@@ -1,0 +1,642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/drawBitmap.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - drawBitmap.h<span style="font-size: 80%;"> (source / <a href="drawBitmap.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">94</td>
+            <td class="headerCovTableEntry">128</td>
+            <td class="headerCovTableEntryLo">73.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file drawBitmap.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the a class that draw an image into a bitmap.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : This file is not included automatically by imebra.h
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : */
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : #if !defined(imebraDrawBitmap_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+<span class="lineNum">      56 </span>            : #define imebraDrawBitmap_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : #include &quot;../../base/include/memory.h&quot;
+<span class="lineNum">      59 </span>            : #include &quot;transformsChain.h&quot;
+<span class="lineNum">      60 </span>            : #include &lt;memory&gt;
+<span class="lineNum">      61 </span>            : #include &lt;string.h&gt;
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : namespace puntoexe
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :         namespace imebra
+<span class="lineNum">      67 </span>            :         {
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            :                 /// \addtogroup group_helpers Helpers
+<span class="lineNum">      70 </span>            :                 ///
+<span class="lineNum">      71 </span>            :                 /// @{
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      74 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      75 </span>            :                 /// \brief Base class used for the exceptions thrown by
+<span class="lineNum">      76 </span>            :                 ///         drawBitmap.
+<span class="lineNum">      77 </span>            :                 ///
+<a name="78"><span class="lineNum">      78 </span>            :                 ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      79 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :                 class drawBitmapException: public std::runtime_error</span>
+<a name="81"><span class="lineNum">      81 </span>            :                 {</a>
+<span class="lineNum">      82 </span>            :                 public:
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :                         drawBitmapException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">      84 </span>            :                 };
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      88 </span>            :                 /// \brief This exception is thrown by
+<span class="lineNum">      89 </span>            :                 ///         declareBitmapType() if the image's area that
+<span class="lineNum">      90 </span>            :                 ///         has to be generated is not valid.
+<span class="lineNum">      91 </span>            :                 ///
+<a name="92"><span class="lineNum">      92 </span>            :                 ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      93 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 :                 class drawBitmapExceptionInvalidArea: public drawBitmapException</span>
+<a name="95"><span class="lineNum">      95 </span>            :                 {</a>
+<span class="lineNum">      96 </span>            :                 public:
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :                         drawBitmapExceptionInvalidArea(const std::string&amp; message): drawBitmapException(message){}</span>
+<span class="lineNum">      98 </span>            :                 };
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     102 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     103 </span>            :         /// \brief Defines the output type of
+<span class="lineNum">     104 </span>            :         ///         getBitmap().
+<span class="lineNum">     105 </span>            :         ///
+<span class="lineNum">     106 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     107 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     108 </span>            :         enum tDrawBitmapType
+<span class="lineNum">     109 </span>            :                 {
+<span class="lineNum">     110 </span>            :             drawBitmapRGB  = 0, ///&lt; Generates a BMP image where each pixel contains 3 bytes (R, G and B)
+<span class="lineNum">     111 </span>            :             drawBitmapBGR  = 1, ///&lt; Generates a BMP image where each pixel contains 3 bytes (B, G and R)
+<span class="lineNum">     112 </span>            :             drawBitmapRGBA = 2, ///&lt; Generates a BMP image where each pixel contains 4 bytes (R, G, B and A)
+<span class="lineNum">     113 </span>            :             drawBitmapBGRA = 3  ///&lt; Generates a BMP image where each pixel contains 4 bytes (B, G, R and A)
+<span class="lineNum">     114 </span>            :                 };
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     117 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     118 </span>            :                 /// \brief This class takes an image as an input and
+<span class="lineNum">     119 </span>            :                 ///         returns an 8 bit RGB bitmap of the requested
+<span class="lineNum">     120 </span>            :                 ///         image's area.
+<span class="lineNum">     121 </span>            :                 ///
+<a name="122"><span class="lineNum">     122 </span>            :                 ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     123 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     124 </span><span class="lineCov">          8 :         class drawBitmap: public baseObject</span>
+<span class="lineNum">     125 </span>            :                 {
+<span class="lineNum">     126 </span>            :                 public:
+<span class="lineNum">     127 </span>            :                         /// \brief Constructor.
+<span class="lineNum">     128 </span>            :                         ///
+<span class="lineNum">     129 </span>            :                         /// @param sourceImage  the input image that has to be
+<span class="lineNum">     130 </span>            :                         ///                      rendered
+<span class="lineNum">     131 </span>            :                         /// @param transformsChain the list of transforms to be
+<span class="lineNum">     132 </span>            :                         ///                      applied to the image before it
+<span class="lineNum">     133 </span>            :                         ///                      is rendered. Can be null.
+<span class="lineNum">     134 </span>            :                         ///                     The transformation to RGB and
+<span class="lineNum">     135 </span>            :                         ///                      high bit shift are applied
+<span class="lineNum">     136 </span>            :                         ///                      automatically by this class
+<span class="lineNum">     137 </span>            :                         ///
+<span class="lineNum">     138 </span>            :                         ///////////////////////////////////////////////////////////
+<span class="lineNum">     139 </span>            :                         drawBitmap(ptr&lt;image&gt; sourceImage, ptr&lt;transforms::transformsChain&gt; transformsChain);
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :                         /// \brief Renders the image specified in the constructor
+<span class="lineNum">     142 </span>            :                         ///         into an RGB or BGR buffer.
+<span class="lineNum">     143 </span>            :                         ///
+<span class="lineNum">     144 </span>            :                         /// The caller can pass to the function a memory object
+<span class="lineNum">     145 </span>            :                         ///  that will be used to store the RGB/BGR buffer,
+<span class="lineNum">     146 </span>            :                         ///  otherwise the function will allocate a new one.
+<span class="lineNum">     147 </span>            :                         ///
+<span class="lineNum">     148 </span>            :                         /// Each row of pixels in the RGB/BGR buffer will be
+<span class="lineNum">     149 </span>            :                         ///  aligned according to the template parameter
+<span class="lineNum">     150 </span>            :                         ///  rowAlignBytes
+<span class="lineNum">     151 </span>            :                         ///
+<span class="lineNum">     152 </span>            :                         /// \image html drawbitmap.png &quot;drawbitmap&quot;
+<span class="lineNum">     153 </span>            :                         /// \image latex drawbitmap.png &quot;drawbitmap&quot; width=15cm
+<span class="lineNum">     154 </span>            :                         ///
+<span class="lineNum">     155 </span>            :                         /// The figure illustrates how the getBitmap() method
+<span class="lineNum">     156 </span>            :                         ///  works:
+<span class="lineNum">     157 </span>            :                         /// -# the image is resized according to the parameters
+<span class="lineNum">     158 </span>            :                         ///        totalWidthPixels and totalHeightPixels
+<span class="lineNum">     159 </span>            :                         /// -# the area specified by visibleTopLeftX,
+<span class="lineNum">     160 </span>            :                         ///    visibleTopLeftY - visibleBottomRightX,
+<span class="lineNum">     161 </span>            :                         ///    visibleBottomRightY is rendered into the buffer
+<span class="lineNum">     162 </span>            :                         ///
+<span class="lineNum">     163 </span>            :                         /// Please note that the rendering algorithm achieves the
+<span class="lineNum">     164 </span>            :                         ///  described results without actually resizing the image.
+<span class="lineNum">     165 </span>            :                         ///
+<span class="lineNum">     166 </span>            :                         /// @tparam drawBitmapType The RGB order. Must be
+<span class="lineNum">     167 </span>            :                         ///                         drawBitmapBGR for BMP images
+<span class="lineNum">     168 </span>            :                         /// @tparam rowAlignBytes  the boundary alignment of each
+<span class="lineNum">     169 </span>            :                         ///                         row. Must be 4 for BMP images
+<span class="lineNum">     170 </span>            :                         /// @param totalWidthPixels the width of the magnified or
+<span class="lineNum">     171 </span>            :                         ///                          shrunken image in pixels
+<span class="lineNum">     172 </span>            :                         ///                          (magnified width on the
+<span class="lineNum">     173 </span>            :                         ///                          figure &quot;drawbitmap&quot;)
+<span class="lineNum">     174 </span>            :                         /// @param totalHeightPixels the height of the magnified
+<span class="lineNum">     175 </span>            :                         ///                           or shrunken image in pixels
+<span class="lineNum">     176 </span>            :                         ///                           (magnified height on the
+<span class="lineNum">     177 </span>            :                         ///                           figure &quot;drawbitmap&quot;)
+<span class="lineNum">     178 </span>            :                         /// @param visibleTopLeftX  the X coordinate of the top
+<span class="lineNum">     179 </span>            :                         ///                          left corner of image area that
+<span class="lineNum">     180 </span>            :                         ///                          has to be rendered
+<span class="lineNum">     181 </span>            :                         ///                          (visible top left magnified X
+<span class="lineNum">     182 </span>            :                         ///                           on the figure &quot;drawbitmap&quot;)
+<span class="lineNum">     183 </span>            :                         /// @param visibleTopLeftY  the Y coordinate of the top
+<span class="lineNum">     184 </span>            :                         ///                          left corner of image area that
+<span class="lineNum">     185 </span>            :                         ///                          has to be rendered
+<span class="lineNum">     186 </span>            :                         ///                          (visible top left magnified Y
+<span class="lineNum">     187 </span>            :                         ///                           on the figure &quot;drawbitmap&quot;)
+<span class="lineNum">     188 </span>            :                         /// @param visibleBottomRightX the X coordinate of the
+<span class="lineNum">     189 </span>            :                         ///                          bottom right corner of image
+<span class="lineNum">     190 </span>            :                         ///                          area that has to be rendered
+<span class="lineNum">     191 </span>            :                         ///                          (visible bottom right
+<span class="lineNum">     192 </span>            :                         ///                           magnified X on the figure
+<span class="lineNum">     193 </span>            :                         ///                           &quot;drawbitmap&quot;)
+<span class="lineNum">     194 </span>            :                         /// @param visibleBottomRightY the Y coordinate of the
+<span class="lineNum">     195 </span>            :                         ///                          bottom right corner of image
+<span class="lineNum">     196 </span>            :                         ///                          area that has to be rendered
+<span class="lineNum">     197 </span>            :                         ///                          (visible bottom right
+<span class="lineNum">     198 </span>            :                         ///                           magnified Y on the figure
+<span class="lineNum">     199 </span>            :                         ///                           &quot;drawbitmap&quot;)
+<span class="lineNum">     200 </span>            :                         /// @param reuseMemory      a pointer to a memory object
+<span class="lineNum">     201 </span>            :                         ///                          that must be used to store the
+<span class="lineNum">     202 </span>            :                         ///                          output buffer. Can be null
+<span class="lineNum">     203 </span>            :                         /// @return the memory object in which the output buffer
+<span class="lineNum">     204 </span>            :                         ///          is stored. Is the same object specified in
+<span class="lineNum">     205 </span>            :                         ///          reuseMemory or a new object if reuseMemory
+<span class="lineNum">     206 </span>            :                         ///          is null
+<span class="lineNum">     207 </span>            :                         ///
+<a name="208"><span class="lineNum">     208 </span>            :                         ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     209 </span>            :                         template &lt;tDrawBitmapType drawBitmapType, int rowAlignBytes&gt;
+<span class="lineNum">     210 </span><span class="lineCov">          4 :                                         ptr&lt;memory&gt; getBitmap(std::int32_t totalWidthPixels, std::int32_t totalHeightPixels,</span>
+<span class="lineNum">     211 </span>            :                                                                                   std::int32_t visibleTopLeftX, std::int32_t visibleTopLeftY, std::int32_t visibleBottomRightX, std::int32_t visibleBottomRightY,
+<span class="lineNum">     212 </span>            :                                                                                   ptr&lt;memory&gt; reuseMemory)
+<span class="lineNum">     213 </span>            :                         {
+<span class="lineNum">     214 </span>            :                                 PUNTOEXE_FUNCTION_START(L&quot;drawBitmap::getBitmap&quot;);
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span>            :                                 // Just return if there is nothing to show
+<span class="lineNum">     217 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     218 </span><span class="lineCov">          4 :                                 if(visibleTopLeftX == visibleBottomRightX || visibleTopLeftY == visibleBottomRightY)</span>
+<span class="lineNum">     219 </span>            :                                 {
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 :                                         if(reuseMemory != 0)</span>
+<span class="lineNum">     221 </span>            :                                         {
+<span class="lineNum">     222 </span><span class="lineNoCov">          0 :                                                 reuseMemory-&gt;resize(0);</span>
+<span class="lineNum">     223 </span>            :                                         }
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :                                         return reuseMemory;</span>
+<span class="lineNum">     225 </span>            :                                 }
+<span class="lineNum">     226 </span>            : 
+<span class="lineNum">     227 </span>            :                                 // Check if the image is visible in the specified area
+<span class="lineNum">     228 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     229 </span><span class="lineCov">          4 :                                 if(</span>
+<span class="lineNum">     230 </span>            :                                                 visibleBottomRightX &gt; totalWidthPixels ||
+<span class="lineNum">     231 </span>            :                                                 visibleBottomRightY &gt; totalHeightPixels ||
+<span class="lineNum">     232 </span>            :                                                 visibleTopLeftX &lt; 0 ||
+<span class="lineNum">     233 </span>            :                                                 visibleTopLeftY &lt; 0 ||
+<span class="lineNum">     234 </span>            :                                                 visibleTopLeftX &gt; visibleBottomRightX ||
+<span class="lineNum">     235 </span>            :                                                 visibleTopLeftY &gt; visibleBottomRightY
+<span class="lineNum">     236 </span>            :                                                 )
+<span class="lineNum">     237 </span>            :                                 {
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :                                         PUNTOEXE_THROW(drawBitmapExceptionInvalidArea, &quot;Destination area not valid&quot;);</span>
+<span class="lineNum">     239 </span>            :                                 }
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span><span class="lineCov">          4 :                 size_t memorySize(getBitmap&lt;drawBitmapType, rowAlignBytes&gt;(totalWidthPixels, totalHeightPixels, visibleTopLeftX, visibleTopLeftY, visibleBottomRightX, visibleBottomRightY, 0, 0));</span>
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span><span class="lineCov">          4 :                                 if(reuseMemory == 0)</span>
+<span class="lineNum">     244 </span>            :                                 {
+<span class="lineNum">     245 </span><span class="lineCov">          4 :                                         reuseMemory = memoryPool::getMemoryPool()-&gt;getMemory(memorySize);</span>
+<span class="lineNum">     246 </span>            :                                 }
+<span class="lineNum">     247 </span>            :                                 else
+<span class="lineNum">     248 </span>            :                                 {
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 :                                         reuseMemory-&gt;resize(memorySize);</span>
+<span class="lineNum">     250 </span>            :                                 }
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :                                 // Retrieve the final bitmap's buffer
+<span class="lineNum">     253 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     254 </span><span class="lineCov">          4 :                                 std::uint8_t* pFinalBuffer = (std::uint8_t*)(reuseMemory-&gt;data());</span>
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span><span class="lineCov">          4 :                                 getBitmap&lt;drawBitmapType, rowAlignBytes&gt;(totalWidthPixels, totalHeightPixels, visibleTopLeftX, visibleTopLeftY, visibleBottomRightX, visibleBottomRightY, pFinalBuffer, memorySize);</span>
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span><span class="lineCov">          4 :                                 return reuseMemory;</span>
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span>            :                                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            :                         }
+<a name="263"><span class="lineNum">     263 </span>            : </a>
+<span class="lineNum">     264 </span>            :                         template &lt;tDrawBitmapType drawBitmapType, int rowAlignBytes&gt;
+<span class="lineNum">     265 </span><span class="lineCov">          8 :                                         size_t getBitmap(std::int32_t totalWidthPixels, std::int32_t totalHeightPixels,</span>
+<span class="lineNum">     266 </span>            :                                                                                   std::int32_t visibleTopLeftX, std::int32_t visibleTopLeftY, std::int32_t visibleBottomRightX, std::int32_t visibleBottomRightY,
+<span class="lineNum">     267 </span>            :                                                                                   std::uint8_t* pBuffer, size_t bufferSize)
+<span class="lineNum">     268 </span>            :                         {
+<span class="lineNum">     269 </span>            :                                 PUNTOEXE_FUNCTION_START(L&quot;drawBitmap::getBitmapRaw&quot;);
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :                                 // Just return if there is nothing to show
+<span class="lineNum">     272 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     273 </span><span class="lineCov">          8 :                                 if(visibleTopLeftX == visibleBottomRightX || visibleTopLeftY == visibleBottomRightY)</span>
+<span class="lineNum">     274 </span>            :                                 {
+<span class="lineNum">     275 </span><span class="lineNoCov">          0 :                                         return 0;</span>
+<span class="lineNum">     276 </span>            :                                 }
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span>            :                                 // Check if the image is visible in the specified area
+<span class="lineNum">     279 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     280 </span><span class="lineCov">          8 :                                 if(</span>
+<span class="lineNum">     281 </span>            :                                                 visibleBottomRightX &gt; totalWidthPixels ||
+<span class="lineNum">     282 </span>            :                                                 visibleBottomRightY &gt; totalHeightPixels ||
+<span class="lineNum">     283 </span>            :                                                 visibleTopLeftX &lt; 0 ||
+<span class="lineNum">     284 </span>            :                                                 visibleTopLeftY &lt; 0 ||
+<span class="lineNum">     285 </span>            :                                                 visibleTopLeftX &gt; visibleBottomRightX ||
+<span class="lineNum">     286 </span>            :                                                 visibleTopLeftY &gt; visibleBottomRightY
+<span class="lineNum">     287 </span>            :                                                 )
+<span class="lineNum">     288 </span>            :                                 {
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :                                         PUNTOEXE_THROW(drawBitmapExceptionInvalidArea, &quot;Destination area not valid&quot;);</span>
+<span class="lineNum">     290 </span>            :                                 }
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span><span class="lineCov">          8 :                 std::uint32_t destPixelSize((drawBitmapType == drawBitmapRGBA || drawBitmapType == drawBitmapBGRA) ? 4 : 3);</span>
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            :                 // Calculate the row' size, in bytes
+<span class="lineNum">     295 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     296 </span><span class="lineCov">          8 :                 std::uint32_t rowSizeBytes = ((visibleBottomRightX - visibleTopLeftX) * destPixelSize + rowAlignBytes - 1) / rowAlignBytes;</span>
+<span class="lineNum">     297 </span><span class="lineCov">          8 :                                 rowSizeBytes *= rowAlignBytes;</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span>            :                                 // Allocate the memory for the final bitmap
+<span class="lineNum">     301 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     302 </span><span class="lineCov">          8 :                                 std::uint32_t memorySize(rowSizeBytes * (visibleBottomRightY - visibleTopLeftY));</span>
+<span class="lineNum">     303 </span><span class="lineCov">          8 :                                 if(memorySize &gt; bufferSize)</span>
+<span class="lineNum">     304 </span>            :                                 {
+<span class="lineNum">     305 </span><span class="lineCov">          4 :                                     return memorySize;</span>
+<span class="lineNum">     306 </span>            :                                 }
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            :                                 // Find the multiplier that make the image bigger than
+<span class="lineNum">     309 </span>            :                                 //  the rendering area
+<span class="lineNum">     310 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     311 </span>            :                                 std::uint32_t imageSizeX, imageSizeY;
+<span class="lineNum">     312 </span><span class="lineCov">          4 :                                 m_image-&gt;getSize(&amp;imageSizeX, &amp;imageSizeY);</span>
+<span class="lineNum">     313 </span>            : 
+<span class="lineNum">     314 </span><span class="lineCov">          4 :                                 std::uint8_t leftShiftX(0), leftShiftY(0);</span>
+<span class="lineNum">     315 </span><span class="lineCov">          4 :                                 std::uint32_t maskX(0), maskY(0);</span>
+<span class="lineNum">     316 </span><span class="lineCov">          8 :                                 while( (imageSizeX &lt;&lt; leftShiftX) &lt; (std::uint32_t)totalWidthPixels)</span>
+<span class="lineNum">     317 </span>            :                                 {
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :                                         ++leftShiftX;</span>
+<span class="lineNum">     319 </span><span class="lineNoCov">          0 :                                         maskX &lt;&lt;= 1;</span>
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :                                         ++maskX;</span>
+<span class="lineNum">     321 </span>            :                                 }
+<span class="lineNum">     322 </span><span class="lineCov">          8 :                                 while( (imageSizeY &lt;&lt; leftShiftY) &lt; (std::uint32_t)totalHeightPixels)</span>
+<span class="lineNum">     323 </span>            :                                 {
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :                                         ++leftShiftY;</span>
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :                                         maskY &lt;&lt;= 1;</span>
+<span class="lineNum">     326 </span><span class="lineNoCov">          0 :                                         ++maskY;</span>
+<span class="lineNum">     327 </span>            :                                 }
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span>            :                                 // Allocate an horizontal buffer that stores the pixels
+<span class="lineNum">     330 </span>            :                                 //  average colors and a buffer that indicates the pixels
+<span class="lineNum">     331 </span>            :                                 //  in the source image mapped to the final bitmap
+<span class="lineNum">     332 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     333 </span><span class="lineCov">          4 :                                 std::uint32_t destBitmapWidth(visibleBottomRightX - visibleTopLeftX);</span>
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span><span class="lineCov">          4 :                                 ptr&lt;memory&gt; averagePixelsMemory(memoryPool::getMemoryPool()-&gt;getMemory(destBitmapWidth * 4 * sizeof(std::int32_t)));</span>
+<span class="lineNum">     336 </span><span class="lineCov">          8 :                                 ptr&lt;memory&gt; sourcePixelIndexMemory(memoryPool::getMemoryPool()-&gt;getMemory((destBitmapWidth + 1) * sizeof(std::uint32_t)));</span>
+<span class="lineNum">     337 </span><span class="lineCov">          4 :                                 std::int32_t* averagePixels = (std::int32_t*)averagePixelsMemory-&gt;data();</span>
+<span class="lineNum">     338 </span><span class="lineCov">          4 :                                 std::uint32_t* sourcePixelIndex = (std::uint32_t*)sourcePixelIndexMemory-&gt;data();</span>
+<span class="lineNum">     339 </span><span class="lineCov">       1208 :                                 for(std::int32_t scanPixelsX = visibleTopLeftX; scanPixelsX != visibleBottomRightX + 1; ++scanPixelsX)</span>
+<span class="lineNum">     340 </span>            :                                 {
+<span class="lineNum">     341 </span><span class="lineCov">       1204 :                                         sourcePixelIndex[scanPixelsX - visibleTopLeftX] = scanPixelsX * (imageSizeX &lt;&lt; leftShiftX) / totalWidthPixels;</span>
+<span class="lineNum">     342 </span>            :                                 }
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :                                 // Get the index of the first and last+1 pixel to be
+<span class="lineNum">     345 </span>            :                                 //  displayed
+<span class="lineNum">     346 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     347 </span><span class="lineCov">          4 :                                 std::int32_t firstPixelX(*sourcePixelIndex);</span>
+<span class="lineNum">     348 </span><span class="lineCov">          4 :                                 std::int32_t lastPixelX(sourcePixelIndex[visibleBottomRightX - visibleTopLeftX]);</span>
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            :                                 // If a transform chain is active then allocate a temporary
+<span class="lineNum">     351 </span>            :                                 //  output image
+<span class="lineNum">     352 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     353 </span>            :                                 std::uint32_t rowSize, channelSize, channelsNumber;
+<span class="lineNum">     354 </span><span class="lineCov">          8 :                                 ptr&lt;image&gt; sourceImage(m_image);</span>
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span>            :                                 // Retrieve the final bitmap's buffer
+<span class="lineNum">     357 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     358 </span><span class="lineCov">          4 :                 std::int32_t nextRowGap = rowSizeBytes - destBitmapWidth * destPixelSize;</span>
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            :                                 // First Y pixel not transformed by the transforms chain
+<span class="lineNum">     361 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     362 </span><span class="lineCov">          4 :                                 std::int32_t transformChainStartY(0), transformChainNextY(0);</span>
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span>            :                                 std::uint32_t sourceHeight;
+<span class="lineNum">     365 </span>            :                                 std::uint32_t sourceWidth;
+<span class="lineNum">     366 </span><span class="lineCov">          4 :                                 if(m_transformsChain-&gt;isEmpty())</span>
+<span class="lineNum">     367 </span>            :                                 {
+<span class="lineNum">     368 </span><span class="lineCov">          2 :                                         sourceHeight = imageSizeY;</span>
+<span class="lineNum">     369 </span><span class="lineCov">          2 :                                         sourceWidth = imageSizeX;</span>
+<span class="lineNum">     370 </span>            :                                 }
+<span class="lineNum">     371 </span>            :                                 else
+<span class="lineNum">     372 </span>            :                                 {
+<span class="lineNum">     373 </span>            : 
+<span class="lineNum">     374 </span><span class="lineCov">          2 :                                         sourceWidth = (lastPixelX &gt;&gt; leftShiftX) - (firstPixelX &gt;&gt; leftShiftX) + 1;</span>
+<span class="lineNum">     375 </span><span class="lineCov">          2 :                                         if((firstPixelX &gt;&gt; leftShiftX) + sourceWidth &gt; imageSizeX)</span>
+<span class="lineNum">     376 </span>            :                                         {
+<span class="lineNum">     377 </span><span class="lineCov">          2 :                                                 sourceWidth = imageSizeX - (firstPixelX &gt;&gt; leftShiftX);</span>
+<span class="lineNum">     378 </span>            :                                         }
+<span class="lineNum">     379 </span><span class="lineCov">          2 :                     sourceHeight = 65536 / (sourceWidth * 3);</span>
+<span class="lineNum">     380 </span><span class="lineCov">          2 :                                         if(sourceHeight &lt; 1)</span>
+<span class="lineNum">     381 </span>            :                                         {
+<span class="lineNum">     382 </span><span class="lineNoCov">          0 :                                                 sourceHeight = 1;</span>
+<span class="lineNum">     383 </span>            :                                         }
+<span class="lineNum">     384 </span><span class="lineCov">          2 :                                         if(sourceHeight &gt; imageSizeY)</span>
+<span class="lineNum">     385 </span>            :                                         {
+<span class="lineNum">     386 </span><span class="lineNoCov">          0 :                                                 sourceHeight = imageSizeY;</span>
+<span class="lineNum">     387 </span>            :                                         }
+<span class="lineNum">     388 </span><span class="lineCov">          2 :                                         sourceImage = new image;</span>
+<span class="lineNum">     389 </span><span class="lineCov">          2 :                                         sourceImage-&gt;create(sourceWidth, sourceHeight, image::depthU8, L&quot;RGB&quot;, 7);</span>
+<span class="lineNum">     390 </span>            :                                 }
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            :                                 // Scan all the final bitmap's rows
+<span class="lineNum">     394 </span>            :                                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     395 </span><span class="lineCov">        904 :                                 for(std::int32_t scanY = visibleTopLeftY; scanY != visibleBottomRightY; ++scanY)</span>
+<span class="lineNum">     396 </span>            :                                 {
+<span class="lineNum">     397 </span><span class="lineCov">        900 :                                         ::memset(averagePixels, 0, destBitmapWidth * 4 * sizeof(std::int32_t));</span>
+<span class="lineNum">     398 </span>            : 
+<span class="lineNum">     399 </span>            :                                         // Scan all the image's rows that go in the bitmap's row
+<span class="lineNum">     400 </span>            :                                         ///////////////////////////////////////////////////////////
+<span class="lineNum">     401 </span><span class="lineCov">        900 :                                         std::int32_t firstPixelY = scanY * (imageSizeY &lt;&lt; leftShiftY) / totalHeightPixels;</span>
+<span class="lineNum">     402 </span><span class="lineCov">        900 :                                         std::int32_t lastPixelY = (scanY + 1) * (imageSizeY &lt;&lt; leftShiftY) / totalHeightPixels;</span>
+<span class="lineNum">     403 </span>            : 
+<span class="lineNum">     404 </span><span class="lineCov">       2100 :                                         for(std::int32_t scanImageY = firstPixelY; scanImageY != lastPixelY; /* increased in the loop */)</span>
+<span class="lineNum">     405 </span>            :                                         {
+<span class="lineNum">     406 </span><span class="lineCov">       1200 :                                                 std::int32_t currentImageY = (scanImageY &gt;&gt; leftShiftY);</span>
+<span class="lineNum">     407 </span><span class="lineCov">       1200 :                                                 std::int32_t* pAveragePointer = averagePixels;</span>
+<span class="lineNum">     408 </span><span class="lineCov">       1200 :                                                 std::uint32_t* pNextSourceXIndex = sourcePixelIndex;</span>
+<span class="lineNum">     409 </span>            : 
+<span class="lineNum">     410 </span><span class="lineCov">       1200 :                                                 std::uint8_t* pImagePointer(0);</span>
+<span class="lineNum">     411 </span><span class="lineCov">       1200 :                                                 std::uint8_t* imageMemory(0);</span>
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span><span class="lineCov">       1200 :                                                 ptr&lt;handlers::dataHandlerNumericBase&gt; imageHandler;</span>
+<span class="lineNum">     414 </span><span class="lineCov">       1200 :                                                 if(m_transformsChain-&gt;isEmpty())</span>
+<span class="lineNum">     415 </span>            :                                                 {
+<span class="lineNum">     416 </span><span class="lineCov">        600 :                                                         imageHandler = sourceImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     417 </span><span class="lineCov">        600 :                                                         imageMemory = imageHandler-&gt;getMemoryBuffer();</span>
+<span class="lineNum">     418 </span><span class="lineCov">        600 :                                                         pImagePointer = &amp;(imageMemory[currentImageY * imageSizeX * 3 + ((*pNextSourceXIndex) &gt;&gt; leftShiftX) * 3]);</span>
+<span class="lineNum">     419 </span>            :                                                 }
+<span class="lineNum">     420 </span>            :                                                 else
+<span class="lineNum">     421 </span>            :                                                 {
+<span class="lineNum">     422 </span><span class="lineCov">        600 :                                                         if(currentImageY &gt;= transformChainNextY)</span>
+<span class="lineNum">     423 </span>            :                                                         {
+<span class="lineNum">     424 </span><span class="lineCov">         12 :                                                                 transformChainNextY = currentImageY + sourceHeight;</span>
+<span class="lineNum">     425 </span><span class="lineCov">         12 :                                                                 if(transformChainNextY &gt; (std::int32_t)imageSizeY)</span>
+<span class="lineNum">     426 </span>            :                                                                 {
+<span class="lineNum">     427 </span><span class="lineCov">          2 :                                                                         transformChainNextY = imageSizeY;</span>
+<span class="lineNum">     428 </span>            :                                                                 }
+<span class="lineNum">     429 </span><span class="lineCov">         12 :                                                                 m_transformsChain-&gt;runTransform(m_image, firstPixelX &gt;&gt; leftShiftX, currentImageY, sourceWidth, transformChainNextY - currentImageY, sourceImage, 0, 0);</span>
+<span class="lineNum">     430 </span><span class="lineCov">         12 :                                                                 transformChainStartY = currentImageY;</span>
+<span class="lineNum">     431 </span>            :                                                         }
+<span class="lineNum">     432 </span><span class="lineCov">        600 :                                                         imageHandler = sourceImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     433 </span><span class="lineCov">        600 :                                                         imageMemory = imageHandler-&gt;getMemoryBuffer();</span>
+<span class="lineNum">     434 </span>            : 
+<span class="lineNum">     435 </span><span class="lineCov">        600 :                                                         pImagePointer = &amp;(imageMemory[(currentImageY - transformChainStartY) * sourceWidth * 3]);</span>
+<span class="lineNum">     436 </span>            :                                                 }
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span><span class="lineCov">       1200 :                                                 std::int32_t scanYBlock ( (scanImageY &amp; (~maskY)) + ((std::int32_t)1 &lt;&lt; leftShiftY) );</span>
+<span class="lineNum">     439 </span><span class="lineCov">       1200 :                                                 if(scanYBlock &gt; lastPixelY)</span>
+<span class="lineNum">     440 </span>            :                                                 {
+<span class="lineNum">     441 </span><span class="lineNoCov">          0 :                                                         scanYBlock = lastPixelY;</span>
+<span class="lineNum">     442 </span>            :                                                 }
+<span class="lineNum">     443 </span><span class="lineCov">       1200 :                                                 std::int32_t numRows(scanYBlock - scanImageY);</span>
+<span class="lineNum">     444 </span><span class="lineCov">       1200 :                                                 scanImageY += numRows;</span>
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span><span class="lineCov">       1200 :                                                 if(numRows == 1)</span>
+<span class="lineNum">     447 </span>            :                                                 {
+<span class="lineNum">     448 </span><span class="lineCov">     361200 :                                                         for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)</span>
+<span class="lineNum">     449 </span>            :                                                         {
+<span class="lineNum">     450 </span><span class="lineCov">     840000 :                                                                 for(std::uint32_t scanImageX = *(pNextSourceXIndex++); scanImageX != *pNextSourceXIndex; ++scanImageX)</span>
+<span class="lineNum">     451 </span>            :                                                                 {
+<span class="lineNum">     452 </span><span class="lineCov">     480000 :                                                                         ++(*pAveragePointer);</span>
+<span class="lineNum">     453 </span><span class="lineCov">     480000 :                                                                         *(++pAveragePointer) += *pImagePointer;</span>
+<span class="lineNum">     454 </span><span class="lineCov">     480000 :                                                                         *(++pAveragePointer) += *(++pImagePointer);</span>
+<span class="lineNum">     455 </span><span class="lineCov">     480000 :                                                                         *(++pAveragePointer) += *(++pImagePointer);</span>
+<span class="lineNum">     456 </span><span class="lineCov">     480000 :                                                                         pAveragePointer -= 3;</span>
+<span class="lineNum">     457 </span><span class="lineCov">     480000 :                                                                         if( (scanImageX &amp; maskX) != 0)</span>
+<span class="lineNum">     458 </span>            :                                                                         {
+<span class="lineNum">     459 </span><span class="lineNoCov">          0 :                                                                                 pImagePointer -= 2;</span>
+<span class="lineNum">     460 </span><span class="lineNoCov">          0 :                                                                                 continue;</span>
+<span class="lineNum">     461 </span>            :                                                                         }
+<span class="lineNum">     462 </span><span class="lineCov">     480000 :                                                                         ++pImagePointer;</span>
+<span class="lineNum">     463 </span>            :                                                                 }
+<span class="lineNum">     464 </span><span class="lineCov">     360000 :                                                                 pAveragePointer += 4;</span>
+<span class="lineNum">     465 </span>            :                                                         }
+<span class="lineNum">     466 </span>            :                                                 }
+<span class="lineNum">     467 </span>            :                                                 else
+<span class="lineNum">     468 </span>            :                                                 {
+<span class="lineNum">     469 </span><span class="lineNoCov">          0 :                                                         for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)</span>
+<span class="lineNum">     470 </span>            :                                                         {
+<span class="lineNum">     471 </span><span class="lineNoCov">          0 :                                                                 for(std::uint32_t scanImageX = *(pNextSourceXIndex++); scanImageX != *pNextSourceXIndex; ++scanImageX)</span>
+<span class="lineNum">     472 </span>            :                                                                 {
+<span class="lineNum">     473 </span><span class="lineNoCov">          0 :                                                                         *pAveragePointer += numRows;</span>
+<span class="lineNum">     474 </span><span class="lineNoCov">          0 :                                                                         *(++pAveragePointer) += *pImagePointer  * numRows;</span>
+<span class="lineNum">     475 </span><span class="lineNoCov">          0 :                                                                         *(++pAveragePointer) += *(++pImagePointer)  * numRows;</span>
+<span class="lineNum">     476 </span><span class="lineNoCov">          0 :                                                                         *(++pAveragePointer) += *(++pImagePointer)  * numRows;</span>
+<span class="lineNum">     477 </span><span class="lineNoCov">          0 :                                                                         pAveragePointer -= 3;</span>
+<span class="lineNum">     478 </span><span class="lineNoCov">          0 :                                                                         if( (scanImageX &amp; maskX) != 0)</span>
+<span class="lineNum">     479 </span>            :                                                                         {
+<span class="lineNum">     480 </span><span class="lineNoCov">          0 :                                                                                 pImagePointer -= 2;</span>
+<span class="lineNum">     481 </span><span class="lineNoCov">          0 :                                                                                 continue;</span>
+<span class="lineNum">     482 </span>            :                                                                         }
+<span class="lineNum">     483 </span><span class="lineNoCov">          0 :                                                                         ++pImagePointer;</span>
+<span class="lineNum">     484 </span>            :                                                                 }
+<span class="lineNum">     485 </span><span class="lineNoCov">          0 :                                                                 pAveragePointer += 4;</span>
+<span class="lineNum">     486 </span>            :                                                         }
+<span class="lineNum">     487 </span>            :                                                 }
+<span class="lineNum">     488 </span>            :                                         }
+<span class="lineNum">     489 </span>            : 
+<span class="lineNum">     490 </span>            :                                         // Copy the average to the bitmap
+<span class="lineNum">     491 </span><span class="lineCov">        900 :                                         std::int32_t* pAveragePointer = averagePixels;</span>
+<span class="lineNum">     492 </span>            :                                         std::uint32_t counter;
+<span class="lineNum">     493 </span>            : 
+<span class="lineNum">     494 </span>            :                     if(drawBitmapType == drawBitmapRGBA)
+<span class="lineNum">     495 </span>            :                     {
+<span class="lineNum">     496 </span>            :                         for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)
+<span class="lineNum">     497 </span>            :                         {
+<span class="lineNum">     498 </span>            :                             counter = (std::uint32_t)*(pAveragePointer++);
+<span class="lineNum">     499 </span>            :                             *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     500 </span>            :                             *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     501 </span>            :                             *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     502 </span>            :                             *(pBuffer++) = 0xff;
+<span class="lineNum">     503 </span>            :                         }
+<span class="lineNum">     504 </span>            :                     }
+<span class="lineNum">     505 </span>            :                     else if(drawBitmapType == drawBitmapBGRA)
+<span class="lineNum">     506 </span>            :                     {
+<span class="lineNum">     507 </span>            :                                             std::uint32_t r, g;
+<span class="lineNum">     508 </span>            :                         for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)
+<span class="lineNum">     509 </span>            :                         {
+<span class="lineNum">     510 </span>            :                             counter = (std::uint32_t)*(pAveragePointer++);
+<span class="lineNum">     511 </span>            :                                                         r = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     512 </span>            :                                                         g = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     513 </span>            :                                                         *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     514 </span>            :                                                         *(pBuffer++) = (std::uint8_t)g;
+<span class="lineNum">     515 </span>            :                                                         *(pBuffer++) = (std::uint8_t)r;
+<span class="lineNum">     516 </span>            :                             *(pBuffer++) = 0xff;
+<span class="lineNum">     517 </span>            :                         }
+<span class="lineNum">     518 </span>            :                     }
+<span class="lineNum">     519 </span>            :                     else if(drawBitmapType == drawBitmapRGB)
+<span class="lineNum">     520 </span>            :                                         {
+<span class="lineNum">     521 </span><span class="lineCov">     300900 :                                                 for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)</span>
+<span class="lineNum">     522 </span>            :                                                 {
+<span class="lineNum">     523 </span><span class="lineCov">     300000 :                                                         counter = (std::uint32_t)*(pAveragePointer++);</span>
+<span class="lineNum">     524 </span><span class="lineCov">     300000 :                                                         *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);</span>
+<span class="lineNum">     525 </span><span class="lineCov">     300000 :                                                         *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);</span>
+<span class="lineNum">     526 </span><span class="lineCov">     300000 :                                                         *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);</span>
+<span class="lineNum">     527 </span>            :                                                 }
+<span class="lineNum">     528 </span>            :                                         }
+<span class="lineNum">     529 </span>            :                                         else
+<span class="lineNum">     530 </span>            :                                         {
+<span class="lineNum">     531 </span>            :                                             std::uint32_t r, g;
+<span class="lineNum">     532 </span>            :                                                 for(std::int32_t scanX (destBitmapWidth); scanX != 0; --scanX)
+<span class="lineNum">     533 </span>            :                                                 {
+<span class="lineNum">     534 </span>            :                                                         counter = (std::uint32_t)*(pAveragePointer++);
+<span class="lineNum">     535 </span>            :                                                         r = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     536 </span>            :                                                         g = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     537 </span>            :                                                         *(pBuffer++) = (std::uint8_t) (((std::uint32_t)*(pAveragePointer++) / counter) &amp; 0xff);
+<span class="lineNum">     538 </span>            :                                                         *(pBuffer++) = (std::uint8_t)g;
+<span class="lineNum">     539 </span>            :                                                         *(pBuffer++) = (std::uint8_t)r;
+<span class="lineNum">     540 </span>            :                                                 }
+<span class="lineNum">     541 </span>            :                                         }
+<span class="lineNum">     542 </span>            : 
+<span class="lineNum">     543 </span><span class="lineCov">        900 :                                         pBuffer += nextRowGap;</span>
+<span class="lineNum">     544 </span>            :                                 }
+<span class="lineNum">     545 </span>            : 
+<span class="lineNum">     546 </span><span class="lineCov">          8 :                                 return memorySize;</span>
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            :                                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     549 </span>            :                         }
+<span class="lineNum">     550 </span>            : 
+<span class="lineNum">     551 </span>            :                 protected:
+<span class="lineNum">     552 </span>            :                         ptr&lt;image&gt; m_image;
+<span class="lineNum">     553 </span>            : 
+<span class="lineNum">     554 </span>            :                         ptr&lt;image&gt; m_finalImage;
+<span class="lineNum">     555 </span>            : 
+<span class="lineNum">     556 </span>            :                         // Transform that calculates an 8 bit per channel RGB image
+<span class="lineNum">     557 </span>            :                         ptr&lt;transforms::transformsChain&gt; m_transformsChain;
+<span class="lineNum">     558 </span>            :                 };
+<span class="lineNum">     559 </span>            : 
+<span class="lineNum">     560 </span>            :                 /// @}
+<span class="lineNum">     561 </span>            : 
+<span class="lineNum">     562 </span>            :         } // namespace imebra
+<span class="lineNum">     563 </span>            : 
+<span class="lineNum">     564 </span>            : } // namespace puntoexe
+<span class="lineNum">     565 </span>            : 
+<span class="lineNum">     566 </span>            : #endif // !defined(imebraDrawBitmap_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

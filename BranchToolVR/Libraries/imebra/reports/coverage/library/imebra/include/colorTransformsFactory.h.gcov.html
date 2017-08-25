@@ -1,0 +1,434 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/colorTransformsFactory.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - colorTransformsFactory.h<span style="font-size: 80%;"> (source / <a href="colorTransformsFactory.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryLo">16.7 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file colorTransformsFactory.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the class used to retrieve a color transform able to
+<span class="lineNum">      50 </span>            :                 handle the requested color spaces.
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : */
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #if !defined(imebraColorTransformsFactory_82307D4A_6490_4202_BF86_93399D32721E__INCLUDED_)
+<span class="lineNum">      55 </span>            : #define imebraColorTransformsFactory_82307D4A_6490_4202_BF86_93399D32721E__INCLUDED_
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &lt;list&gt;
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : #include &quot;colorTransform.h&quot;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : namespace puntoexe
+<span class="lineNum">      62 </span>            : {
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : namespace imebra
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : namespace transforms
+<span class="lineNum">      68 </span>            : {
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : namespace colorTransforms
+<span class="lineNum">      71 </span>            : {
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : /// \addtogroup group_transforms
+<span class="lineNum">      74 </span>            : ///
+<span class="lineNum">      75 </span>            : /// @{
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      79 </span>            : /// \brief This class maintains a list of all the available
+<span class="lineNum">      80 </span>            : ///         colorTransform classes and retrieve the
+<span class="lineNum">      81 </span>            : ///         most appropriate transform class (or classes)
+<span class="lineNum">      82 </span>            : ///         when a color space conversion is needed.
+<span class="lineNum">      83 </span>            : ///
+<span class="lineNum">      84 </span>            : /// One instance of this class is statically allocated
+<span class="lineNum">      85 </span>            : ///  by the library; the application does NOT have to
+<span class="lineNum">      86 </span>            : ///  allocate its own instance of colorTransformsFactory.
+<span class="lineNum">      87 </span>            : ///
+<span class="lineNum">      88 </span>            : /// A pointer to the statically allocated 
+<span class="lineNum">      89 </span>            : ///  colorTransformsFactory class can be obtained by 
+<span class="lineNum">      90 </span>            : ///  calling that static function 
+<span class="lineNum">      91 </span>            : ///  colorTransformsFactory::getColorTransformsFactory().
+<span class="lineNum">      92 </span>            : ///
+<span class="lineNum">      93 </span>            : /// The class can also retrieve more information
+<span class="lineNum">      94 </span>            : ///  from a name of a color space (in dicom standard).
+<span class="lineNum">      95 </span>            : /// For instance, both the Dicom color space 
+<span class="lineNum">      96 </span>            : ///  &quot;YBR_FULL_422&quot; and &quot;YBR_FULL&quot; describe the color
+<span class="lineNum">      97 </span>            : ///  space YBR, but the first indicates that the image
+<span class="lineNum">      98 </span>            : ///  is subsampled both horizontally and vertically.
+<span class="lineNum">      99 </span>            : ///
+<span class="lineNum">     100 </span>            : /// The colorTransformsFactory can normalize the color
+<span class="lineNum">     101 </span>            : ///  space name (e.g.: convert &quot;YBR_FULL_422&quot; to
+<span class="lineNum">     102 </span>            : ///  &quot;YBR_FULL&quot;) and can retrieve the subsampling
+<span class="lineNum">     103 </span>            : ///  parameters.
+<span class="lineNum">     104 </span>            : ///
+<a name="105"><span class="lineNum">     105 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     106 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     107 </span><span class="lineCov">          1 : class colorTransformsFactory: public baseObject</span>
+<span class="lineNum">     108 </span>            : {
+<span class="lineNum">     109 </span>            : public:
+<span class="lineNum">     110 </span>            :         /// \internal
+<span class="lineNum">     111 </span>            :         /// \brief Register a color transform in the 
+<span class="lineNum">     112 </span>            :         ///         colorTransformsFactory class.
+<span class="lineNum">     113 </span>            :         ///
+<span class="lineNum">     114 </span>            :         /// @parameter newColorTransform the color transform to
+<span class="lineNum">     115 </span>            :         ///                               be registered
+<span class="lineNum">     116 </span>            :         ///
+<span class="lineNum">     117 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     118 </span>            :         void registerTransform(ptr&lt;colorTransform&gt; newColorTransform);
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     121 </span>            :         /// \name Static instance
+<span class="lineNum">     122 </span>            :         ///       
+<span class="lineNum">     123 </span>            :         /// Static functions that return a pointer to the
+<span class="lineNum">     124 </span>            :         ///  statically allocated instance of 
+<span class="lineNum">     125 </span>            :         ///  colorTransformsFactory
+<span class="lineNum">     126 </span>            :         ///
+<span class="lineNum">     127 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            :         //@{
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            :         /// \brief Retrieve a pointer to the unique statically 
+<span class="lineNum">     131 </span>            :         ///         allocated instance of the colorTransforsFactory
+<span class="lineNum">     132 </span>            :         ///         class.
+<span class="lineNum">     133 </span>            :         ///         
+<span class="lineNum">     134 </span>            :         /// The application must use the colorTransformsFactory
+<span class="lineNum">     135 </span>            :         ///  referenced by this function.
+<span class="lineNum">     136 </span>            :         ///
+<span class="lineNum">     137 </span>            :         /// @return a pointer to the unique instance of the
+<span class="lineNum">     138 </span>            :         ///          colorTransformsFactory
+<span class="lineNum">     139 </span>            :         ///
+<span class="lineNum">     140 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     141 </span>            :         static ptr&lt;colorTransformsFactory&gt; getColorTransformsFactory();
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span>            :         
+<span class="lineNum">     144 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     145 </span>            :         /// \name Static functions
+<span class="lineNum">     146 </span>            :         ///       
+<span class="lineNum">     147 </span>            :         /// Static functions that operate on the color space name
+<span class="lineNum">     148 </span>            :         ///
+<span class="lineNum">     149 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     150 </span>            :         //@{
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span>            :         /// \brief Normalize a color space name.
+<span class="lineNum">     153 </span>            :         ///
+<span class="lineNum">     154 </span>            :         /// The function converts all the chars to uppercase and
+<span class="lineNum">     155 </span>            :         ///  remove additional information from the color space.
+<span class="lineNum">     156 </span>            :         ///
+<span class="lineNum">     157 </span>            :         /// For instance, the color space &quot;ybr_full_420&quot; is
+<span class="lineNum">     158 </span>            :         ///  converted to &quot;YBR_FULL&quot;.
+<span class="lineNum">     159 </span>            :         ///
+<span class="lineNum">     160 </span>            :         /// @param colorSpace the color space name to be normalized
+<span class="lineNum">     161 </span>            :         /// @return the normalized color space name
+<span class="lineNum">     162 </span>            :         ///
+<span class="lineNum">     163 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     164 </span>            :         static std::wstring normalizeColorSpace(std::wstring colorSpace);
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            :         /// \brief Returns true if the color space name specified
+<span class="lineNum">     167 </span>            :         ///         in the parameter has only one color channel and
+<span class="lineNum">     168 </span>            :         ///         is monochrome (it doesn't have a lookup color
+<span class="lineNum">     169 </span>            :         ///         table).
+<span class="lineNum">     170 </span>            :         ///
+<span class="lineNum">     171 </span>            :         /// At the moment, only the color space names &quot;MONOCHROME1&quot; 
+<span class="lineNum">     172 </span>            :         ///  and &quot;MONOCHROME2&quot; indicate a monochrome color space.
+<span class="lineNum">     173 </span>            :         ///
+<span class="lineNum">     174 </span>            :         /// @param colorSpace the name of the color space to be
+<span class="lineNum">     175 </span>            :         ///                    tested
+<span class="lineNum">     176 </span>            :         /// @return true if the color space indicated in the 
+<span class="lineNum">     177 </span>            :         ///                    parameter is monochrome, or false
+<span class="lineNum">     178 </span>            :         ///                    otherwise
+<span class="lineNum">     179 </span>            :         ///
+<span class="lineNum">     180 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     181 </span>            :         static bool isMonochrome(std::wstring colorSpace);
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            :         /// \brief Returns true if the name of the color space
+<span class="lineNum">     184 </span>            :         ///         specified in the parameter indicates that
+<span class="lineNum">     185 </span>            :         ///         the chrominance channels are subsampled
+<span class="lineNum">     186 </span>            :         ///         horizontally.
+<span class="lineNum">     187 </span>            :         ///
+<span class="lineNum">     188 </span>            :         /// @param colorSpace the name of the color space to be
+<span class="lineNum">     189 </span>            :         ///                    tested
+<span class="lineNum">     190 </span>            :         /// @return true if the name of the color space in the
+<span class="lineNum">     191 </span>            :         ///                    parameter colorSpace has the
+<span class="lineNum">     192 </span>            :         ///                    chrominance channels subsampled
+<span class="lineNum">     193 </span>            :         ///                    horizontally
+<span class="lineNum">     194 </span>            :         ///
+<span class="lineNum">     195 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     196 </span>            :         static bool isSubsampledX(std::wstring colorSpace);
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span>            :         /// \brief Returns true if the name of the color space
+<span class="lineNum">     199 </span>            :         ///         specified in the parameter indicates that
+<span class="lineNum">     200 </span>            :         ///         the chrominance channels are subsampled
+<span class="lineNum">     201 </span>            :         ///         vertically.
+<span class="lineNum">     202 </span>            :         ///
+<span class="lineNum">     203 </span>            :         /// @param colorSpace the name of the color space to be
+<span class="lineNum">     204 </span>            :         ///                    tested
+<span class="lineNum">     205 </span>            :         /// @return true if the name of the color space in the
+<span class="lineNum">     206 </span>            :         ///                    parameter colorSpace has the
+<span class="lineNum">     207 </span>            :         ///                    chrominance channels subsampled
+<span class="lineNum">     208 </span>            :         ///                    vertically
+<span class="lineNum">     209 </span>            :         ///
+<span class="lineNum">     210 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     211 </span>            :         static bool isSubsampledY(std::wstring colorSpace);
+<span class="lineNum">     212 </span>            : 
+<span class="lineNum">     213 </span>            :         /// \brief Returns true if the color space specified 
+<span class="lineNum">     214 </span>            :         ///         in the parameter can be subsampled.
+<span class="lineNum">     215 </span>            :         ///
+<span class="lineNum">     216 </span>            :         /// For instance, the color spaces &quot;YBR_FULL&quot; and 
+<span class="lineNum">     217 </span>            :         ///  &quot;YBR_PARTIAL&quot; can be subsampled, but the color
+<span class="lineNum">     218 </span>            :         ///  space &quot;RGB&quot; cannot be subsampled.
+<span class="lineNum">     219 </span>            :         ///
+<span class="lineNum">     220 </span>            :         /// @param colorSpace the name of the color space to
+<span class="lineNum">     221 </span>            :         ///                    be tested
+<span class="lineNum">     222 </span>            :         /// @return true if the name of the color space in the
+<span class="lineNum">     223 </span>            :         ///                    parameter colorSpace can be
+<span class="lineNum">     224 </span>            :         ///                    subsampled
+<span class="lineNum">     225 </span>            :         ///
+<span class="lineNum">     226 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     227 </span>            :         static bool canSubsample(std::wstring colorSpace);
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :         /// \brief Add the subsamplig information to a color space
+<span class="lineNum">     230 </span>            :         ///         name.
+<span class="lineNum">     231 </span>            :         ///
+<span class="lineNum">     232 </span>            :         /// Only the color spaces for which canSubsample() returns
+<span class="lineNum">     233 </span>            :         ///  true can have the subsampling information.
+<span class="lineNum">     234 </span>            :         ///
+<span class="lineNum">     235 </span>            :         /// @param colorSpace the name of the color space to which
+<span class="lineNum">     236 </span>            :         ///                    the subsampling information should
+<span class="lineNum">     237 </span>            :         ///                    be added
+<span class="lineNum">     238 </span>            :         /// @param bSubsampleX if true, then the function will make
+<span class="lineNum">     239 </span>            :         ///                    the color space subsampled 
+<span class="lineNum">     240 </span>            :         ///                    horizontally. The color space will
+<span class="lineNum">     241 </span>            :         ///                    also be subsampled vertically
+<span class="lineNum">     242 </span>            :         /// @param bSubsampleY if true, then the function will make
+<span class="lineNum">     243 </span>            :         ///                    the color space subsampled 
+<span class="lineNum">     244 </span>            :         ///                    vertically
+<span class="lineNum">     245 </span>            :         /// @return the color space name subsampled as specified
+<span class="lineNum">     246 </span>            :         ///
+<span class="lineNum">     247 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     248 </span>            :         static std::wstring makeSubsampled(std::wstring colorSpace, bool bSubsampleX, bool bSubsampleY);
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            :         /// \brief Returns the number of channels used by the
+<span class="lineNum">     251 </span>            :         ///         specified color space.
+<span class="lineNum">     252 </span>            :         ///
+<span class="lineNum">     253 </span>            :         /// For instance, the color space &quot;RGB&quot; has 3 color 
+<span class="lineNum">     254 </span>            :         ///  channels, while the &quot;MONOCHROME2&quot; color space has
+<span class="lineNum">     255 </span>            :         ///  1 color channel.
+<span class="lineNum">     256 </span>            :         ///
+<span class="lineNum">     257 </span>            :         /// @param colorSpace the name of the color space for
+<span class="lineNum">     258 </span>            :         ///                    which the number of channels
+<span class="lineNum">     259 </span>            :         ///                    must be returned
+<span class="lineNum">     260 </span>            :         /// @return the number of color channels in the 
+<span class="lineNum">     261 </span>            :         ///                    specified color channel
+<span class="lineNum">     262 </span>            :         ///
+<span class="lineNum">     263 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     264 </span>            :         static std::uint32_t getNumberOfChannels(std::wstring colorSpace);
+<span class="lineNum">     265 </span>            :         
+<span class="lineNum">     266 </span>            :         //@}
+<span class="lineNum">     267 </span>            :         
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     270 </span>            :         /// \name Color space conversion
+<span class="lineNum">     271 </span>            :         /// 
+<span class="lineNum">     272 </span>            :         /// Return the transform that convert one color space into
+<span class="lineNum">     273 </span>            :         ///  another
+<span class="lineNum">     274 </span>            :         ///
+<span class="lineNum">     275 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     276 </span>            :         //@{
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span>            :         /// \brief Returns a transform that can convert the
+<span class="lineNum">     279 </span>            :         ///         pixels from one color space to another color
+<span class="lineNum">     280 </span>            :         ///         space.
+<span class="lineNum">     281 </span>            :         ///
+<span class="lineNum">     282 </span>            :         /// If no conversion is needed then the function
+<span class="lineNum">     283 </span>            :         ///  returns 0.
+<span class="lineNum">     284 </span>            :         /// If the function cannot find any suitable transform 
+<span class="lineNum">     285 </span>            :         ///  then a colorTransformsFactoryExceptionNoTransform
+<span class="lineNum">     286 </span>            :         ///  is thrown.
+<span class="lineNum">     287 </span>            :         ///
+<span class="lineNum">     288 </span>            :         /// @param startColorSpace the color space from which the
+<span class="lineNum">     289 </span>            :         ///                         conversion has to take
+<span class="lineNum">     290 </span>            :         ///                         place
+<span class="lineNum">     291 </span>            :         /// @param endColorSpace   the color space resulting 
+<span class="lineNum">     292 </span>            :         ///                         from the conversion
+<span class="lineNum">     293 </span>            :         /// @return the transform that can convert the 
+<span class="lineNum">     294 </span>            :         ///          startColorSpace into endColorSpace, or 0 if
+<span class="lineNum">     295 </span>            :         ///          startColorSpace and endColorSpace have the
+<span class="lineNum">     296 </span>            :         ///          same value
+<span class="lineNum">     297 </span>            :         ///
+<span class="lineNum">     298 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     299 </span>            :         ptr&lt;colorTransform&gt; getTransform(std::wstring startColorSpace, std::wstring endColorSpace);
+<span class="lineNum">     300 </span>            : 
+<span class="lineNum">     301 </span>            :         //@}
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            : protected:
+<span class="lineNum">     304 </span>            :         typedef std::list&lt;ptr&lt;colorTransform&gt; &gt; tTransformsList;
+<span class="lineNum">     305 </span>            :         tTransformsList m_transformsList;
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span>            : public:
+<span class="lineNum">     308 </span>            :         // Force the construction of the factory before main()
+<span class="lineNum">     309 </span>            :         //  starts
+<span class="lineNum">     310 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     311 </span>            :         class forceColorTransformsFactoryConstruction
+<a name="312"><span class="lineNum">     312 </span>            :         {</a>
+<span class="lineNum">     313 </span>            :         public:
+<span class="lineNum">     314 </span><span class="lineCov">          1 :                 forceColorTransformsFactoryConstruction()</span>
+<span class="lineNum">     315 </span>            :                 {
+<span class="lineNum">     316 </span><span class="lineCov">          1 :                         colorTransformsFactory::getColorTransformsFactory();</span>
+<span class="lineNum">     317 </span><span class="lineCov">          1 :                 }</span>
+<span class="lineNum">     318 </span>            :         };
+<span class="lineNum">     319 </span>            : 
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span>            : };
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     324 </span>            : /// \brief This is the base class for the exceptions
+<span class="lineNum">     325 </span>            : ///         thrown by colorTransformsFactory.
+<a name="326"><span class="lineNum">     326 </span>            : ///</a>
+<span class="lineNum">     327 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     328 </span><span class="lineNoCov">          0 : class colorTransformsFactoryException: public transformException</span>
+<a name="329"><span class="lineNum">     329 </span>            : {</a>
+<span class="lineNum">     330 </span>            : public:
+<span class="lineNum">     331 </span><span class="lineNoCov">          0 :         colorTransformsFactoryException(const std::string&amp; message): transformException(message){}</span>
+<span class="lineNum">     332 </span>            : };
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     335 </span>            : /// \brief This exception is thrown by the function
+<span class="lineNum">     336 </span>            : ///         colorTransformsFactory::getTransform() when
+<span class="lineNum">     337 </span>            : ///         it cannot find any transform that can convert
+<span class="lineNum">     338 </span>            : ///         the specified color spaces.
+<a name="339"><span class="lineNum">     339 </span>            : ///</a>
+<span class="lineNum">     340 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 : class colorTransformsFactoryExceptionNoTransform: public colorTransformsFactoryException</span>
+<a name="342"><span class="lineNum">     342 </span>            : {</a>
+<span class="lineNum">     343 </span>            : public:
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :         colorTransformsFactoryExceptionNoTransform(const std::string&amp; message): colorTransformsFactoryException(message){}</span>
+<span class="lineNum">     345 </span>            : };
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            : /// @}
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            : } // namespace colorTransforms
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            : } // namespace transforms
+<span class="lineNum">     352 </span>            : 
+<span class="lineNum">     353 </span>            : } // namespace imebra
+<span class="lineNum">     354 </span>            : 
+<span class="lineNum">     355 </span>            : } // namespace puntoexe
+<span class="lineNum">     356 </span>            : 
+<span class="lineNum">     357 </span>            : 
+<span class="lineNum">     358 </span>            : #endif // !defined imebraColorTransformsFactory
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

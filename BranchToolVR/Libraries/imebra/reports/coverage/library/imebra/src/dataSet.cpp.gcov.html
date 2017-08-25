@@ -1,0 +1,1635 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/dataSet.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - dataSet.cpp<span style="font-size: 80%;"> (source / <a href="dataSet.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">370</td>
+            <td class="headerCovTableEntry">473</td>
+            <td class="headerCovTableEntryMed">78.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntryMed">88.9 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file dataSet.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the class dataSet.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../../base/include/streamReader.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../../base/include/streamWriter.h&quot;
+<span class="lineNum">      56 </span>            : #include &quot;../../base/include/memoryStream.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;../include/dataSet.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../include/dataGroup.h&quot;
+<span class="lineNum">      59 </span>            : #include &quot;../include/dataHandlerNumeric.h&quot;
+<span class="lineNum">      60 </span>            : #include &quot;../include/dicomDict.h&quot;
+<span class="lineNum">      61 </span>            : #include &quot;../include/codecFactory.h&quot;
+<span class="lineNum">      62 </span>            : #include &quot;../include/codec.h&quot;
+<span class="lineNum">      63 </span>            : #include &quot;../include/image.h&quot;
+<span class="lineNum">      64 </span>            : #include &quot;../include/LUT.h&quot;
+<span class="lineNum">      65 </span>            : #include &quot;../include/waveform.h&quot;
+<span class="lineNum">      66 </span>            : #include &quot;../include/colorTransformsFactory.h&quot;
+<span class="lineNum">      67 </span>            : #include &quot;../include/transformsChain.h&quot;
+<span class="lineNum">      68 </span>            : #include &quot;../include/transformHighBit.h&quot;
+<span class="lineNum">      69 </span>            : #include &quot;../include/transaction.h&quot;
+<span class="lineNum">      70 </span>            : #include &quot;../include/modalityVOILUT.h&quot;
+<span class="lineNum">      71 </span>            : #include &quot;../include/applyLUT.h&quot;
+<span class="lineNum">      72 </span>            : #include &quot;../include/MONOCHROME1ToMONOCHROME2.h&quot;
+<span class="lineNum">      73 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">      74 </span>            : #include &lt;string.h&gt;
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : namespace puntoexe
+<span class="lineNum">      78 </span>            : {
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            : namespace imebra
+<span class="lineNum">      81 </span>            : {
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      84 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      85 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      86 </span>            : //
+<span class="lineNum">      87 </span>            : //
+<span class="lineNum">      88 </span>            : //
+<span class="lineNum">      89 </span>            : // dataSet
+<span class="lineNum">      90 </span>            : //
+<span class="lineNum">      91 </span>            : //
+<span class="lineNum">      92 </span>            : //
+<span class="lineNum">      93 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      95 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      98 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      99 </span>            : //
+<span class="lineNum">     100 </span>            : //
+<span class="lineNum">     101 </span>            : // Retrieve the requested tag
+<span class="lineNum">     102 </span>            : //
+<span class="lineNum">     103 </span>            : //
+<a name="104"><span class="lineNum">     104 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     105 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     106 </span><span class="lineCov">       8258 : ptr&lt;data&gt; dataSet::getTag(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, bool bCreate /* =false */)</span>
+<span class="lineNum">     107 </span>            : {
+<span class="lineNum">     108 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getTag&quot;);
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span><span class="lineCov">       8258 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span><span class="lineCov">      16516 :         ptr&lt;data&gt; pData;</span>
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span><span class="lineCov">      16516 :         ptr&lt;dataGroup&gt;    group=getGroup(groupId, order, bCreate);</span>
+<span class="lineNum">     115 </span><span class="lineCov">       8258 :         if(group != 0)</span>
+<span class="lineNum">     116 </span>            :         {
+<span class="lineNum">     117 </span><span class="lineCov">       6561 :                 pData=group-&gt;getTag(tagId, bCreate);</span>
+<span class="lineNum">     118 </span>            :         }
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span><span class="lineCov">      16516 :         return pData;</span>
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     123 </span>            : }
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     127 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            : //
+<span class="lineNum">     129 </span>            : //
+<span class="lineNum">     130 </span>            : // Get the requested group
+<span class="lineNum">     131 </span>            : //
+<span class="lineNum">     132 </span>            : //
+<a name="133"><span class="lineNum">     133 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     134 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     135 </span><span class="lineCov">      79411 : ptr&lt;dataGroup&gt; dataSet::getGroup(std::uint16_t groupId, std::uint16_t order, bool bCreate /* =false */)</span>
+<span class="lineNum">     136 </span>            : {
+<span class="lineNum">     137 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getGroup&quot;);
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span><span class="lineCov">      79411 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span><span class="lineCov">     158822 :         ptr&lt;dataGroup&gt; pData=getData(groupId, order);</span>
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span><span class="lineCov">      79411 :         if(pData == 0 &amp;&amp; bCreate)</span>
+<span class="lineNum">     144 </span>            :         {
+<span class="lineNum">     145 </span><span class="lineCov">       5268 :                 pData = new dataGroup(this);</span>
+<span class="lineNum">     146 </span><span class="lineCov">       5268 :                 setGroup(groupId, order, pData);</span>
+<span class="lineNum">     147 </span>            :         }
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span><span class="lineCov">     158822 :         return pData;</span>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     152 </span>            : }
+<span class="lineNum">     153 </span>            : 
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     156 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     157 </span>            : //
+<span class="lineNum">     158 </span>            : //
+<span class="lineNum">     159 </span>            : // Set the requested group
+<span class="lineNum">     160 </span>            : //
+<span class="lineNum">     161 </span>            : //
+<a name="162"><span class="lineNum">     162 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     163 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     164 </span><span class="lineCov">       5268 : void dataSet::setGroup(std::uint16_t groupId, std::uint16_t order, ptr&lt;dataGroup&gt; pGroup)</span>
+<span class="lineNum">     165 </span>            : {
+<span class="lineNum">     166 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setGroup&quot;);
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span><span class="lineCov">       5268 :         setData(groupId, order, pGroup);</span>
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     171 </span><span class="lineCov">       5268 : }</span>
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            : 
+<span class="lineNum">     174 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     175 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     176 </span>            : //
+<span class="lineNum">     177 </span>            : //
+<span class="lineNum">     178 </span>            : // Retrieve the image from the structure
+<span class="lineNum">     179 </span>            : //
+<span class="lineNum">     180 </span>            : //
+<a name="181"><span class="lineNum">     181 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     182 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     183 </span><span class="lineCov">       1564 : ptr&lt;image&gt; dataSet::getImage(std::uint32_t frameNumber)</span>
+<span class="lineNum">     184 </span>            : {
+<span class="lineNum">     185 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getImage&quot;);
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :         // Lock this object
+<span class="lineNum">     188 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span><span class="lineCov">       1564 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :         // Retrieve the transfer syntax
+<span class="lineNum">     192 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     193 </span><span class="lineCov">       3128 :         std::wstring transferSyntax=getUnicodeString(0x0002, 0x0, 0x0010, 0x0);</span>
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :         // Get the right codec
+<span class="lineNum">     196 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     197 </span><span class="lineCov">       3128 :         ptr&lt;codecs::codec&gt; pCodec=codecs::codecFactory::getCodec(transferSyntax);</span>
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            :         // Return if the codec has not been found
+<span class="lineNum">     200 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     201 </span><span class="lineCov">       1564 :         if(pCodec == 0)</span>
+<span class="lineNum">     202 </span>            :         {
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionUnknownTransferSyntax, &quot;None of the codecs support the specified transfer syntax&quot;);</span>
+<span class="lineNum">     204 </span>            :         }
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span><span class="lineCov">       3128 :         ptr&lt;imebra::data&gt; imageTag = getTag(0x7fe0, 0x0, 0x0010, false);</span>
+<span class="lineNum">     207 </span><span class="lineCov">       1564 :         if(imageTag == 0)</span>
+<span class="lineNum">     208 </span>            :         {
+<span class="lineNum">     209 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;The requested image doesn't exist&quot;);</span>
+<span class="lineNum">     210 </span>            :         }
+<span class="lineNum">     211 </span><span class="lineCov">       3128 :         std::string imageStreamDataType = imageTag-&gt;getDataType();</span>
+<span class="lineNum">     212 </span>            : 
+<span class="lineNum">     213 </span>            :         // Get the number of frames
+<span class="lineNum">     214 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     215 </span><span class="lineCov">       1564 :         std::uint32_t numberOfFrames = 1;</span>
+<span class="lineNum">     216 </span><span class="lineCov">       1564 :         if(!getDataType(0x0028, 0, 0x0008).empty())</span>
+<span class="lineNum">     217 </span>            :         {
+<span class="lineNum">     218 </span><span class="lineCov">       1564 :                 numberOfFrames = getUnsignedLong(0x0028, 0, 0x0008, 0);</span>
+<span class="lineNum">     219 </span>            :         }
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span><span class="lineCov">       1564 :         if(frameNumber &gt;= numberOfFrames)</span>
+<span class="lineNum">     222 </span>            :         {
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;The requested image doesn't exist&quot;);</span>
+<span class="lineNum">     224 </span>            :         }
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            :         // Placeholder for the stream containing the image
+<span class="lineNum">     227 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     228 </span><span class="lineCov">       3128 :         ptr&lt;streamReader&gt; imageStream;</span>
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :         // Retrieve the second item in the image's tag.
+<span class="lineNum">     231 </span>            :         // If the second item is present, then a multiframe
+<span class="lineNum">     232 </span>            :         //  image is present.
+<span class="lineNum">     233 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     234 </span><span class="lineCov">       1564 :         bool bDontNeedImagesPositions = false;</span>
+<span class="lineNum">     235 </span>            :         {
+<span class="lineNum">     236 </span><span class="lineCov">       1564 :                 if(imageTag-&gt;getBufferSize(1) != 0)</span>
+<span class="lineNum">     237 </span>            :                 {
+<span class="lineNum">     238 </span><span class="lineCov">        412 :                         std::uint32_t firstBufferId(0), endBufferId(0), totalLength(0);</span>
+<span class="lineNum">     239 </span><span class="lineCov">        412 :                         if(imageTag-&gt;getBufferSize(0) == 0 &amp;&amp; numberOfFrames + 1 == imageTag-&gt;getBuffersCount())</span>
+<span class="lineNum">     240 </span>            :                         {
+<span class="lineNum">     241 </span><span class="lineNoCov">          0 :                                 firstBufferId = frameNumber + 1;</span>
+<span class="lineNum">     242 </span><span class="lineNoCov">          0 :                                 endBufferId = firstBufferId + 1;</span>
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 :                                 totalLength = imageTag-&gt;getBufferSize(firstBufferId);</span>
+<span class="lineNum">     244 </span>            :                         }
+<span class="lineNum">     245 </span>            :                         else
+<span class="lineNum">     246 </span>            :                         {
+<span class="lineNum">     247 </span><span class="lineCov">        412 :                                 totalLength = getFrameBufferIds(frameNumber, &amp;firstBufferId, &amp;endBufferId);</span>
+<span class="lineNum">     248 </span>            :                         }
+<span class="lineNum">     249 </span><span class="lineCov">        412 :                         if(firstBufferId == endBufferId - 1)</span>
+<span class="lineNum">     250 </span>            :                         {
+<span class="lineNum">     251 </span><span class="lineCov">        410 :                                 imageStream = imageTag-&gt;getStreamReader(firstBufferId);</span>
+<span class="lineNum">     252 </span><span class="lineCov">        410 :                                 if(imageStream == 0)</span>
+<span class="lineNum">     253 </span>            :                                 {
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :                                         PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;The requested image doesn't exist&quot;);</span>
+<span class="lineNum">     255 </span>            :                                 }
+<span class="lineNum">     256 </span>            :                         }
+<span class="lineNum">     257 </span>            :                         else
+<span class="lineNum">     258 </span>            :                         {
+<span class="lineNum">     259 </span><span class="lineCov">          2 :                                 ptr&lt;memory&gt; temporaryMemory(memoryPool::getMemoryPool()-&gt;getMemory(totalLength));</span>
+<span class="lineNum">     260 </span><span class="lineCov">          2 :                                 const std::uint8_t* pDest = temporaryMemory-&gt;data();</span>
+<span class="lineNum">     261 </span><span class="lineCov">          9 :                                 for(std::uint32_t scanBuffers = firstBufferId; scanBuffers != endBufferId; ++scanBuffers)</span>
+<span class="lineNum">     262 </span>            :                                 {
+<span class="lineNum">     263 </span><span class="lineCov">          7 :                                         ptr&lt;handlers::dataHandlerRaw&gt; bufferHandler = imageTag-&gt;getDataHandlerRaw(scanBuffers, false, &quot;&quot;);</span>
+<span class="lineNum">     264 </span><span class="lineCov">          7 :                                         std::uint8_t* pSource = bufferHandler-&gt;getMemoryBuffer();</span>
+<span class="lineNum">     265 </span><span class="lineCov">          7 :                                         ::memcpy((void*)pDest, (void*)pSource, bufferHandler-&gt;getSize());</span>
+<span class="lineNum">     266 </span><span class="lineCov">          7 :                                         pDest += bufferHandler-&gt;getSize();</span>
+<span class="lineNum">     267 </span><span class="lineCov">          7 :                                 }</span>
+<span class="lineNum">     268 </span><span class="lineCov">          4 :                                 ptr&lt;baseStream&gt; compositeStream(new memoryStream(temporaryMemory));</span>
+<span class="lineNum">     269 </span><span class="lineCov">          4 :                                 imageStream = ptr&lt;streamReader&gt;(new streamReader(compositeStream));</span>
+<span class="lineNum">     270 </span>            :                         }
+<span class="lineNum">     271 </span><span class="lineCov">        412 :                         bDontNeedImagesPositions = true;</span>
+<span class="lineNum">     272 </span>            :                 }
+<span class="lineNum">     273 </span>            :         }
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :         // If the image cannot be found, then probably we are
+<span class="lineNum">     276 </span>            :         //  handling an old dicom format.
+<span class="lineNum">     277 </span>            :         // Then try to read the image from the next group with
+<span class="lineNum">     278 </span>            :         //  id=0x7fe
+<span class="lineNum">     279 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     280 </span><span class="lineCov">       1564 :         if(imageStream == 0)</span>
+<span class="lineNum">     281 </span>            :         {
+<span class="lineNum">     282 </span><span class="lineCov">       1152 :                 imageStream = getStreamReader(0x7fe0, (std::uint16_t)frameNumber, 0x0010, 0x0);</span>
+<span class="lineNum">     283 </span><span class="lineCov">       1152 :                 bDontNeedImagesPositions = true;</span>
+<span class="lineNum">     284 </span>            :         }
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span>            :         // We are dealing with an old dicom format that doesn't
+<span class="lineNum">     287 </span>            :         //  include the image offsets and stores all the images
+<span class="lineNum">     288 </span>            :         //  in one buffer
+<span class="lineNum">     289 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     290 </span><span class="lineCov">       1564 :         if(imageStream == 0)</span>
+<span class="lineNum">     291 </span>            :         {
+<span class="lineNum">     292 </span><span class="lineCov">        768 :                 imageStream = imageTag-&gt;getStreamReader(0x0);</span>
+<span class="lineNum">     293 </span><span class="lineCov">        768 :                 if(imageStream == 0)</span>
+<span class="lineNum">     294 </span>            :                 {
+<span class="lineNum">     295 </span><span class="lineNoCov">          0 :                         PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;The requested image doesn't exist&quot;);</span>
+<span class="lineNum">     296 </span>            :                 }
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            :                 // Reset an internal array that keeps track of the
+<span class="lineNum">     299 </span>            :                 //  images position
+<span class="lineNum">     300 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     301 </span><span class="lineCov">        768 :                 if(m_imagesPositions.size() != numberOfFrames)</span>
+<span class="lineNum">     302 </span>            :                 {
+<span class="lineNum">     303 </span><span class="lineCov">        384 :                         m_imagesPositions.resize(numberOfFrames);</span>
+<span class="lineNum">     304 </span>            : 
+<span class="lineNum">     305 </span><span class="lineCov">        384 :                         for(std::uint32_t resetImagesPositions = 0; resetImagesPositions &lt; numberOfFrames; m_imagesPositions[resetImagesPositions++] = 0)</span>
+<span class="lineNum">     306 </span>            :                         {}// empty loop
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            :                 }
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            :                 // Read all the images before the desidered one so we set
+<span class="lineNum">     311 </span>            :                 //  reading position in the stream
+<span class="lineNum">     312 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     313 </span><span class="lineCov">       1920 :                 for(std::uint32_t readImages = 0; readImages &lt; frameNumber; readImages++)</span>
+<span class="lineNum">     314 </span>            :                 {
+<span class="lineNum">     315 </span><span class="lineCov">       1152 :                         std::uint32_t offsetPosition = m_imagesPositions[readImages];</span>
+<span class="lineNum">     316 </span><span class="lineCov">       1152 :                         if(offsetPosition == 0)</span>
+<span class="lineNum">     317 </span>            :                         {
+<span class="lineNum">     318 </span><span class="lineCov">        768 :                                 ptr&lt;image&gt; tempImage = pCodec-&gt;getImage(this, imageStream, imageStreamDataType);</span>
+<span class="lineNum">     319 </span><span class="lineCov">        768 :                                 m_imagesPositions[readImages] = imageStream-&gt;position();</span>
+<span class="lineNum">     320 </span><span class="lineCov">        768 :                                 continue;</span>
+<span class="lineNum">     321 </span>            :                         }
+<span class="lineNum">     322 </span><span class="lineCov">        384 :                         if((m_imagesPositions[readImages + 1] == 0) || (readImages == (frameNumber - 1)))</span>
+<span class="lineNum">     323 </span>            :                         {
+<span class="lineNum">     324 </span><span class="lineCov">        384 :                                 imageStream-&gt;seek(offsetPosition);</span>
+<span class="lineNum">     325 </span>            :                         }
+<span class="lineNum">     326 </span>            :                 }
+<span class="lineNum">     327 </span>            :         }
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span><span class="lineCov">       1564 :         double pixelDistanceX=getDouble(0x0028, 0x0, 0x0030, 0);</span>
+<span class="lineNum">     330 </span><span class="lineCov">       1564 :         double pixelDistanceY=getDouble(0x0028, 0x0, 0x0030, 1);</span>
+<span class="lineNum">     331 </span><span class="lineCov">       1564 :         if(bDontNeedImagesPositions)</span>
+<span class="lineNum">     332 </span>            :         {
+<span class="lineNum">     333 </span><span class="lineCov">       1564 :                 lockAccess.unlock();</span>
+<span class="lineNum">     334 </span>            :         }
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span><span class="lineCov">       3128 :         ptr&lt;image&gt; pImage;</span>
+<span class="lineNum">     337 </span><span class="lineCov">       1564 :         pImage = pCodec-&gt;getImage(this, imageStream, imageStreamDataType);</span>
+<span class="lineNum">     338 </span>            : 
+<span class="lineNum">     339 </span><span class="lineCov">       1558 :         if(!bDontNeedImagesPositions &amp;&amp; m_imagesPositions.size() &gt; frameNumber)</span>
+<span class="lineNum">     340 </span>            :         {
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 :                 m_imagesPositions[frameNumber] = imageStream-&gt;position();</span>
+<span class="lineNum">     342 </span>            :         }
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :         // If the image has been returned correctly, then set
+<span class="lineNum">     345 </span>            :         //  the image's size
+<span class="lineNum">     346 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     347 </span><span class="lineCov">       1558 :         if(pImage != 0)</span>
+<span class="lineNum">     348 </span>            :         {
+<span class="lineNum">     349 </span>            :                 std::uint32_t sizeX, sizeY;
+<span class="lineNum">     350 </span><span class="lineCov">       1558 :                 pImage-&gt;getSize(&amp;sizeX, &amp;sizeY);</span>
+<span class="lineNum">     351 </span><span class="lineCov">       1558 :                 pImage-&gt;setSizeMm(pixelDistanceX*(double)sizeX, pixelDistanceY*(double)sizeY);</span>
+<span class="lineNum">     352 </span>            :         }
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span><span class="lineCov">       1558 :         if(pImage-&gt;getColorSpace() == L&quot;PALETTE COLOR&quot;)</span>
+<span class="lineNum">     355 </span>            :         {
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :                 ptr&lt;lut&gt; red(new lut), green(new lut), blue(new lut);</span>
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :                 red-&gt;setLut(getDataHandler(0x0028, 0x0, 0x1101, 0, false), getDataHandler(0x0028, 0x0, 0x1201, 0, false), L&quot;&quot;);</span>
+<span class="lineNum">     358 </span><span class="lineNoCov">          0 :                 green-&gt;setLut(getDataHandler(0x0028, 0x0, 0x1102, 0, false), getDataHandler(0x0028, 0x0, 0x1202, 0, false), L&quot;&quot;);</span>
+<span class="lineNum">     359 </span><span class="lineNoCov">          0 :                 blue-&gt;setLut(getDataHandler(0x0028, 0x0, 0x1103, 0, false), getDataHandler(0x0028, 0x0, 0x1203, 0, false), L&quot;&quot;);</span>
+<span class="lineNum">     360 </span><span class="lineNoCov">          0 :                 ptr&lt;palette&gt; imagePalette(new palette(red, green, blue));</span>
+<span class="lineNum">     361 </span><span class="lineNoCov">          0 :                 pImage-&gt;setPalette(imagePalette);</span>
+<span class="lineNum">     362 </span>            :         }
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span><span class="lineCov">       3122 :         return pImage;</span>
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     367 </span>            : }
+<span class="lineNum">     368 </span>            : 
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     371 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     372 </span>            : //
+<span class="lineNum">     373 </span>            : //
+<span class="lineNum">     374 </span>            : // Get an image from the dataset and apply the modality
+<span class="lineNum">     375 </span>            : //  transform.
+<span class="lineNum">     376 </span>            : //
+<span class="lineNum">     377 </span>            : //
+<a name="378"><span class="lineNum">     378 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     379 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     380 </span><span class="lineNoCov">          0 : ptr&lt;image&gt; dataSet::getModalityImage(std::uint32_t frameNumber)</span>
+<span class="lineNum">     381 </span>            : {
+<span class="lineNum">     382 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;dataSet::getImage&quot;);
+<span class="lineNum">     383 </span>            : 
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 :     ptr&lt;image&gt; originalImage = getImage(frameNumber);</span>
+<span class="lineNum">     385 </span>            : 
+<span class="lineNum">     386 </span><span class="lineNoCov">          0 :     ptr&lt;transforms::colorTransforms::colorTransformsFactory&gt; colorFactory(transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory());</span>
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :     if(originalImage == 0 || !colorFactory-&gt;isMonochrome(originalImage-&gt;getColorSpace()))</span>
+<span class="lineNum">     388 </span>            :     {
+<span class="lineNum">     389 </span><span class="lineNoCov">          0 :         return originalImage;</span>
+<span class="lineNum">     390 </span>            :     }
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span><span class="lineNoCov">          0 :     ptr&lt;transforms::modalityVOILUT&gt; modalityVOILUT(new transforms::modalityVOILUT(this));</span>
+<span class="lineNum">     393 </span>            : 
+<span class="lineNum">     394 </span>            :     // Convert to MONOCHROME2 if a modality transform is not present
+<span class="lineNum">     395 </span>            :     ////////////////////////////////////////////////////////////////
+<span class="lineNum">     396 </span><span class="lineNoCov">          0 :     if(modalityVOILUT-&gt;isEmpty())</span>
+<span class="lineNum">     397 </span>            :     {
+<span class="lineNum">     398 </span><span class="lineNoCov">          0 :         ptr&lt;transforms::colorTransforms::colorTransform&gt; monochromeColorTransform(colorFactory-&gt;getTransform(originalImage-&gt;getColorSpace(), L&quot;MONOCHROME2&quot;));</span>
+<span class="lineNum">     399 </span><span class="lineNoCov">          0 :         if(monochromeColorTransform != 0)</span>
+<span class="lineNum">     400 </span>            :         {
+<span class="lineNum">     401 </span>            :             std::uint32_t width, height;
+<span class="lineNum">     402 </span><span class="lineNoCov">          0 :             originalImage-&gt;getSize(&amp;width, &amp;height);</span>
+<span class="lineNum">     403 </span><span class="lineNoCov">          0 :             ptr&lt;image&gt; outputImage = monochromeColorTransform-&gt;allocateOutputImage(originalImage, width, height);</span>
+<span class="lineNum">     404 </span><span class="lineNoCov">          0 :             monochromeColorTransform-&gt;runTransform(originalImage, 0, 0, width, height, outputImage, 0, 0);</span>
+<span class="lineNum">     405 </span><span class="lineNoCov">          0 :             return outputImage;</span>
+<span class="lineNum">     406 </span>            :         }
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span><span class="lineNoCov">          0 :         return originalImage;</span>
+<span class="lineNum">     409 </span>            :     }
+<span class="lineNum">     410 </span>            : 
+<span class="lineNum">     411 </span>            :     // Apply the modality VOI/LUT transform
+<span class="lineNum">     412 </span>            :     ///////////////////////////////////////
+<span class="lineNum">     413 </span>            :     std::uint32_t width, height;
+<span class="lineNum">     414 </span><span class="lineNoCov">          0 :     originalImage-&gt;getSize(&amp;width, &amp;height);</span>
+<span class="lineNum">     415 </span><span class="lineNoCov">          0 :     ptr&lt;image&gt; outputImage = modalityVOILUT-&gt;allocateOutputImage(originalImage, width, height);</span>
+<span class="lineNum">     416 </span><span class="lineNoCov">          0 :     modalityVOILUT-&gt;runTransform(originalImage, 0, 0, width, height, outputImage, 0, 0);</span>
+<span class="lineNum">     417 </span><span class="lineNoCov">          0 :     return outputImage;</span>
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span>            :     PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     420 </span>            : }
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            : 
+<span class="lineNum">     423 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     424 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     425 </span>            : //
+<span class="lineNum">     426 </span>            : //
+<span class="lineNum">     427 </span>            : // Insert an image into the dataset
+<span class="lineNum">     428 </span>            : //
+<span class="lineNum">     429 </span>            : //
+<a name="430"><span class="lineNum">     430 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     431 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     432 </span><span class="lineCov">       1548 : void dataSet::setImage(std::uint32_t frameNumber, ptr&lt;image&gt; pImage, std::wstring transferSyntax, codecs::codec::quality quality)</span>
+<span class="lineNum">     433 </span>            : {
+<span class="lineNum">     434 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setImage&quot;);
+<span class="lineNum">     435 </span>            : 
+<span class="lineNum">     436 </span>            :         // Lock the entire dataset
+<span class="lineNum">     437 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     438 </span><span class="lineCov">       1548 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     439 </span>            : 
+<span class="lineNum">     440 </span>            :         // All the commit are in one transaction
+<span class="lineNum">     441 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     442 </span><span class="lineCov">       1940 :         transaction localTransaction(true);</span>
+<span class="lineNum">     443 </span>            : 
+<span class="lineNum">     444 </span>            :         // The group, order, tag and buffer where the image must
+<span class="lineNum">     445 </span>            :         //  be stored
+<span class="lineNum">     446 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     447 </span><span class="lineCov">       1548 :         std::uint16_t groupId(0x7fe0), orderId(0), tagId(0x0010);</span>
+<span class="lineNum">     448 </span><span class="lineCov">       1548 :     std::uint32_t firstBufferId(0);</span>
+<span class="lineNum">     449 </span>            : 
+<span class="lineNum">     450 </span>            :         // bDontChangeAttributes is true if some images already
+<span class="lineNum">     451 </span>            :         //  exist in the dataset and we must save the new image
+<span class="lineNum">     452 </span>            :         //  using the attributes already stored
+<span class="lineNum">     453 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     454 </span><span class="lineCov">       1548 :         std::uint32_t numberOfFrames = getUnsignedLong(0x0028, 0, 0x0008, 0);</span>
+<span class="lineNum">     455 </span><span class="lineCov">       1548 :         if(frameNumber != numberOfFrames)</span>
+<span class="lineNum">     456 </span>            :         {
+<span class="lineNum">     457 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionWrongFrame, &quot;The frames must be inserted in sequence&quot;);</span>
+<span class="lineNum">     458 </span>            :         }
+<span class="lineNum">     459 </span><span class="lineCov">       1548 :         bool bDontChangeAttributes = (numberOfFrames != 0);</span>
+<span class="lineNum">     460 </span><span class="lineCov">       1548 :         if(bDontChangeAttributes)</span>
+<span class="lineNum">     461 </span>            :         {
+<span class="lineNum">     462 </span><span class="lineCov">       1025 :                 transferSyntax = getUnicodeString(0x0002, 0x0, 0x0010, 0x0);</span>
+<span class="lineNum">     463 </span>            :         }
+<span class="lineNum">     464 </span>            : 
+<span class="lineNum">     465 </span>            :         // Select the right codec
+<span class="lineNum">     466 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     467 </span><span class="lineCov">       1940 :         ptr&lt;codecs::codec&gt; saveCodec(codecs::codecFactory::getCodec(transferSyntax));</span>
+<span class="lineNum">     468 </span><span class="lineCov">       1548 :         if(saveCodec == 0L)</span>
+<span class="lineNum">     469 </span>            :         {
+<span class="lineNum">     470 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionUnknownTransferSyntax, &quot;None of the codec support the requested transfer syntax&quot;);</span>
+<span class="lineNum">     471 </span>            :         }
+<span class="lineNum">     472 </span>            : 
+<span class="lineNum">     473 </span>            :         // Do we have to save the basic offset table?
+<span class="lineNum">     474 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     475 </span><span class="lineCov">       6956 :         bool bEncapsulated = saveCodec-&gt;encapsulated(transferSyntax) ||</span>
+<span class="lineNum">     476 </span><span class="lineCov">       3860 :                                  (getDataHandlerRaw(groupId, 0x0, tagId, 0x1, false) != 0);</span>
+<span class="lineNum">     477 </span>            : 
+<span class="lineNum">     478 </span>            :         // Check if we are dealing with an old Dicom format...
+<span class="lineNum">     479 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     480 </span><span class="lineCov">       1940 :         std::string dataHandlerType = getDataType(0x7fe0, 0x1, 0x0010);</span>
+<span class="lineNum">     481 </span><span class="lineCov">       1548 :         if(!dataHandlerType.empty())</span>
+<span class="lineNum">     482 </span>            :         {
+<span class="lineNum">     483 </span><span class="lineNoCov">          0 :                 orderId = (std::uint16_t)frameNumber;</span>
+<span class="lineNum">     484 </span><span class="lineNoCov">          0 :                 bEncapsulated = false;</span>
+<span class="lineNum">     485 </span>            :         }
+<span class="lineNum">     486 </span>            : 
+<span class="lineNum">     487 </span>            : 
+<span class="lineNum">     488 </span>            :         // Set the subsampling flags
+<span class="lineNum">     489 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     490 </span><span class="lineCov">       1548 :         bool bSubSampledX = quality &gt; codecs::codec::high;</span>
+<span class="lineNum">     491 </span><span class="lineCov">       1548 :         bool bSubSampledY = quality &gt; codecs::codec::medium;</span>
+<span class="lineNum">     492 </span><span class="lineCov">       1548 :         if( !transforms::colorTransforms::colorTransformsFactory::canSubsample(pImage-&gt;getColorSpace()) )</span>
+<span class="lineNum">     493 </span>            :         {
+<span class="lineNum">     494 </span><span class="lineCov">       1546 :                 bSubSampledX = bSubSampledY = false;</span>
+<span class="lineNum">     495 </span>            :         }
+<span class="lineNum">     496 </span>            : 
+<span class="lineNum">     497 </span><span class="lineCov">       1548 :     image::bitDepth depth = pImage-&gt;getDepth();</span>
+<span class="lineNum">     498 </span><span class="lineCov">       1548 :     bool b2complement = (depth == image::depthS32 || depth == image::depthS16 || depth == image::depthS8);</span>
+<span class="lineNum">     499 </span><span class="lineCov">       1548 :     std::uint32_t channelsNumber = pImage-&gt;getChannelsNumber();</span>
+<span class="lineNum">     500 </span><span class="lineCov">       1548 :     std::uint8_t allocatedBits = (std::uint8_t)(saveCodec-&gt;suggestAllocatedBits(transferSyntax, pImage-&gt;getHighBit()));</span>
+<span class="lineNum">     501 </span><span class="lineCov">       1548 :     bool bInterleaved(false);</span>
+<span class="lineNum">     502 </span><span class="lineCov">       1548 :     if(getDataType(0x0028, 0, 0x0006).empty())</span>
+<span class="lineNum">     503 </span>            :     {
+<span class="lineNum">     504 </span><span class="lineCov">         11 :         if(channelsNumber &gt; 1)</span>
+<span class="lineNum">     505 </span>            :         {
+<span class="lineNum">     506 </span><span class="lineCov">          9 :             bInterleaved = true;</span>
+<span class="lineNum">     507 </span><span class="lineCov">          9 :             setUnsignedLong(0x0028, 0, 0x0006, 0, 0, &quot;US&quot;);</span>
+<span class="lineNum">     508 </span>            :         }
+<span class="lineNum">     509 </span>            :     }
+<span class="lineNum">     510 </span>            :     else
+<span class="lineNum">     511 </span>            :     {
+<span class="lineNum">     512 </span><span class="lineCov">       1537 :         bInterleaved = (getUnsignedLong(0x0028, 0x0, 0x0006, 0x0) == 0x0);</span>
+<span class="lineNum">     513 </span>            :     }
+<span class="lineNum">     514 </span>            : 
+<span class="lineNum">     515 </span>            :         // If the attributes cannot be changed, then check the
+<span class="lineNum">     516 </span>            :         //  attributes already stored in the dataset
+<span class="lineNum">     517 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     518 </span><span class="lineCov">       1548 :         if(bDontChangeAttributes)</span>
+<span class="lineNum">     519 </span>            :         {
+<span class="lineNum">     520 </span><span class="lineCov">       1025 :                 pImage = convertImageForDataSet(pImage);</span>
+<span class="lineNum">     521 </span><span class="lineCov">       1025 :                 std::wstring currentColorSpace = getUnicodeString(0x0028, 0x0, 0x0004, 0x0);</span>
+<span class="lineNum">     522 </span><span class="lineCov">       1025 :                 bSubSampledX = transforms::colorTransforms::colorTransformsFactory::isSubsampledX(currentColorSpace);</span>
+<span class="lineNum">     523 </span><span class="lineCov">       1025 :                 bSubSampledY = transforms::colorTransforms::colorTransformsFactory::isSubsampledY(currentColorSpace);</span>
+<span class="lineNum">     524 </span><span class="lineCov">       1025 :                 b2complement = (getUnsignedLong(0x0028, 0, 0x0103, 0) != 0);</span>
+<span class="lineNum">     525 </span><span class="lineCov">       1025 :                 allocatedBits = (std::uint8_t)getUnsignedLong(0x0028, 0x0, 0x0100, 0x0);</span>
+<span class="lineNum">     526 </span><span class="lineCov">       1025 :                 channelsNumber = getUnsignedLong(0x0028, 0x0, 0x0002, 0x0);</span>
+<span class="lineNum">     527 </span>            :         }
+<span class="lineNum">     528 </span>            : 
+<span class="lineNum">     529 </span>            :         // Select the data type OB if not already set in the
+<span class="lineNum">     530 </span>            :         //  dataset
+<span class="lineNum">     531 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     532 </span><span class="lineCov">       1548 :         if(dataHandlerType.empty())</span>
+<span class="lineNum">     533 </span>            :         {
+<span class="lineNum">     534 </span><span class="lineCov">       1548 :                 if(transferSyntax == L&quot;1.2.840.10008.1.2&quot;)</span>
+<span class="lineNum">     535 </span>            :                 {
+<span class="lineNum">     536 </span><span class="lineCov">        388 :                         dataHandlerType = getDefaultDataType(0x7FE0, 0x0010);</span>
+<span class="lineNum">     537 </span>            :                 }
+<span class="lineNum">     538 </span>            :                 else
+<span class="lineNum">     539 </span>            :                 {
+<span class="lineNum">     540 </span><span class="lineCov">       1160 :                         dataHandlerType = (bEncapsulated || allocatedBits &lt;= 8) ? &quot;OB&quot; : &quot;OW&quot;;</span>
+<span class="lineNum">     541 </span>            :                 }
+<span class="lineNum">     542 </span>            :         }
+<span class="lineNum">     543 </span>            : 
+<span class="lineNum">     544 </span>            :         // Encapsulated mode. Check if we have the offsets table
+<span class="lineNum">     545 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     546 </span><span class="lineCov">       1548 :         if(bEncapsulated)</span>
+<span class="lineNum">     547 </span>            :         {
+<span class="lineNum">     548 </span>            :                 // We have to add the offsets buffer
+<span class="lineNum">     549 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     550 </span><span class="lineCov">        392 :                 ptr&lt;handlers::dataHandlerRaw&gt; imageHandler0 = getDataHandlerRaw(groupId, 0x0, tagId, 0x0, false);</span>
+<span class="lineNum">     551 </span><span class="lineCov">        784 :                 ptr&lt;handlers::dataHandlerRaw&gt; imageHandler1 = getDataHandlerRaw(groupId, 0x0, tagId, 0x1, false);</span>
+<span class="lineNum">     552 </span><span class="lineCov">        392 :                 if(imageHandler0 != 0L &amp;&amp; imageHandler0-&gt;getSize() != 0 &amp;&amp; imageHandler1 == 0L)</span>
+<span class="lineNum">     553 </span>            :                 {
+<span class="lineNum">     554 </span>            :                         // The first image must be moved forward, in order to
+<span class="lineNum">     555 </span>            :                         //  make some room for the offset table
+<span class="lineNum">     556 </span>            :                         ///////////////////////////////////////////////////////////
+<span class="lineNum">     557 </span><span class="lineNoCov">          0 :                         dataHandlerType = imageHandler0-&gt;getDataType();</span>
+<span class="lineNum">     558 </span><span class="lineNoCov">          0 :                         ptr&lt;handlers::dataHandlerRaw&gt; moveFirstImage = getDataHandlerRaw(groupId, 0x0, tagId, 0x1, true, dataHandlerType);</span>
+<span class="lineNum">     559 </span>            : 
+<span class="lineNum">     560 </span><span class="lineNoCov">          0 :                         if(moveFirstImage == 0L)</span>
+<span class="lineNum">     561 </span>            :                         {
+<span class="lineNum">     562 </span><span class="lineNoCov">          0 :                                 PUNTOEXE_THROW(dataSetExceptionOldFormat, &quot;Cannot move the first image&quot;);</span>
+<span class="lineNum">     563 </span>            :                         }
+<span class="lineNum">     564 </span><span class="lineNoCov">          0 :                         std::uint32_t bufferSize=imageHandler0-&gt;getSize();</span>
+<span class="lineNum">     565 </span><span class="lineNoCov">          0 :                         moveFirstImage-&gt;setSize(bufferSize);</span>
+<span class="lineNum">     566 </span><span class="lineNoCov">          0 :                         ::memcpy(moveFirstImage-&gt;getMemoryBuffer(), imageHandler0-&gt;getMemoryBuffer(), bufferSize);</span>
+<span class="lineNum">     567 </span>            :                 }
+<span class="lineNum">     568 </span>            : 
+<span class="lineNum">     569 </span>            :                 // An image in the first buffer already exists.
+<span class="lineNum">     570 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     571 </span><span class="lineCov">        392 :                 if(imageHandler1 != 0)</span>
+<span class="lineNum">     572 </span>            :                 {
+<span class="lineNum">     573 </span><span class="lineCov">        257 :                         dataHandlerType = imageHandler1-&gt;getDataType();</span>
+<span class="lineNum">     574 </span>            :                 }
+<span class="lineNum">     575 </span>            : 
+<span class="lineNum">     576 </span><span class="lineCov">        784 :                 firstBufferId = getFirstAvailFrameBufferId();</span>
+<span class="lineNum">     577 </span>            :         }
+<span class="lineNum">     578 </span>            : 
+<span class="lineNum">     579 </span>            :         // Get a stream to save the image
+<span class="lineNum">     580 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     581 </span><span class="lineCov">       1940 :         ptr&lt;streamWriter&gt; outputStream;</span>
+<span class="lineNum">     582 </span><span class="lineCov">       1940 :         ptr&lt;memory&gt; uncompressedImage(new memory);</span>
+<span class="lineNum">     583 </span><span class="lineCov">       1548 :         if(bEncapsulated || frameNumber == 0)</span>
+<span class="lineNum">     584 </span>            :         {
+<span class="lineNum">     585 </span><span class="lineCov">        780 :                 outputStream = getStreamWriter(groupId, orderId, tagId, firstBufferId, dataHandlerType);</span>
+<span class="lineNum">     586 </span>            :         }
+<span class="lineNum">     587 </span>            :         else
+<span class="lineNum">     588 </span>            :         {
+<span class="lineNum">     589 </span><span class="lineCov">        768 :                 ptr&lt;puntoexe::memoryStream&gt; memStream(new memoryStream(uncompressedImage));</span>
+<span class="lineNum">     590 </span><span class="lineCov">        768 :                 outputStream = new streamWriter(memStream);</span>
+<span class="lineNum">     591 </span>            :         }
+<span class="lineNum">     592 </span>            : 
+<span class="lineNum">     593 </span>            :         // Save the image in the stream
+<span class="lineNum">     594 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     595 </span><span class="lineCov">       1548 :         saveCodec-&gt;setImage(</span>
+<span class="lineNum">     596 </span>            :                 outputStream,
+<span class="lineNum">     597 </span>            :                 pImage,
+<span class="lineNum">     598 </span>            :                 transferSyntax,
+<span class="lineNum">     599 </span>            :                 quality,
+<span class="lineNum">     600 </span>            :                 dataHandlerType,
+<span class="lineNum">     601 </span>            :                 allocatedBits,
+<span class="lineNum">     602 </span>            :                 bSubSampledX, bSubSampledY,
+<span class="lineNum">     603 </span>            :                 bInterleaved,
+<span class="lineNum">     604 </span><span class="lineCov">       1548 :                 b2complement);</span>
+<span class="lineNum">     605 </span><span class="lineCov">       1548 :         outputStream-&gt;flushDataBuffer();</span>
+<span class="lineNum">     606 </span>            : 
+<span class="lineNum">     607 </span><span class="lineCov">       1548 :         if(!bEncapsulated &amp;&amp; frameNumber != 0)</span>
+<span class="lineNum">     608 </span>            :         {
+<span class="lineNum">     609 </span><span class="lineCov">        768 :                 ptr&lt;handlers::dataHandlerRaw&gt; copyUncompressed(getDataHandlerRaw(groupId, orderId, tagId, firstBufferId, true));</span>
+<span class="lineNum">     610 </span><span class="lineCov">        768 :                 copyUncompressed-&gt;setSize((frameNumber + 1) * uncompressedImage-&gt;size());</span>
+<span class="lineNum">     611 </span><span class="lineCov">        768 :                 std::uint8_t* pSource = uncompressedImage-&gt;data();</span>
+<span class="lineNum">     612 </span><span class="lineCov">        768 :                 std::uint8_t* pDest = copyUncompressed-&gt;getMemoryBuffer() + (frameNumber * uncompressedImage-&gt;size());</span>
+<span class="lineNum">     613 </span><span class="lineCov">        768 :                 ::memcpy(pDest, pSource, uncompressedImage-&gt;size());</span>
+<span class="lineNum">     614 </span>            :         }
+<span class="lineNum">     615 </span>            : 
+<span class="lineNum">     616 </span>            :         // The images' positions calculated by getImage are not
+<span class="lineNum">     617 </span>            :         //  valid now. They must be recalculated.
+<span class="lineNum">     618 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     619 </span><span class="lineCov">       1548 :         m_imagesPositions.clear();</span>
+<span class="lineNum">     620 </span>            : 
+<span class="lineNum">     621 </span>            :         // Write the attributes in the dataset
+<span class="lineNum">     622 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     623 </span><span class="lineCov">       1548 :         if(!bDontChangeAttributes)</span>
+<span class="lineNum">     624 </span>            :         {
+<span class="lineNum">     625 </span><span class="lineCov">        523 :                 ptr&lt;handlers::dataHandler&gt; dataHandlerTransferSyntax = getDataHandler(0x0002, 0x0, 0x0010, 0x0, true);</span>
+<span class="lineNum">     626 </span><span class="lineCov">        523 :                 dataHandlerTransferSyntax-&gt;setUnicodeString(0, transferSyntax);</span>
+<span class="lineNum">     627 </span>            : 
+<span class="lineNum">     628 </span><span class="lineCov">       1046 :                 std::wstring colorSpace = pImage-&gt;getColorSpace();</span>
+<span class="lineNum">     629 </span><span class="lineCov">        523 :                 setUnicodeString(0x0028, 0x0, 0x0004, 0x0, transforms::colorTransforms::colorTransformsFactory::makeSubsampled(colorSpace, bSubSampledX, bSubSampledY));</span>
+<span class="lineNum">     630 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0006, 0x0, bInterleaved ? 0 : 1);</span>
+<span class="lineNum">     631 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0100, 0x0, allocatedBits);            // allocated bits</span>
+<span class="lineNum">     632 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0101, 0x0, pImage-&gt;getHighBit() + 1); // stored bits</span>
+<span class="lineNum">     633 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0102, 0x0, pImage-&gt;getHighBit());     // high bit</span>
+<span class="lineNum">     634 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0103, 0x0, b2complement ? 1 : 0);</span>
+<span class="lineNum">     635 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0002, 0x0, channelsNumber);</span>
+<span class="lineNum">     636 </span>            :                 std::uint32_t imageSizeX, imageSizeY;
+<span class="lineNum">     637 </span><span class="lineCov">        523 :                 pImage-&gt;getSize(&amp;imageSizeX, &amp;imageSizeY);</span>
+<span class="lineNum">     638 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0011, 0x0, imageSizeX);</span>
+<span class="lineNum">     639 </span><span class="lineCov">        523 :                 setUnsignedLong(0x0028, 0x0, 0x0010, 0x0, imageSizeY);</span>
+<span class="lineNum">     640 </span>            : 
+<span class="lineNum">     641 </span><span class="lineCov">        523 :                 if(colorSpace == L&quot;PALETTECOLOR&quot;)</span>
+<span class="lineNum">     642 </span>            :                 {
+<span class="lineNum">     643 </span><span class="lineNoCov">          0 :                         ptr&lt;palette&gt; imagePalette(pImage-&gt;getPalette());</span>
+<span class="lineNum">     644 </span><span class="lineNoCov">          0 :                         if(imagePalette != 0)</span>
+<span class="lineNum">     645 </span>            :                         {
+<span class="lineNum">     646 </span><span class="lineNoCov">          0 :                                 imagePalette-&gt;getRed()-&gt;fillHandlers(getDataHandler(0x0028, 0x0, 0x1101, 0, true), getDataHandler(0x0028, 0x0, 0x1201, 0, true));</span>
+<span class="lineNum">     647 </span><span class="lineNoCov">          0 :                                 imagePalette-&gt;getGreen()-&gt;fillHandlers(getDataHandler(0x0028, 0x0, 0x1102, 0, true), getDataHandler(0x0028, 0x0, 0x1202, 0, true));</span>
+<span class="lineNum">     648 </span><span class="lineNoCov">          0 :                                 imagePalette-&gt;getBlue()-&gt;fillHandlers(getDataHandler(0x0028, 0x0, 0x1103, 0, true), getDataHandler(0x0028, 0x0, 0x1203, 0, true));</span>
+<span class="lineNum">     649 </span><span class="lineNoCov">          0 :                         }</span>
+<span class="lineNum">     650 </span>            : 
+<span class="lineNum">     651 </span>            :                 }
+<span class="lineNum">     652 </span>            : 
+<span class="lineNum">     653 </span>            :                 double imageSizeMmX, imageSizeMmY;
+<span class="lineNum">     654 </span><span class="lineCov">       1046 :                 pImage-&gt;getSizeMm(&amp;imageSizeMmX, &amp;imageSizeMmY);</span>
+<span class="lineNum">     655 </span>            : 
+<span class="lineNum">     656 </span>            :         }
+<span class="lineNum">     657 </span>            : 
+<span class="lineNum">     658 </span>            :         // Update the number of frames
+<span class="lineNum">     659 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     660 </span><span class="lineCov">       1548 :         numberOfFrames = frameNumber + 1;</span>
+<span class="lineNum">     661 </span><span class="lineCov">       1548 :         setUnsignedLong(0x0028, 0, 0x0008, 0, numberOfFrames );</span>
+<span class="lineNum">     662 </span>            : 
+<span class="lineNum">     663 </span>            :         // Update the offsets tag with the image's offsets
+<span class="lineNum">     664 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     665 </span><span class="lineCov">       1548 :         if(!bEncapsulated)</span>
+<span class="lineNum">     666 </span>            :         {
+<span class="lineNum">     667 </span><span class="lineCov">       2704 :                 return;</span>
+<span class="lineNum">     668 </span>            :         }
+<span class="lineNum">     669 </span>            : 
+<span class="lineNum">     670 </span><span class="lineCov">        392 :         std::uint32_t calculatePosition(0);</span>
+<span class="lineNum">     671 </span><span class="lineCov">        784 :         ptr&lt;data&gt; tag(getTag(groupId, 0, tagId, true));</span>
+<span class="lineNum">     672 </span><span class="lineCov">        777 :         for(std::uint32_t scanBuffers = 1; scanBuffers != firstBufferId; ++scanBuffers)</span>
+<span class="lineNum">     673 </span>            :         {
+<span class="lineNum">     674 </span><span class="lineCov">        385 :                 calculatePosition += tag-&gt;getBufferSize(scanBuffers);</span>
+<span class="lineNum">     675 </span><span class="lineCov">        385 :                 calculatePosition += 8;</span>
+<span class="lineNum">     676 </span>            :         }
+<span class="lineNum">     677 </span><span class="lineCov">        784 :         ptr&lt;handlers::dataHandlerRaw&gt; offsetHandler(getDataHandlerRaw(groupId, 0, tagId, 0, true, dataHandlerType));</span>
+<span class="lineNum">     678 </span><span class="lineCov">        392 :         offsetHandler-&gt;setSize(4 * (frameNumber + 1));</span>
+<span class="lineNum">     679 </span><span class="lineCov">        392 :         std::uint8_t* pOffsetFrame(offsetHandler-&gt;getMemoryBuffer() + (frameNumber * 4));</span>
+<span class="lineNum">     680 </span><span class="lineCov">        392 :         *( (std::uint32_t*)pOffsetFrame  ) = calculatePosition;</span>
+<span class="lineNum">     681 </span><span class="lineCov">        784 :         streamController::adjustEndian(pOffsetFrame, 4, streamController::lowByteEndian, 1);</span>
+<span class="lineNum">     682 </span>            : 
+<span class="lineNum">     683 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     684 </span>            : }
+<span class="lineNum">     685 </span>            : 
+<span class="lineNum">     686 </span>            : 
+<span class="lineNum">     687 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     688 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     689 </span>            : //
+<span class="lineNum">     690 </span>            : // Get the offset, in bytes, of the specified frame
+<span class="lineNum">     691 </span>            : //
+<a name="692"><span class="lineNum">     692 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     693 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     694 </span><span class="lineCov">        824 : std::uint32_t dataSet::getFrameOffset(std::uint32_t frameNumber)</span>
+<span class="lineNum">     695 </span>            : {
+<span class="lineNum">     696 </span>            :         // Retrieve the buffer containing the offsets
+<span class="lineNum">     697 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     698 </span><span class="lineCov">        824 :         ptr&lt;handlers::dataHandlerRaw&gt; framesPointer = getDataHandlerRaw(0x7fe0, 0x0, 0x0010, 0, false);</span>
+<span class="lineNum">     699 </span><span class="lineCov">        824 :         if(framesPointer == 0)</span>
+<span class="lineNum">     700 </span>            :         {
+<span class="lineNum">     701 </span><span class="lineNoCov">          0 :                 return 0xffffffff;</span>
+<span class="lineNum">     702 </span>            :         }
+<span class="lineNum">     703 </span>            : 
+<span class="lineNum">     704 </span>            :         // Get the offset table's size, in number of offsets
+<span class="lineNum">     705 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     706 </span><span class="lineCov">        824 :         std::uint32_t offsetsCount = framesPointer-&gt;getSize() / sizeof(std::uint32_t);</span>
+<span class="lineNum">     707 </span>            : 
+<span class="lineNum">     708 </span>            :         // If the requested frame doesn't exist then return
+<span class="lineNum">     709 </span>            :         //  0xffffffff (the maximum value)
+<span class="lineNum">     710 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     711 </span><span class="lineCov">        824 :         if(frameNumber &gt;= offsetsCount &amp;&amp; frameNumber != 0)</span>
+<span class="lineNum">     712 </span>            :         {
+<span class="lineNum">     713 </span><span class="lineCov">        154 :                 return 0xffffffff;</span>
+<span class="lineNum">     714 </span>            :         }
+<span class="lineNum">     715 </span>            : 
+<span class="lineNum">     716 </span>            :         // Return the requested offset. If the requested frame is
+<span class="lineNum">     717 </span>            :         //  the first and is offset is not specified, then return
+<span class="lineNum">     718 </span>            :         //  0 (the first position)
+<span class="lineNum">     719 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     720 </span><span class="lineCov">        670 :     if(frameNumber &lt; offsetsCount)</span>
+<span class="lineNum">     721 </span>            :     {
+<span class="lineNum">     722 </span><span class="lineCov">        670 :         std::uint32_t* pOffsets = (std::uint32_t*)(framesPointer-&gt;getMemoryBuffer());</span>
+<span class="lineNum">     723 </span><span class="lineCov">        670 :         std::uint32_t returnOffset(pOffsets[frameNumber]);</span>
+<span class="lineNum">     724 </span><span class="lineCov">        670 :         streamController::adjustEndian((std::uint8_t*)&amp;returnOffset, 4, streamController::lowByteEndian);</span>
+<span class="lineNum">     725 </span><span class="lineCov">        670 :         return returnOffset;</span>
+<span class="lineNum">     726 </span>            :         }
+<span class="lineNum">     727 </span><span class="lineNoCov">          0 :         return 0;</span>
+<span class="lineNum">     728 </span>            : }
+<span class="lineNum">     729 </span>            : 
+<span class="lineNum">     730 </span>            : 
+<span class="lineNum">     731 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     732 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     733 </span>            : //
+<span class="lineNum">     734 </span>            : // Return the buffer that starts at the specified offset
+<span class="lineNum">     735 </span>            : //
+<a name="736"><span class="lineNum">     736 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     737 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     738 </span><span class="lineCov">        824 : std::uint32_t dataSet::getFrameBufferId(std::uint32_t offset, std::uint32_t* pLengthToBuffer)</span>
+<span class="lineNum">     739 </span>            : {
+<span class="lineNum">     740 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getFrameBufferId&quot;);
+<span class="lineNum">     741 </span>            : 
+<span class="lineNum">     742 </span><span class="lineCov">        824 :         *pLengthToBuffer = 0;</span>
+<span class="lineNum">     743 </span>            : 
+<span class="lineNum">     744 </span><span class="lineCov">        824 :         ptr&lt;data&gt; imageTag = getTag(0x7fe0, 0, 0x0010, false);</span>
+<span class="lineNum">     745 </span><span class="lineCov">        824 :         if(imageTag == 0)</span>
+<span class="lineNum">     746 </span>            :         {
+<span class="lineNum">     747 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">     748 </span>            :         }
+<span class="lineNum">     749 </span>            : 
+<span class="lineNum">     750 </span>            :         // Start from the buffer n. 1 (the buffer 0 contains
+<span class="lineNum">     751 </span>            :         //  the offset table
+<span class="lineNum">     752 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     753 </span><span class="lineCov">        824 :         std::uint32_t scanBuffers(1);</span>
+<span class="lineNum">     754 </span>            : 
+<span class="lineNum">     755 </span><span class="lineCov">        824 :         if(offset == 0xffffffff)</span>
+<span class="lineNum">     756 </span>            :         {
+<span class="lineNum">     757 </span><span class="lineCov">        725 :                 while(imageTag-&gt;bufferExists(scanBuffers))</span>
+<span class="lineNum">     758 </span>            :                 {
+<span class="lineNum">     759 </span><span class="lineCov">        417 :                         ++scanBuffers;</span>
+<span class="lineNum">     760 </span>            :                 }
+<span class="lineNum">     761 </span><span class="lineCov">        154 :                 return scanBuffers;</span>
+<span class="lineNum">     762 </span>            :         }
+<span class="lineNum">     763 </span>            : 
+<span class="lineNum">     764 </span><span class="lineCov">       2118 :         while(offset != 0)</span>
+<span class="lineNum">     765 </span>            :         {
+<span class="lineNum">     766 </span>            :                 // If the handler isn't connected to any buffer, then
+<span class="lineNum">     767 </span>            :                 //  the buffer doesn't exist: return
+<span class="lineNum">     768 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     769 </span><span class="lineCov">        778 :                 if(!imageTag-&gt;bufferExists(scanBuffers))</span>
+<span class="lineNum">     770 </span>            :                 {
+<span class="lineNum">     771 </span><span class="lineNoCov">          0 :                         break;</span>
+<span class="lineNum">     772 </span>            :                 }
+<span class="lineNum">     773 </span>            : 
+<span class="lineNum">     774 </span>            :                 // Calculate the total size of the buffer, including
+<span class="lineNum">     775 </span>            :                 //  its descriptor (tag group and id and length)
+<span class="lineNum">     776 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     777 </span><span class="lineCov">        778 :                 std::uint32_t bufferSize = imageTag-&gt;getBufferSize(scanBuffers);;</span>
+<span class="lineNum">     778 </span><span class="lineCov">        778 :                 (*pLengthToBuffer) += bufferSize; // Increase the total size</span>
+<span class="lineNum">     779 </span><span class="lineCov">        778 :                 bufferSize += 4; // one WORD for the group id, one WORD for the tag id</span>
+<span class="lineNum">     780 </span><span class="lineCov">        778 :                 bufferSize += 4; // one DWORD for the tag length</span>
+<span class="lineNum">     781 </span><span class="lineCov">        778 :                 if(bufferSize &gt; offset)</span>
+<span class="lineNum">     782 </span>            :                 {
+<span class="lineNum">     783 </span><span class="lineNoCov">          0 :                         PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;Image not in the offset table&quot;);</span>
+<span class="lineNum">     784 </span>            :                 }
+<span class="lineNum">     785 </span><span class="lineCov">        778 :                 offset -= bufferSize;</span>
+<span class="lineNum">     786 </span><span class="lineCov">        778 :                 ++scanBuffers;</span>
+<span class="lineNum">     787 </span>            :         }
+<span class="lineNum">     788 </span>            : 
+<span class="lineNum">     789 </span><span class="lineCov">        670 :         if(offset != 0)</span>
+<span class="lineNum">     790 </span>            :         {
+<span class="lineNum">     791 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetCorruptedOffsetTable, &quot;The basic offset table is corrupted&quot;);</span>
+<span class="lineNum">     792 </span>            :         }
+<span class="lineNum">     793 </span>            : 
+<span class="lineNum">     794 </span><span class="lineCov">        670 :         return scanBuffers;</span>
+<span class="lineNum">     795 </span>            : 
+<span class="lineNum">     796 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     797 </span>            : }
+<span class="lineNum">     798 </span>            : 
+<span class="lineNum">     799 </span>            : 
+<span class="lineNum">     800 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     801 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     802 </span>            : //
+<span class="lineNum">     803 </span>            : //
+<span class="lineNum">     804 </span>            : // Get the first buffer and the end buffer occupied by an
+<span class="lineNum">     805 </span>            : //  image
+<span class="lineNum">     806 </span>            : //
+<span class="lineNum">     807 </span>            : //
+<a name="808"><span class="lineNum">     808 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     809 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     810 </span><span class="lineCov">        412 : std::uint32_t dataSet::getFrameBufferIds(std::uint32_t frameNumber, std::uint32_t* pFirstBuffer, std::uint32_t* pEndBuffer)</span>
+<span class="lineNum">     811 </span>            : {
+<span class="lineNum">     812 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getFrameBufferIds&quot;);
+<span class="lineNum">     813 </span>            : 
+<span class="lineNum">     814 </span><span class="lineCov">        412 :         std::uint32_t startOffset = getFrameOffset(frameNumber);</span>
+<span class="lineNum">     815 </span><span class="lineCov">        412 :         std::uint32_t endOffset = getFrameOffset(frameNumber + 1);</span>
+<span class="lineNum">     816 </span>            : 
+<span class="lineNum">     817 </span><span class="lineCov">        412 :         if(startOffset == 0xffffffff)</span>
+<span class="lineNum">     818 </span>            :         {
+<span class="lineNum">     819 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetImageDoesntExist, &quot;Image not in the table offset&quot;);</span>
+<span class="lineNum">     820 </span>            :         }
+<span class="lineNum">     821 </span>            : 
+<span class="lineNum">     822 </span>            :         std::uint32_t startLength, endLength;
+<span class="lineNum">     823 </span><span class="lineCov">        412 :         *pFirstBuffer = getFrameBufferId(startOffset, &amp;startLength);</span>
+<span class="lineNum">     824 </span><span class="lineCov">        412 :         *pEndBuffer = getFrameBufferId(endOffset, &amp;endLength);</span>
+<span class="lineNum">     825 </span>            : 
+<span class="lineNum">     826 </span><span class="lineCov">        412 :         ptr&lt;data&gt; imageTag = getTag(0x7fe0, 0, 0x0010, false);</span>
+<span class="lineNum">     827 </span><span class="lineCov">        412 :         if(imageTag == 0)</span>
+<span class="lineNum">     828 </span>            :         {
+<span class="lineNum">     829 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">     830 </span>            :         }
+<span class="lineNum">     831 </span><span class="lineCov">        412 :         std::uint32_t totalSize(0);</span>
+<span class="lineNum">     832 </span><span class="lineCov">        829 :         for(std::uint32_t scanBuffers(*pFirstBuffer); scanBuffers != *pEndBuffer; ++scanBuffers)</span>
+<span class="lineNum">     833 </span>            :         {
+<span class="lineNum">     834 </span><span class="lineCov">        417 :                 totalSize += imageTag-&gt;getBufferSize(scanBuffers);</span>
+<span class="lineNum">     835 </span>            :         }
+<span class="lineNum">     836 </span><span class="lineCov">        412 :         return totalSize;</span>
+<span class="lineNum">     837 </span>            : 
+<span class="lineNum">     838 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     839 </span>            : }
+<span class="lineNum">     840 </span>            : 
+<span class="lineNum">     841 </span>            : 
+<span class="lineNum">     842 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     843 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     844 </span>            : //
+<span class="lineNum">     845 </span>            : //
+<span class="lineNum">     846 </span>            : // Return the id of the first available buffer that can
+<span class="lineNum">     847 </span>            : //  be used to store a new frame
+<span class="lineNum">     848 </span>            : //
+<span class="lineNum">     849 </span>            : //
+<a name="850"><span class="lineNum">     850 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     851 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     852 </span><span class="lineCov">        392 : std::uint32_t dataSet::getFirstAvailFrameBufferId()</span>
+<span class="lineNum">     853 </span>            : {
+<span class="lineNum">     854 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getFirstAvailFrameBufferId&quot;);
+<span class="lineNum">     855 </span>            : 
+<span class="lineNum">     856 </span><span class="lineCov">        392 :         ptr&lt;data&gt; imageTag = getTag(0x7fe0, 0, 0x0010, false);</span>
+<span class="lineNum">     857 </span><span class="lineCov">        392 :         if(imageTag == 0)</span>
+<span class="lineNum">     858 </span>            :         {
+<span class="lineNum">     859 </span><span class="lineCov">        135 :                 return 1;</span>
+<span class="lineNum">     860 </span>            :         }
+<span class="lineNum">     861 </span>            : 
+<span class="lineNum">     862 </span><span class="lineCov">        257 :         std::uint32_t availableId(1);</span>
+<span class="lineNum">     863 </span><span class="lineCov">        899 :         while(imageTag-&gt;bufferExists(availableId))</span>
+<span class="lineNum">     864 </span>            :         {
+<span class="lineNum">     865 </span><span class="lineCov">        385 :                 ++availableId;</span>
+<span class="lineNum">     866 </span>            :         }
+<span class="lineNum">     867 </span>            : 
+<span class="lineNum">     868 </span><span class="lineCov">        257 :         return availableId;</span>
+<span class="lineNum">     869 </span>            : 
+<span class="lineNum">     870 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     871 </span>            : }
+<span class="lineNum">     872 </span>            : 
+<span class="lineNum">     873 </span>            : 
+<span class="lineNum">     874 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     875 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     876 </span>            : //
+<span class="lineNum">     877 </span>            : //
+<span class="lineNum">     878 </span>            : // Converts an image using the attributes specified in
+<span class="lineNum">     879 </span>            : //  the dataset.
+<span class="lineNum">     880 </span>            : //
+<span class="lineNum">     881 </span>            : //
+<a name="882"><span class="lineNum">     882 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     883 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     884 </span><span class="lineCov">       1025 : ptr&lt;image&gt; dataSet::convertImageForDataSet(ptr&lt;image&gt; sourceImage)</span>
+<span class="lineNum">     885 </span>            : {
+<span class="lineNum">     886 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::convertImageForDataSet&quot;);
+<span class="lineNum">     887 </span>            : 
+<span class="lineNum">     888 </span>            :         std::uint32_t imageWidth, imageHeight;
+<span class="lineNum">     889 </span><span class="lineCov">       1025 :         sourceImage-&gt;getSize(&amp;imageWidth, &amp;imageHeight);</span>
+<span class="lineNum">     890 </span>            : 
+<span class="lineNum">     891 </span><span class="lineCov">       1025 :         std::wstring colorSpace = sourceImage-&gt;getColorSpace();</span>
+<span class="lineNum">     892 </span><span class="lineCov">       1025 :         std::uint32_t highBit = sourceImage-&gt;getHighBit();</span>
+<span class="lineNum">     893 </span>            : 
+<span class="lineNum">     894 </span><span class="lineCov">       1025 :         std::uint32_t currentWidth  = getUnsignedLong(0x0028, 0x0, 0x0011, 0x0);</span>
+<span class="lineNum">     895 </span><span class="lineCov">       1025 :         std::uint32_t currentHeight = getUnsignedLong(0x0028, 0x0, 0x0010, 0x0);</span>
+<span class="lineNum">     896 </span><span class="lineCov">       1025 :         std::uint32_t currentHighBit = getUnsignedLong(0x0028, 0x0, 0x0102, 0x0);</span>
+<span class="lineNum">     897 </span>            : 
+<span class="lineNum">     898 </span>            : 
+<span class="lineNum">     899 </span>            : 
+<span class="lineNum">     900 </span>            : 
+<span class="lineNum">     901 </span>            : 
+<span class="lineNum">     902 </span><span class="lineCov">       2050 :         std::wstring currentColorSpace = transforms::colorTransforms::colorTransformsFactory::normalizeColorSpace(getUnicodeString(0x0028, 0x0, 0x0004, 0x0));</span>
+<span class="lineNum">     903 </span>            : 
+<span class="lineNum">     904 </span><span class="lineCov">       1025 :         if(currentWidth != imageWidth || currentHeight != imageHeight)</span>
+<span class="lineNum">     905 </span>            :         {
+<span class="lineNum">     906 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionDifferentFormat, &quot;The dataset already contains an image with a different size&quot;);</span>
+<span class="lineNum">     907 </span>            :         }
+<span class="lineNum">     908 </span>            : 
+<span class="lineNum">     909 </span><span class="lineCov">       1025 :         if(currentHighBit &lt; highBit)</span>
+<span class="lineNum">     910 </span>            :         {
+<span class="lineNum">     911 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionDifferentFormat, &quot;The high bit in the dataset is smaller than the requested one&quot;);</span>
+<span class="lineNum">     912 </span>            :         }
+<span class="lineNum">     913 </span>            : 
+<span class="lineNum">     914 </span><span class="lineCov">       1025 :         if( !transforms::colorTransforms::colorTransformsFactory::isMonochrome(colorSpace) &amp;&amp; colorSpace != currentColorSpace)</span>
+<span class="lineNum">     915 </span>            :         {
+<span class="lineNum">     916 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(dataSetExceptionDifferentFormat, &quot;The requested color space doesn't match the one already stored in the dataset&quot;);</span>
+<span class="lineNum">     917 </span>            :         }
+<span class="lineNum">     918 </span>            : 
+<span class="lineNum">     919 </span><span class="lineCov">       2050 :         ptr&lt;transforms::transformsChain&gt; chain(new transforms::transformsChain);</span>
+<span class="lineNum">     920 </span><span class="lineCov">       1025 :         if(colorSpace != currentColorSpace)</span>
+<span class="lineNum">     921 </span>            :         {
+<span class="lineNum">     922 </span><span class="lineNoCov">          0 :                 ptr&lt;transforms::colorTransforms::colorTransformsFactory&gt; pColorFactory(transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory());</span>
+<span class="lineNum">     923 </span><span class="lineNoCov">          0 :                 ptr&lt;transforms::transform&gt; colorChain = pColorFactory-&gt;getTransform(colorSpace, currentColorSpace);</span>
+<span class="lineNum">     924 </span><span class="lineNoCov">          0 :                 if(colorChain-&gt;isEmpty())</span>
+<span class="lineNum">     925 </span>            :                 {
+<span class="lineNum">     926 </span><span class="lineNoCov">          0 :                         PUNTOEXE_THROW(dataSetExceptionDifferentFormat, &quot;The image color space cannot be converted to the dataset color space&quot;);</span>
+<span class="lineNum">     927 </span>            :                 }
+<span class="lineNum">     928 </span><span class="lineNoCov">          0 :                 chain-&gt;addTransform(colorChain);</span>
+<span class="lineNum">     929 </span>            :         }
+<span class="lineNum">     930 </span>            : 
+<span class="lineNum">     931 </span><span class="lineCov">       1025 :         if(currentHighBit != highBit)</span>
+<span class="lineNum">     932 </span>            :         {
+<span class="lineNum">     933 </span><span class="lineNoCov">          0 :                 chain-&gt;addTransform(new transforms::transformHighBit);</span>
+<span class="lineNum">     934 </span>            :         }
+<span class="lineNum">     935 </span>            : 
+<span class="lineNum">     936 </span><span class="lineCov">       1025 :         if(chain-&gt;isEmpty())</span>
+<span class="lineNum">     937 </span>            :         {
+<span class="lineNum">     938 </span><span class="lineCov">       1025 :                 return sourceImage;</span>
+<span class="lineNum">     939 </span>            :         }
+<span class="lineNum">     940 </span>            : 
+<span class="lineNum">     941 </span><span class="lineNoCov">          0 :         ptr&lt;image&gt; destImage(new image);</span>
+<span class="lineNum">     942 </span><span class="lineNoCov">          0 :         bool b2Complement(getUnsignedLong(0x0028, 0x0, 0x0103, 0x0)!=0x0);</span>
+<span class="lineNum">     943 </span>            :         image::bitDepth depth;
+<span class="lineNum">     944 </span><span class="lineNoCov">          0 :         if(b2Complement)</span>
+<span class="lineNum">     945 </span><span class="lineNoCov">          0 :                 depth=highBit&gt;=8 ? image::depthS16 : image::depthS8;</span>
+<span class="lineNum">     946 </span>            :         else
+<span class="lineNum">     947 </span><span class="lineNoCov">          0 :                 depth=highBit&gt;=8 ? image::depthU16 : image::depthU8;</span>
+<span class="lineNum">     948 </span><span class="lineNoCov">          0 :         destImage-&gt;create(currentWidth, currentHeight, depth, currentColorSpace, currentHighBit);</span>
+<span class="lineNum">     949 </span>            : 
+<span class="lineNum">     950 </span><span class="lineNoCov">          0 :         chain-&gt;runTransform(sourceImage, 0, 0, imageWidth, imageHeight, destImage, 0, 0);</span>
+<span class="lineNum">     951 </span>            : 
+<span class="lineNum">     952 </span><span class="lineCov">       1025 :         return destImage;</span>
+<span class="lineNum">     953 </span>            : 
+<span class="lineNum">     954 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     955 </span>            : }
+<span class="lineNum">     956 </span>            : 
+<span class="lineNum">     957 </span>            : 
+<span class="lineNum">     958 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     959 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     960 </span>            : //
+<span class="lineNum">     961 </span>            : //
+<span class="lineNum">     962 </span>            : // Retrieve a sequence item as a dataset
+<span class="lineNum">     963 </span>            : //
+<span class="lineNum">     964 </span>            : //
+<a name="965"><span class="lineNum">     965 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     966 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     967 </span><span class="lineCov">          6 : ptr&lt;dataSet&gt; dataSet::getSequenceItem(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t itemId)</span>
+<span class="lineNum">     968 </span>            : {
+<span class="lineNum">     969 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getSequenceItem&quot;);
+<span class="lineNum">     970 </span>            : 
+<span class="lineNum">     971 </span><span class="lineCov">          6 :         ptr&lt;data&gt; tag=getTag(groupId, order, tagId, false);</span>
+<span class="lineNum">     972 </span><span class="lineCov">         12 :         ptr&lt;dataSet&gt; pDataSet;</span>
+<span class="lineNum">     973 </span><span class="lineCov">          6 :         if(tag != 0)</span>
+<span class="lineNum">     974 </span>            :         {
+<span class="lineNum">     975 </span><span class="lineCov">          4 :                 pDataSet = tag-&gt;getDataSet(itemId);</span>
+<span class="lineNum">     976 </span>            :         }
+<span class="lineNum">     977 </span>            : 
+<span class="lineNum">     978 </span><span class="lineCov">         12 :         return pDataSet;</span>
+<span class="lineNum">     979 </span>            : 
+<span class="lineNum">     980 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     981 </span>            : }
+<span class="lineNum">     982 </span>            : 
+<span class="lineNum">     983 </span>            : 
+<span class="lineNum">     984 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     985 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     986 </span>            : //
+<span class="lineNum">     987 </span>            : //
+<span class="lineNum">     988 </span>            : // Retrieve a LUT from the data set
+<span class="lineNum">     989 </span>            : //
+<span class="lineNum">     990 </span>            : //
+<a name="991"><span class="lineNum">     991 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     992 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     993 </span><span class="lineCov">          1 : ptr&lt;lut&gt; dataSet::getLut(std::uint16_t groupId, std::uint16_t tagId, std::uint32_t lutId)</span>
+<span class="lineNum">     994 </span>            : {
+<span class="lineNum">     995 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getLut&quot;);
+<span class="lineNum">     996 </span>            : 
+<span class="lineNum">     997 </span><span class="lineCov">          1 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     998 </span>            : 
+<span class="lineNum">     999 </span><span class="lineCov">          2 :         ptr&lt;lut&gt; pLUT;</span>
+<span class="lineNum">    1000 </span><span class="lineCov">          2 :         ptr&lt;dataSet&gt; embeddedLUT=getSequenceItem(groupId, 0, tagId, lutId);</span>
+<span class="lineNum">    1001 </span><span class="lineCov">          2 :         std::string tagType = getDataType(groupId, 0, tagId);</span>
+<span class="lineNum">    1002 </span><span class="lineCov">          1 :         if(embeddedLUT != 0)</span>
+<span class="lineNum">    1003 </span>            :         {
+<span class="lineNum">    1004 </span><span class="lineNoCov">          0 :                 ptr&lt;lut&gt; tempLut(new lut);</span>
+<span class="lineNum">    1005 </span><span class="lineNoCov">          0 :                 pLUT = tempLut;</span>
+<span class="lineNum">    1006 </span><span class="lineNoCov">          0 :                 ptr&lt;handlers::dataHandler&gt; descriptorHandle=embeddedLUT-&gt;getDataHandler(0x0028, 0x0, 0x3002, 0x0, false);</span>
+<span class="lineNum">    1007 </span><span class="lineNoCov">          0 :                 ptr&lt;handlers::dataHandler&gt; dataHandle=embeddedLUT-&gt;getDataHandler(0x0028, 0x0, 0x3006, 0x0, false);</span>
+<span class="lineNum">    1008 </span>            : 
+<span class="lineNum">    1009 </span>            :                 pLUT-&gt;setLut(
+<span class="lineNum">    1010 </span>            :                         descriptorHandle,
+<span class="lineNum">    1011 </span>            :                         dataHandle,
+<span class="lineNum">    1012 </span><span class="lineNoCov">          0 :                         embeddedLUT-&gt;getUnicodeString(0x0028, 0x0, 0x3003, 0x0));</span>
+<span class="lineNum">    1013 </span>            :         }
+<span class="lineNum">    1014 </span><span class="lineCov">          2 :         return pLUT;</span>
+<span class="lineNum">    1015 </span>            : 
+<span class="lineNum">    1016 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1017 </span>            : }
+<span class="lineNum">    1018 </span>            : 
+<span class="lineNum">    1019 </span>            : 
+<span class="lineNum">    1020 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1021 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1022 </span>            : //
+<span class="lineNum">    1023 </span>            : //
+<span class="lineNum">    1024 </span>            : // Retrieve a waveform
+<span class="lineNum">    1025 </span>            : //
+<span class="lineNum">    1026 </span>            : //
+<a name="1027"><span class="lineNum">    1027 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1028 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1029 </span><span class="lineNoCov">          0 : ptr&lt;waveform&gt; dataSet::getWaveform(std::uint32_t waveformId)</span>
+<span class="lineNum">    1030 </span>            : {
+<span class="lineNum">    1031 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getWaveform&quot;);
+<span class="lineNum">    1032 </span>            : 
+<span class="lineNum">    1033 </span><span class="lineNoCov">          0 :         lockObject lockAccess(this);</span>
+<span class="lineNum">    1034 </span>            : 
+<span class="lineNum">    1035 </span><span class="lineNoCov">          0 :         ptr&lt;dataSet&gt; embeddedWaveform(getSequenceItem(0x5400, 0, 0x0100, waveformId));</span>
+<span class="lineNum">    1036 </span><span class="lineNoCov">          0 :         if(embeddedWaveform == 0)</span>
+<span class="lineNum">    1037 </span>            :         {
+<span class="lineNum">    1038 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">    1039 </span>            :         }
+<span class="lineNum">    1040 </span>            : 
+<span class="lineNum">    1041 </span><span class="lineNoCov">          0 :         return new waveform(embeddedWaveform);</span>
+<span class="lineNum">    1042 </span>            : 
+<span class="lineNum">    1043 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1044 </span>            : }
+<span class="lineNum">    1045 </span>            : 
+<span class="lineNum">    1046 </span>            : 
+<span class="lineNum">    1047 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1048 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1049 </span>            : //
+<span class="lineNum">    1050 </span>            : //
+<span class="lineNum">    1051 </span>            : // Get a tag as a signed long
+<span class="lineNum">    1052 </span>            : //
+<span class="lineNum">    1053 </span>            : //
+<a name="1054"><span class="lineNum">    1054 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1055 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1056 </span><span class="lineCov">        512 : std::int32_t dataSet::getSignedLong(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber)</span>
+<span class="lineNum">    1057 </span>            : {
+<span class="lineNum">    1058 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getSignedLong&quot;);
+<span class="lineNum">    1059 </span>            : 
+<span class="lineNum">    1060 </span><span class="lineCov">        512 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, false);</span>
+<span class="lineNum">    1061 </span><span class="lineCov">        512 :         if(dataHandler == 0)</span>
+<span class="lineNum">    1062 </span>            :         {
+<span class="lineNum">    1063 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">    1064 </span>            :         }
+<span class="lineNum">    1065 </span>            : 
+<span class="lineNum">    1066 </span><span class="lineCov">        512 :         return dataHandler-&gt;pointerIsValid(elementNumber) ? dataHandler-&gt;getSignedLong(elementNumber) : 0;</span>
+<span class="lineNum">    1067 </span>            : 
+<span class="lineNum">    1068 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1069 </span>            : }
+<span class="lineNum">    1070 </span>            : 
+<span class="lineNum">    1071 </span>            : 
+<span class="lineNum">    1072 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1073 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1074 </span>            : //
+<span class="lineNum">    1075 </span>            : //
+<span class="lineNum">    1076 </span>            : // Set a tag as a signed long
+<span class="lineNum">    1077 </span>            : //
+<span class="lineNum">    1078 </span>            : //
+<a name="1079"><span class="lineNum">    1079 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1080 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1081 </span><span class="lineNoCov">          0 : void dataSet::setSignedLong(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber, std::int32_t newValue, std::string defaultType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1082 </span>            : {
+<span class="lineNum">    1083 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setSignedLong&quot;);
+<span class="lineNum">    1084 </span>            : 
+<span class="lineNum">    1085 </span><span class="lineNoCov">          0 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, true, defaultType);</span>
+<span class="lineNum">    1086 </span><span class="lineNoCov">          0 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1087 </span>            :         {
+<span class="lineNum">    1088 </span><span class="lineNoCov">          0 :                 if(dataHandler-&gt;getSize() &lt;= elementNumber)</span>
+<span class="lineNum">    1089 </span>            :                 {
+<span class="lineNum">    1090 </span><span class="lineNoCov">          0 :                         dataHandler-&gt;setSize(elementNumber + 1);</span>
+<span class="lineNum">    1091 </span>            :                 }
+<span class="lineNum">    1092 </span><span class="lineNoCov">          0 :                 dataHandler-&gt;setSignedLong(elementNumber, newValue);</span>
+<span class="lineNum">    1093 </span><span class="lineNoCov">          0 :         }</span>
+<span class="lineNum">    1094 </span>            : 
+<span class="lineNum">    1095 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1096 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1097 </span>            : 
+<span class="lineNum">    1098 </span>            : 
+<span class="lineNum">    1099 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1100 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1101 </span>            : //
+<span class="lineNum">    1102 </span>            : //
+<span class="lineNum">    1103 </span>            : // Get the requested tag as an unsigned long
+<span class="lineNum">    1104 </span>            : //
+<span class="lineNum">    1105 </span>            : //
+<a name="1106"><span class="lineNum">    1106 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1107 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1108 </span><span class="lineCov">      29264 : std::uint32_t dataSet::getUnsignedLong(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber)</span>
+<span class="lineNum">    1109 </span>            : {
+<span class="lineNum">    1110 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getUnignedLong&quot;);
+<span class="lineNum">    1111 </span>            : 
+<span class="lineNum">    1112 </span><span class="lineCov">      29264 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, false);</span>
+<span class="lineNum">    1113 </span><span class="lineCov">      29264 :         if(dataHandler == 0)</span>
+<span class="lineNum">    1114 </span>            :         {
+<span class="lineNum">    1115 </span><span class="lineCov">        524 :                 return 0;</span>
+<span class="lineNum">    1116 </span>            :         }
+<span class="lineNum">    1117 </span>            : 
+<span class="lineNum">    1118 </span><span class="lineCov">      28740 :         return dataHandler-&gt;pointerIsValid(elementNumber) ? dataHandler-&gt;getUnsignedLong(elementNumber) : 0;</span>
+<span class="lineNum">    1119 </span>            : 
+<span class="lineNum">    1120 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1121 </span>            : }
+<span class="lineNum">    1122 </span>            : 
+<span class="lineNum">    1123 </span>            : 
+<span class="lineNum">    1124 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1125 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1126 </span>            : //
+<span class="lineNum">    1127 </span>            : //
+<span class="lineNum">    1128 </span>            : // Set the requested tag as an unsigned long
+<span class="lineNum">    1129 </span>            : //
+<span class="lineNum">    1130 </span>            : //
+<a name="1131"><span class="lineNum">    1131 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1132 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1133 </span><span class="lineCov">       6417 : void dataSet::setUnsignedLong(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber, std::uint32_t newValue, std::string defaultType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1134 </span>            : {
+<span class="lineNum">    1135 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setUnsignedLong&quot;);
+<span class="lineNum">    1136 </span>            : 
+<span class="lineNum">    1137 </span><span class="lineCov">       6417 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, true, defaultType);</span>
+<span class="lineNum">    1138 </span><span class="lineCov">       6417 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1139 </span>            :         {
+<span class="lineNum">    1140 </span><span class="lineCov">       6417 :                 if(dataHandler-&gt;getSize() &lt;= elementNumber)</span>
+<span class="lineNum">    1141 </span>            :                 {
+<span class="lineNum">    1142 </span><span class="lineCov">       4870 :                         dataHandler-&gt;setSize(elementNumber + 1);</span>
+<span class="lineNum">    1143 </span>            :                 }
+<span class="lineNum">    1144 </span><span class="lineCov">       6417 :                 dataHandler-&gt;setUnsignedLong(elementNumber, newValue);</span>
+<span class="lineNum">    1145 </span><span class="lineCov">       6417 :         }</span>
+<span class="lineNum">    1146 </span>            : 
+<span class="lineNum">    1147 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1148 </span><span class="lineCov">       6417 : }</span>
+<span class="lineNum">    1149 </span>            : 
+<span class="lineNum">    1150 </span>            : 
+<span class="lineNum">    1151 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1152 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1153 </span>            : //
+<span class="lineNum">    1154 </span>            : //
+<span class="lineNum">    1155 </span>            : // Get the requested tag as a double
+<span class="lineNum">    1156 </span>            : //
+<span class="lineNum">    1157 </span>            : //
+<a name="1158"><span class="lineNum">    1158 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1159 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1160 </span><span class="lineCov">       3129 : double dataSet::getDouble(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber)</span>
+<span class="lineNum">    1161 </span>            : {
+<span class="lineNum">    1162 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getDouble&quot;);
+<span class="lineNum">    1163 </span>            : 
+<span class="lineNum">    1164 </span><span class="lineCov">       3129 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, false);</span>
+<span class="lineNum">    1165 </span><span class="lineCov">       3129 :         if(dataHandler == 0)</span>
+<span class="lineNum">    1166 </span>            :         {
+<span class="lineNum">    1167 </span><span class="lineCov">       3129 :                 return 0.0;</span>
+<span class="lineNum">    1168 </span>            :         }
+<span class="lineNum">    1169 </span>            : 
+<span class="lineNum">    1170 </span><span class="lineNoCov">          0 :         return dataHandler-&gt;pointerIsValid(elementNumber) ? dataHandler-&gt;getDouble(elementNumber) : 0.0;</span>
+<span class="lineNum">    1171 </span>            : 
+<span class="lineNum">    1172 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1173 </span>            : }
+<span class="lineNum">    1174 </span>            : 
+<span class="lineNum">    1175 </span>            : 
+<span class="lineNum">    1176 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1177 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1178 </span>            : //
+<span class="lineNum">    1179 </span>            : //
+<span class="lineNum">    1180 </span>            : // Set the requested tag as a double
+<span class="lineNum">    1181 </span>            : //
+<span class="lineNum">    1182 </span>            : //
+<a name="1183"><span class="lineNum">    1183 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1184 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1185 </span><span class="lineNoCov">          0 : void dataSet::setDouble(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber, double newValue, std::string defaultType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1186 </span>            : {
+<span class="lineNum">    1187 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setDouble&quot;);
+<span class="lineNum">    1188 </span>            : 
+<span class="lineNum">    1189 </span><span class="lineNoCov">          0 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0, true, defaultType);</span>
+<span class="lineNum">    1190 </span><span class="lineNoCov">          0 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1191 </span>            :         {
+<span class="lineNum">    1192 </span><span class="lineNoCov">          0 :                 if(dataHandler-&gt;getSize() &lt;= elementNumber)</span>
+<span class="lineNum">    1193 </span>            :                 {
+<span class="lineNum">    1194 </span><span class="lineNoCov">          0 :                         dataHandler-&gt;setSize(elementNumber + 1);</span>
+<span class="lineNum">    1195 </span>            :                 }
+<span class="lineNum">    1196 </span><span class="lineNoCov">          0 :                 dataHandler-&gt;setDouble(elementNumber, newValue);</span>
+<span class="lineNum">    1197 </span><span class="lineNoCov">          0 :         }</span>
+<span class="lineNum">    1198 </span>            : 
+<span class="lineNum">    1199 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1200 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">    1201 </span>            : 
+<span class="lineNum">    1202 </span>            : 
+<span class="lineNum">    1203 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1204 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1205 </span>            : //
+<span class="lineNum">    1206 </span>            : //
+<span class="lineNum">    1207 </span>            : // Get the requested tag as a string
+<span class="lineNum">    1208 </span>            : //
+<span class="lineNum">    1209 </span>            : //
+<a name="1210"><span class="lineNum">    1210 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1211 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1212 </span><span class="lineCov">       1538 : std::string dataSet::getString(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber)</span>
+<span class="lineNum">    1213 </span>            : {
+<span class="lineNum">    1214 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getString&quot;);
+<span class="lineNum">    1215 </span>            : 
+<span class="lineNum">    1216 </span><span class="lineCov">       1538 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0L, false);</span>
+<span class="lineNum">    1217 </span><span class="lineCov">       3076 :         std::string returnValue;</span>
+<span class="lineNum">    1218 </span><span class="lineCov">       1538 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1219 </span>            :         {
+<span class="lineNum">    1220 </span><span class="lineCov">       1536 :                 if(dataHandler-&gt;pointerIsValid(elementNumber))</span>
+<span class="lineNum">    1221 </span>            :                 {
+<span class="lineNum">    1222 </span><span class="lineCov">       1024 :                         returnValue = dataHandler-&gt;getString(elementNumber);</span>
+<span class="lineNum">    1223 </span>            :                 }
+<span class="lineNum">    1224 </span>            :         }
+<span class="lineNum">    1225 </span>            : 
+<span class="lineNum">    1226 </span><span class="lineCov">       3076 :         return returnValue;</span>
+<span class="lineNum">    1227 </span>            : 
+<span class="lineNum">    1228 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1229 </span>            : }
+<span class="lineNum">    1230 </span>            : 
+<span class="lineNum">    1231 </span>            : 
+<span class="lineNum">    1232 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1233 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1234 </span>            : //
+<span class="lineNum">    1235 </span>            : //
+<span class="lineNum">    1236 </span>            : // Get the requested tag as an unicode string
+<span class="lineNum">    1237 </span>            : //
+<span class="lineNum">    1238 </span>            : //
+<a name="1239"><span class="lineNum">    1239 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1240 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1241 </span><span class="lineCov">      10399 : std::wstring dataSet::getUnicodeString(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber)</span>
+<span class="lineNum">    1242 </span>            : {
+<span class="lineNum">    1243 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getUnicodeString&quot;);
+<span class="lineNum">    1244 </span>            : 
+<span class="lineNum">    1245 </span><span class="lineCov">      10399 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0L, false);</span>
+<span class="lineNum">    1246 </span><span class="lineCov">      20798 :         std::wstring returnValue;</span>
+<span class="lineNum">    1247 </span><span class="lineCov">      10399 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1248 </span>            :         {
+<span class="lineNum">    1249 </span><span class="lineCov">      10394 :                 if(dataHandler-&gt;pointerIsValid(elementNumber))</span>
+<span class="lineNum">    1250 </span>            :                 {
+<span class="lineNum">    1251 </span><span class="lineCov">      10369 :                         returnValue = dataHandler-&gt;getUnicodeString(elementNumber);</span>
+<span class="lineNum">    1252 </span>            :                 }
+<span class="lineNum">    1253 </span>            :         }
+<span class="lineNum">    1254 </span>            : 
+<span class="lineNum">    1255 </span><span class="lineCov">      20798 :         return returnValue;</span>
+<span class="lineNum">    1256 </span>            : 
+<span class="lineNum">    1257 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1258 </span>            : }
+<span class="lineNum">    1259 </span>            : 
+<span class="lineNum">    1260 </span>            : 
+<span class="lineNum">    1261 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1262 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1263 </span>            : //
+<span class="lineNum">    1264 </span>            : //
+<span class="lineNum">    1265 </span>            : // Set the requested tag as a string
+<span class="lineNum">    1266 </span>            : //
+<span class="lineNum">    1267 </span>            : //
+<a name="1268"><span class="lineNum">    1268 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1269 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1270 </span><span class="lineCov">       1538 : void dataSet::setString(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber, std::string newString, std::string defaultType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1271 </span>            : {
+<span class="lineNum">    1272 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setString&quot;);
+<span class="lineNum">    1273 </span>            : 
+<span class="lineNum">    1274 </span><span class="lineCov">       1538 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0L, true, defaultType);</span>
+<span class="lineNum">    1275 </span><span class="lineCov">       1538 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1276 </span>            :         {
+<span class="lineNum">    1277 </span><span class="lineCov">       1538 :                 if(dataHandler-&gt;getSize() &lt;= elementNumber)</span>
+<span class="lineNum">    1278 </span>            :                 {
+<span class="lineNum">    1279 </span><span class="lineCov">       1536 :                         dataHandler-&gt;setSize(elementNumber + 1);</span>
+<span class="lineNum">    1280 </span>            :                 }
+<span class="lineNum">    1281 </span><span class="lineCov">       1538 :                 dataHandler-&gt;setString(elementNumber, newString);</span>
+<span class="lineNum">    1282 </span><span class="lineCov">       1538 :         }</span>
+<span class="lineNum">    1283 </span>            : 
+<span class="lineNum">    1284 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1285 </span><span class="lineCov">       1538 : }</span>
+<span class="lineNum">    1286 </span>            : 
+<span class="lineNum">    1287 </span>            : 
+<span class="lineNum">    1288 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1289 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1290 </span>            : //
+<span class="lineNum">    1291 </span>            : //
+<span class="lineNum">    1292 </span>            : // Set the requested tag as a string
+<span class="lineNum">    1293 </span>            : //
+<span class="lineNum">    1294 </span>            : //
+<a name="1295"><span class="lineNum">    1295 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1296 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1297 </span><span class="lineCov">        627 : void dataSet::setUnicodeString(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t elementNumber, std::wstring newString, std::string defaultType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1298 </span>            : {
+<span class="lineNum">    1299 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::setUnicodeString&quot;);
+<span class="lineNum">    1300 </span>            : 
+<span class="lineNum">    1301 </span><span class="lineCov">        627 :         ptr&lt;handlers::dataHandler&gt; dataHandler=getDataHandler(groupId, order, tagId, 0L, true, defaultType);</span>
+<span class="lineNum">    1302 </span><span class="lineCov">        627 :         if(dataHandler != 0)</span>
+<span class="lineNum">    1303 </span>            :         {
+<span class="lineNum">    1304 </span><span class="lineCov">        627 :                 if(dataHandler-&gt;getSize() &lt;= elementNumber)</span>
+<span class="lineNum">    1305 </span>            :                 {
+<span class="lineNum">    1306 </span><span class="lineCov">        592 :                         dataHandler-&gt;setSize(elementNumber + 1);</span>
+<span class="lineNum">    1307 </span>            :                 }
+<span class="lineNum">    1308 </span><span class="lineCov">        627 :                 dataHandler-&gt;setUnicodeString(elementNumber, newString);</span>
+<span class="lineNum">    1309 </span><span class="lineCov">        627 :         }</span>
+<span class="lineNum">    1310 </span>            : 
+<span class="lineNum">    1311 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1312 </span><span class="lineCov">        627 : }</span>
+<span class="lineNum">    1313 </span>            : 
+<span class="lineNum">    1314 </span>            : 
+<span class="lineNum">    1315 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1316 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1317 </span>            : //
+<span class="lineNum">    1318 </span>            : //
+<span class="lineNum">    1319 </span>            : // Get a data handler for the requested tag
+<span class="lineNum">    1320 </span>            : //
+<span class="lineNum">    1321 </span>            : //
+<a name="1322"><span class="lineNum">    1322 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1323 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1324 </span><span class="lineCov">      55006 : ptr&lt;handlers::dataHandler&gt; dataSet::getDataHandler(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t bufferId, bool bWrite, std::string defaultType /* =&quot;&quot; */)</span>
+<span class="lineNum">    1325 </span>            : {
+<span class="lineNum">    1326 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getDataHandler&quot;);
+<span class="lineNum">    1327 </span>            : 
+<span class="lineNum">    1328 </span><span class="lineCov">      55006 :         lockObject lockAccess(this);</span>
+<span class="lineNum">    1329 </span>            : 
+<span class="lineNum">    1330 </span><span class="lineCov">     110012 :         ptr&lt;dataGroup&gt;    group=getGroup(groupId, order, bWrite);</span>
+<span class="lineNum">    1331 </span>            : 
+<span class="lineNum">    1332 </span><span class="lineCov">     110012 :         ptr&lt;handlers::dataHandler&gt; pDataHandler;</span>
+<span class="lineNum">    1333 </span>            : 
+<span class="lineNum">    1334 </span><span class="lineCov">      55006 :         if(group == 0)</span>
+<span class="lineNum">    1335 </span>            :         {
+<span class="lineNum">    1336 </span><span class="lineCov">         35 :                 return pDataHandler;</span>
+<span class="lineNum">    1337 </span>            :         }
+<span class="lineNum">    1338 </span>            : 
+<span class="lineNum">    1339 </span><span class="lineCov">      54971 :         if(defaultType.length()!=2L)</span>
+<span class="lineNum">    1340 </span>            :         {
+<span class="lineNum">    1341 </span><span class="lineCov">      54906 :                 defaultType=getDefaultDataType(groupId, tagId);</span>
+<span class="lineNum">    1342 </span>            :         }
+<span class="lineNum">    1343 </span>            : 
+<span class="lineNum">    1344 </span><span class="lineCov">      54971 :         pDataHandler = group-&gt;getDataHandler(tagId, bufferId, bWrite, defaultType);</span>
+<span class="lineNum">    1345 </span>            : 
+<span class="lineNum">    1346 </span><span class="lineCov">     109977 :         return pDataHandler;</span>
+<span class="lineNum">    1347 </span>            : 
+<span class="lineNum">    1348 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1349 </span>            : }
+<span class="lineNum">    1350 </span>            : 
+<span class="lineNum">    1351 </span>            : 
+<span class="lineNum">    1352 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1353 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1354 </span>            : //
+<span class="lineNum">    1355 </span>            : //
+<span class="lineNum">    1356 </span>            : // Get a stream reader that works on the specified tag
+<span class="lineNum">    1357 </span>            : //
+<span class="lineNum">    1358 </span>            : //
+<a name="1359"><span class="lineNum">    1359 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1360 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1361 </span><span class="lineCov">       1152 : ptr&lt;streamReader&gt; dataSet::getStreamReader(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t bufferId)</span>
+<span class="lineNum">    1362 </span>            : {
+<span class="lineNum">    1363 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getStream&quot;);
+<span class="lineNum">    1364 </span>            : 
+<span class="lineNum">    1365 </span><span class="lineCov">       1152 :         lockObject lockAccess(this);</span>
+<span class="lineNum">    1366 </span>            : 
+<span class="lineNum">    1367 </span><span class="lineCov">       2304 :         ptr&lt;dataGroup&gt;    group=getGroup(groupId, order, false);</span>
+<span class="lineNum">    1368 </span>            : 
+<span class="lineNum">    1369 </span><span class="lineCov">       2304 :         ptr&lt;streamReader&gt; returnStream;</span>
+<span class="lineNum">    1370 </span>            : 
+<span class="lineNum">    1371 </span><span class="lineCov">       1152 :         if(group != 0)</span>
+<span class="lineNum">    1372 </span>            :         {
+<span class="lineNum">    1373 </span><span class="lineCov">        384 :                 returnStream = group-&gt;getStreamReader(tagId, bufferId);</span>
+<span class="lineNum">    1374 </span>            :         }
+<span class="lineNum">    1375 </span>            : 
+<span class="lineNum">    1376 </span><span class="lineCov">       2304 :         return returnStream;</span>
+<span class="lineNum">    1377 </span>            : 
+<span class="lineNum">    1378 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1379 </span>            : }
+<span class="lineNum">    1380 </span>            : 
+<span class="lineNum">    1381 </span>            : 
+<span class="lineNum">    1382 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1383 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1384 </span>            : //
+<span class="lineNum">    1385 </span>            : //
+<span class="lineNum">    1386 </span>            : // Retrieve a stream writer for the specified tag
+<span class="lineNum">    1387 </span>            : //
+<span class="lineNum">    1388 </span>            : //
+<a name="1389"><span class="lineNum">    1389 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1390 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1391 </span><span class="lineCov">        780 : ptr&lt;streamWriter&gt; dataSet::getStreamWriter(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t bufferId, std::string dataType /* = &quot;&quot; */)</span>
+<span class="lineNum">    1392 </span>            : {
+<span class="lineNum">    1393 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getStream&quot;);
+<span class="lineNum">    1394 </span>            : 
+<span class="lineNum">    1395 </span><span class="lineCov">        780 :         lockObject lockAccess(this);</span>
+<span class="lineNum">    1396 </span>            : 
+<span class="lineNum">    1397 </span><span class="lineCov">       1560 :         ptr&lt;dataGroup&gt;    group=getGroup(groupId, order, true);</span>
+<span class="lineNum">    1398 </span>            : 
+<span class="lineNum">    1399 </span><span class="lineCov">       1560 :         ptr&lt;streamWriter&gt; returnStream;</span>
+<span class="lineNum">    1400 </span>            : 
+<span class="lineNum">    1401 </span><span class="lineCov">        780 :         if(group != 0)</span>
+<span class="lineNum">    1402 </span>            :         {
+<span class="lineNum">    1403 </span><span class="lineCov">        780 :                 returnStream = group-&gt;getStreamWriter(tagId, bufferId, dataType);</span>
+<span class="lineNum">    1404 </span>            :         }
+<span class="lineNum">    1405 </span>            : 
+<span class="lineNum">    1406 </span><span class="lineCov">       1560 :         return returnStream;</span>
+<span class="lineNum">    1407 </span>            : 
+<span class="lineNum">    1408 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1409 </span>            : }
+<span class="lineNum">    1410 </span>            : 
+<span class="lineNum">    1411 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1412 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1413 </span>            : //
+<span class="lineNum">    1414 </span>            : //
+<span class="lineNum">    1415 </span>            : // Get a raw data handler for the requested tag
+<span class="lineNum">    1416 </span>            : //
+<span class="lineNum">    1417 </span>            : //
+<a name="1418"><span class="lineNum">    1418 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1419 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1420 </span><span class="lineCov">      14209 : ptr&lt;handlers::dataHandlerRaw&gt; dataSet::getDataHandlerRaw(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId, std::uint32_t bufferId, bool bWrite, std::string defaultType /* =&quot;&quot; */)</span>
+<span class="lineNum">    1421 </span>            : {
+<span class="lineNum">    1422 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getDataHandlerRaw&quot;);
+<span class="lineNum">    1423 </span>            : 
+<span class="lineNum">    1424 </span><span class="lineCov">      14209 :         lockObject lockAccess(this);</span>
+<span class="lineNum">    1425 </span>            : 
+<span class="lineNum">    1426 </span><span class="lineCov">      28418 :         ptr&lt;dataGroup&gt;    group=getGroup(groupId, order, bWrite);</span>
+<span class="lineNum">    1427 </span>            : 
+<span class="lineNum">    1428 </span><span class="lineCov">      14209 :         if(group == 0)</span>
+<span class="lineNum">    1429 </span>            :         {
+<span class="lineNum">    1430 </span><span class="lineCov">        658 :                 ptr&lt;handlers::dataHandlerRaw&gt; emptyDataHandler;</span>
+<span class="lineNum">    1431 </span><span class="lineCov">        658 :                 return emptyDataHandler;</span>
+<span class="lineNum">    1432 </span>            :         }
+<span class="lineNum">    1433 </span>            : 
+<span class="lineNum">    1434 </span><span class="lineCov">      13551 :         if(defaultType.length()!=2)</span>
+<span class="lineNum">    1435 </span>            :         {
+<span class="lineNum">    1436 </span><span class="lineCov">       2874 :                 defaultType=getDefaultDataType(groupId, tagId);</span>
+<span class="lineNum">    1437 </span>            :         }
+<span class="lineNum">    1438 </span>            : 
+<span class="lineNum">    1439 </span><span class="lineCov">      27760 :         return group-&gt;getDataHandlerRaw(tagId, bufferId, bWrite, defaultType);</span>
+<span class="lineNum">    1440 </span>            : 
+<span class="lineNum">    1441 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1442 </span>            : }
+<span class="lineNum">    1443 </span>            : 
+<span class="lineNum">    1444 </span>            : 
+<span class="lineNum">    1445 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1446 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1447 </span>            : //
+<span class="lineNum">    1448 </span>            : //
+<span class="lineNum">    1449 </span>            : // Retrieve the requested tag's default data type
+<span class="lineNum">    1450 </span>            : //
+<span class="lineNum">    1451 </span>            : //
+<a name="1452"><span class="lineNum">    1452 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1453 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1454 </span><span class="lineCov">      59832 : std::string dataSet::getDefaultDataType(std::uint16_t groupId, std::uint16_t tagId)</span>
+<span class="lineNum">    1455 </span>            : {
+<span class="lineNum">    1456 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getDefaultDataType&quot;);
+<span class="lineNum">    1457 </span>            : 
+<span class="lineNum">    1458 </span><span class="lineCov">      59832 :         return dicomDictionary::getDicomDictionary()-&gt;getTagType(groupId, tagId);</span>
+<span class="lineNum">    1459 </span>            : 
+<span class="lineNum">    1460 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">    1461 </span>            : }
+<span class="lineNum">    1462 </span>            : 
+<span class="lineNum">    1463 </span>            : 
+<span class="lineNum">    1464 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1465 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1466 </span>            : //
+<span class="lineNum">    1467 </span>            : //
+<span class="lineNum">    1468 </span>            : // Get the data type of a tag
+<span class="lineNum">    1469 </span>            : //
+<span class="lineNum">    1470 </span>            : //
+<a name="1471"><span class="lineNum">    1471 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1472 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1473 </span><span class="lineCov">       4661 : std::string dataSet::getDataType(std::uint16_t groupId, std::uint16_t order, std::uint16_t tagId)</span>
+<span class="lineNum">    1474 </span>            : {
+<span class="lineNum">    1475 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;dataSet::getDataType&quot;);
+<span class="lineNum">    1476 </span>            : 
+<span class="lineNum">    1477 </span><span class="lineCov">       4661 :         std::string bufferType;</span>
+<span class="lineNum">    1478 </span>            : 
+<span class="lineNum">    1479 </span><span class="lineCov">       9322 :         ptr&lt;data&gt; tag = getTag(groupId, order, tagId, false);</span>
+<span class="lineNum">    1480 </span><span class="lineCov">       4661 :         if(tag != 0)</span>
+<span class="lineNum">    1481 </span>            :         {
+<span class="lineNum">    1482 </span><span class="lineCov">       3101 :                 bufferType = tag-&gt;getDataType();</span>
+<span class="lineNum">    1483 </span>            :         }
+<span class="lineNum">    1484 </span><span class="lineCov">       9322 :         return bufferType;</span>
+<span class="lineNum">    1485 </span>            : 
+<span class="lineNum">    1486 </span>            :         PUNTOEXE_FUNCTION_END();
+<a name="1487"><span class="lineNum">    1487 </span>            : }</a>
+<span class="lineNum">    1488 </span>            : 
+<span class="lineNum">    1489 </span><span class="lineCov">        522 : void dataSet::updateCharsetTag()</span>
+<span class="lineNum">    1490 </span>            : {
+<span class="lineNum">    1491 </span><span class="lineCov">        522 :         charsetsList::tCharsetsList charsets;</span>
+<span class="lineNum">    1492 </span><span class="lineCov">        522 :         getCharsetsList(&amp;charsets);</span>
+<span class="lineNum">    1493 </span><span class="lineCov">       1044 :         ptr&lt;handlers::dataHandler&gt; charsetHandler(getDataHandler(0x0008, 0, 0x0005, 0, true));</span>
+<span class="lineNum">    1494 </span><span class="lineCov">        522 :         charsetHandler-&gt;setSize((std::uint32_t)(charsets.size()));</span>
+<span class="lineNum">    1495 </span><span class="lineCov">        522 :         std::uint32_t pointer(0);</span>
+<span class="lineNum">    1496 </span><span class="lineCov">       1041 :         for(charsetsList::tCharsetsList::iterator scanCharsets = charsets.begin(); scanCharsets != charsets.end(); ++scanCharsets)</span>
+<span class="lineNum">    1497 </span>            :         {
+<span class="lineNum">    1498 </span><span class="lineCov">        519 :         charsetHandler-&gt;setString(pointer++, *scanCharsets);</span>
+<span class="lineNum">    1499 </span><span class="lineCov">        522 :         }</span>
+<span class="lineNum">    1500 </span><span class="lineCov">        522 : }</span>
+<span class="lineNum">    1501 </span>            : 
+<span class="lineNum">    1502 </span>            : 
+<span class="lineNum">    1503 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1504 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1505 </span>            : //
+<span class="lineNum">    1506 </span>            : //
+<span class="lineNum">    1507 </span>            : // Update the list of the used charsets
+<span class="lineNum">    1508 </span>            : //
+<span class="lineNum">    1509 </span>            : //
+<a name="1510"><span class="lineNum">    1510 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1511 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1512 </span><span class="lineCov">        537 : void dataSet::updateTagsCharset()</span>
+<span class="lineNum">    1513 </span>            : {
+<span class="lineNum">    1514 </span><span class="lineCov">        537 :         charsetsList::tCharsetsList charsets;</span>
+<span class="lineNum">    1515 </span><span class="lineCov">       1074 :         ptr&lt;handlers::dataHandler&gt; charsetHandler(getDataHandler(0x0008, 0, 0x0005, 0, false));</span>
+<span class="lineNum">    1516 </span><span class="lineCov">        537 :         if(charsetHandler != 0)</span>
+<span class="lineNum">    1517 </span>            :         {
+<span class="lineNum">    1518 </span><span class="lineCov">       1039 :                 for(std::uint32_t pointer(0); charsetHandler-&gt;pointerIsValid(pointer); ++pointer)</span>
+<span class="lineNum">    1519 </span>            :                 {
+<span class="lineNum">    1520 </span><span class="lineCov">        518 :             charsets.push_back(charsetHandler-&gt;getString(pointer));</span>
+<span class="lineNum">    1521 </span>            :                 }
+<span class="lineNum">    1522 </span>            :         }
+<span class="lineNum">    1523 </span><span class="lineCov">       1074 :         setCharsetsList(&amp;charsets);</span>
+<span class="lineNum">    1524 </span><span class="lineCov">        537 : }</span>
+<span class="lineNum">    1525 </span>            : 
+<span class="lineNum">    1526 </span>            : 
+<span class="lineNum">    1527 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1528 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1529 </span>            : //
+<span class="lineNum">    1530 </span>            : //
+<span class="lineNum">    1531 </span>            : // Set the item's position in the stream
+<span class="lineNum">    1532 </span>            : //
+<span class="lineNum">    1533 </span>            : //
+<a name="1534"><span class="lineNum">    1534 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1535 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1536 </span><span class="lineCov">          9 : void dataSet::setItemOffset(std::uint32_t offset)</span>
+<span class="lineNum">    1537 </span>            : {
+<span class="lineNum">    1538 </span><span class="lineCov">          9 :         m_itemOffset = offset;</span>
+<span class="lineNum">    1539 </span><span class="lineCov">          9 : }</span>
+<span class="lineNum">    1540 </span>            : 
+<span class="lineNum">    1541 </span>            : 
+<span class="lineNum">    1542 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1543 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1544 </span>            : //
+<span class="lineNum">    1545 </span>            : //
+<span class="lineNum">    1546 </span>            : // Get the item's position in the stream
+<span class="lineNum">    1547 </span>            : //
+<span class="lineNum">    1548 </span>            : //
+<a name="1549"><span class="lineNum">    1549 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">    1550 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">    1551 </span><span class="lineCov">          8 : std::uint32_t dataSet::getItemOffset()</span>
+<span class="lineNum">    1552 </span>            : {
+<span class="lineNum">    1553 </span><span class="lineCov">          8 :         return m_itemOffset;</span>
+<span class="lineNum">    1554 </span>            : }
+<span class="lineNum">    1555 </span>            : 
+<span class="lineNum">    1556 </span>            : 
+<a name="1557"><span class="lineNum">    1557 </span>            : } // namespace imebra</a>
+<span class="lineNum">    1558 </span>            : 
+<span class="lineNum">    1559 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

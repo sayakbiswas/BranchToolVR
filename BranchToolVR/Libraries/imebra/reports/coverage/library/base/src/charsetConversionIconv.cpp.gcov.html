@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/src/charsetConversionIconv.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/src</a> - charsetConversionIconv.cpp<span style="font-size: 80%;"> (source / <a href="charsetConversionIconv.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">39</td>
+            <td class="headerCovTableEntry">40</td>
+            <td class="headerCovTableEntryHi">97.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file charsetConversionIconv.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the charsetConversion class using Iconv.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../include/configuration.h&quot;
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : #if defined(PUNTOEXE_USE_ICONV)
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &quot;../include/exception.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../include/charsetConversionIconv.h&quot;
+<span class="lineNum">      59 </span>            : #include &lt;memory&gt;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : namespace puntoexe
+<span class="lineNum">      62 </span>            : {
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      65 </span>            : //
+<span class="lineNum">      66 </span>            : // Constructor
+<a name="67"><span class="lineNum">      67 </span>            : //</a>
+<span class="lineNum">      68 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      69 </span><span class="lineCov">       7115 : charsetConversionIconv::charsetConversionIconv(const std::string&amp; dicomName)</span>
+<span class="lineNum">      70 </span>            : {
+<span class="lineNum">      71 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;charsetConversion::charsetConversionIconv&quot;);
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span><span class="lineCov">       7063 :     const charsetInformation&amp; info(getDictionary().getCharsetInformation(dicomName));</span>
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span><span class="lineCov">       7063 :     std::string toCodeIgnore(info.m_isoRegistration);</span>
+<span class="lineNum">      76 </span><span class="lineCov">       7063 :     toCodeIgnore += &quot;//IGNORE&quot;;</span>
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            :     // Check little endian/big endian
+<span class="lineNum">      79 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">      80 </span>            :     static std::uint16_t m_endianCheck=0x00ff;
+<span class="lineNum">      81 </span>            :     const char* utfCode;
+<span class="lineNum">      82 </span>            :     switch(sizeof(wchar_t))
+<span class="lineNum">      83 </span>            :     {
+<span class="lineNum">      84 </span>            :     case 2:
+<span class="lineNum">      85 </span>            :         utfCode = (*((std::uint8_t*)&amp;m_endianCheck) == 0xff) ? &quot;UTF-16LE&quot; : &quot;UTF-16BE&quot;;
+<span class="lineNum">      86 </span>            :         break;
+<span class="lineNum">      87 </span>            :     case 4:
+<span class="lineNum">      88 </span><span class="lineCov">       7063 :         utfCode = (*((std::uint8_t*)&amp;m_endianCheck) == 0xff) ? &quot;UTF-32LE&quot; : &quot;UTF-32BE&quot;;</span>
+<span class="lineNum">      89 </span><span class="lineCov">       7063 :         break;</span>
+<span class="lineNum">      90 </span>            :     default:
+<span class="lineNum">      91 </span>            :         PUNTOEXE_THROW(charsetConversionExceptionUtfSizeNotSupported, &quot;The system utf size is not supported&quot;);
+<span class="lineNum">      92 </span>            :     }
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span><span class="lineCov">       7063 :     m_iconvToUnicode = iconv_open(utfCode, info.m_isoRegistration.c_str());</span>
+<span class="lineNum">      95 </span><span class="lineCov">       7063 :     m_iconvFromUnicode = iconv_open(toCodeIgnore.c_str(), utfCode);</span>
+<span class="lineNum">      96 </span><span class="lineCov">       7063 :     if(m_iconvToUnicode == (iconv_t)-1 || m_iconvFromUnicode == (iconv_t)-1)</span>
+<span class="lineNum">      97 </span>            :     {
+<span class="lineNum">      98 </span><span class="lineCov">         52 :         std::ostringstream buildErrorString;</span>
+<span class="lineNum">      99 </span><span class="lineCov">         52 :         buildErrorString &lt;&lt; &quot;Table &quot; &lt;&lt; info.m_isoRegistration &lt;&lt; &quot; not supported by the system&quot;;</span>
+<span class="lineNum">     100 </span><span class="lineCov">         52 :         PUNTOEXE_THROW(charsetConversionExceptionNoSupportedTable, buildErrorString.str());</span>
+<span class="lineNum">     101 </span><span class="lineCov">       7063 :     }</span>
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :     PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     104 </span><span class="lineCov">       7011 : }</span>
+<span class="lineNum">     105 </span>            : 
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     108 </span>            : //
+<span class="lineNum">     109 </span>            : // Destructor
+<a name="110"><span class="lineNum">     110 </span>            : //</a>
+<span class="lineNum">     111 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     112 </span><span class="lineCov">      20909 : charsetConversionIconv::~charsetConversionIconv()</span>
+<span class="lineNum">     113 </span>            : {
+<span class="lineNum">     114 </span><span class="lineCov">       7011 :     iconv_close(m_iconvToUnicode);</span>
+<span class="lineNum">     115 </span><span class="lineCov">       7011 :     iconv_close(m_iconvFromUnicode);</span>
+<span class="lineNum">     116 </span><span class="lineCov">      13898 : }</span>
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     119 </span>            : //
+<span class="lineNum">     120 </span>            : // Convert a string from unicode to multibyte
+<a name="121"><span class="lineNum">     121 </span>            : //</a>
+<span class="lineNum">     122 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     123 </span><span class="lineCov">      21563 : std::string charsetConversionIconv::fromUnicode(const std::wstring&amp; unicodeString) const</span>
+<span class="lineNum">     124 </span>            : {
+<span class="lineNum">     125 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;charsetConversionIconv::fromUnicode&quot;);
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span><span class="lineCov">      21563 :         if(unicodeString.empty())</span>
+<span class="lineNum">     128 </span>            :         {
+<span class="lineNum">     129 </span><span class="lineNoCov">          0 :                 return std::string();</span>
+<span class="lineNum">     130 </span>            :         }
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span><span class="lineCov">      21563 :         return myIconv(m_iconvFromUnicode, (char*)unicodeString.c_str(), unicodeString.length() * sizeof(wchar_t));</span>
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     135 </span>            : }
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     139 </span>            : //
+<span class="lineNum">     140 </span>            : // Convert a string from multibyte to unicode
+<a name="141"><span class="lineNum">     141 </span>            : //</a>
+<span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     143 </span><span class="lineCov">       4520 : std::wstring charsetConversionIconv::toUnicode(const std::string&amp; asciiString) const</span>
+<span class="lineNum">     144 </span>            : {
+<span class="lineNum">     145 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;charsetConversionIconv::toUnicode&quot;);
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span><span class="lineCov">       4520 :         if(asciiString.empty())</span>
+<span class="lineNum">     148 </span>            :         {
+<span class="lineNum">     149 </span><span class="lineCov">        512 :                 return std::wstring();</span>
+<span class="lineNum">     150 </span>            :         }
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span><span class="lineCov">       4008 :         std::string convertedString(myIconv(m_iconvToUnicode, (char*)asciiString.c_str(), asciiString.length()));</span>
+<span class="lineNum">     153 </span><span class="lineCov">       8016 :         std::wstring returnString((wchar_t*)convertedString.c_str(), convertedString.size() / sizeof(wchar_t));</span>
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span><span class="lineCov">       8016 :     return returnString;</span>
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     158 </span>            : }
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     162 </span>            : //
+<span class="lineNum">     163 </span>            : // In Posix systems executes an iconv
+<span class="lineNum">     164 </span>            : //
+<span class="lineNum">     165 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     166 </span>            : #if defined(PUNTOEXE_WINDOWS)
+<a name="167"><span class="lineNum">     167 </span>            : std::string charsetConversionIconv::myIconv(iconv_t context, const char* inputString, size_t inputStringLengthBytes) const</a>
+<span class="lineNum">     168 </span>            : #else
+<span class="lineNum">     169 </span><span class="lineCov">      25571 : std::string charsetConversionIconv::myIconv(iconv_t context, char* inputString, size_t inputStringLengthBytes) const</span>
+<span class="lineNum">     170 </span>            : #endif
+<span class="lineNum">     171 </span>            : {
+<span class="lineNum">     172 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;charsetConversion::myIconv&quot;);
+<span class="lineNum">     173 </span>            : 
+<span class="lineNum">     174 </span><span class="lineCov">      25571 :         std::string finalString;</span>
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            :         // Reset the state
+<span class="lineNum">     177 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     178 </span><span class="lineCov">      25571 :         iconv(context, 0, 0, 0, 0);</span>
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            :         // Buffer for the conversion
+<span class="lineNum">     181 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     182 </span>            :         char conversionBuffer[1024];
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            :         // Convert the string
+<span class="lineNum">     185 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     186 </span><span class="lineCov">      76628 :         for(size_t iconvReturn = (size_t)-1; iconvReturn == (size_t)-1;)</span>
+<span class="lineNum">     187 </span>            :         {
+<span class="lineNum">     188 </span>            :                 // Executes the conversion
+<span class="lineNum">     189 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     190 </span><span class="lineCov">      25571 :                 size_t progressiveOutputBufferSize = sizeof(conversionBuffer);</span>
+<span class="lineNum">     191 </span><span class="lineCov">      25571 :                 char* progressiveOutputBuffer(conversionBuffer);</span>
+<span class="lineNum">     192 </span><span class="lineCov">      25571 :                 iconvReturn = iconv(context, &amp;inputString, &amp;inputStringLengthBytes, &amp;progressiveOutputBuffer, &amp;progressiveOutputBufferSize);</span>
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            :                 // Update buffer's size
+<span class="lineNum">     195 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     196 </span><span class="lineCov">      25571 :                 size_t outputLengthBytes = sizeof(conversionBuffer) - progressiveOutputBufferSize;</span>
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span><span class="lineCov">      25571 :                 finalString.append(conversionBuffer, outputLengthBytes);</span>
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            :                 // Throw if an invalid sequence is found
+<span class="lineNum">     201 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     202 </span><span class="lineCov">      25571 :                 if(iconvReturn == (size_t)-1 &amp;&amp; errno != E2BIG)</span>
+<span class="lineNum">     203 </span>            :                 {
+<span class="lineNum">     204 </span><span class="lineCov">         85 :                     return std::string();</span>
+<span class="lineNum">     205 </span>            :                 }
+<span class="lineNum">     206 </span>            :         }
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span><span class="lineCov">      25486 :         return finalString;</span>
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     211 </span>            : }
+<span class="lineNum">     212 </span>            : 
+<span class="lineNum">     213 </span>            : } // namespace puntoexe
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

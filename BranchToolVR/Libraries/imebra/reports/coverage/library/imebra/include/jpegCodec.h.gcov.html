@@ -1,0 +1,794 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/jpegCodec.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - jpegCodec.h<span style="font-size: 80%;"> (source / <a href="jpegCodec.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntryMed">86.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntry">37</td>
+            <td class="headerCovTableEntryMed">81.1 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file jpegCodec.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the class jpegCodec.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraJpegCodec_7F63E846_8824_42c6_A048_DD59C657AED4__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraJpegCodec_7F63E846_8824_42c6_A048_DD59C657AED4__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;codec.h&quot;
+<span class="lineNum">      57 </span>            : #include &lt;map&gt;
+<span class="lineNum">      58 </span>            : #include &lt;list&gt;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      61 </span>            : //
+<span class="lineNum">      62 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">      63 </span>            : //
+<span class="lineNum">      64 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      65 </span>            : namespace puntoexe
+<span class="lineNum">      66 </span>            : {
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : class huffmanTable;
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : namespace imebra
+<span class="lineNum">      71 </span>            : {
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : namespace codecs
+<span class="lineNum">      74 </span>            : {
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : /// \addtogroup group_codecs
+<span class="lineNum">      77 </span>            : ///
+<span class="lineNum">      78 </span>            : /// @{
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            : // The following classes are used in the jpegCodec
+<span class="lineNum">      81 </span>            : //  declaration
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span>            : namespace jpeg
+<span class="lineNum">      84 </span>            : {
+<span class="lineNum">      85 </span>            :         class tag;
+<span class="lineNum">      86 </span>            :         class jpegChannel;
+<span class="lineNum">      87 </span>            : }
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      90 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      91 </span>            : /// \brief The Jpeg codec.
+<span class="lineNum">      92 </span>            : ///
+<span class="lineNum">      93 </span>            : /// This class is used to decode and encode a Jpeg stream.
+<span class="lineNum">      94 </span>            : ///
+<span class="lineNum">      95 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      97 </span>            : class jpegCodec : public codec
+<span class="lineNum">      98 </span>            : {
+<span class="lineNum">      99 </span>            :         friend class jpeg::tag;
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            : public:
+<span class="lineNum">     102 </span>            :         // Constructor
+<span class="lineNum">     103 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     104 </span>            :         jpegCodec();
+<span class="lineNum">     105 </span>            : 
+<span class="lineNum">     106 </span>            :         // Allocate the image's channels
+<span class="lineNum">     107 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     108 </span>            :         void allocChannels();
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            :         // Find the mcu's size
+<span class="lineNum">     111 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     112 </span>            :         void findMcuSize();
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            :         // Recalculate the tables for dequantization/quantization
+<span class="lineNum">     115 </span>            :         void recalculateQuantizationTables(int table);
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :         // Erase the allocated channels
+<span class="lineNum">     119 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     120 </span>            :         void eraseChannels();
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            :         // Retrieve the image from a dataset
+<span class="lineNum">     123 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     124 </span>            :         virtual ptr&lt;image&gt; getImage(ptr&lt;dataSet&gt; sourceDataSet, ptr&lt;streamReader&gt; pStream, std::string dataType);
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            :         // Insert a jpeg compressed image into a dataset
+<span class="lineNum">     127 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            :         virtual void setImage(
+<span class="lineNum">     129 </span>            :                 ptr&lt;streamWriter&gt; pDestStream,
+<span class="lineNum">     130 </span>            :                 ptr&lt;image&gt; pImage,
+<span class="lineNum">     131 </span>            :                 std::wstring transferSyntax,
+<span class="lineNum">     132 </span>            :                 quality imageQuality,
+<span class="lineNum">     133 </span>            :                 std::string dataType,
+<span class="lineNum">     134 </span>            :                 std::uint8_t allocatedBits,
+<span class="lineNum">     135 </span>            :                 bool bSubSampledX,
+<span class="lineNum">     136 </span>            :                 bool bSubSampledY,
+<span class="lineNum">     137 </span>            :                 bool bInterleaved,
+<span class="lineNum">     138 </span>            :                 bool b2Complement);
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :         // Return true if the codec can handle the transfer
+<span class="lineNum">     141 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     142 </span>            :         virtual bool canHandleTransferSyntax(std::wstring transferSyntax);
+<span class="lineNum">     143 </span>            : 
+<span class="lineNum">     144 </span>            :         // Returns true if the transfer syntax has to be
+<span class="lineNum">     145 </span>            :         //  encapsulated
+<span class="lineNum">     146 </span>            :         //
+<span class="lineNum">     147 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     148 </span>            :         virtual bool encapsulated(std::wstring transferSyntax);
+<span class="lineNum">     149 </span>            : 
+<span class="lineNum">     150 </span>            :         // Return the highest bit that the transfer syntax can
+<span class="lineNum">     151 </span>            :         //  handle
+<span class="lineNum">     152 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     153 </span>            :         virtual std::uint32_t getMaxHighBit(std::string transferSyntax);
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            :         // Return the suggested allocated bits
+<span class="lineNum">     156 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     157 </span>            :         virtual std::uint32_t suggestAllocatedBits(std::wstring transferSyntax, std::uint32_t highBit);
+<span class="lineNum">     158 </span>            : 
+<span class="lineNum">     159 </span>            :         // Create another jpeg codec
+<span class="lineNum">     160 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     161 </span>            :         virtual ptr&lt;codec&gt; createCodec();
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            : protected:
+<span class="lineNum">     164 </span>            :         // Destructor
+<span class="lineNum">     165 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     166 </span>            :         virtual ~jpegCodec();
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            :         // Read a jpeg stream and build a Dicom dataset
+<span class="lineNum">     169 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span>            :         virtual void readStream(ptr&lt;streamReader&gt; pSourceStream, ptr&lt;dataSet&gt; pDataSet, std::uint32_t maxSizeBufferLoad = 0xffffffff);
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :         // Write a Dicom dataset as a Jpeg stream
+<span class="lineNum">     173 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     174 </span>            :         virtual void writeStream(ptr&lt;streamWriter&gt; pSourceStream, ptr&lt;dataSet&gt; pDataSet);
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     177 </span>            :         //
+<span class="lineNum">     178 </span>            :         // Image's attributes. Used while reading/writing an image
+<span class="lineNum">     179 </span>            :         //
+<span class="lineNum">     180 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     181 </span>            : public:
+<span class="lineNum">     182 </span>            :         // The image's size, in pixels
+<span class="lineNum">     183 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     184 </span>            :         std::uint32_t m_imageSizeX;
+<span class="lineNum">     185 </span>            :         std::uint32_t m_imageSizeY;
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :         // Encoding process
+<span class="lineNum">     188 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span>            :         std::uint8_t  m_process;
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :         // The bits per color component
+<span class="lineNum">     192 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     193 </span>            :         int m_precision;
+<span class="lineNum">     194 </span>            :         std::int32_t m_valuesMask;
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :         // true when the end of the image has been reached
+<span class="lineNum">     197 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     198 </span>            :         bool m_bEndOfImage;
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            :         // The allocated channels
+<span class="lineNum">     201 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     202 </span>            :         typedef ptr&lt;jpeg::jpegChannel&gt; ptrChannel;
+<span class="lineNum">     203 </span>            :         typedef std::map&lt;std::uint8_t, ptrChannel&gt; tChannelsMap;
+<span class="lineNum">     204 </span>            :         tChannelsMap m_channelsMap;
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :         // The list of the channels in the active scan, zero
+<span class="lineNum">     207 </span>            :         //  terminated
+<span class="lineNum">     208 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     209 </span>            :         jpeg::jpegChannel* m_channelsList[257]; // 256 channels + terminator
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            :         // Huffman tables
+<span class="lineNum">     212 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     213 </span>            :         ptr&lt;huffmanTable&gt; m_pHuffmanTableDC[16];
+<span class="lineNum">     214 </span>            :         ptr&lt;huffmanTable&gt; m_pHuffmanTableAC[16];
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span>            :         //
+<span class="lineNum">     217 </span>            :         // Quantization tables
+<span class="lineNum">     218 </span>            :         //
+<span class="lineNum">     219 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     220 </span>            :         std::uint32_t m_quantizationTable[16][64];
+<span class="lineNum">     221 </span>            : 
+<span class="lineNum">     222 </span>            :         // The number of MCUs per restart interval
+<span class="lineNum">     223 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     224 </span>            :         std::uint16_t m_mcuPerRestartInterval;
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            :         // The number of processed MCUs
+<span class="lineNum">     227 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     228 </span>            :         std::uint32_t m_mcuProcessed;
+<span class="lineNum">     229 </span>            :         std::uint32_t m_mcuProcessedX;
+<span class="lineNum">     230 </span>            :         std::uint32_t m_mcuProcessedY;
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            :         // The length of the EOB run
+<span class="lineNum">     233 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     234 </span>            :         std::uint32_t m_eobRun;
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span>            :         // The last found restart interval
+<span class="lineNum">     237 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     238 </span>            :         std::uint32_t m_mcuLastRestart;
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :         // Spectral index and progressive bits reading
+<span class="lineNum">     241 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     242 </span>            :         std::uint32_t m_spectralIndexStart;
+<span class="lineNum">     243 </span>            :         std::uint32_t m_spectralIndexEnd;
+<span class="lineNum">     244 </span>            :         std::uint32_t m_bitHigh;
+<span class="lineNum">     245 </span>            :         std::uint32_t m_bitLow;
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            :         // true if we are reading a lossless jpeg image
+<span class="lineNum">     248 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     249 </span>            :         bool m_bLossless;
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :         // The maximum sampling factor
+<span class="lineNum">     252 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     253 </span>            :         std::uint32_t m_maxSamplingFactorX;
+<span class="lineNum">     254 </span>            :         std::uint32_t m_maxSamplingFactorY;
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :         // The number of MCUs (horizontal, vertical, total)
+<span class="lineNum">     257 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     258 </span>            :         std::uint32_t m_mcuNumberX;
+<span class="lineNum">     259 </span>            :         std::uint32_t m_mcuNumberY;
+<span class="lineNum">     260 </span>            :         std::uint32_t m_mcuNumberTotal;
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :         // The image's size, rounded to accomodate all the MCUs
+<span class="lineNum">     264 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     265 </span>            :         std::uint32_t m_jpegImageSizeX;
+<span class="lineNum">     266 </span>            :         std::uint32_t m_jpegImageSizeY;
+<span class="lineNum">     267 </span>            : 
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span>            :         // FDCT/IDCT
+<span class="lineNum">     270 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     271 </span>            : public:
+<span class="lineNum">     272 </span>            :         void FDCT(std::int32_t* pIOMatrix, float* pDescaleFactors);
+<span class="lineNum">     273 </span>            :         void IDCT(std::int32_t* pIOMatrix, long long* pScaleFactors);
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            : protected:
+<span class="lineNum">     276 </span>            :         /// \internal
+<span class="lineNum">     277 </span>            :         /// \brief This enumeration contains the tags used by
+<span class="lineNum">     278 </span>            :         ///         the jpeg codec
+<span class="lineNum">     279 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     280 </span>            :         enum tTagId
+<span class="lineNum">     281 </span>            :         {
+<span class="lineNum">     282 </span>            :                 unknown = 0xff,
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            :                 sof0 = 0xc0,
+<span class="lineNum">     285 </span>            :                 sof1 = 0xc1,
+<span class="lineNum">     286 </span>            :                 sof2 = 0xc2,
+<span class="lineNum">     287 </span>            :                 sof3 = 0xc3,
+<span class="lineNum">     288 </span>            : 
+<span class="lineNum">     289 </span>            :                 dht = 0xc4,
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span>            :                 sof5 = 0xc5,
+<span class="lineNum">     292 </span>            :                 sof6 = 0xc6,
+<span class="lineNum">     293 </span>            :                 sof7 = 0xc7,
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span>            :                 sof9 = 0xc9,
+<span class="lineNum">     296 </span>            :                 sofA = 0xca,
+<span class="lineNum">     297 </span>            :                 sofB = 0xcb,
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :                 sofD = 0xcd,
+<span class="lineNum">     300 </span>            :                 sofE = 0xce,
+<span class="lineNum">     301 </span>            :                 sofF = 0xcf,
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            :                 rst0 = 0xd0,
+<span class="lineNum">     304 </span>            :                 rst1 = 0xd1,
+<span class="lineNum">     305 </span>            :                 rst2 = 0xd2,
+<span class="lineNum">     306 </span>            :                 rst3 = 0xd3,
+<span class="lineNum">     307 </span>            :                 rst4 = 0xd4,
+<span class="lineNum">     308 </span>            :                 rst5 = 0xd5,
+<span class="lineNum">     309 </span>            :                 rst6 = 0xd6,
+<span class="lineNum">     310 </span>            :                 rst7 = 0xd7,
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span>            :                 eoi = 0xd9,
+<span class="lineNum">     313 </span>            :                 sos = 0xda,
+<span class="lineNum">     314 </span>            :                 dqt = 0xdb,
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span>            :                 dri = 0xdd
+<span class="lineNum">     317 </span>            :         };
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            :         // Register a tag in the jpeg codec
+<span class="lineNum">     320 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     321 </span>            :         void registerTag(tTagId tagId, ptr&lt;jpeg::tag&gt; pTag);
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :         // Read a lossy block of pixels
+<span class="lineNum">     324 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     325 </span>            :         inline void readBlock(streamReader* pStream, std::int32_t* pBuffer, jpeg::jpegChannel* pChannel);
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :         // Write a lossy block of pixels
+<span class="lineNum">     328 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     329 </span>            :         inline void writeBlock(streamWriter* pStream, std::int32_t* pBuffer, jpeg::jpegChannel* pChannel, bool bCalcHuffman);
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            :         // Reset the internal variables
+<span class="lineNum">     332 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     333 </span>            :         void resetInternal(bool bCompression, quality compQuality);
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            :         void copyJpegChannelsToImage(ptr&lt;image&gt; destImage, bool b2complement, std::wstring colorSpace);
+<span class="lineNum">     336 </span>            :         void copyImageToJpegChannels(ptr&lt;image&gt; sourceImage, bool b2complement, std::uint8_t allocatedBits, bool bSubSampledX, bool bSubSampledY);
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            :         void writeScan(streamWriter* pDestinationStream, bool bCalcHuffman);
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span>            :         void writeTag(streamWriter* pDestinationStream, tTagId tagId);
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :         long long m_decompressionQuantizationTable[16][64];
+<span class="lineNum">     343 </span>            :         float m_compressionQuantizationTable[16][64];
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span>            :         // Map of the available Jpeg tags
+<span class="lineNum">     346 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     347 </span>            :         typedef ptr&lt;jpeg::tag&gt; ptrTag;
+<span class="lineNum">     348 </span>            :         typedef std::map&lt;std::uint8_t, ptrTag&gt; tTagsMap;
+<span class="lineNum">     349 </span>            :         tTagsMap m_tagsMap;
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            :         // temporary matrix used by FDCT
+<span class="lineNum">     352 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     353 </span>            :         float m_fdctTempMatrix[64];
+<span class="lineNum">     354 </span>            : 
+<span class="lineNum">     355 </span>            :         // temporary matrix used by IDCT
+<span class="lineNum">     356 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     357 </span>            :         long long m_idctTempMatrix[64];
+<span class="lineNum">     358 </span>            : };
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            : /// \brief Base class for the exceptions thrown by the
+<span class="lineNum">     361 </span>            : ///        jpeg codec
+<a name="362"><span class="lineNum">     362 </span>            : ///</a>
+<span class="lineNum">     363 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     364 </span><span class="lineNoCov">          0 : class jpegCodecException: public codecException</span>
+<a name="365"><span class="lineNum">     365 </span>            : {</a>
+<span class="lineNum">     366 </span>            : public:
+<span class="lineNum">     367 </span><span class="lineNoCov">          0 :         jpegCodecException(const std::string&amp; message): codecException(message){}</span>
+<span class="lineNum">     368 </span>            : };
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            : /// \brief Exception thrown when the jpeg variant cannot
+<span class="lineNum">     371 </span>            : ///         be handled.
+<a name="372"><span class="lineNum">     372 </span>            : ///</a>
+<span class="lineNum">     373 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     374 </span><span class="lineNoCov">          0 : class jpegCodecCannotHandleSyntax: public jpegCodecException</span>
+<span class="lineNum">     375 </span>            : {
+<span class="lineNum">     376 </span>            : public:
+<span class="lineNum">     377 </span>            :         /// \brief Constructs the exception.
+<span class="lineNum">     378 </span>            :         ///
+<span class="lineNum">     379 </span>            :         /// @param message   the cause of the exception
+<a name="380"><span class="lineNum">     380 </span>            :         ///</a>
+<span class="lineNum">     381 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     382 </span><span class="lineNoCov">          0 :         jpegCodecCannotHandleSyntax(const std::string&amp; message): jpegCodecException(message){}</span>
+<span class="lineNum">     383 </span>            : };
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span>            : /// @}
+<span class="lineNum">     386 </span>            : 
+<span class="lineNum">     387 </span>            : namespace jpeg
+<span class="lineNum">     388 </span>            : {
+<span class="lineNum">     389 </span>            : 
+<span class="lineNum">     390 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     391 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     392 </span>            : //
+<span class="lineNum">     393 </span>            : //
+<span class="lineNum">     394 </span>            : // CImbsJpegCodecChannel
+<span class="lineNum">     395 </span>            : // An image's channel
+<span class="lineNum">     396 </span>            : //
+<span class="lineNum">     397 </span>            : //
+<a name="398"><span class="lineNum">     398 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     399 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     400 </span><span class="lineCov">        408 : class jpegChannel : public channel</span>
+<span class="lineNum">     401 </span>            : {
+<span class="lineNum">     402 </span>            : public:
+<a name="403"><span class="lineNum">     403 </span>            :         // Constructor</a>
+<span class="lineNum">     404 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     405 </span><span class="lineCov">        204 :         jpegChannel():</span>
+<span class="lineNum">     406 </span>            :                 m_quantTable(0),
+<span class="lineNum">     407 </span>            :                 m_blockMcuX(0),
+<span class="lineNum">     408 </span>            :                 m_blockMcuY(0),
+<span class="lineNum">     409 </span>            :                 m_blockMcuXY(0),
+<span class="lineNum">     410 </span>            :                 m_lastDCValue(0),
+<span class="lineNum">     411 </span>            :                 m_defaultDCValue(0),
+<span class="lineNum">     412 </span>            :                 m_losslessPositionX(0),
+<span class="lineNum">     413 </span>            :                 m_losslessPositionY(0),
+<span class="lineNum">     414 </span>            :                 m_unprocessedAmplitudesCount(0),
+<span class="lineNum">     415 </span>            :                 m_unprocessedAmplitudesPredictor(0),
+<span class="lineNum">     416 </span>            :                 m_huffmanTableDC(0),
+<span class="lineNum">     417 </span>            :                 m_huffmanTableAC(0),
+<span class="lineNum">     418 </span>            :                 m_pActiveHuffmanTableDC(0),
+<span class="lineNum">     419 </span>            :                 m_pActiveHuffmanTableAC(0),
+<span class="lineNum">     420 </span><span class="lineCov">        204 :                 m_valuesMask(0){}</span>
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            :         // Quantization table's id
+<span class="lineNum">     423 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     424 </span>            :         int m_quantTable;
+<span class="lineNum">     425 </span>            : 
+<span class="lineNum">     426 </span>            :         // Blocks per MCU
+<span class="lineNum">     427 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     428 </span>            :         int m_blockMcuX;
+<span class="lineNum">     429 </span>            :         int m_blockMcuY;
+<span class="lineNum">     430 </span>            :         int m_blockMcuXY;
+<span class="lineNum">     431 </span>            : 
+<span class="lineNum">     432 </span>            :         // Last DC value
+<span class="lineNum">     433 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     434 </span>            :         std::int32_t m_lastDCValue;
+<span class="lineNum">     435 </span>            : 
+<span class="lineNum">     436 </span>            :         // Default DC value
+<span class="lineNum">     437 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     438 </span>            :         std::int32_t m_defaultDCValue;
+<span class="lineNum">     439 </span>            : 
+<span class="lineNum">     440 </span>            :         // Lossless position
+<span class="lineNum">     441 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     442 </span>            :         std::uint32_t m_losslessPositionX;
+<span class="lineNum">     443 </span>            :         std::uint32_t m_losslessPositionY;
+<span class="lineNum">     444 </span>            : 
+<span class="lineNum">     445 </span>            :         std::int32_t m_unprocessedAmplitudesBuffer[1024];
+<span class="lineNum">     446 </span>            :         std::uint32_t m_unprocessedAmplitudesCount;
+<span class="lineNum">     447 </span>            :         std::uint32_t m_unprocessedAmplitudesPredictor;
+<span class="lineNum">     448 </span>            : 
+<span class="lineNum">     449 </span>            :         // Huffman tables' id
+<span class="lineNum">     450 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     451 </span>            :         int m_huffmanTableDC;
+<span class="lineNum">     452 </span>            :         int m_huffmanTableAC;
+<span class="lineNum">     453 </span>            :         huffmanTable* m_pActiveHuffmanTableDC;
+<span class="lineNum">     454 </span>            :         huffmanTable* m_pActiveHuffmanTableAC;
+<span class="lineNum">     455 </span>            : 
+<a name="456"><span class="lineNum">     456 </span>            :         std::int32_t m_valuesMask;</a>
+<span class="lineNum">     457 </span>            : 
+<span class="lineNum">     458 </span><span class="lineCov">    2889124 :         inline void addUnprocessedAmplitude(std::int32_t unprocessedAmplitude, std::uint32_t predictor, bool bMcuRestart)</span>
+<span class="lineNum">     459 </span>            :         {
+<span class="lineNum">     460 </span><span class="lineCov">    5778203 :                 if(bMcuRestart ||</span>
+<span class="lineNum">     461 </span><span class="lineCov">    5778114 :                         predictor != m_unprocessedAmplitudesPredictor ||</span>
+<span class="lineNum">     462 </span><span class="lineCov">    2889035 :                         m_unprocessedAmplitudesCount == sizeof(m_unprocessedAmplitudesBuffer) / sizeof(m_unprocessedAmplitudesBuffer[0]))</span>
+<span class="lineNum">     463 </span>            :                 {
+<span class="lineNum">     464 </span><span class="lineCov">       2880 :                         processUnprocessedAmplitudes();</span>
+<span class="lineNum">     465 </span><span class="lineCov">       2879 :                         if(bMcuRestart)</span>
+<span class="lineNum">     466 </span>            :                         {
+<span class="lineNum">     467 </span><span class="lineCov">         45 :                                 m_unprocessedAmplitudesPredictor = 0;</span>
+<span class="lineNum">     468 </span><span class="lineCov">         45 :                                 m_unprocessedAmplitudesBuffer[0] = unprocessedAmplitude + m_defaultDCValue;</span>
+<span class="lineNum">     469 </span>            :                         }
+<span class="lineNum">     470 </span>            :                         else
+<span class="lineNum">     471 </span>            :                         {
+<span class="lineNum">     472 </span><span class="lineCov">       2834 :                                 m_unprocessedAmplitudesPredictor = predictor;</span>
+<span class="lineNum">     473 </span><span class="lineCov">       2834 :                                 m_unprocessedAmplitudesBuffer[0] = unprocessedAmplitude;</span>
+<span class="lineNum">     474 </span>            :                         }
+<span class="lineNum">     475 </span><span class="lineCov">       2879 :                         ++m_unprocessedAmplitudesCount;</span>
+<span class="lineNum">     476 </span><span class="lineCov">    2892002 :                         return;</span>
+<span class="lineNum">     477 </span>            :                 }
+<span class="lineNum">     478 </span><span class="lineCov">    2886244 :                 m_unprocessedAmplitudesBuffer[m_unprocessedAmplitudesCount++] = unprocessedAmplitude;</span>
+<span class="lineNum">     479 </span>            :         }
+<span class="lineNum">     480 </span>            : 
+<span class="lineNum">     481 </span>            :         void processUnprocessedAmplitudes();
+<span class="lineNum">     482 </span>            : };
+<span class="lineNum">     483 </span>            : 
+<span class="lineNum">     484 </span>            : 
+<span class="lineNum">     485 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     486 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     487 </span>            : //
+<span class="lineNum">     488 </span>            : //
+<span class="lineNum">     489 </span>            : // jpegCodecTag
+<span class="lineNum">     490 </span>            : //
+<span class="lineNum">     491 </span>            : // The base class for all the jpeg tags
+<span class="lineNum">     492 </span>            : //
+<span class="lineNum">     493 </span>            : //
+<a name="494"><span class="lineNum">     494 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     495 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     496 </span><span class="lineCov">      31806 : class tag : public baseObject</span>
+<span class="lineNum">     497 </span>            : {
+<span class="lineNum">     498 </span>            : public:
+<span class="lineNum">     499 </span>            :         typedef ptr&lt;jpeg::jpegChannel&gt; ptrChannel;
+<span class="lineNum">     500 </span>            : 
+<span class="lineNum">     501 </span>            : public:
+<span class="lineNum">     502 </span>            :         // Write the tag's content.
+<span class="lineNum">     503 </span>            :         // The function should call WriteLength first.
+<span class="lineNum">     504 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     505 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec)=0;
+<span class="lineNum">     506 </span>            : 
+<span class="lineNum">     507 </span>            :         // Read the tag's content. The function should call
+<span class="lineNum">     508 </span>            :         //  ReadLength first.
+<span class="lineNum">     509 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     510 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry)=0;
+<span class="lineNum">     511 </span>            : 
+<span class="lineNum">     512 </span>            : protected:
+<span class="lineNum">     513 </span>            :         // Write the tag's length
+<span class="lineNum">     514 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     515 </span>            :         void writeLength(streamWriter* pStream, std::uint16_t length);
+<span class="lineNum">     516 </span>            : 
+<span class="lineNum">     517 </span>            :         // Read the tag's length
+<span class="lineNum">     518 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     519 </span>            :         std::int32_t readLength(streamReader* pStream);
+<span class="lineNum">     520 </span>            : };
+<span class="lineNum">     521 </span>            : 
+<span class="lineNum">     522 </span>            : 
+<span class="lineNum">     523 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     524 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     525 </span>            : //
+<span class="lineNum">     526 </span>            : //
+<span class="lineNum">     527 </span>            : // jpegCodecTagUnknown
+<span class="lineNum">     528 </span>            : //
+<span class="lineNum">     529 </span>            : // Read/write an unknown tag
+<span class="lineNum">     530 </span>            : //
+<span class="lineNum">     531 </span>            : //
+<a name="532"><span class="lineNum">     532 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     533 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     534 </span><span class="lineCov">       1767 : class tagUnknown: public tag</span>
+<span class="lineNum">     535 </span>            : {
+<span class="lineNum">     536 </span>            : public:
+<span class="lineNum">     537 </span>            :         // Write the tag's content.
+<span class="lineNum">     538 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     539 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     540 </span>            : 
+<span class="lineNum">     541 </span>            :         // Read the tag's content.
+<span class="lineNum">     542 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     543 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     544 </span>            : 
+<span class="lineNum">     545 </span>            : };
+<span class="lineNum">     546 </span>            : 
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     549 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     550 </span>            : //
+<span class="lineNum">     551 </span>            : //
+<span class="lineNum">     552 </span>            : // jpegCodecTagSOF
+<span class="lineNum">     553 </span>            : //
+<span class="lineNum">     554 </span>            : // Read/write a SOF tag
+<span class="lineNum">     555 </span>            : //
+<span class="lineNum">     556 </span>            : //
+<a name="557"><span class="lineNum">     557 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     558 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     559 </span><span class="lineCov">      22971 : class tagSOF: public tag</span>
+<span class="lineNum">     560 </span>            : {
+<span class="lineNum">     561 </span>            : public:
+<span class="lineNum">     562 </span>            :         // Write the tag's content.
+<span class="lineNum">     563 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     564 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     565 </span>            : 
+<span class="lineNum">     566 </span>            :         // Read the tag's content.
+<span class="lineNum">     567 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     568 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     569 </span>            : 
+<span class="lineNum">     570 </span>            : };
+<span class="lineNum">     571 </span>            : 
+<span class="lineNum">     572 </span>            : 
+<span class="lineNum">     573 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     574 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     575 </span>            : //
+<span class="lineNum">     576 </span>            : //
+<span class="lineNum">     577 </span>            : // Read/write a DHT tag
+<span class="lineNum">     578 </span>            : //
+<span class="lineNum">     579 </span>            : //
+<a name="580"><span class="lineNum">     580 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     581 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     582 </span><span class="lineCov">       1767 : class tagDHT: public tag</span>
+<span class="lineNum">     583 </span>            : {
+<span class="lineNum">     584 </span>            : public:
+<span class="lineNum">     585 </span>            :         // Write the tag's content.
+<span class="lineNum">     586 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     587 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     588 </span>            : 
+<span class="lineNum">     589 </span>            :         // Read the tag's content.
+<span class="lineNum">     590 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     591 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     592 </span>            : 
+<span class="lineNum">     593 </span>            : };
+<span class="lineNum">     594 </span>            : 
+<span class="lineNum">     595 </span>            : 
+<span class="lineNum">     596 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     597 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     598 </span>            : //
+<span class="lineNum">     599 </span>            : //
+<span class="lineNum">     600 </span>            : // Read/write a SOS tag
+<span class="lineNum">     601 </span>            : //
+<span class="lineNum">     602 </span>            : //
+<a name="603"><span class="lineNum">     603 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     604 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     605 </span><span class="lineCov">       1767 : class tagSOS: public tag</span>
+<span class="lineNum">     606 </span>            : {
+<span class="lineNum">     607 </span>            : public:
+<span class="lineNum">     608 </span>            :         // Write the tag's content.
+<span class="lineNum">     609 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     610 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     611 </span>            : 
+<span class="lineNum">     612 </span>            :         // Read the tag's content.
+<span class="lineNum">     613 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     614 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     615 </span>            : 
+<span class="lineNum">     616 </span>            : };
+<span class="lineNum">     617 </span>            : 
+<span class="lineNum">     618 </span>            : 
+<span class="lineNum">     619 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     620 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     621 </span>            : //
+<span class="lineNum">     622 </span>            : //
+<span class="lineNum">     623 </span>            : // Read/write a DQT tag
+<span class="lineNum">     624 </span>            : //
+<span class="lineNum">     625 </span>            : //
+<a name="626"><span class="lineNum">     626 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     627 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     628 </span><span class="lineCov">       1767 : class tagDQT: public tag</span>
+<span class="lineNum">     629 </span>            : {
+<span class="lineNum">     630 </span>            : public:
+<span class="lineNum">     631 </span>            :         // Write the tag's content.
+<span class="lineNum">     632 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     633 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     634 </span>            : 
+<span class="lineNum">     635 </span>            :         // Read the tag's content.
+<span class="lineNum">     636 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     637 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     638 </span>            : 
+<span class="lineNum">     639 </span>            : };
+<span class="lineNum">     640 </span>            : 
+<span class="lineNum">     641 </span>            : 
+<span class="lineNum">     642 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     643 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     644 </span>            : //
+<span class="lineNum">     645 </span>            : //
+<span class="lineNum">     646 </span>            : // Read/write a DRI tag
+<span class="lineNum">     647 </span>            : //
+<span class="lineNum">     648 </span>            : //
+<a name="649"><span class="lineNum">     649 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     650 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     651 </span><span class="lineCov">       1767 : class tagDRI: public tag</span>
+<span class="lineNum">     652 </span>            : {
+<span class="lineNum">     653 </span>            : public:
+<span class="lineNum">     654 </span>            :         // Write the tag's content.
+<span class="lineNum">     655 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     656 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     657 </span>            : 
+<span class="lineNum">     658 </span>            :         // Read the tag's content.
+<span class="lineNum">     659 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     660 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     661 </span>            : 
+<span class="lineNum">     662 </span>            : };
+<span class="lineNum">     663 </span>            : 
+<span class="lineNum">     664 </span>            : 
+<span class="lineNum">     665 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     666 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     667 </span>            : //
+<span class="lineNum">     668 </span>            : //
+<span class="lineNum">     669 </span>            : // Read/write a RST tag
+<span class="lineNum">     670 </span>            : //
+<span class="lineNum">     671 </span>            : //
+<a name="672"><span class="lineNum">     672 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     673 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     674 </span><span class="lineCov">      14136 : class tagRST: public tag</span>
+<span class="lineNum">     675 </span>            : {
+<span class="lineNum">     676 </span>            : public:
+<span class="lineNum">     677 </span>            :         // Write the tag's content.
+<span class="lineNum">     678 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     679 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     680 </span>            : 
+<span class="lineNum">     681 </span>            :         // Read the tag's content.
+<span class="lineNum">     682 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     683 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     684 </span>            : 
+<span class="lineNum">     685 </span>            : };
+<span class="lineNum">     686 </span>            : 
+<span class="lineNum">     687 </span>            : 
+<span class="lineNum">     688 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     689 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     690 </span>            : //
+<span class="lineNum">     691 </span>            : //
+<span class="lineNum">     692 </span>            : // Read/write an EOI tag
+<span class="lineNum">     693 </span>            : //
+<span class="lineNum">     694 </span>            : //
+<a name="695"><span class="lineNum">     695 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     696 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     697 </span><span class="lineCov">       1767 : class tagEOI: public tag</span>
+<span class="lineNum">     698 </span>            : {
+<span class="lineNum">     699 </span>            : public:
+<span class="lineNum">     700 </span>            :         // Write the tag's content.
+<span class="lineNum">     701 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     702 </span>            :         virtual void writeTag(streamWriter* pStream, jpegCodec* pCodec);
+<span class="lineNum">     703 </span>            : 
+<span class="lineNum">     704 </span>            :         // Read the tag's content.
+<span class="lineNum">     705 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     706 </span>            :         virtual void readTag(streamReader* pStream, jpegCodec* pCodec, std::uint8_t tagEntry);
+<span class="lineNum">     707 </span>            : 
+<span class="lineNum">     708 </span>            : };
+<span class="lineNum">     709 </span>            : 
+<span class="lineNum">     710 </span>            : } // namespace jpegCodec
+<span class="lineNum">     711 </span>            : 
+<span class="lineNum">     712 </span>            : } // namespace codecs
+<span class="lineNum">     713 </span>            : 
+<span class="lineNum">     714 </span>            : } // namespace imebra
+<span class="lineNum">     715 </span>            : 
+<span class="lineNum">     716 </span>            : } // namespace puntoexe
+<span class="lineNum">     717 </span>            : 
+<span class="lineNum">     718 </span>            : #endif // !defined(imebraJpegCodec_7F63E846_8824_42c6_A048_DD59C657AED4__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

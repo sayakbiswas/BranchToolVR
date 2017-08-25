@@ -1,0 +1,465 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/transform.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - transform.h<span style="font-size: 80%;"> (source / <a href="transform.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">28.6 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file transform.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the base class used by all the transforms.
+<span class="lineNum">      50 </span>            :  
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraTransform_5DB89BFD_F105_45e7_B9D9_3756AC93C821__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraTransform_5DB89BFD_F105_45e7_B9D9_3756AC93C821__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;dataHandlerNumeric.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;image.h&quot;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : #define DEFINE_RUN_TEMPLATE_TRANSFORM \
+<span class="lineNum">      62 </span>            : template &lt;typename inputType&gt;\
+<span class="lineNum">      63 </span>            : void runTemplateTransform1(\
+<span class="lineNum">      64 </span>            :     inputType* inputData, size_t inputDataSize, std::uint32_t inputHandlerWidth, const std::wstring&amp; inputHandlerColorSpace,\
+<span class="lineNum">      65 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; inputPalette,\
+<span class="lineNum">      66 </span>            :     std::int32_t inputHandlerMinValue, std::uint32_t inputHighBit,\
+<span class="lineNum">      67 </span>            :     std::int32_t inputTopLeftX, std::int32_t inputTopLeftY, std::int32_t inputWidth, std::int32_t inputHeight,\
+<span class="lineNum">      68 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::handlers::dataHandlerNumericBase&gt; outputHandler, std::int32_t outputHandlerWidth, const std::wstring&amp; outputHandlerColorSpace,\
+<span class="lineNum">      69 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; outputPalette,\
+<span class="lineNum">      70 </span>            :     std::int32_t outputHandlerMinValue, std::uint32_t outputHighBit,\
+<span class="lineNum">      71 </span>            :     std::int32_t outputTopLeftX, std::int32_t outputTopLeftY)\
+<span class="lineNum">      72 </span>            : {\
+<span class="lineNum">      73 </span>            :         HANDLER_CALL_TEMPLATE_FUNCTION_WITH_PARAMS(runTemplateTransform2, outputHandler, \
+<span class="lineNum">      74 </span>            :                         inputData, inputDataSize, inputHandlerWidth, inputHandlerColorSpace,\
+<span class="lineNum">      75 </span>            :                         inputPalette,\
+<span class="lineNum">      76 </span>            :                         inputHandlerMinValue, inputHighBit,\
+<span class="lineNum">      77 </span>            :                         inputTopLeftX, inputTopLeftY, inputWidth, inputHeight,\
+<span class="lineNum">      78 </span>            :                         outputHandlerWidth, outputHandlerColorSpace,\
+<span class="lineNum">      79 </span>            :                         outputPalette,\
+<span class="lineNum">      80 </span>            :                         outputHandlerMinValue, outputHighBit,\
+<span class="lineNum">      81 </span>            :                         outputTopLeftX, outputTopLeftY);\
+<span class="lineNum">      82 </span>            : }\
+<span class="lineNum">      83 </span>            : \
+<span class="lineNum">      84 </span>            : void runTemplateTransform(\
+<span class="lineNum">      85 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::handlers::dataHandlerNumericBase&gt; inputHandler, std::uint32_t inputHandlerWidth, const std::wstring&amp; inputHandlerColorSpace,\
+<span class="lineNum">      86 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; inputPalette,\
+<span class="lineNum">      87 </span>            :     std::int32_t inputHandlerMinValue, std::uint32_t inputHighBit,\
+<span class="lineNum">      88 </span>            :     std::int32_t inputTopLeftX, std::int32_t inputTopLeftY, std::int32_t inputWidth, std::int32_t inputHeight,\
+<span class="lineNum">      89 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::handlers::dataHandlerNumericBase&gt; outputHandler, std::int32_t outputHandlerWidth, const std::wstring&amp; outputHandlerColorSpace,\
+<span class="lineNum">      90 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; outputPalette,\
+<span class="lineNum">      91 </span>            :     std::int32_t outputHandlerMinValue, std::uint32_t outputHighBit,\
+<span class="lineNum">      92 </span>            :     std::int32_t outputTopLeftX, std::int32_t outputTopLeftY)\
+<span class="lineNum">      93 </span>            : {\
+<span class="lineNum">      94 </span>            :         HANDLER_CALL_TEMPLATE_FUNCTION_WITH_PARAMS(runTemplateTransform1, inputHandler, \
+<span class="lineNum">      95 </span>            :                         inputHandlerWidth, inputHandlerColorSpace,\
+<span class="lineNum">      96 </span>            :                         inputPalette,\
+<span class="lineNum">      97 </span>            :             inputHandlerMinValue, inputHighBit,\
+<span class="lineNum">      98 </span>            :                         inputTopLeftX, inputTopLeftY, inputWidth, inputHeight,\
+<span class="lineNum">      99 </span>            :                         outputHandler, outputHandlerWidth, outputHandlerColorSpace,\
+<span class="lineNum">     100 </span>            :                         outputPalette,\
+<span class="lineNum">     101 </span>            :                         outputHandlerMinValue, outputHighBit,\
+<span class="lineNum">     102 </span>            :                         outputTopLeftX, outputTopLeftY);\
+<span class="lineNum">     103 </span>            : }\
+<span class="lineNum">     104 </span>            : \
+<span class="lineNum">     105 </span>            : template &lt;typename outputType, typename inputType&gt;\
+<span class="lineNum">     106 </span>            : void runTemplateTransform2(\
+<span class="lineNum">     107 </span>            :     outputType* outputData, size_t outputDataSize, \
+<span class="lineNum">     108 </span>            :     inputType* inputData, size_t inputDataSize, \
+<span class="lineNum">     109 </span>            :     std::uint32_t inputHandlerWidth, const std::wstring&amp; inputHandlerColorSpace,\
+<span class="lineNum">     110 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; inputPalette,\
+<span class="lineNum">     111 </span>            :     std::int32_t inputHandlerMinValue, std::uint32_t inputHighBit,\
+<span class="lineNum">     112 </span>            :     std::int32_t inputTopLeftX, std::int32_t inputTopLeftY, std::int32_t inputWidth, std::int32_t inputHeight,\
+<span class="lineNum">     113 </span>            :     std::int32_t outputHandlerWidth, const std::wstring&amp; outputHandlerColorSpace,\
+<span class="lineNum">     114 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; outputPalette,\
+<span class="lineNum">     115 </span>            :     std::int32_t outputHandlerMinValue, std::uint32_t outputHighBit,\
+<span class="lineNum">     116 </span>            :     std::int32_t outputTopLeftX, std::int32_t outputTopLeftY)\
+<span class="lineNum">     117 </span>            : {\
+<span class="lineNum">     118 </span>            :         templateTransform( \
+<span class="lineNum">     119 </span>            :             inputData, inputDataSize, inputHandlerWidth, inputHandlerColorSpace, \
+<span class="lineNum">     120 </span>            :             inputPalette, \
+<span class="lineNum">     121 </span>            :             inputHandlerMinValue, inputHighBit, \
+<span class="lineNum">     122 </span>            :             inputTopLeftX, inputTopLeftY, inputWidth, inputHeight, \
+<span class="lineNum">     123 </span>            :             outputData, outputDataSize, outputHandlerWidth, outputHandlerColorSpace, \
+<span class="lineNum">     124 </span>            :             outputPalette, \
+<span class="lineNum">     125 </span>            :             outputHandlerMinValue, outputHighBit, \
+<span class="lineNum">     126 </span>            :             outputTopLeftX, outputTopLeftY);\
+<span class="lineNum">     127 </span>            : }\
+<span class="lineNum">     128 </span>            : \
+<span class="lineNum">     129 </span>            : virtual void runTransformHandlers(\
+<span class="lineNum">     130 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::handlers::dataHandlerNumericBase&gt; inputHandler, std::uint32_t inputHandlerWidth, const std::wstring&amp; inputHandlerColorSpace,\
+<span class="lineNum">     131 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; inputPalette,\
+<span class="lineNum">     132 </span>            :     std::int32_t inputHandlerMinValue, std::uint32_t inputHighBit,\
+<span class="lineNum">     133 </span>            :     std::int32_t inputTopLeftX, std::int32_t inputTopLeftY, std::int32_t inputWidth, std::int32_t inputHeight,\
+<span class="lineNum">     134 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::handlers::dataHandlerNumericBase&gt; outputHandler, std::int32_t outputHandlerWidth, const std::wstring&amp; outputHandlerColorSpace,\
+<span class="lineNum">     135 </span>            :     puntoexe::ptr&lt;puntoexe::imebra::palette&gt; outputPalette,\
+<span class="lineNum">     136 </span>            :     std::int32_t outputHandlerMinValue, std::uint32_t outputHighBit,\
+<span class="lineNum">     137 </span>            :     std::int32_t outputTopLeftX, std::int32_t outputTopLeftY)\
+<span class="lineNum">     138 </span>            : {\
+<span class="lineNum">     139 </span>            :     runTemplateTransform(inputHandler, inputHandlerWidth, inputHandlerColorSpace, inputPalette, inputHandlerMinValue, inputHighBit,\
+<span class="lineNum">     140 </span>            :             inputTopLeftX, inputTopLeftY, inputWidth, inputHeight,\
+<span class="lineNum">     141 </span>            :             outputHandler, outputHandlerWidth, outputHandlerColorSpace, outputPalette, outputHandlerMinValue, outputHighBit,\
+<span class="lineNum">     142 </span>            :             outputTopLeftX, outputTopLeftY);\
+<span class="lineNum">     143 </span>            : }
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     146 </span>            : //
+<span class="lineNum">     147 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">     148 </span>            : //
+<span class="lineNum">     149 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     150 </span>            : namespace puntoexe
+<span class="lineNum">     151 </span>            : {
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            : namespace imebra
+<span class="lineNum">     154 </span>            : {
+<span class="lineNum">     155 </span>            : 
+<span class="lineNum">     156 </span>            : namespace handlers
+<span class="lineNum">     157 </span>            : {
+<span class="lineNum">     158 </span>            :     class dataHandlerNumericBase;
+<span class="lineNum">     159 </span>            : }
+<span class="lineNum">     160 </span>            : 
+<span class="lineNum">     161 </span>            : class image;
+<span class="lineNum">     162 </span>            : class dataSet;
+<span class="lineNum">     163 </span>            : class lut;
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : /// \namespace transforms
+<span class="lineNum">     166 </span>            : /// \brief All the transforms are declared in this
+<span class="lineNum">     167 </span>            : ///         namespace.
+<span class="lineNum">     168 </span>            : ///
+<span class="lineNum">     169 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span>            : namespace transforms
+<span class="lineNum">     171 </span>            : {
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            : /*! \addtogroup group_transforms Transforms
+<span class="lineNum">     174 </span>            : \brief The transform classes apply a transformation to
+<span class="lineNum">     175 </span>            :                 one input image and return the result of the
+<span class="lineNum">     176 </span>            :                 transformation into an output image.
+<span class="lineNum">     177 </span>            : 
+<span class="lineNum">     178 </span>            : Usually the transforms require that the input and the
+<span class="lineNum">     179 </span>            :  output images use the same color space, but the
+<span class="lineNum">     180 </span>            :  color transforms are able to copy the pixel data
+<span class="lineNum">     181 </span>            :  from the color space of the input image into the
+<span class="lineNum">     182 </span>            :  color space of the output image.
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            : The application can call
+<span class="lineNum">     185 </span>            :  transforms::transform::allocateOutputImage() to
+<span class="lineNum">     186 </span>            :  allocate an output image that is compatible with the
+<span class="lineNum">     187 </span>            :  selected transform and input image.\n
+<span class="lineNum">     188 </span>            : For instance, once an image has been retrieved from
+<span class="lineNum">     189 </span>            :  a dataSet we can ask the modalityVOILUT transform
+<span class="lineNum">     190 </span>            :  to allocate an output image for us, and it will
+<span class="lineNum">     191 </span>            :  allocate an image with the right color space and
+<span class="lineNum">     192 </span>            :  bit depth;
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            : \code
+<span class="lineNum">     195 </span>            : // loadedDataSet is a ptr&lt;dataSet&gt; previously loaded
+<span class="lineNum">     196 </span>            : // Here we get the first image in the dataSet
+<span class="lineNum">     197 </span>            : ptr&lt;image&gt; inputImage(loadedDataSet-&gt;getImage(0));
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            : // We need to get the image's size because we have to
+<span class="lineNum">     200 </span>            : //  tell the transform on which area we want to apply
+<span class="lineNum">     201 </span>            : //  the transform (we want all the image area)
+<span class="lineNum">     202 </span>            : std::uint32_t width, height;
+<span class="lineNum">     203 </span>            : inputImage-&gt;getSize(&amp;width, &amp;height);
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            : // Allocate the modality transform. The modality transform
+<span class="lineNum">     206 </span>            : //  gets the transformation parameters from the dataset
+<span class="lineNum">     207 </span>            : ptr&lt;transforms::modalityVOILUT&gt; modalityTransform(new transforms::modalityVOILUT(loadedDataSet));
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            : // We ask the transform to allocate a proper output image
+<span class="lineNum">     210 </span>            : ptr&lt;image&gt; outputImage(modalityTransform-&gt;allocateOutputImage(inputImage, width, height));
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            : // And now we run the transform
+<span class="lineNum">     213 </span>            : modalityTransform-&gt;runTransform(inputImage, 0, 0, width, height, outputImage, 0, 0);
+<span class="lineNum">     214 </span>            : \endcode
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span>            : All the transforms but the modalityVOILUT can convert
+<span class="lineNum">     217 </span>            :  the result to the bit depth of the output image, so for
+<span class="lineNum">     218 </span>            :  instance the transform colorTransforms::YBRFULLToRGB
+<span class="lineNum">     219 </span>            :  can take a 16 bits per channel input image and
+<span class="lineNum">     220 </span>            :  write the result to a 8 bits per color channel output
+<span class="lineNum">     221 </span>            :  image.\n
+<span class="lineNum">     222 </span>            : modalityVOILUT cannot do this because its output has
+<span class="lineNum">     223 </span>            :  to conform to the value in the tag 0028,1054; the
+<span class="lineNum">     224 </span>            :  tag 0028,1054 specifies the units of the modality VOI-LUT
+<span class="lineNum">     225 </span>            :  transform. modalityVOILUT::allocateOutputImage() is able
+<span class="lineNum">     226 </span>            :  output image that can hold the result of the
+<span class="lineNum">     227 </span>            :  to allocate the modality transformation.
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            : */
+<span class="lineNum">     230 </span>            : /// @{
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            : /// \brief This is the base class for the transforms.
+<span class="lineNum">     233 </span>            : ///
+<span class="lineNum">     234 </span>            : /// A transform takes one input and one output image:
+<span class="lineNum">     235 </span>            : ///  the output image is modified according to the
+<span class="lineNum">     236 </span>            : ///  transform's type, input image's content and
+<span class="lineNum">     237 </span>            : ///  transform's parameter.
+<a name="238"><span class="lineNum">     238 </span>            : ///</a>
+<span class="lineNum">     239 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     240 </span><span class="lineCov">       2140 : class transform : public baseObject</span>
+<span class="lineNum">     241 </span>            : {
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            : public:
+<span class="lineNum">     244 </span>            :         /// \brief Returns true if the transform doesn't do
+<span class="lineNum">     245 </span>            :         ///         anything.
+<span class="lineNum">     246 </span>            :         ///
+<span class="lineNum">     247 </span>            :         /// @return false if the transform does something, or true
+<span class="lineNum">     248 </span>            :         ///          if the transform doesn't do anything (e.g. an
+<span class="lineNum">     249 </span>            :         ///          empty transformsChain object).
+<span class="lineNum">     250 </span>            :         ///
+<span class="lineNum">     251 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     252 </span>            :         virtual bool isEmpty();
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            : 
+<span class="lineNum">     255 </span>            :         /// \brief Allocate an output image that is compatible with
+<span class="lineNum">     256 </span>            :         ///         the transform given the specified input image.
+<span class="lineNum">     257 </span>            :         ///
+<span class="lineNum">     258 </span>            :         /// @param pInputImage image that will be used as input
+<span class="lineNum">     259 </span>            :         ///                     image in runTransform()
+<span class="lineNum">     260 </span>            :         /// @param width       the width of the output image,
+<span class="lineNum">     261 </span>            :         ///                     in pixels
+<span class="lineNum">     262 </span>            :         /// @param height      the height of the output image,
+<span class="lineNum">     263 </span>            :         ///                     in pixels
+<span class="lineNum">     264 </span>            :         /// @return an image suitable to be used as output image
+<span class="lineNum">     265 </span>            :         ///          in runTransform()
+<span class="lineNum">     266 </span>            :         ///
+<span class="lineNum">     267 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     268 </span>            :         virtual ptr&lt;image&gt; allocateOutputImage(ptr&lt;image&gt; pInputImage, std::uint32_t width, std::uint32_t height) = 0;
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span>            :         /// \brief Executes the transform.
+<span class="lineNum">     271 </span>            :         ///
+<span class="lineNum">     272 </span>            :         /// @param inputImage    the input image for the transform
+<span class="lineNum">     273 </span>            :         /// @param inputTopLeftX the horizontal position of the
+<span class="lineNum">     274 </span>            :         ///                       top left corner of the area to
+<span class="lineNum">     275 </span>            :         ///                       process
+<span class="lineNum">     276 </span>            :         /// @param inputTopLeftY the vertical position of the top
+<span class="lineNum">     277 </span>            :         ///                       left corner of the area to
+<span class="lineNum">     278 </span>            :         ///                       process
+<span class="lineNum">     279 </span>            :         /// @param inputWidth    the width of the area to process
+<span class="lineNum">     280 </span>            :         /// @param inputHeight   the height of the area to process
+<span class="lineNum">     281 </span>            :         /// @param outputImage   the output image for the transform
+<span class="lineNum">     282 </span>            :         /// @param outputTopLeftX the horizontal position of the
+<span class="lineNum">     283 </span>            :         ///                       top left corner of the output
+<span class="lineNum">     284 </span>            :         ///                       area
+<span class="lineNum">     285 </span>            :         /// @param outputTopLeftY the vertical position of the top
+<span class="lineNum">     286 </span>            :         ///                        left corner of the output area
+<span class="lineNum">     287 </span>            :         ///
+<span class="lineNum">     288 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     289 </span>            :         virtual void runTransform(
+<span class="lineNum">     290 </span>            :             const ptr&lt;image&gt;&amp; inputImage,
+<span class="lineNum">     291 </span>            :             std::uint32_t inputTopLeftX, std::uint32_t inputTopLeftY, std::uint32_t inputWidth, std::uint32_t inputHeight,
+<span class="lineNum">     292 </span>            :             const ptr&lt;image&gt;&amp; outputImage,
+<span class="lineNum">     293 </span>            :                         std::uint32_t outputTopLeftX, std::uint32_t outputTopLeftY) = 0;
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span>            : };
+<span class="lineNum">     296 </span>            : 
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            : /// \brief This is the base class for transforms that use
+<span class="lineNum">     299 </span>            : ///         templates.
+<span class="lineNum">     300 </span>            : ///
+<span class="lineNum">     301 </span>            : /// Transforms derived from transformHandlers
+<span class="lineNum">     302 </span>            : ///  have the macro DEFINE_RUN_TEMPLATE_TRANSFORM in
+<span class="lineNum">     303 </span>            : ///  their class definition and implement the template
+<span class="lineNum">     304 </span>            : ///  function templateTransform().
+<a name="305"><span class="lineNum">     305 </span>            : ///</a>
+<span class="lineNum">     306 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     307 </span><span class="lineCov">         80 : class transformHandlers: public transform</span>
+<span class="lineNum">     308 </span>            : {
+<span class="lineNum">     309 </span>            : public:
+<span class="lineNum">     310 </span>            :         /// \brief Reimplemented from transform: calls the
+<span class="lineNum">     311 </span>            :         ///         templated function templateTransform().
+<span class="lineNum">     312 </span>            :         ///
+<span class="lineNum">     313 </span>            :         /// @param inputImage    the input image for the transform
+<span class="lineNum">     314 </span>            :         /// @param inputTopLeftX the horizontal position of the
+<span class="lineNum">     315 </span>            :         ///                       top left corner of the area to
+<span class="lineNum">     316 </span>            :         ///                       process
+<span class="lineNum">     317 </span>            :         /// @param inputTopLeftY the vertical position of the top
+<span class="lineNum">     318 </span>            :         ///                       left corner of the area to
+<span class="lineNum">     319 </span>            :         ///                       process
+<span class="lineNum">     320 </span>            :         /// @param inputWidth    the width of the area to process
+<span class="lineNum">     321 </span>            :         /// @param inputHeight   the height of the area to process
+<span class="lineNum">     322 </span>            :         /// @param outputImage   the output image for the transform
+<span class="lineNum">     323 </span>            :         /// @param outputTopLeftX the horizontal position of the
+<span class="lineNum">     324 </span>            :         ///                       top left corner of the output
+<span class="lineNum">     325 </span>            :         ///                       area
+<span class="lineNum">     326 </span>            :         /// @param outputTopLeftY the vertical position of the top
+<span class="lineNum">     327 </span>            :         ///                        left corner of the output area
+<span class="lineNum">     328 </span>            :         ///
+<span class="lineNum">     329 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     330 </span>            :         virtual void runTransform(
+<span class="lineNum">     331 </span>            :                         const ptr&lt;image&gt;&amp; inputImage,
+<span class="lineNum">     332 </span>            :                         std::uint32_t inputTopLeftX, std::uint32_t inputTopLeftY, std::uint32_t inputWidth, std::uint32_t inputHeight,
+<span class="lineNum">     333 </span>            :                         const ptr&lt;image&gt;&amp; outputImage,
+<span class="lineNum">     334 </span>            :                         std::uint32_t outputTopLeftX, std::uint32_t outputTopLeftY);
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            :         /// \internal
+<span class="lineNum">     337 </span>            :         virtual void runTransformHandlers(
+<span class="lineNum">     338 </span>            :                         ptr&lt;handlers::dataHandlerNumericBase&gt; inputHandler, std::uint32_t inputHandlerWidth, const std::wstring&amp; inputHandlerColorSpace,
+<span class="lineNum">     339 </span>            :                         ptr&lt;palette&gt; inputPalette,
+<span class="lineNum">     340 </span>            :             std::int32_t inputHandlerMinValue, std::uint32_t inputHighBit,
+<span class="lineNum">     341 </span>            :                         std::int32_t inputTopLeftX, std::int32_t inputTopLeftY, std::int32_t inputWidth, std::int32_t inputHeight,
+<span class="lineNum">     342 </span>            :                         ptr&lt;handlers::dataHandlerNumericBase&gt; outputHandler, std::int32_t outputHandlerWidth, const std::wstring&amp; outputHandlerColorSpace,
+<span class="lineNum">     343 </span>            :                         ptr&lt;palette&gt; outputPalette,
+<span class="lineNum">     344 </span>            :             std::int32_t outputHandlerMinValue, std::uint32_t outputHighBit,
+<span class="lineNum">     345 </span>            :                         std::int32_t outputTopLeftX, std::int32_t outputTopLeftY) = 0;
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            : };
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : /// \brief Base class for the exceptions thrown by the
+<span class="lineNum">     351 </span>            : ///         transforms.
+<a name="352"><span class="lineNum">     352 </span>            : ///</a>
+<span class="lineNum">     353 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 : class transformException: public std::runtime_error</span>
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span>            : public:
+<span class="lineNum">     357 </span>            :         /// \brief Constructor.
+<span class="lineNum">     358 </span>            :         ///
+<span class="lineNum">     359 </span>            :         /// @param message the cause of the exception
+<a name="360"><span class="lineNum">     360 </span>            :         ///</a>
+<span class="lineNum">     361 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 :         transformException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     363 </span>            : };
+<span class="lineNum">     364 </span>            : 
+<span class="lineNum">     365 </span>            : /// \brief Exception thrown when the image areas to be
+<span class="lineNum">     366 </span>            : ///         processed are out of bounds.
+<a name="367"><span class="lineNum">     367 </span>            : ///</a>
+<span class="lineNum">     368 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 : class transformExceptionInvalidArea: public transformException</span>
+<span class="lineNum">     370 </span>            : {
+<span class="lineNum">     371 </span>            : public:
+<span class="lineNum">     372 </span>            :     /// \brief Constructor.
+<span class="lineNum">     373 </span>            :     ///
+<span class="lineNum">     374 </span>            :     /// @param message the cause of the exception
+<a name="375"><span class="lineNum">     375 </span>            :     ///</a>
+<span class="lineNum">     376 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 :     transformExceptionInvalidArea(const std::string&amp; message): transformException(message){}</span>
+<span class="lineNum">     378 </span>            : };
+<span class="lineNum">     379 </span>            : 
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            : /// @}
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            : } // namespace transforms
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span>            : } // namespace imebra
+<span class="lineNum">     386 </span>            : 
+<span class="lineNum">     387 </span>            : } // namespace puntoexe
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span>            : #endif // !defined(imebraTransform_5DB89BFD_F105_45e7_B9D9_3756AC93C821__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

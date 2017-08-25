@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/image.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - image.cpp<span style="font-size: 80%;"> (source / <a href="image.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">92</td>
+            <td class="headerCovTableEntry">100</td>
+            <td class="headerCovTableEntryHi">92.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryHi">91.7 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file image.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the class image.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../include/image.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../include/colorTransformsFactory.h&quot;
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : namespace puntoexe
+<span class="lineNum">      58 </span>            : {
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : namespace imebra
+<span class="lineNum">      61 </span>            : {
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      64 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      65 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      66 </span>            : //
+<span class="lineNum">      67 </span>            : //
+<span class="lineNum">      68 </span>            : //
+<span class="lineNum">      69 </span>            : // image
+<span class="lineNum">      70 </span>            : //
+<span class="lineNum">      71 </span>            : //
+<span class="lineNum">      72 </span>            : //
+<span class="lineNum">      73 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      74 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      75 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      79 </span>            : //
+<span class="lineNum">      80 </span>            : //
+<span class="lineNum">      81 </span>            : // Create an image with the specified size, colorspace and
+<span class="lineNum">      82 </span>            : //  bit depth
+<span class="lineNum">      83 </span>            : //
+<span class="lineNum">      84 </span>            : //
+<a name="85"><span class="lineNum">      85 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      86 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span><span class="lineCov">       3931 : ptr&lt;handlers::dataHandlerNumericBase&gt; image::create(</span>
+<span class="lineNum">      88 </span>            :                                                 const std::uint32_t sizeX, 
+<span class="lineNum">      89 </span>            :                                                 const std::uint32_t sizeY, 
+<span class="lineNum">      90 </span>            :                                                 const bitDepth depth, 
+<span class="lineNum">      91 </span>            :                                                 std::wstring inputColorSpace, 
+<span class="lineNum">      92 </span>            :                                                 const std::uint8_t highBit)
+<span class="lineNum">      93 </span>            : {
+<span class="lineNum">      94 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::create&quot;);
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span><span class="lineCov">       3931 :         lockObject lockAccess(this);</span>
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span><span class="lineCov">       3931 :         if(sizeX == 0 || sizeY == 0)</span>
+<span class="lineNum">      99 </span>            :         {
+<span class="lineNum">     100 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(imageExceptionInvalidSize, &quot;An invalid image's size has been specified&quot;);</span>
+<span class="lineNum">     101 </span>            :         }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :         // Normalize the color space (remove _420 &amp; _422 and
+<span class="lineNum">     104 </span>            :         //  make it uppercase).
+<span class="lineNum">     105 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     106 </span><span class="lineCov">       3931 :         m_colorSpace=transforms::colorTransforms::colorTransformsFactory::normalizeColorSpace(inputColorSpace);</span>
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span>            :         // Find the number of channels to allocate
+<span class="lineNum">     109 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     110 </span><span class="lineCov">       3931 :         m_channelsNumber = transforms::colorTransforms::colorTransformsFactory::getNumberOfChannels(inputColorSpace);</span>
+<span class="lineNum">     111 </span><span class="lineCov">       3931 :         if(m_channelsNumber == 0)</span>
+<span class="lineNum">     112 </span>            :         {
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(imageExceptionUnknownColorSpace, &quot;Cannot recognize the specified color space&quot;);</span>
+<span class="lineNum">     114 </span>            :         }
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            :         // Find the datatype to use to allocate the
+<span class="lineNum">     117 </span>            :         //  buffer (datatypes are in Dicom standard, plus SB
+<span class="lineNum">     118 </span>            :         //  for signed bytes).
+<span class="lineNum">     119 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     120 </span><span class="lineCov">       3931 :         m_channelPixelSize = 0;</span>
+<span class="lineNum">     121 </span><span class="lineCov">       3931 :         std::uint8_t defaultHighBit = 0;</span>
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span><span class="lineCov">       7862 :         std::string bufferDataType;</span>
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span><span class="lineCov">       3931 :         switch(depth)</span>
+<span class="lineNum">     126 </span>            :         {
+<span class="lineNum">     127 </span>            :         case depthU8:
+<span class="lineNum">     128 </span><span class="lineCov">        552 :                 bufferDataType = &quot;OB&quot;;</span>
+<span class="lineNum">     129 </span><span class="lineCov">        552 :                 defaultHighBit=7;</span>
+<span class="lineNum">     130 </span><span class="lineCov">        552 :                 break;</span>
+<span class="lineNum">     131 </span>            :         case depthS8:
+<span class="lineNum">     132 </span><span class="lineCov">        480 :                 bufferDataType = &quot;SB&quot;;</span>
+<span class="lineNum">     133 </span><span class="lineCov">        480 :                 defaultHighBit=7;</span>
+<span class="lineNum">     134 </span><span class="lineCov">        480 :                 break;</span>
+<span class="lineNum">     135 </span>            :         case depthU16:
+<span class="lineNum">     136 </span><span class="lineCov">        496 :                 bufferDataType = &quot;US&quot;;</span>
+<span class="lineNum">     137 </span><span class="lineCov">        496 :                 defaultHighBit=15;</span>
+<span class="lineNum">     138 </span><span class="lineCov">        496 :                 break;</span>
+<span class="lineNum">     139 </span>            :         case depthS16:
+<span class="lineNum">     140 </span><span class="lineCov">        483 :                 bufferDataType = &quot;SS&quot;;</span>
+<span class="lineNum">     141 </span><span class="lineCov">        483 :                 defaultHighBit=15;</span>
+<span class="lineNum">     142 </span><span class="lineCov">        483 :                 break;</span>
+<span class="lineNum">     143 </span>            :         case depthU32:
+<span class="lineNum">     144 </span><span class="lineCov">        960 :                 bufferDataType = &quot;UL&quot;;</span>
+<span class="lineNum">     145 </span><span class="lineCov">        960 :                 defaultHighBit=31;</span>
+<span class="lineNum">     146 </span><span class="lineCov">        960 :                 break;</span>
+<span class="lineNum">     147 </span>            :         case depthS32:
+<span class="lineNum">     148 </span><span class="lineCov">        960 :                 bufferDataType = &quot;SL&quot;;</span>
+<span class="lineNum">     149 </span><span class="lineCov">        960 :                 defaultHighBit=31;</span>
+<span class="lineNum">     150 </span><span class="lineCov">        960 :                 break;</span>
+<span class="lineNum">     151 </span>            :         default:
+<span class="lineNum">     152 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(imageExceptionUnknownDepth, &quot;Unknown depth&quot;);</span>
+<span class="lineNum">     153 </span>            :         }
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            :         // Adjust the high bit value
+<span class="lineNum">     156 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     157 </span><span class="lineCov">       3931 :         if(highBit == 0 || highBit&gt;defaultHighBit)</span>
+<span class="lineNum">     158 </span><span class="lineCov">         48 :                 m_highBit=defaultHighBit;</span>
+<span class="lineNum">     159 </span>            :         else
+<span class="lineNum">     160 </span><span class="lineCov">       3883 :                 m_highBit=highBit;</span>
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            :         // If a valid buffer with the same data type is already
+<span class="lineNum">     163 </span>            :         //  allocated then use it.
+<span class="lineNum">     164 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     165 </span><span class="lineCov">       3931 :         if(m_buffer == 0 || !(m_buffer-&gt;isReferencedOnce()) )</span>
+<span class="lineNum">     166 </span>            :         {
+<span class="lineNum">     167 </span><span class="lineCov">       3931 :                 ptr&lt;buffer&gt; tempBuffer(new buffer(this, bufferDataType));</span>
+<span class="lineNum">     168 </span><span class="lineCov">       3931 :                 m_buffer = tempBuffer;</span>
+<span class="lineNum">     169 </span>            :         }
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span><span class="lineCov">       3931 :         m_sizeX = m_sizeY = 0;</span>
+<span class="lineNum">     172 </span>            :         
+<span class="lineNum">     173 </span><span class="lineCov">       3931 :         ptr&lt;handlers::dataHandler&gt; imageHandler(m_buffer-&gt;getDataHandler(true, sizeX * sizeY * (std::uint32_t)m_channelsNumber) );</span>
+<span class="lineNum">     174 </span><span class="lineCov">       3931 :         if(imageHandler != 0)</span>
+<span class="lineNum">     175 </span>            :         {
+<span class="lineNum">     176 </span><span class="lineCov">       3931 :                 m_rowLength = m_channelsNumber*sizeX;</span>
+<span class="lineNum">     177 </span>            :                 
+<span class="lineNum">     178 </span><span class="lineCov">       3931 :                 imageHandler-&gt;setSize(m_rowLength*sizeY);</span>
+<span class="lineNum">     179 </span><span class="lineCov">       3931 :                 m_channelPixelSize = imageHandler-&gt;getUnitSize();</span>
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :                 // Set the attributes
+<span class="lineNum">     182 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     183 </span><span class="lineCov">       3931 :                 m_imageDepth=depth;</span>
+<span class="lineNum">     184 </span><span class="lineCov">       3931 :                 m_sizeX=sizeX;</span>
+<span class="lineNum">     185 </span><span class="lineCov">       3931 :                 m_sizeY=sizeY;</span>
+<span class="lineNum">     186 </span>            :         }
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span><span class="lineCov">       7862 :         return ptr&lt;handlers::dataHandlerNumericBase&gt;(dynamic_cast&lt;handlers::dataHandlerNumericBase*&gt;(imageHandler.get()) );</span>
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     191 </span>            : }
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     195 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     196 </span>            : //
+<span class="lineNum">     197 </span>            : //
+<span class="lineNum">     198 </span>            : // Set the depth
+<span class="lineNum">     199 </span>            : //
+<span class="lineNum">     200 </span>            : //
+<a name="201"><span class="lineNum">     201 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     202 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 : void image::setHighBit(std::uint32_t highBit)</span>
+<span class="lineNum">     204 </span>            : {
+<span class="lineNum">     205 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::setHighBit&quot;);
+<span class="lineNum">     206 </span>            : 
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span><span class="lineNoCov">          0 :         m_highBit = highBit;</span>
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            :         PUNTOEXE_FUNCTION_END();
+<a name="212"><span class="lineNum">     212 </span><span class="lineNoCov">          0 : }</span></a>
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span><span class="lineCov">          1 : void image::setPalette(ptr&lt;palette&gt; imagePalette)</span>
+<span class="lineNum">     215 </span>            : {
+<span class="lineNum">     216 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getPalette&quot;);
+<span class="lineNum">     217 </span>            : 
+<span class="lineNum">     218 </span><span class="lineCov">          1 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span><span class="lineCov">          1 :         m_palette = imagePalette;</span>
+<span class="lineNum">     221 </span>            : 
+<span class="lineNum">     222 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     223 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            : 
+<span class="lineNum">     227 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     228 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     229 </span>            : //
+<span class="lineNum">     230 </span>            : //
+<span class="lineNum">     231 </span>            : // Retrieve an handler to the image's buffer.
+<span class="lineNum">     232 </span>            : // The image's components are interleaved.
+<span class="lineNum">     233 </span>            : //
+<span class="lineNum">     234 </span>            : //
+<a name="235"><span class="lineNum">     235 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     236 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     237 </span><span class="lineCov">       6019 : ptr&lt;handlers::dataHandlerNumericBase&gt; image::getDataHandler(const bool bWrite, std::uint32_t* pRowSize, std::uint32_t* pChannelPixelSize, std::uint32_t* pChannelsNumber)</span>
+<span class="lineNum">     238 </span>            : {
+<span class="lineNum">     239 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getDataHandler&quot;);
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span><span class="lineCov">       6019 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span><span class="lineCov">       6019 :         if(m_buffer == 0)</span>
+<span class="lineNum">     244 </span>            :         {
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :                 return ptr&lt;handlers::dataHandlerNumericBase&gt;(0);</span>
+<span class="lineNum">     246 </span>            :         }
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineCov">       6019 :         *pRowSize=m_rowLength;</span>
+<span class="lineNum">     249 </span><span class="lineCov">       6019 :         *pChannelPixelSize=m_channelPixelSize;</span>
+<span class="lineNum">     250 </span><span class="lineCov">       6019 :         *pChannelsNumber=m_channelsNumber;</span>
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span><span class="lineCov">      12038 :         ptr&lt;handlers::dataHandler&gt; imageHandler(m_buffer-&gt;getDataHandler(bWrite, m_sizeX * m_sizeY * m_channelsNumber));</span>
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span><span class="lineCov">      12038 :         return ptr&lt;handlers::dataHandlerNumericBase&gt;(dynamic_cast&lt;handlers::dataHandlerNumericBase*&gt;(imageHandler.get()) );</span>
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     257 </span>            : }
+<span class="lineNum">     258 </span>            : 
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     261 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     262 </span>            : //
+<span class="lineNum">     263 </span>            : //
+<span class="lineNum">     264 </span>            : // Return the bit depth
+<span class="lineNum">     265 </span>            : //
+<span class="lineNum">     266 </span>            : //
+<a name="267"><span class="lineNum">     267 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     268 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     269 </span><span class="lineCov">       4745 : image::bitDepth image::getDepth()</span>
+<span class="lineNum">     270 </span>            : {
+<span class="lineNum">     271 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getDepth&quot;);
+<span class="lineNum">     272 </span>            : 
+<span class="lineNum">     273 </span><span class="lineCov">       4745 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     274 </span><span class="lineCov">       4745 :         return m_imageDepth;</span>
+<span class="lineNum">     275 </span>            : 
+<span class="lineNum">     276 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     277 </span>            : }
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     281 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     282 </span>            : //
+<span class="lineNum">     283 </span>            : //
+<span class="lineNum">     284 </span>            : // Return the high bit
+<span class="lineNum">     285 </span>            : //
+<span class="lineNum">     286 </span>            : //
+<a name="287"><span class="lineNum">     287 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     288 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     289 </span><span class="lineCov">       9897 : std::uint32_t image::getHighBit()</span>
+<span class="lineNum">     290 </span>            : {
+<span class="lineNum">     291 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getHighBit&quot;);
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span><span class="lineCov">       9897 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     294 </span><span class="lineCov">       9897 :         return m_highBit;</span>
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            :         PUNTOEXE_FUNCTION_END();
+<a name="297"><span class="lineNum">     297 </span>            : }</a>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span><span class="lineCov">         90 : ptr&lt;palette&gt; image::getPalette()</span>
+<span class="lineNum">     300 </span>            : {
+<span class="lineNum">     301 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getPalette&quot;);
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span><span class="lineCov">         90 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     304 </span>            : 
+<span class="lineNum">     305 </span><span class="lineCov">         90 :         return m_palette;</span>
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     308 </span>            : }
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     312 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     313 </span>            : //
+<span class="lineNum">     314 </span>            : //
+<span class="lineNum">     315 </span>            : // Returns the colorspace
+<span class="lineNum">     316 </span>            : //
+<span class="lineNum">     317 </span>            : //
+<a name="318"><span class="lineNum">     318 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     319 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     320 </span><span class="lineCov">       6312 : std::wstring image::getColorSpace()</span>
+<span class="lineNum">     321 </span>            : {
+<span class="lineNum">     322 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getColorSpace&quot;);
+<span class="lineNum">     323 </span>            : 
+<span class="lineNum">     324 </span><span class="lineCov">       6312 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     325 </span><span class="lineCov">       6312 :         return m_colorSpace;</span>
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     328 </span>            : }
+<span class="lineNum">     329 </span>            : 
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     332 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     333 </span>            : //
+<span class="lineNum">     334 </span>            : //
+<span class="lineNum">     335 </span>            : // Returns the numbero of allocated channels
+<span class="lineNum">     336 </span>            : //
+<span class="lineNum">     337 </span>            : //
+<a name="338"><span class="lineNum">     338 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     339 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     340 </span><span class="lineCov">       5394 : std::uint32_t image::getChannelsNumber()</span>
+<span class="lineNum">     341 </span>            : {
+<span class="lineNum">     342 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getChannelsNumber&quot;);
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span><span class="lineCov">       5394 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     345 </span><span class="lineCov">       5394 :         return m_channelsNumber;</span>
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     348 </span>            : }
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     352 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     353 </span>            : //
+<span class="lineNum">     354 </span>            : //
+<span class="lineNum">     355 </span>            : // Returns the image's size in pixels
+<span class="lineNum">     356 </span>            : //
+<span class="lineNum">     357 </span>            : //
+<a name="358"><span class="lineNum">     358 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     359 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     360 </span><span class="lineCov">       7869 : void image::getSize(std::uint32_t* pSizeX, std::uint32_t* pSizeY)</span>
+<span class="lineNum">     361 </span>            : {
+<span class="lineNum">     362 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getSize&quot;);
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span><span class="lineCov">       7869 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span><span class="lineCov">       7869 :         if(pSizeX)</span>
+<span class="lineNum">     367 </span><span class="lineCov">       7869 :                 *pSizeX=m_sizeX;</span>
+<span class="lineNum">     368 </span>            : 
+<span class="lineNum">     369 </span><span class="lineCov">       7869 :         if(pSizeY)</span>
+<span class="lineNum">     370 </span><span class="lineCov">       7869 :                 *pSizeY=m_sizeY;</span>
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     373 </span><span class="lineCov">       7869 : }</span>
+<span class="lineNum">     374 </span>            : 
+<span class="lineNum">     375 </span>            : 
+<span class="lineNum">     376 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     377 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     378 </span>            : //
+<span class="lineNum">     379 </span>            : //
+<span class="lineNum">     380 </span>            : // Returns the image's size in millimeters
+<span class="lineNum">     381 </span>            : //
+<span class="lineNum">     382 </span>            : //
+<a name="383"><span class="lineNum">     383 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     384 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     385 </span><span class="lineCov">        523 : void image::getSizeMm(double* pSizeMmX, double* pSizeMmY)</span>
+<span class="lineNum">     386 </span>            : {
+<span class="lineNum">     387 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::getSizeMm&quot;);
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span><span class="lineCov">        523 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span><span class="lineCov">        523 :         if(pSizeMmX)</span>
+<span class="lineNum">     392 </span><span class="lineCov">        523 :                 *pSizeMmX=m_sizeMmX;</span>
+<span class="lineNum">     393 </span>            : 
+<span class="lineNum">     394 </span><span class="lineCov">        523 :         if(pSizeMmY)</span>
+<span class="lineNum">     395 </span><span class="lineCov">        523 :                 *pSizeMmY=m_sizeMmY;</span>
+<span class="lineNum">     396 </span>            : 
+<span class="lineNum">     397 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     398 </span><span class="lineCov">        523 : }</span>
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span>            : 
+<span class="lineNum">     401 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     402 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     403 </span>            : //
+<span class="lineNum">     404 </span>            : //
+<span class="lineNum">     405 </span>            : // Set the image's size in millimeters
+<span class="lineNum">     406 </span>            : //
+<span class="lineNum">     407 </span>            : //
+<a name="408"><span class="lineNum">     408 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     409 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     410 </span><span class="lineCov">       3100 : void image::setSizeMm(const double sizeMmX, const double sizeMmY)</span>
+<span class="lineNum">     411 </span>            : {
+<span class="lineNum">     412 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;image::setSizeMm&quot;);
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span><span class="lineCov">       3100 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     415 </span>            : 
+<span class="lineNum">     416 </span><span class="lineCov">       3100 :         if(sizeMmX)</span>
+<span class="lineNum">     417 </span><span class="lineCov">       1542 :                 m_sizeMmX=sizeMmX;</span>
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span><span class="lineCov">       3100 :         if(sizeMmY)</span>
+<span class="lineNum">     420 </span><span class="lineCov">       1542 :                 m_sizeMmY=sizeMmY;</span>
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     423 </span><span class="lineCov">       3100 : }</span>
+<span class="lineNum">     424 </span>            : 
+<span class="lineNum">     425 </span>            : } // namespace imebra
+<span class="lineNum">     426 </span>            : 
+<span class="lineNum">     427 </span>            : } // namespace puntoexe
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

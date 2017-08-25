@@ -1,0 +1,482 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/colorTransformsFactory.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - colorTransformsFactory.cpp<span style="font-size: 80%;"> (source / <a href="colorTransformsFactory.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">54</td>
+            <td class="headerCovTableEntry">73</td>
+            <td class="headerCovTableEntryLo">74.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file colorTransformsFactory.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the colorTransformsFactory class.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../include/colorTransformsFactory.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../include/transformsChain.h&quot;
+<span class="lineNum">      56 </span>            : #include &quot;../include/image.h&quot;
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : namespace puntoexe
+<span class="lineNum">      59 </span>            : {
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : namespace imebra
+<span class="lineNum">      62 </span>            : {
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : namespace transforms
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : namespace colorTransforms
+<span class="lineNum">      68 </span>            : {
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      71 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      72 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      73 </span>            : //
+<span class="lineNum">      74 </span>            : //
+<span class="lineNum">      75 </span>            : //
+<span class="lineNum">      76 </span>            : // colorTransformsFactory
+<span class="lineNum">      77 </span>            : //
+<span class="lineNum">      78 </span>            : //
+<span class="lineNum">      79 </span>            : //
+<span class="lineNum">      80 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      81 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      85 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      86 </span>            : //
+<span class="lineNum">      87 </span>            : //
+<span class="lineNum">      88 </span>            : // Force the construction of the factory before main()
+<span class="lineNum">      89 </span>            : //  starts
+<span class="lineNum">      90 </span>            : //
+<span class="lineNum">      91 </span>            : //
+<a name="92"><span class="lineNum">      92 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      93 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span><span class="lineCov">          1 : static colorTransformsFactory::forceColorTransformsFactoryConstruction forceConstruction;</span>
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      98 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      99 </span>            : //
+<span class="lineNum">     100 </span>            : //
+<span class="lineNum">     101 </span>            : // Register a color transform
+<span class="lineNum">     102 </span>            : //
+<span class="lineNum">     103 </span>            : //
+<a name="104"><span class="lineNum">     104 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     105 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     106 </span><span class="lineCov">         12 : void colorTransformsFactory::registerTransform(ptr&lt;colorTransform&gt; newColorTransform)</span>
+<span class="lineNum">     107 </span>            : {
+<span class="lineNum">     108 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::registerTransform&quot;);
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span><span class="lineCov">         12 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span><span class="lineCov">         12 :         m_transformsList.push_back(newColorTransform);</span>
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     115 </span><span class="lineCov">         12 : }</span>
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     119 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     120 </span>            : //
+<span class="lineNum">     121 </span>            : //
+<span class="lineNum">     122 </span>            : // Get a pointer to the colorTransformsFactory instance
+<span class="lineNum">     123 </span>            : //
+<span class="lineNum">     124 </span>            : //
+<a name="125"><span class="lineNum">     125 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     126 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     127 </span><span class="lineCov">         30 : ptr&lt;colorTransformsFactory&gt; colorTransformsFactory::getColorTransformsFactory()</span>
+<span class="lineNum">     128 </span>            : {
+<span class="lineNum">     129 </span><span class="lineCov">         30 :         static ptr&lt;colorTransformsFactory&gt; m_transformFactory(new colorTransformsFactory);</span>
+<span class="lineNum">     130 </span><span class="lineCov">         30 :         return m_transformFactory;</span>
+<span class="lineNum">     131 </span>            : }
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     135 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     136 </span>            : //
+<span class="lineNum">     137 </span>            : //
+<span class="lineNum">     138 </span>            : // Normalize the color space name
+<span class="lineNum">     139 </span>            : //
+<span class="lineNum">     140 </span>            : //
+<a name="141"><span class="lineNum">     141 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////;
+<span class="lineNum">     143 </span><span class="lineCov">      12585 : std::wstring colorTransformsFactory::normalizeColorSpace(std::wstring colorSpace)</span>
+<span class="lineNum">     144 </span>            : {
+<span class="lineNum">     145 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::normalizeColorSpace&quot;);
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span><span class="lineCov">      12585 :         std::wstring normalizedColorSpace;</span>
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span><span class="lineCov">      12585 :         size_t c42position = colorSpace.find(L&quot;_42&quot;);</span>
+<span class="lineNum">     150 </span><span class="lineCov">      12585 :         if(c42position != colorSpace.npos)</span>
+<span class="lineNum">     151 </span><span class="lineNoCov">          0 :                 normalizedColorSpace=colorSpace.substr(0, c42position);</span>
+<span class="lineNum">     152 </span>            :         else
+<span class="lineNum">     153 </span><span class="lineCov">      12585 :                 normalizedColorSpace=colorSpace;</span>
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            :         // Colorspace transformed to uppercase
+<span class="lineNum">     156 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     157 </span><span class="lineCov">      50913 :         for(int adjustColorSpace = 0; adjustColorSpace&lt;(int)normalizedColorSpace.length(); ++adjustColorSpace)</span>
+<span class="lineNum">     158 </span>            :         {
+<span class="lineNum">     159 </span><span class="lineCov">      38328 :                 if(normalizedColorSpace[adjustColorSpace] &gt;= L'a' &amp;&amp; normalizedColorSpace[adjustColorSpace] &lt;= L'z')</span>
+<span class="lineNum">     160 </span><span class="lineNoCov">          0 :                         normalizedColorSpace[adjustColorSpace] -= L'a'-L'A';</span>
+<span class="lineNum">     161 </span>            :         }
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span><span class="lineCov">      12585 :         return normalizedColorSpace;</span>
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     166 </span>            : }
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     171 </span>            : //
+<span class="lineNum">     172 </span>            : //
+<span class="lineNum">     173 </span>            : // Returns true if the color space name represents a
+<span class="lineNum">     174 </span>            : //  monochrome color space
+<span class="lineNum">     175 </span>            : //
+<span class="lineNum">     176 </span>            : //
+<a name="177"><span class="lineNum">     177 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     178 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     179 </span><span class="lineCov">       1026 : bool colorTransformsFactory::isMonochrome(std::wstring colorSpace)</span>
+<span class="lineNum">     180 </span>            : {
+<span class="lineNum">     181 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::isMonochrome&quot;);
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span><span class="lineCov">       1026 :         std::wstring normalizedColorSpace = normalizeColorSpace(colorSpace);</span>
+<span class="lineNum">     184 </span><span class="lineCov">       1026 :         return (normalizedColorSpace == L&quot;MONOCHROME1&quot; || normalizedColorSpace == L&quot;MONOCHROME2&quot;);</span>
+<span class="lineNum">     185 </span>            : 
+<span class="lineNum">     186 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     187 </span>            : }
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     191 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     192 </span>            : //
+<span class="lineNum">     193 </span>            : //
+<span class="lineNum">     194 </span>            : // Returns true if the color space name represents an
+<span class="lineNum">     195 </span>            : //  horizontally subsampled color space
+<span class="lineNum">     196 </span>            : //
+<span class="lineNum">     197 </span>            : //
+<a name="198"><span class="lineNum">     198 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     199 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     200 </span><span class="lineCov">       3329 : bool colorTransformsFactory::isSubsampledX(std::wstring colorSpace)</span>
+<span class="lineNum">     201 </span>            : {
+<span class="lineNum">     202 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::isSubsampledX&quot;);
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span><span class="lineCov">       3329 :         return (colorSpace.find(L&quot;_42&quot;)!=colorSpace.npos);</span>
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     207 </span>            : }
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     211 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     212 </span>            : //
+<span class="lineNum">     213 </span>            : //
+<span class="lineNum">     214 </span>            : // Returns true if the color space name represents a
+<span class="lineNum">     215 </span>            : //  vertically subsampled color space
+<span class="lineNum">     216 </span>            : //
+<span class="lineNum">     217 </span>            : //
+<a name="218"><span class="lineNum">     218 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     219 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     220 </span><span class="lineCov">       3329 : bool colorTransformsFactory::isSubsampledY(std::wstring colorSpace)</span>
+<span class="lineNum">     221 </span>            : {
+<span class="lineNum">     222 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::isSubsampledY&quot;);
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span><span class="lineCov">       3329 :         return (colorSpace.find(L&quot;_420&quot;)!=colorSpace.npos);</span>
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     227 </span>            : }
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     231 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     232 </span>            : //
+<span class="lineNum">     233 </span>            : //
+<span class="lineNum">     234 </span>            : // Returns true if the specified color space can be
+<span class="lineNum">     235 </span>            : //  subsampled
+<span class="lineNum">     236 </span>            : //
+<span class="lineNum">     237 </span>            : //
+<a name="238"><span class="lineNum">     238 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     239 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     240 </span><span class="lineCov">       2071 : bool colorTransformsFactory::canSubsample(std::wstring colorSpace)</span>
+<span class="lineNum">     241 </span>            : {
+<span class="lineNum">     242 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::canSubsample&quot;);
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span><span class="lineCov">       2071 :         std::wstring normalizedColorSpace = normalizeColorSpace(colorSpace);</span>
+<span class="lineNum">     245 </span><span class="lineCov">       2071 :         return normalizedColorSpace.find(L&quot;YBR_&quot;) == 0;</span>
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     248 </span>            : }
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     252 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     253 </span>            : //
+<span class="lineNum">     254 </span>            : //
+<span class="lineNum">     255 </span>            : // Subsample a color space name
+<span class="lineNum">     256 </span>            : //
+<span class="lineNum">     257 </span>            : //
+<a name="258"><span class="lineNum">     258 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     259 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     260 </span><span class="lineCov">        523 : std::wstring colorTransformsFactory::makeSubsampled(std::wstring colorSpace, bool bSubsampleX, bool bSubsampleY)</span>
+<span class="lineNum">     261 </span>            : {
+<span class="lineNum">     262 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::makeSubsampled&quot;);
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span><span class="lineCov">        523 :         std::wstring normalizedColorSpace = normalizeColorSpace(colorSpace);</span>
+<span class="lineNum">     265 </span><span class="lineCov">        523 :         if(!canSubsample(normalizedColorSpace))</span>
+<span class="lineNum">     266 </span>            :         {
+<span class="lineNum">     267 </span><span class="lineCov">        521 :                 return normalizedColorSpace;</span>
+<span class="lineNum">     268 </span>            :         }
+<span class="lineNum">     269 </span><span class="lineCov">          2 :         if(bSubsampleY)</span>
+<span class="lineNum">     270 </span>            :         {
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :                 return normalizedColorSpace + L&quot;_420&quot;;</span>
+<span class="lineNum">     272 </span>            :         }
+<span class="lineNum">     273 </span><span class="lineCov">          2 :         if(bSubsampleX)</span>
+<span class="lineNum">     274 </span>            :         {
+<span class="lineNum">     275 </span><span class="lineNoCov">          0 :                 return normalizedColorSpace + L&quot;_422&quot;;</span>
+<span class="lineNum">     276 </span>            :         }
+<span class="lineNum">     277 </span><span class="lineCov">          2 :         return normalizedColorSpace;</span>
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     280 </span>            : }
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            : 
+<span class="lineNum">     283 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     284 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     285 </span>            : //
+<span class="lineNum">     286 </span>            : //
+<span class="lineNum">     287 </span>            : // Returns the number of channels for the specified
+<span class="lineNum">     288 </span>            : //  color space
+<span class="lineNum">     289 </span>            : //
+<span class="lineNum">     290 </span>            : //
+<a name="291"><span class="lineNum">     291 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     292 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     293 </span><span class="lineCov">       3939 : std::uint32_t colorTransformsFactory::getNumberOfChannels(std::wstring colorSpace)</span>
+<span class="lineNum">     294 </span>            : {
+<span class="lineNum">     295 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::getNumberOfChannels&quot;);
+<span class="lineNum">     296 </span>            : 
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">       3939 :         std::wstring normalizedColorSpace = normalizeColorSpace(colorSpace);</span></a>
+<span class="lineNum">     298 </span>            : 
+<a name="299"><span class="lineNum">     299 </span><span class="lineCov">         11 :         struct sColorSpace</span></a>
+<span class="lineNum">     300 </span>            :         {
+<span class="lineNum">     301 </span><span class="lineCov">         11 :                 sColorSpace(const wchar_t* colorSpace, std::uint8_t channelsNumber): m_colorSpace(colorSpace), m_channelsNumber(channelsNumber){}</span>
+<span class="lineNum">     302 </span>            :                 std::wstring m_colorSpace;
+<span class="lineNum">     303 </span>            :                 std::uint8_t m_channelsNumber;
+<span class="lineNum">     304 </span>            :         };
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            :         static sColorSpace imbxColorSpaces[]=
+<span class="lineNum">     307 </span>            :         {
+<span class="lineNum">     308 </span>            :                 sColorSpace(L&quot;RGB&quot;, 0x3),
+<span class="lineNum">     309 </span>            :                 sColorSpace(L&quot;YBR_FULL&quot;, 0x3),
+<span class="lineNum">     310 </span>            :                 sColorSpace(L&quot;YBR_PARTIAL&quot;, 0x3),
+<span class="lineNum">     311 </span>            :                 sColorSpace(L&quot;YBR_RCT&quot;, 0x3),
+<span class="lineNum">     312 </span>            :                 sColorSpace(L&quot;YBR_ICT&quot;, 0x3),
+<span class="lineNum">     313 </span>            :                 sColorSpace(L&quot;PALETTE COLOR&quot;, 0x1),
+<span class="lineNum">     314 </span>            :                 sColorSpace(L&quot;CMYK&quot;, 0x4),
+<span class="lineNum">     315 </span>            :                 sColorSpace(L&quot;CMY&quot;, 0x3),
+<span class="lineNum">     316 </span>            :                 sColorSpace(L&quot;MONOCHROME2&quot;, 0x1),
+<a name="317"><span class="lineNum">     317 </span>            :                 sColorSpace(L&quot;MONOCHROME1&quot;, 0x1),</a>
+<span class="lineNum">     318 </span>            :                 sColorSpace(L&quot;&quot;, 0x0)
+<span class="lineNum">     319 </span><span class="lineCov">       3940 :         };</span>
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span><span class="lineCov">       3991 :         for(std::uint8_t findColorSpace = 0; imbxColorSpaces[findColorSpace].m_channelsNumber != 0x0; ++findColorSpace)</span>
+<span class="lineNum">     322 </span>            :         {
+<span class="lineNum">     323 </span><span class="lineCov">       3991 :                 if(imbxColorSpaces[findColorSpace].m_colorSpace == normalizedColorSpace)</span>
+<span class="lineNum">     324 </span>            :                 {
+<span class="lineNum">     325 </span><span class="lineCov">       3939 :                         return imbxColorSpaces[findColorSpace].m_channelsNumber;</span>
+<span class="lineNum">     326 </span>            :                 }
+<span class="lineNum">     327 </span>            :         }
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span><span class="lineNoCov">          0 :         return 0;</span>
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     332 </span>            : }
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     336 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     337 </span>            : //
+<span class="lineNum">     338 </span>            : //
+<span class="lineNum">     339 </span>            : // Returns a transform that can convert a color space into
+<span class="lineNum">     340 </span>            : //  another
+<span class="lineNum">     341 </span>            : //
+<span class="lineNum">     342 </span>            : //
+<a name="343"><span class="lineNum">     343 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     344 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     345 </span><span class="lineCov">         27 : ptr&lt;colorTransform&gt; colorTransformsFactory::getTransform(std::wstring startColorSpace, std::wstring endColorSpace)</span>
+<span class="lineNum">     346 </span>            : {
+<span class="lineNum">     347 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;colorTransformsFactory::getTransform&quot;);
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span><span class="lineCov">         27 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span><span class="lineCov">         54 :         std::wstring normalizedStartColorSpace = normalizeColorSpace(startColorSpace);</span>
+<span class="lineNum">     352 </span><span class="lineCov">         54 :         std::wstring normalizedEndColorSpace = normalizeColorSpace(endColorSpace);</span>
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span><span class="lineCov">         27 :         if(normalizedStartColorSpace == normalizedEndColorSpace)</span>
+<span class="lineNum">     355 </span>            :         {
+<span class="lineNum">     356 </span><span class="lineCov">          2 :                 return ptr&lt;colorTransform&gt;(0);</span>
+<span class="lineNum">     357 </span>            :         }
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span><span class="lineCov">        102 :         for(tTransformsList::iterator scanSingleTransform = m_transformsList.begin(); scanSingleTransform != m_transformsList.end(); ++scanSingleTransform)</span>
+<span class="lineNum">     360 </span>            :         {
+<span class="lineNum">     361 </span><span class="lineCov">        280 :                 if( (*scanSingleTransform)-&gt;getInitialColorSpace() == normalizedStartColorSpace &amp;&amp; </span>
+<span class="lineNum">     362 </span><span class="lineCov">        178 :                         (*scanSingleTransform)-&gt;getFinalColorSpace() == normalizedEndColorSpace)</span>
+<span class="lineNum">     363 </span>            :                 {
+<span class="lineNum">     364 </span><span class="lineCov">         25 :                         ptr&lt;colorTransform&gt; newTransform = (*scanSingleTransform)-&gt;createColorTransform();</span>
+<span class="lineNum">     365 </span><span class="lineCov">         25 :                         return newTransform;</span>
+<span class="lineNum">     366 </span>            :                 }
+<span class="lineNum">     367 </span>            :         }
+<span class="lineNum">     368 </span>            : 
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 :         for(tTransformsList::iterator scanMultipleTransforms = m_transformsList.begin(); scanMultipleTransforms != m_transformsList.end(); ++scanMultipleTransforms)</span>
+<span class="lineNum">     370 </span>            :         {
+<span class="lineNum">     371 </span><span class="lineNoCov">          0 :                 if( (*scanMultipleTransforms)-&gt;getInitialColorSpace() != normalizedStartColorSpace)</span>
+<span class="lineNum">     372 </span>            :                 {
+<span class="lineNum">     373 </span><span class="lineNoCov">          0 :                         continue;</span>
+<span class="lineNum">     374 </span>            :                 }
+<span class="lineNum">     375 </span>            : 
+<span class="lineNum">     376 </span><span class="lineNoCov">          0 :                 for(tTransformsList::iterator secondTransform = m_transformsList.begin(); secondTransform != m_transformsList.end(); ++secondTransform)</span>
+<span class="lineNum">     377 </span>            :                 {
+<span class="lineNum">     378 </span><span class="lineNoCov">          0 :                         if( (*secondTransform)-&gt;getFinalColorSpace() != normalizedEndColorSpace ||</span>
+<span class="lineNum">     379 </span><span class="lineNoCov">          0 :                                 (*secondTransform)-&gt;getInitialColorSpace() != (*scanMultipleTransforms)-&gt;getFinalColorSpace())</span>
+<span class="lineNum">     380 </span>            :                         {
+<span class="lineNum">     381 </span><span class="lineNoCov">          0 :                                 continue;</span>
+<span class="lineNum">     382 </span>            :                         }
+<span class="lineNum">     383 </span>            : 
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 :                         ptr&lt;colorTransform&gt; newTransform0 = (*scanMultipleTransforms)-&gt;createColorTransform();</span>
+<span class="lineNum">     385 </span><span class="lineNoCov">          0 :                         ptr&lt;colorTransform&gt; newTransform1 = (*secondTransform)-&gt;createColorTransform();</span>
+<span class="lineNum">     386 </span>            : 
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :                         ptr&lt;transformsChain&gt; chain(new transformsChain);</span>
+<span class="lineNum">     388 </span><span class="lineNoCov">          0 :                         chain-&gt;addTransform(newTransform0);</span>
+<span class="lineNum">     389 </span><span class="lineNoCov">          0 :                         chain-&gt;addTransform(newTransform1);</span>
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span><span class="lineNoCov">          0 :                         return chain;</span>
+<span class="lineNum">     392 </span><span class="lineNoCov">          0 :                 }</span>
+<span class="lineNum">     393 </span>            :         }
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span><span class="lineCov">         27 :         PUNTOEXE_THROW(colorTransformsFactoryExceptionNoTransform, &quot;There isn't any transform that can convert between the specified color spaces&quot;);</span>
+<span class="lineNum">     396 </span>            : 
+<span class="lineNum">     397 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     398 </span>            : }
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span>            : } // namespace colorTransforms
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            : } // namespace transforms
+<span class="lineNum">     403 </span>            : 
+<a name="404"><span class="lineNum">     404 </span>            : } // namespace imebra</a>
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

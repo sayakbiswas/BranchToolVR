@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - /usr/include/gtest/internal/gtest-string.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">usr/include/gtest/internal</a> - gtest-string.h<span style="font-size: 80%;"> (source / <a href="gtest-string.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntryLo">45.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryLo">66.7 %</td>
+          </tr>
+          <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright 2005, Google Inc.</a>
+<span class="lineNum">       2 </span>            : // All rights reserved.
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       5 </span>            : // modification, are permitted provided that the following conditions are
+<span class="lineNum">       6 </span>            : // met:
+<span class="lineNum">       7 </span>            : //
+<span class="lineNum">       8 </span>            : //     * Redistributions of source code must retain the above copyright
+<span class="lineNum">       9 </span>            : // notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      10 </span>            : //     * Redistributions in binary form must reproduce the above
+<span class="lineNum">      11 </span>            : // copyright notice, this list of conditions and the following disclaimer
+<span class="lineNum">      12 </span>            : // in the documentation and/or other materials provided with the
+<span class="lineNum">      13 </span>            : // distribution.
+<span class="lineNum">      14 </span>            : //     * Neither the name of Google Inc. nor the names of its
+<span class="lineNum">      15 </span>            : // contributors may be used to endorse or promote products derived from
+<span class="lineNum">      16 </span>            : // this software without specific prior written permission.
+<span class="lineNum">      17 </span>            : //
+<span class="lineNum">      18 </span>            : // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+<span class="lineNum">      19 </span>            : // &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+<span class="lineNum">      20 </span>            : // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+<span class="lineNum">      21 </span>            : // A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+<span class="lineNum">      22 </span>            : // OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+<span class="lineNum">      23 </span>            : // SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+<span class="lineNum">      24 </span>            : // LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+<span class="lineNum">      25 </span>            : // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+<span class="lineNum">      26 </span>            : // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+<span class="lineNum">      27 </span>            : // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+<span class="lineNum">      28 </span>            : // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      29 </span>            : //
+<span class="lineNum">      30 </span>            : // Authors: wan@google.com (Zhanyong Wan), eefacm@gmail.com (Sean Mcafee)
+<span class="lineNum">      31 </span>            : //
+<span class="lineNum">      32 </span>            : // The Google C++ Testing Framework (Google Test)
+<span class="lineNum">      33 </span>            : //
+<span class="lineNum">      34 </span>            : // This header file declares the String class and functions used internally by
+<span class="lineNum">      35 </span>            : // Google Test.  They are subject to change without notice. They should not used
+<span class="lineNum">      36 </span>            : // by code external to Google Test.
+<span class="lineNum">      37 </span>            : //
+<span class="lineNum">      38 </span>            : // This header file is #included by &lt;gtest/internal/gtest-internal.h&gt;.
+<span class="lineNum">      39 </span>            : // It should not be #included by other files.
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            : #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+<span class="lineNum">      42 </span>            : #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : #ifdef __BORLANDC__
+<span class="lineNum">      45 </span>            : // string.h is not guaranteed to provide strcpy on C++ Builder.
+<span class="lineNum">      46 </span>            : # include &lt;mem.h&gt;
+<span class="lineNum">      47 </span>            : #endif
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : #include &lt;string.h&gt;
+<span class="lineNum">      50 </span>            : #include &quot;gtest/internal/gtest-port.h&quot;
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : #include &lt;string&gt;
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : namespace testing {
+<span class="lineNum">      55 </span>            : namespace internal {
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : // String - a UTF-8 string class.
+<span class="lineNum">      58 </span>            : //
+<span class="lineNum">      59 </span>            : // For historic reasons, we don't use std::string.
+<span class="lineNum">      60 </span>            : //
+<span class="lineNum">      61 </span>            : // TODO(wan@google.com): replace this class with std::string or
+<span class="lineNum">      62 </span>            : // implement it in terms of the latter.
+<span class="lineNum">      63 </span>            : //
+<span class="lineNum">      64 </span>            : // Note that String can represent both NULL and the empty string,
+<span class="lineNum">      65 </span>            : // while std::string cannot represent NULL.
+<span class="lineNum">      66 </span>            : //
+<span class="lineNum">      67 </span>            : // NULL and the empty string are considered different.  NULL is less
+<span class="lineNum">      68 </span>            : // than anything (including the empty string) except itself.
+<span class="lineNum">      69 </span>            : //
+<span class="lineNum">      70 </span>            : // This class only provides minimum functionality necessary for
+<span class="lineNum">      71 </span>            : // implementing Google Test.  We do not intend to implement a full-fledged
+<span class="lineNum">      72 </span>            : // string class here.
+<span class="lineNum">      73 </span>            : //
+<span class="lineNum">      74 </span>            : // Since the purpose of this class is to provide a substitute for
+<span class="lineNum">      75 </span>            : // std::string on platforms where it cannot be used, we define a copy
+<span class="lineNum">      76 </span>            : // constructor and assignment operators such that we don't need
+<span class="lineNum">      77 </span>            : // conditional compilation in a lot of places.
+<span class="lineNum">      78 </span>            : //
+<span class="lineNum">      79 </span>            : // In order to make the representation efficient, the d'tor of String
+<span class="lineNum">      80 </span>            : // is not virtual.  Therefore DO NOT INHERIT FROM String.
+<span class="lineNum">      81 </span>            : class GTEST_API_ String {
+<span class="lineNum">      82 </span>            :  public:
+<span class="lineNum">      83 </span>            :   // Static utility methods
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            :   // Returns the input enclosed in double quotes if it's not NULL;
+<span class="lineNum">      86 </span>            :   // otherwise returns &quot;(null)&quot;.  For example, &quot;\&quot;Hello\&quot;&quot; is returned
+<span class="lineNum">      87 </span>            :   // for input &quot;Hello&quot;.
+<span class="lineNum">      88 </span>            :   //
+<span class="lineNum">      89 </span>            :   // This is useful for printing a C string in the syntax of a literal.
+<span class="lineNum">      90 </span>            :   //
+<span class="lineNum">      91 </span>            :   // Known issue: escape sequences are not handled yet.
+<span class="lineNum">      92 </span>            :   static String ShowCStringQuoted(const char* c_str);
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            :   // Clones a 0-terminated C string, allocating memory using new.  The
+<span class="lineNum">      95 </span>            :   // caller is responsible for deleting the return value using
+<span class="lineNum">      96 </span>            :   // delete[].  Returns the cloned string, or NULL if the input is
+<span class="lineNum">      97 </span>            :   // NULL.
+<span class="lineNum">      98 </span>            :   //
+<span class="lineNum">      99 </span>            :   // This is different from strdup() in string.h, which allocates
+<span class="lineNum">     100 </span>            :   // memory using malloc().
+<span class="lineNum">     101 </span>            :   static const char* CloneCString(const char* c_str);
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : #if GTEST_OS_WINDOWS_MOBILE
+<span class="lineNum">     104 </span>            :   // Windows CE does not have the 'ANSI' versions of Win32 APIs. To be
+<span class="lineNum">     105 </span>            :   // able to pass strings to Win32 APIs on CE we need to convert them
+<span class="lineNum">     106 </span>            :   // to 'Unicode', UTF-16.
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span>            :   // Creates a UTF-16 wide string from the given ANSI string, allocating
+<span class="lineNum">     109 </span>            :   // memory using new. The caller is responsible for deleting the return
+<span class="lineNum">     110 </span>            :   // value using delete[]. Returns the wide string, or NULL if the
+<span class="lineNum">     111 </span>            :   // input is NULL.
+<span class="lineNum">     112 </span>            :   //
+<span class="lineNum">     113 </span>            :   // The wide string is created using the ANSI codepage (CP_ACP) to
+<span class="lineNum">     114 </span>            :   // match the behaviour of the ANSI versions of Win32 calls and the
+<span class="lineNum">     115 </span>            :   // C runtime.
+<span class="lineNum">     116 </span>            :   static LPCWSTR AnsiToUtf16(const char* c_str);
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :   // Creates an ANSI string from the given wide string, allocating
+<span class="lineNum">     119 </span>            :   // memory using new. The caller is responsible for deleting the return
+<span class="lineNum">     120 </span>            :   // value using delete[]. Returns the ANSI string, or NULL if the
+<span class="lineNum">     121 </span>            :   // input is NULL.
+<span class="lineNum">     122 </span>            :   //
+<span class="lineNum">     123 </span>            :   // The returned string is created using the ANSI codepage (CP_ACP) to
+<span class="lineNum">     124 </span>            :   // match the behaviour of the ANSI versions of Win32 calls and the
+<span class="lineNum">     125 </span>            :   // C runtime.
+<span class="lineNum">     126 </span>            :   static const char* Utf16ToAnsi(LPCWSTR utf16_str);
+<span class="lineNum">     127 </span>            : #endif
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            :   // Compares two C strings.  Returns true iff they have the same content.
+<span class="lineNum">     130 </span>            :   //
+<span class="lineNum">     131 </span>            :   // Unlike strcmp(), this function can handle NULL argument(s).  A
+<span class="lineNum">     132 </span>            :   // NULL C string is considered different to any non-NULL C string,
+<span class="lineNum">     133 </span>            :   // including the empty string.
+<span class="lineNum">     134 </span>            :   static bool CStringEquals(const char* lhs, const char* rhs);
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span>            :   // Converts a wide C string to a String using the UTF-8 encoding.
+<span class="lineNum">     137 </span>            :   // NULL will be converted to &quot;(null)&quot;.  If an error occurred during
+<span class="lineNum">     138 </span>            :   // the conversion, &quot;(failed to convert from wide string)&quot; is
+<span class="lineNum">     139 </span>            :   // returned.
+<span class="lineNum">     140 </span>            :   static String ShowWideCString(const wchar_t* wide_c_str);
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            :   // Similar to ShowWideCString(), except that this function encloses
+<span class="lineNum">     143 </span>            :   // the converted string in double quotes.
+<span class="lineNum">     144 </span>            :   static String ShowWideCStringQuoted(const wchar_t* wide_c_str);
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            :   // Compares two wide C strings.  Returns true iff they have the same
+<span class="lineNum">     147 </span>            :   // content.
+<span class="lineNum">     148 </span>            :   //
+<span class="lineNum">     149 </span>            :   // Unlike wcscmp(), this function can handle NULL argument(s).  A
+<span class="lineNum">     150 </span>            :   // NULL C string is considered different to any non-NULL C string,
+<span class="lineNum">     151 </span>            :   // including the empty string.
+<span class="lineNum">     152 </span>            :   static bool WideCStringEquals(const wchar_t* lhs, const wchar_t* rhs);
+<span class="lineNum">     153 </span>            : 
+<span class="lineNum">     154 </span>            :   // Compares two C strings, ignoring case.  Returns true iff they
+<span class="lineNum">     155 </span>            :   // have the same content.
+<span class="lineNum">     156 </span>            :   //
+<span class="lineNum">     157 </span>            :   // Unlike strcasecmp(), this function can handle NULL argument(s).
+<span class="lineNum">     158 </span>            :   // A NULL C string is considered different to any non-NULL C string,
+<span class="lineNum">     159 </span>            :   // including the empty string.
+<span class="lineNum">     160 </span>            :   static bool CaseInsensitiveCStringEquals(const char* lhs,
+<span class="lineNum">     161 </span>            :                                            const char* rhs);
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            :   // Compares two wide C strings, ignoring case.  Returns true iff they
+<span class="lineNum">     164 </span>            :   // have the same content.
+<span class="lineNum">     165 </span>            :   //
+<span class="lineNum">     166 </span>            :   // Unlike wcscasecmp(), this function can handle NULL argument(s).
+<span class="lineNum">     167 </span>            :   // A NULL C string is considered different to any non-NULL wide C string,
+<span class="lineNum">     168 </span>            :   // including the empty string.
+<span class="lineNum">     169 </span>            :   // NB: The implementations on different platforms slightly differ.
+<span class="lineNum">     170 </span>            :   // On windows, this method uses _wcsicmp which compares according to LC_CTYPE
+<span class="lineNum">     171 </span>            :   // environment variable. On GNU platform this method uses wcscasecmp
+<span class="lineNum">     172 </span>            :   // which compares according to LC_CTYPE category of the current locale.
+<span class="lineNum">     173 </span>            :   // On MacOS X, it uses towlower, which also uses LC_CTYPE category of the
+<span class="lineNum">     174 </span>            :   // current locale.
+<span class="lineNum">     175 </span>            :   static bool CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
+<span class="lineNum">     176 </span>            :                                                const wchar_t* rhs);
+<span class="lineNum">     177 </span>            : 
+<span class="lineNum">     178 </span>            :   // Formats a list of arguments to a String, using the same format
+<span class="lineNum">     179 </span>            :   // spec string as for printf.
+<span class="lineNum">     180 </span>            :   //
+<span class="lineNum">     181 </span>            :   // We do not use the StringPrintf class as it is not universally
+<span class="lineNum">     182 </span>            :   // available.
+<span class="lineNum">     183 </span>            :   //
+<span class="lineNum">     184 </span>            :   // The result is limited to 4096 characters (including the tailing
+<span class="lineNum">     185 </span>            :   // 0).  If 4096 characters are not enough to format the input,
+<span class="lineNum">     186 </span>            :   // &quot;&lt;buffer exceeded&gt;&quot; is returned.
+<span class="lineNum">     187 </span>            :   static String Format(const char* format, ...);
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span>            :   // C'tors
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :   // The default c'tor constructs a NULL string.
+<span class="lineNum">     192 </span>            :   String() : c_str_(NULL), length_(0) {}
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            :   // Constructs a String by cloning a 0-terminated C string.
+<span class="lineNum">     195 </span>            :   String(const char* a_c_str) {  // NOLINT
+<span class="lineNum">     196 </span>            :     if (a_c_str == NULL) {
+<span class="lineNum">     197 </span>            :       c_str_ = NULL;
+<span class="lineNum">     198 </span>            :       length_ = 0;
+<span class="lineNum">     199 </span>            :     } else {
+<span class="lineNum">     200 </span>            :       ConstructNonNull(a_c_str, strlen(a_c_str));
+<span class="lineNum">     201 </span>            :     }
+<span class="lineNum">     202 </span>            :   }
+<span class="lineNum">     203 </span>            : 
+<span class="lineNum">     204 </span>            :   // Constructs a String by copying a given number of chars from a
+<span class="lineNum">     205 </span>            :   // buffer.  E.g. String(&quot;hello&quot;, 3) creates the string &quot;hel&quot;,
+<span class="lineNum">     206 </span>            :   // String(&quot;a\0bcd&quot;, 4) creates &quot;a\0bc&quot;, String(NULL, 0) creates &quot;&quot;,
+<span class="lineNum">     207 </span>            :   // and String(NULL, 1) results in access violation.
+<span class="lineNum">     208 </span>            :   String(const char* buffer, size_t a_length) {
+<span class="lineNum">     209 </span>            :     ConstructNonNull(buffer, a_length);
+<span class="lineNum">     210 </span>            :   }
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            :   // The copy c'tor creates a new copy of the string.  The two
+<span class="lineNum">     213 </span>            :   // String objects do not share content.
+<span class="lineNum">     214 </span>            :   String(const String&amp; str) : c_str_(NULL), length_(0) { *this = str; }
+<span class="lineNum">     215 </span>            : 
+<a name="216"><span class="lineNum">     216 </span>            :   // D'tor.  String is intended to be a final class, so the d'tor</a>
+<span class="lineNum">     217 </span>            :   // doesn't need to be virtual.
+<span class="lineNum">     218 </span><span class="lineCov">       1056 :   ~String() { delete[] c_str_; }</span>
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            :   // Allows a String to be implicitly converted to an ::std::string or
+<span class="lineNum">     221 </span>            :   // ::string, and vice versa.  Converting a String containing a NULL
+<span class="lineNum">     222 </span>            :   // pointer to ::std::string or ::string is undefined behavior.
+<span class="lineNum">     223 </span>            :   // Converting a ::std::string or ::string containing an embedded NUL
+<a name="224"><span class="lineNum">     224 </span>            :   // character to a String will result in the prefix up to the first</a>
+<span class="lineNum">     225 </span>            :   // NUL character.
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :   String(const ::std::string&amp; str) {</span>
+<span class="lineNum">     227 </span><span class="lineNoCov">          0 :     ConstructNonNull(str.c_str(), str.length());</span>
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :   }</span>
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :   operator ::std::string() const { return ::std::string(c_str(), length()); }
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            : #if GTEST_HAS_GLOBAL_STRING
+<span class="lineNum">     233 </span>            :   String(const ::string&amp; str) {
+<span class="lineNum">     234 </span>            :     ConstructNonNull(str.c_str(), str.length());
+<span class="lineNum">     235 </span>            :   }
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            :   operator ::string() const { return ::string(c_str(), length()); }
+<span class="lineNum">     238 </span>            : #endif  // GTEST_HAS_GLOBAL_STRING
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :   // Returns true iff this is an empty string (i.e. &quot;&quot;).
+<span class="lineNum">     241 </span>            :   bool empty() const { return (c_str() != NULL) &amp;&amp; (length() == 0); }
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :   // Compares this with another String.
+<span class="lineNum">     244 </span>            :   // Returns &lt; 0 if this is less than rhs, 0 if this is equal to rhs, or &gt; 0
+<span class="lineNum">     245 </span>            :   // if this is greater than rhs.
+<span class="lineNum">     246 </span>            :   int Compare(const String&amp; rhs) const;
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :   // Returns true iff this String equals the given C string.  A NULL
+<span class="lineNum">     249 </span>            :   // string and a non-NULL string are considered not equal.
+<span class="lineNum">     250 </span>            :   bool operator==(const char* a_c_str) const { return Compare(a_c_str) == 0; }
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :   // Returns true iff this String is less than the given String.  A
+<span class="lineNum">     253 </span>            :   // NULL string is considered less than &quot;&quot;.
+<span class="lineNum">     254 </span>            :   bool operator&lt;(const String&amp; rhs) const { return Compare(rhs) &lt; 0; }
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :   // Returns true iff this String doesn't equal the given C string.  A NULL
+<span class="lineNum">     257 </span>            :   // string and a non-NULL string are considered not equal.
+<span class="lineNum">     258 </span>            :   bool operator!=(const char* a_c_str) const { return !(*this == a_c_str); }
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span>            :   // Returns true iff this String ends with the given suffix.  *Any*
+<span class="lineNum">     261 </span>            :   // String is considered to end with a NULL or empty suffix.
+<span class="lineNum">     262 </span>            :   bool EndsWith(const char* suffix) const;
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span>            :   // Returns true iff this String ends with the given suffix, not considering
+<span class="lineNum">     265 </span>            :   // case. Any String is considered to end with a NULL or empty suffix.
+<span class="lineNum">     266 </span>            :   bool EndsWithCaseInsensitive(const char* suffix) const;
+<span class="lineNum">     267 </span>            : 
+<a name="268"><span class="lineNum">     268 </span>            :   // Returns the length of the encapsulated string, or 0 if the</a>
+<span class="lineNum">     269 </span>            :   // string is NULL.
+<span class="lineNum">     270 </span><span class="lineCov">       1196 :   size_t length() const { return length_; }</span>
+<span class="lineNum">     271 </span>            : 
+<span class="lineNum">     272 </span>            :   // Gets the 0-terminated C string this String object represents.
+<a name="273"><span class="lineNum">     273 </span>            :   // The String object still owns the string.  Therefore the caller</a>
+<span class="lineNum">     274 </span>            :   // should NOT delete the return value.
+<span class="lineNum">     275 </span><span class="lineCov">       4047 :   const char* c_str() const { return c_str_; }</span>
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :   // Assigns a C string to this object.  Self-assignment works.
+<span class="lineNum">     278 </span>            :   const String&amp; operator=(const char* a_c_str) {
+<span class="lineNum">     279 </span>            :     return *this = String(a_c_str);
+<span class="lineNum">     280 </span>            :   }
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            :   // Assigns a String object to this object.  Self-assignment works.
+<span class="lineNum">     283 </span>            :   const String&amp; operator=(const String&amp; rhs) {
+<span class="lineNum">     284 </span>            :     if (this != &amp;rhs) {
+<span class="lineNum">     285 </span>            :       delete[] c_str_;
+<span class="lineNum">     286 </span>            :       if (rhs.c_str() == NULL) {
+<span class="lineNum">     287 </span>            :         c_str_ = NULL;
+<span class="lineNum">     288 </span>            :         length_ = 0;
+<span class="lineNum">     289 </span>            :       } else {
+<span class="lineNum">     290 </span>            :         ConstructNonNull(rhs.c_str(), rhs.length());
+<span class="lineNum">     291 </span>            :       }
+<span class="lineNum">     292 </span>            :     }
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            :     return *this;
+<span class="lineNum">     295 </span>            :   }
+<span class="lineNum">     296 </span>            : 
+<span class="lineNum">     297 </span>            :  private:
+<span class="lineNum">     298 </span>            :   // Constructs a non-NULL String from the given content.  This
+<span class="lineNum">     299 </span>            :   // function can only be called when c_str_ has not been allocated.
+<a name="300"><span class="lineNum">     300 </span>            :   // ConstructNonNull(NULL, 0) results in an empty string (&quot;&quot;).</a>
+<span class="lineNum">     301 </span>            :   // ConstructNonNull(NULL, non_zero) is undefined behavior.
+<span class="lineNum">     302 </span><span class="lineCov">       1400 :   void ConstructNonNull(const char* buffer, size_t a_length) {</span>
+<span class="lineNum">     303 </span><span class="lineCov">       1400 :     char* const str = new char[a_length + 1];</span>
+<span class="lineNum">     304 </span><span class="lineCov">       1400 :     memcpy(str, buffer, a_length);</span>
+<span class="lineNum">     305 </span><span class="lineCov">       1400 :     str[a_length] = '\0';</span>
+<span class="lineNum">     306 </span><span class="lineCov">       1400 :     c_str_ = str;</span>
+<span class="lineNum">     307 </span><span class="lineCov">       1400 :     length_ = a_length;</span>
+<span class="lineNum">     308 </span><span class="lineCov">       1400 :   }</span>
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            :   const char* c_str_;
+<span class="lineNum">     311 </span>            :   size_t length_;
+<span class="lineNum">     312 </span>            : };  // class String
+<span class="lineNum">     313 </span>            : 
+<a name="314"><span class="lineNum">     314 </span>            : // Streams a String to an ostream.  Each '\0' character in the String</a>
+<span class="lineNum">     315 </span>            : // is replaced with &quot;\\0&quot;.
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 : inline ::std::ostream&amp; operator&lt;&lt;(::std::ostream&amp; os, const String&amp; str) {</span>
+<span class="lineNum">     317 </span><span class="lineNoCov">          0 :   if (str.c_str() == NULL) {</span>
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :     os &lt;&lt; &quot;(null)&quot;;</span>
+<span class="lineNum">     319 </span>            :   } else {
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :     const char* const c_str = str.c_str();</span>
+<span class="lineNum">     321 </span><span class="lineNoCov">          0 :     for (size_t i = 0; i != str.length(); i++) {</span>
+<span class="lineNum">     322 </span><span class="lineNoCov">          0 :       if (c_str[i] == '\0') {</span>
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :         os &lt;&lt; &quot;\\0&quot;;</span>
+<span class="lineNum">     324 </span>            :       } else {
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :         os &lt;&lt; c_str[i];</span>
+<span class="lineNum">     326 </span>            :       }
+<span class="lineNum">     327 </span>            :     }
+<span class="lineNum">     328 </span>            :   }
+<span class="lineNum">     329 </span><span class="lineNoCov">          0 :   return os;</span>
+<span class="lineNum">     330 </span>            : }
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span>            : // Gets the content of the stringstream's buffer as a String.  Each '\0'
+<span class="lineNum">     333 </span>            : // character in the buffer is replaced with &quot;\\0&quot;.
+<span class="lineNum">     334 </span>            : GTEST_API_ String StringStreamToString(::std::stringstream* stream);
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            : // Converts a streamable value to a String.  A NULL pointer is
+<span class="lineNum">     337 </span>            : // converted to &quot;(null)&quot;.  When the input value is a ::string,
+<span class="lineNum">     338 </span>            : // ::std::string, ::wstring, or ::std::wstring object, each NUL
+<span class="lineNum">     339 </span>            : // character in it is replaced with &quot;\\0&quot;.
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span>            : // Declared here but defined in gtest.h, so that it has access
+<span class="lineNum">     342 </span>            : // to the definition of the Message class, required by the ARM
+<span class="lineNum">     343 </span>            : // compiler.
+<span class="lineNum">     344 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     345 </span>            : String StreamableToString(const T&amp; streamable);
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            : }  // namespace internal
+<span class="lineNum">     348 </span>            : }  // namespace testing
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : #endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

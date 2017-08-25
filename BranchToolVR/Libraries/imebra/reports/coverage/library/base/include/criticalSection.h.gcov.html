@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/criticalSection.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - criticalSection.h<span style="font-size: 80%;"> (source / <a href="criticalSection.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file criticalSection.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the functions that handle the the mutexes.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(CImbxCriticalSection_5092DA6B_EF16_4EF9_A1CF_DC8651AA7873__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define CImbxCriticalSection_5092DA6B_EF16_4EF9_A1CF_DC8651AA7873__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;configuration.h&quot;
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : #ifdef PUNTOEXE_WINDOWS
+<span class="lineNum">      59 </span>            : #include &quot;windows.h&quot;
+<span class="lineNum">      60 </span>            : #else
+<span class="lineNum">      61 </span>            : #include &lt;pthread.h&gt; // this must be the first included file
+<span class="lineNum">      62 </span>            : #endif
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : #include &lt;exception&gt;
+<span class="lineNum">      65 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">      66 </span>            : #include &lt;list&gt;
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : #include &lt;typeinfo&gt;
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : namespace puntoexe
+<span class="lineNum">      71 </span>            : {
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : /// \addtogroup group_baseclasses
+<span class="lineNum">      74 </span>            : ///
+<span class="lineNum">      75 </span>            : /// @{
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : #ifdef PUNTOEXE_WINDOWS
+<span class="lineNum">      78 </span>            :         typedef CRITICAL_SECTION tCriticalSection;
+<span class="lineNum">      79 </span>            : #else
+<span class="lineNum">      80 </span>            :         typedef pthread_mutex_t tCriticalSection;
+<span class="lineNum">      81 </span>            : #endif
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            : /// \brief This class represents a critical section.
+<span class="lineNum">      85 </span>            : ///
+<span class="lineNum">      86 </span>            : /// Critical sections can be used by different threads to
+<span class="lineNum">      87 </span>            : ///  lock the access to shared resources.
+<span class="lineNum">      88 </span>            : ///
+<span class="lineNum">      89 </span>            : /// Use the class lockCriticalSection to safely lock
+<span class="lineNum">      90 </span>            : ///  a critical section; lockCriticalSection unlocks the
+<span class="lineNum">      91 </span>            : ///  locked critical section in its destructor, therefore
+<span class="lineNum">      92 </span>            : ///  it is safe to use it in code that throw exceptions.
+<span class="lineNum">      93 </span>            : ///
+<span class="lineNum">      94 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      95 </span>            : class criticalSection
+<span class="lineNum">      96 </span>            : {
+<span class="lineNum">      97 </span>            : public:
+<span class="lineNum">      98 </span>            :         /// \brief Construct and initializes the critical section.
+<span class="lineNum">      99 </span>            :         ///
+<span class="lineNum">     100 </span>            :         /// The critical section is initially not locked. It can be
+<span class="lineNum">     101 </span>            :         ///  locked by calling lock() or tryLock() or by using the 
+<span class="lineNum">     102 </span>            :         ///  class lockCriticalSection (preferred).
+<span class="lineNum">     103 </span>            :         ///
+<span class="lineNum">     104 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     105 </span>            :         criticalSection();
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :         /// \brief Deallocates the critical section.
+<span class="lineNum">     108 </span>            :         ///
+<span class="lineNum">     109 </span>            :         /// A system crash is likely to happens in the case a
+<span class="lineNum">     110 </span>            :         ///  critical section is destroyed while it is in a locked 
+<span class="lineNum">     111 </span>            :         ///  state. For this reason the class lockCriticalSection
+<span class="lineNum">     112 </span>            :         ///  should be used instead of calling directly lock(),
+<span class="lineNum">     113 </span>            :         ///  unlock() or tryLock().
+<span class="lineNum">     114 </span>            :         ///
+<span class="lineNum">     115 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     116 </span>            :         virtual ~criticalSection();
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :         /// \brief Lock the critical section.
+<span class="lineNum">     119 </span>            :         ///
+<span class="lineNum">     120 </span>            :         /// If the critical section is already locked by another
+<span class="lineNum">     121 </span>            :         ///  thread then the function waits for the critical 
+<span class="lineNum">     122 </span>            :         ///  section to become available and then locks it and set
+<span class="lineNum">     123 </span>            :         ///  its reference conter to 1.
+<span class="lineNum">     124 </span>            :         ///
+<span class="lineNum">     125 </span>            :         /// If the critical section is unlocked then the fuction
+<span class="lineNum">     126 </span>            :         ///  locks it and set its reference counter to 1.
+<span class="lineNum">     127 </span>            :         ///
+<span class="lineNum">     128 </span>            :         /// If the critical section is already locked by the same
+<span class="lineNum">     129 </span>            :         ///  thread that called lock(), then the function simply
+<span class="lineNum">     130 </span>            :         ///  increases the reference counter by one.
+<span class="lineNum">     131 </span>            :         ///
+<span class="lineNum">     132 </span>            :         /// Use unlock() to unlock a locked critical section.
+<span class="lineNum">     133 </span>            :         /// 
+<span class="lineNum">     134 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     135 </span>            :         void lock();
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            :         /// \brief Decreases the reference counter of the critical
+<span class="lineNum">     138 </span>            :         ///         section and unlocks it if the counter reaches 
+<span class="lineNum">     139 </span>            :         ///         0.
+<span class="lineNum">     140 </span>            :         ///
+<span class="lineNum">     141 </span>            :         /// Use lock() to lock the critical section.
+<span class="lineNum">     142 </span>            :         ///
+<span class="lineNum">     143 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     144 </span>            :         void unlock();
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            :         /// \brief Try to lock a critical section.
+<span class="lineNum">     147 </span>            :         ///
+<span class="lineNum">     148 </span>            :         /// If the critical section is already locked in another
+<span class="lineNum">     149 </span>            :         ///  thread then the function returns immediatly the value
+<span class="lineNum">     150 </span>            :         ///  false.
+<span class="lineNum">     151 </span>            :         ///
+<span class="lineNum">     152 </span>            :         /// If the critical section is not locked, then the 
+<span class="lineNum">     153 </span>            :         ///  function locks the critical section, set the reference
+<span class="lineNum">     154 </span>            :         ///  counter to 1 and returns true.
+<span class="lineNum">     155 </span>            :         ///
+<span class="lineNum">     156 </span>            :         /// If the critical section is locked by the same thread
+<span class="lineNum">     157 </span>            :         ///  that called tryLock() then the reference counter is
+<span class="lineNum">     158 </span>            :         ///  increased by one and the function returns true.
+<span class="lineNum">     159 </span>            :         ///
+<span class="lineNum">     160 </span>            :         /// @return true if the section has been succesfully locked
+<span class="lineNum">     161 </span>            :         ///          or false otherwise
+<span class="lineNum">     162 </span>            :         ///
+<span class="lineNum">     163 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     164 </span>            :         bool tryLock();
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : private:
+<span class="lineNum">     167 </span>            :         tCriticalSection m_criticalSection;
+<span class="lineNum">     168 </span>            : };
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span>            : /// \brief This class locks a critical section in the
+<span class="lineNum">     172 </span>            : ///         constructor and unlocks it in the destructor.
+<span class="lineNum">     173 </span>            : ///
+<span class="lineNum">     174 </span>            : /// This helps to correctly release a critical section in
+<span class="lineNum">     175 </span>            : ///  case of exceptions or premature exit from a function
+<span class="lineNum">     176 </span>            : ///  that uses the critical section.
+<span class="lineNum">     177 </span>            : ///
+<span class="lineNum">     178 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     179 </span>            : class lockCriticalSection
+<span class="lineNum">     180 </span>            : {
+<span class="lineNum">     181 </span>            : public:
+<span class="lineNum">     182 </span>            :         /// \brief Creates the object lockCriticalSection and
+<span class="lineNum">     183 </span>            :         ///         lock the specified criticalSection.
+<span class="lineNum">     184 </span>            :         ///
+<span class="lineNum">     185 </span>            :         /// @param pCriticalSection a pointer to the 
+<span class="lineNum">     186 </span>            :         ///                          criticalSection that has to
+<span class="lineNum">     187 </span>            :         ///                          be locked
+<span class="lineNum">     188 </span>            :         ///
+<span class="lineNum">     189 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     190 </span>            :         lockCriticalSection(criticalSection* pCriticalSection);
+<span class="lineNum">     191 </span>            :         
+<span class="lineNum">     192 </span>            :         /// \brief Destroy the object lockCriticalSection and
+<span class="lineNum">     193 </span>            :         ///         unlock the previously locked criticalSection.
+<span class="lineNum">     194 </span>            :         ///
+<span class="lineNum">     195 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     196 </span>            :         virtual ~lockCriticalSection();
+<span class="lineNum">     197 </span>            : private:
+<span class="lineNum">     198 </span>            :         criticalSection* m_pCriticalSection;
+<span class="lineNum">     199 </span>            : };
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            : /// \internal
+<span class="lineNum">     203 </span>            : /// \brief Represents a list of critical sections.
+<span class="lineNum">     204 </span>            : ///
+<span class="lineNum">     205 </span>            : /// It is used by lockMultipleCriticalSections() and
+<span class="lineNum">     206 </span>            : ///  unlockMultipleCriticalSections().
+<span class="lineNum">     207 </span>            : ///
+<span class="lineNum">     208 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     209 </span>            : typedef std::list&lt;criticalSection*&gt; tCriticalSectionsList;
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            : /// \internal
+<span class="lineNum">     212 </span>            : /// \brief Lock a collection of critical sections.
+<span class="lineNum">     213 </span>            : ///
+<span class="lineNum">     214 </span>            : /// The list can contain several pointers to the critical
+<span class="lineNum">     215 </span>            : ///  sections that must be locked; the function tries to
+<span class="lineNum">     216 </span>            : ///  lock all the critical sections in the list until it
+<span class="lineNum">     217 </span>            : ///  succeedes.
+<span class="lineNum">     218 </span>            : ///
+<span class="lineNum">     219 </span>            : /// The critical sections locked with 
+<span class="lineNum">     220 </span>            : ///  lockMultipleCriticalSections() should be unlocked by
+<span class="lineNum">     221 </span>            : ///  unlockMultipleCriticalSections().
+<span class="lineNum">     222 </span>            : ///
+<span class="lineNum">     223 </span>            : /// @param pList a list of the critical sections that must
+<span class="lineNum">     224 </span>            : ///               be locked
+<span class="lineNum">     225 </span>            : /// @return      a pointer to a list that must be passed
+<span class="lineNum">     226 </span>            : ///               to unlockMultipleCriticalSections()
+<span class="lineNum">     227 </span>            : ///
+<span class="lineNum">     228 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     229 </span>            : tCriticalSectionsList* lockMultipleCriticalSections(tCriticalSectionsList* pList);
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span>            : /// \internal
+<span class="lineNum">     232 </span>            : /// \brief Unlock a collection of critical sections
+<span class="lineNum">     233 </span>            : ///         locked by lockMultipleCriticalSections().
+<span class="lineNum">     234 </span>            : ///
+<span class="lineNum">     235 </span>            : /// @param pList a pointer the list returned by
+<span class="lineNum">     236 </span>            : ///               lockMultipleCriticalSections().
+<span class="lineNum">     237 </span>            : ///
+<span class="lineNum">     238 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     239 </span>            : void unlockMultipleCriticalSections(tCriticalSectionsList* pList);
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span>            : /// \internal
+<span class="lineNum">     242 </span>            : /// \brief Exception thrown when a posix mutex is in an
+<span class="lineNum">     243 </span>            : ///         error state.
+<a name="244"><span class="lineNum">     244 </span>            : ///</a>
+<span class="lineNum">     245 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 : class posixMutexException: public std::runtime_error</span>
+<a name="247"><span class="lineNum">     247 </span>            : {</a>
+<span class="lineNum">     248 </span>            : public:
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 :         posixMutexException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     250 </span>            : };
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            : ///@}
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            : } // namespace puntoexe
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            : #endif // !defined(CImbxCriticalSection_5092DA6B_EF16_4EF9_A1CF_DC8651AA7873__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

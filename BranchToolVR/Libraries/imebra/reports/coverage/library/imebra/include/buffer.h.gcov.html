@@ -1,0 +1,541 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/buffer.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - buffer.h<span style="font-size: 80%;"> (source / <a href="buffer.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryLo">20.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryLo">20.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file buffer.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the buffer class.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraBuffer_DE3F98A9_664E_47c0_A29B_B681F9AEB118__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraBuffer_DE3F98A9_664E_47c0_A29B_B681F9AEB118__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;../../base/include/streamController.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../../base/include/memory.h&quot;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : #include &quot;charsetsList.h&quot;
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      63 </span>            : //
+<span class="lineNum">      64 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">      65 </span>            : //
+<span class="lineNum">      66 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      67 </span>            : namespace puntoexe
+<span class="lineNum">      68 </span>            : {
+<span class="lineNum">      69 </span>            :         class streamReader;
+<span class="lineNum">      70 </span>            :         class streamWriter;
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : namespace imebra
+<span class="lineNum">      74 </span>            : {
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : namespace handlers
+<span class="lineNum">      77 </span>            : {
+<span class="lineNum">      78 </span>            :         class dataHandler;
+<span class="lineNum">      79 </span>            :         class dataHandlerRaw;
+<span class="lineNum">      80 </span>            : }
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : /// \addtogroup group_dataset
+<span class="lineNum">      83 </span>            : ///
+<span class="lineNum">      84 </span>            : /// @{
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      88 </span>            : /// \brief This class manages a memory area containing
+<span class="lineNum">      89 </span>            : ///         data in dicom format.
+<span class="lineNum">      90 </span>            : ///
+<span class="lineNum">      91 </span>            : /// A buffer also knows the data type of the
+<span class="lineNum">      92 </span>            : ///  elements it stores.
+<span class="lineNum">      93 </span>            : /// The data type is in Dicom format (two upper case
+<span class="lineNum">      94 </span>            : ///  chars).
+<span class="lineNum">      95 </span>            : ///
+<span class="lineNum">      96 </span>            : /// The memory can be accessed through a 
+<span class="lineNum">      97 </span>            : ///  \ref handlers::dataHandler derived object
+<span class="lineNum">      98 </span>            : ///  obtained by calling the function getDataHandler().
+<span class="lineNum">      99 </span>            : ///  
+<span class="lineNum">     100 </span>            : /// Data handlers work on a copy of the buffer, so most
+<span class="lineNum">     101 </span>            : ///  of the problem related to the multithreading
+<span class="lineNum">     102 </span>            : ///  enviroments are avoided.
+<span class="lineNum">     103 </span>            : ///
+<span class="lineNum">     104 </span>            : /// The data handlers supply several functions that
+<span class="lineNum">     105 </span>            : ///  allow to access to the data in several formats
+<span class="lineNum">     106 </span>            : ///  (strings, numeric, time, and so on).
+<span class="lineNum">     107 </span>            : ///
+<a name="108"><span class="lineNum">     108 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     109 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     110 </span><span class="lineCov">      44360 : class buffer : public baseObject</span>
+<span class="lineNum">     111 </span>            : {
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            : public:
+<span class="lineNum">     114 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     115 </span>            :         /// \name Constructor
+<span class="lineNum">     116 </span>            :         ///
+<span class="lineNum">     117 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     118 </span>            :         //@{
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            :         /// \brief Constructor. Initialize the buffer object and
+<span class="lineNum">     121 </span>            :         ///        set the default data type.
+<span class="lineNum">     122 </span>            :         ///
+<span class="lineNum">     123 </span>            :         /// If no data type is specified, then the Dicom data
+<span class="lineNum">     124 </span>            :         ///  type &quot;OB&quot; is used.
+<span class="lineNum">     125 </span>            :         ///
+<span class="lineNum">     126 </span>            :         /// @param externalLock a pointer to an object to be
+<span class="lineNum">     127 </span>            :         ///                      used to lock this one
+<span class="lineNum">     128 </span>            :         ///                      (see baseObject).
+<span class="lineNum">     129 </span>            :         ///                     If set to zero then a local
+<span class="lineNum">     130 </span>            :         ///                      locker will be used
+<span class="lineNum">     131 </span>            :         /// @param defaultType  a string with the buffer's type.
+<span class="lineNum">     132 </span>            :         ///                     The buffer's type must be one of
+<span class="lineNum">     133 </span>            :         ///                      the Dicom data types.
+<span class="lineNum">     134 </span>            :         ///                     A dicom's data type is formed by
+<span class="lineNum">     135 </span>            :         ///                      two uppercase chars
+<span class="lineNum">     136 </span>            :         ///
+<span class="lineNum">     137 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     138 </span>            :         buffer(const ptr&lt;baseObject&gt;&amp; externalLock, const std::string&amp; defaultType=&quot;&quot;);
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :         /// \brief Constructor. Initialize the buffer object and
+<span class="lineNum">     141 </span>            :         ///         declare the buffer's content on demand.
+<span class="lineNum">     142 </span>            :         ///
+<span class="lineNum">     143 </span>            :         /// On demand content is loaded from the original stream
+<span class="lineNum">     144 </span>            :         ///  when the application requires the access to the
+<span class="lineNum">     145 </span>            :         ///  buffer.
+<span class="lineNum">     146 </span>            :         ///
+<span class="lineNum">     147 </span>            :         /// @param externalLock a pointer to an object to be
+<span class="lineNum">     148 </span>            :         ///                      used to lock this one
+<span class="lineNum">     149 </span>            :         ///                      (see baseObject).
+<span class="lineNum">     150 </span>            :         ///                     If set to zero then a local
+<span class="lineNum">     151 </span>            :         ///                      locker will be used
+<span class="lineNum">     152 </span>            :         /// @param defaultType  a string with the buffer's type.
+<span class="lineNum">     153 </span>            :         ///                     The buffer's type must be one of
+<span class="lineNum">     154 </span>            :         ///                      the Dicom data types.
+<span class="lineNum">     155 </span>            :         ///                     A dicom's data type is formed by
+<span class="lineNum">     156 </span>            :         ///                      two uppercase chars
+<span class="lineNum">     157 </span>            :         /// @param originalStream the stream from which the content
+<span class="lineNum">     158 </span>            :         ///                      can be read
+<span class="lineNum">     159 </span>            :         /// @param bufferPosition the first stream's byte that 
+<span class="lineNum">     160 </span>            :         ///                      contains the buffer's content
+<span class="lineNum">     161 </span>            :         /// @param bufferLength the buffer's content length, in
+<span class="lineNum">     162 </span>            :         ///                      bytes
+<span class="lineNum">     163 </span>            :         /// @param wordLength   the size of a buffer's element,
+<span class="lineNum">     164 </span>            :         ///                      in bytes
+<span class="lineNum">     165 </span>            :         /// @param endianType   the stream's endian type
+<span class="lineNum">     166 </span>            :         ///
+<span class="lineNum">     167 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     168 </span>            :         buffer(const ptr&lt;baseObject&gt;&amp; externalLock,
+<span class="lineNum">     169 </span>            :                 const std::string&amp; defaultType,
+<span class="lineNum">     170 </span>            :                 const ptr&lt;baseStream&gt;&amp; originalStream,
+<span class="lineNum">     171 </span>            :                 std::uint32_t bufferPosition,
+<span class="lineNum">     172 </span>            :                 std::uint32_t bufferLength,
+<span class="lineNum">     173 </span>            :                 std::uint32_t wordLength,
+<span class="lineNum">     174 </span>            :                 streamController::tByteOrdering endianType);
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            :         //@}
+<span class="lineNum">     177 </span>            : 
+<span class="lineNum">     178 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     179 </span>            :         /// \name Data handlers
+<span class="lineNum">     180 </span>            :         ///
+<span class="lineNum">     181 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     182 </span>            :         //@{
+<span class="lineNum">     183 </span>            : public:
+<span class="lineNum">     184 </span>            :         /// \brief Retrieve a data handler that can be used to
+<span class="lineNum">     185 </span>            :         ///         read, write and resize the memory controlled by 
+<span class="lineNum">     186 </span>            :         ///         the buffer.
+<span class="lineNum">     187 </span>            :         ///
+<span class="lineNum">     188 </span>            :         /// The data handler will have access to a local copy
+<span class="lineNum">     189 </span>            :         ///  of the buffer, then it will not have to worry about
+<span class="lineNum">     190 </span>            :         ///  multithreading related problems.
+<span class="lineNum">     191 </span>            :         /// If a writing handler is requested, then the handler's
+<span class="lineNum">     192 </span>            :         ///  local buffer will be copied back into the buffer when
+<span class="lineNum">     193 </span>            :         ///  the handler will be destroyed.
+<span class="lineNum">     194 </span>            :         ///
+<span class="lineNum">     195 </span>            :         /// @param bWrite set to true if you want to write into
+<span class="lineNum">     196 </span>            :         ///                the buffer
+<span class="lineNum">     197 </span>            :         /// @param size   this parameter is used only when the
+<span class="lineNum">     198 </span>            :         ///                parameter bWrite is set to true and the
+<span class="lineNum">     199 </span>            :         ///                buffer is empty: in this case, the
+<span class="lineNum">     200 </span>            :         ///                returned buffer will be resized to the
+<span class="lineNum">     201 </span>            :         ///                number of elements (NOT bytes) declared
+<span class="lineNum">     202 </span>            :         ///                in this parameter
+<span class="lineNum">     203 </span>            :         /// @return a pointer to a dataHandler object
+<span class="lineNum">     204 </span>            :         ///
+<span class="lineNum">     205 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     206 </span>            :         ptr&lt;handlers::dataHandler&gt; getDataHandler(bool bWrite, std::uint32_t size = 0);
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span>            :         /// \brief Retrieve a raw data handler that can be used to
+<span class="lineNum">     209 </span>            :         ///         read, write and resize the memory controlled by 
+<span class="lineNum">     210 </span>            :         ///         the buffer.
+<span class="lineNum">     211 </span>            :         ///
+<span class="lineNum">     212 </span>            :         /// Raw data handlers always see a collection of bytes,
+<span class="lineNum">     213 </span>            :         ///  regardless of the original buffer's type.
+<span class="lineNum">     214 </span>            :         ///
+<span class="lineNum">     215 </span>            :         /// The data handler will have access to a local copy
+<span class="lineNum">     216 </span>            :         ///  of the buffer, then it will not have to worry about
+<span class="lineNum">     217 </span>            :         ///  multithreading related problems.
+<span class="lineNum">     218 </span>            :         /// If a writing handler is requested, then the handler's
+<span class="lineNum">     219 </span>            :         ///  local buffer will be copied back into the buffer when
+<span class="lineNum">     220 </span>            :         ///  the handler will be destroyed.
+<span class="lineNum">     221 </span>            :         ///
+<span class="lineNum">     222 </span>            :         /// @param bWrite set to true if you want to write into
+<span class="lineNum">     223 </span>            :         ///                the buffer
+<span class="lineNum">     224 </span>            :         /// @param size   this parameter is used only when the
+<span class="lineNum">     225 </span>            :         ///                parameter bWrite is set to true and the
+<span class="lineNum">     226 </span>            :         ///                buffer is empty: in this case, the
+<span class="lineNum">     227 </span>            :         ///                returned buffer will be resized to the
+<span class="lineNum">     228 </span>            :         ///                number of bytes declared in this
+<span class="lineNum">     229 </span>            :         ///                parameter
+<span class="lineNum">     230 </span>            :         /// @return a pointer to a dataHandler object
+<span class="lineNum">     231 </span>            :         ///
+<span class="lineNum">     232 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     233 </span>            :         ptr&lt;handlers::dataHandlerRaw&gt; getDataHandlerRaw(bool bWrite, std::uint32_t size = 0);
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :         //@}
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     239 </span>            :         /// \name Stream
+<span class="lineNum">     240 </span>            :         ///
+<span class="lineNum">     241 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     242 </span>            :         //@{
+<span class="lineNum">     243 </span>            :         
+<span class="lineNum">     244 </span>            :         /// \brief Return the current buffer's size in bytes
+<span class="lineNum">     245 </span>            :         ///
+<span class="lineNum">     246 </span>            :         /// If the buffer is currently loaded then return the
+<span class="lineNum">     247 </span>            :         ///  memory's size, otherwise return the size that the
+<span class="lineNum">     248 </span>            :         ///  buffer would have when it is loaded.
+<span class="lineNum">     249 </span>            :         ///
+<span class="lineNum">     250 </span>            :         /// @return the buffer's size, in bytes
+<span class="lineNum">     251 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     252 </span>            :         std::uint32_t getBufferSizeBytes();
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            :         //@}
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     258 </span>            :         /// \name Stream
+<span class="lineNum">     259 </span>            :         ///
+<span class="lineNum">     260 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     261 </span>            :         //@{
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :         /// \brief Return a stream reader connected to the 
+<span class="lineNum">     264 </span>            :         ///         buffer's content.
+<span class="lineNum">     265 </span>            :         ///
+<span class="lineNum">     266 </span>            :         /// The stream works on a local copy of the buffer's data,
+<span class="lineNum">     267 </span>            :         ///  then it doesn't have to worry about multithreading
+<span class="lineNum">     268 </span>            :         ///  related problems.
+<span class="lineNum">     269 </span>            :         ///
+<span class="lineNum">     270 </span>            :         /// @return          a pointer to a stream reader
+<span class="lineNum">     271 </span>            :         ///
+<span class="lineNum">     272 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     273 </span>            :         ptr&lt;streamReader&gt; getStreamReader();
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :         /// \brief Return a stream writer connected to the 
+<span class="lineNum">     276 </span>            :         ///         buffer's content.
+<span class="lineNum">     277 </span>            :         ///
+<span class="lineNum">     278 </span>            :         /// The stream works on a local copy of the buffer's data,
+<span class="lineNum">     279 </span>            :         ///  then it doesn't have to worry about multithreading
+<span class="lineNum">     280 </span>            :         ///  related problems.
+<span class="lineNum">     281 </span>            :         ///
+<span class="lineNum">     282 </span>            :         /// @return          a pointer to a stream writer
+<span class="lineNum">     283 </span>            :         ///
+<span class="lineNum">     284 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     285 </span>            :         ptr&lt;streamWriter&gt; getStreamWriter();
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :         //@}
+<span class="lineNum">     288 </span>            : 
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     291 </span>            :         /// \name Buffer's data type
+<span class="lineNum">     292 </span>            :         ///
+<span class="lineNum">     293 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     294 </span>            :         //@{
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            :         /// \brief Returns the buffer's data type.
+<span class="lineNum">     297 </span>            :         ///
+<span class="lineNum">     298 </span>            :         /// Return a string with the buffer's data type.
+<span class="lineNum">     299 </span>            :         ///
+<span class="lineNum">     300 </span>            :         /// @return a string with the buffer's data type in Dicom
+<span class="lineNum">     301 </span>            :         ///          format.
+<span class="lineNum">     302 </span>            :         //
+<span class="lineNum">     303 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     304 </span>            :         std::string getDataType();
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            :         //@}
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            :         // Disconnect a data handler.
+<span class="lineNum">     309 </span>            :         // Called by the handler during its destruction
+<span class="lineNum">     310 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     311 </span>            :         void copyBack(handlers::dataHandler* pDisconnectHandler);
+<span class="lineNum">     312 </span>            :         void commit();
+<span class="lineNum">     313 </span>            : 
+<span class="lineNum">     314 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     315 </span>            :         /// \name Charsets
+<span class="lineNum">     316 </span>            :         ///
+<span class="lineNum">     317 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     318 </span>            :         //@{
+<span class="lineNum">     319 </span>            : 
+<span class="lineNum">     320 </span>            :         /// \brief Defines the charsets that should be used by
+<span class="lineNum">     321 </span>            :         ///         the object.
+<span class="lineNum">     322 </span>            :         ///
+<span class="lineNum">     323 </span>            :         /// The valid charsets are:
+<span class="lineNum">     324 </span>            :         /// - &quot;&quot;
+<span class="lineNum">     325 </span>            :     /// - &quot;ISO_IR 6&quot;
+<span class="lineNum">     326 </span>            :         /// - &quot;ISO_IR 100&quot;
+<span class="lineNum">     327 </span>            :         /// - &quot;ISO_IR 101&quot;
+<span class="lineNum">     328 </span>            :         /// - &quot;ISO_IR 109&quot;
+<span class="lineNum">     329 </span>            :         /// - &quot;ISO_IR 110&quot;
+<span class="lineNum">     330 </span>            :         /// - &quot;ISO_IR 144&quot;
+<span class="lineNum">     331 </span>            :         /// - &quot;ISO_IR 127&quot;
+<span class="lineNum">     332 </span>            :         /// - &quot;ISO_IR 126&quot;
+<span class="lineNum">     333 </span>            :         /// - &quot;ISO_IR 138&quot;
+<span class="lineNum">     334 </span>            :         /// - &quot;ISO_IR 148&quot;
+<span class="lineNum">     335 </span>            :         /// - &quot;ISO_IR 13&quot;
+<span class="lineNum">     336 </span>            :         /// - &quot;ISO_IR 166&quot;
+<span class="lineNum">     337 </span>            :         /// - &quot;ISO 2022 IR 6&quot;
+<span class="lineNum">     338 </span>            :         /// - &quot;ISO 2022 IR 100&quot;
+<span class="lineNum">     339 </span>            :         /// - &quot;ISO 2022 IR 101&quot;
+<span class="lineNum">     340 </span>            :         /// - &quot;ISO 2022 IR 109&quot;
+<span class="lineNum">     341 </span>            :         /// - &quot;ISO 2022 IR 110&quot;
+<span class="lineNum">     342 </span>            :         /// - &quot;ISO 2022 IR 144&quot;
+<span class="lineNum">     343 </span>            :         /// - &quot;ISO 2022 IR 127&quot;
+<span class="lineNum">     344 </span>            :         /// - &quot;ISO 2022 IR 126&quot;
+<span class="lineNum">     345 </span>            :         /// - &quot;ISO 2022 IR 138&quot;
+<span class="lineNum">     346 </span>            :         /// - &quot;ISO 2022 IR 148&quot;
+<span class="lineNum">     347 </span>            :         /// - &quot;ISO 2022 IR 13&quot;
+<span class="lineNum">     348 </span>            :         /// - &quot;ISO 2022 IR 166&quot;
+<span class="lineNum">     349 </span>            :         /// - &quot;ISO 2022 IR 87&quot;
+<span class="lineNum">     350 </span>            :         /// - &quot;ISO 2022 IR 159&quot;
+<span class="lineNum">     351 </span>            :         /// - &quot;ISO 2022 IR 149&quot;
+<span class="lineNum">     352 </span>            :         /// - &quot;ISO_IR 192&quot; (UTF-8)
+<span class="lineNum">     353 </span>            :         /// - &quot;GB18030&quot;
+<span class="lineNum">     354 </span>            :         ///
+<span class="lineNum">     355 </span>            :         /// @param pCharsetsList  a list of charsets that can be
+<span class="lineNum">     356 </span>            :         ///                        used by the dicom object.
+<span class="lineNum">     357 </span>            :         ///                       The default charsets must be 
+<span class="lineNum">     358 </span>            :         ///                        the first item in the list
+<span class="lineNum">     359 </span>            :         ///
+<span class="lineNum">     360 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     361 </span>            :         virtual void setCharsetsList(charsetsList::tCharsetsList* pCharsetsList);
+<span class="lineNum">     362 </span>            :         
+<span class="lineNum">     363 </span>            :         /// \brief Retrieve the charsets used by the dicom object.
+<span class="lineNum">     364 </span>            :         ///
+<span class="lineNum">     365 </span>            :         /// If during the operation an error is detected (diffetent
+<span class="lineNum">     366 </span>            :         ///  objects use different default charsets) then
+<span class="lineNum">     367 </span>            :         ///  the exception charsetListExceptionDiffDefault is 
+<span class="lineNum">     368 </span>            :         ///  thrown.
+<span class="lineNum">     369 </span>            :         ///
+<span class="lineNum">     370 </span>            :         /// @param pCharsetsList  a pointer to a list that will
+<span class="lineNum">     371 </span>            :         ///                        be filled with the used 
+<span class="lineNum">     372 </span>            :         ///                        charsets
+<span class="lineNum">     373 </span>            :         ///
+<span class="lineNum">     374 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     375 </span>            :         virtual void getCharsetsList(charsetsList::tCharsetsList* pCharsetsList);
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            :         //@}
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : protected:
+<span class="lineNum">     380 </span>            :         // Return a data handler.
+<span class="lineNum">     381 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     382 </span>            :         ptr&lt;handlers::dataHandler&gt; getDataHandler(bool bWrite, bool bRaw, std::uint32_t size);
+<span class="lineNum">     383 </span>            : 
+<span class="lineNum">     384 </span>            :         //
+<span class="lineNum">     385 </span>            :         // Attributes
+<span class="lineNum">     386 </span>            :         //
+<span class="lineNum">     387 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     388 </span>            : private:
+<span class="lineNum">     389 </span>            :         // The memory buffer
+<span class="lineNum">     390 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     391 </span>            :         ptr&lt;memory&gt; m_memory;
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            :         // Temporary memory buffer and charsets list, used for
+<span class="lineNum">     394 </span>            :         //  the two phase operation copyBack/commit
+<span class="lineNum">     395 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     396 </span>            :         ptr&lt;memory&gt; m_temporaryMemory;
+<span class="lineNum">     397 </span>            :         charsetsList::tCharsetsList m_temporaryCharsets;
+<span class="lineNum">     398 </span>            :         std::string m_temporaryBufferType;
+<span class="lineNum">     399 </span>            :         
+<span class="lineNum">     400 </span>            : protected:
+<span class="lineNum">     401 </span>            :         // The buffer's type, in Dicom standard
+<span class="lineNum">     402 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     403 </span>            :         std::string m_bufferType;
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span>            : protected:
+<span class="lineNum">     406 </span>            :         // The following variables are used to reread the buffer
+<span class="lineNum">     407 </span>            :         //  from the stream.
+<span class="lineNum">     408 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     409 </span>            :         ptr&lt;baseStream&gt; m_originalStream;    // &lt; Original stream
+<span class="lineNum">     410 </span>            :         std::uint32_t m_originalBufferPosition; // &lt; Original buffer's position
+<span class="lineNum">     411 </span>            :         std::uint32_t m_originalBufferLength;   // &lt; Original buffer's length
+<span class="lineNum">     412 </span>            :         std::uint32_t m_originalWordLength;     // &lt; Original word's length (for low/high endian adjustment)
+<span class="lineNum">     413 </span>            :         streamController::tByteOrdering m_originalEndianType; // &lt; Original endian type
+<span class="lineNum">     414 </span>            :         
+<span class="lineNum">     415 </span>            : private:
+<span class="lineNum">     416 </span>            :         // Charset list
+<span class="lineNum">     417 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     418 </span>            :         charsetsList::tCharsetsList m_charsetsList;
+<span class="lineNum">     419 </span>            : 
+<span class="lineNum">     420 </span>            :         // Buffer's version
+<span class="lineNum">     421 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     422 </span>            :         std::uint32_t m_version;
+<span class="lineNum">     423 </span>            :         
+<span class="lineNum">     424 </span>            : };
+<span class="lineNum">     425 </span>            : 
+<span class="lineNum">     426 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     427 </span>            : /// \brief This is the base class for the exceptions thrown
+<span class="lineNum">     428 </span>            : ///         by the buffer class.
+<a name="429"><span class="lineNum">     429 </span>            : ///</a>
+<span class="lineNum">     430 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     431 </span><span class="lineNoCov">          0 : class bufferException: public std::runtime_error</span>
+<span class="lineNum">     432 </span>            : {
+<span class="lineNum">     433 </span>            : public:
+<span class="lineNum">     434 </span>            :         /// \brief Build a buffer exception
+<span class="lineNum">     435 </span>            :         ///
+<span class="lineNum">     436 </span>            :         /// @param message the message to store into the exception
+<a name="437"><span class="lineNum">     437 </span>            :         ///</a>
+<span class="lineNum">     438 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     439 </span><span class="lineNoCov">          0 :         bufferException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     440 </span>            : };
+<span class="lineNum">     441 </span>            : 
+<span class="lineNum">     442 </span>            : 
+<span class="lineNum">     443 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     444 </span>            : /// \brief This exception is throw by the buffer when an
+<span class="lineNum">     445 </span>            : ///         handler for an unknown data type is asked.
+<a name="446"><span class="lineNum">     446 </span>            : ///</a>
+<span class="lineNum">     447 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     448 </span><span class="lineNoCov">          0 : class bufferExceptionUnknownType: public bufferException</span>
+<span class="lineNum">     449 </span>            : {
+<span class="lineNum">     450 </span>            : public:
+<span class="lineNum">     451 </span>            :         /// \brief Build a wrong data type exception
+<span class="lineNum">     452 </span>            :         ///
+<span class="lineNum">     453 </span>            :         /// @param message the message to store into the exception
+<a name="454"><span class="lineNum">     454 </span>            :         ///</a>
+<span class="lineNum">     455 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     456 </span><span class="lineNoCov">          0 :         bufferExceptionUnknownType(const std::string&amp; message): bufferException(message){}</span>
+<span class="lineNum">     457 </span>            : };
+<span class="lineNum">     458 </span>            : 
+<span class="lineNum">     459 </span>            : /// @}
+<span class="lineNum">     460 </span>            : 
+<span class="lineNum">     461 </span>            : } // End of namespace imebra
+<span class="lineNum">     462 </span>            : 
+<span class="lineNum">     463 </span>            : } // End of namespace puntoexe
+<span class="lineNum">     464 </span>            : 
+<span class="lineNum">     465 </span>            : #endif // !defined(imebraBuffer_DE3F98A9_664E_47c0_A29B_B681F9AEB118__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

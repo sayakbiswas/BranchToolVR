@@ -1,0 +1,514 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/streamReader.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - streamReader.h<span style="font-size: 80%;"> (source / <a href="streamReader.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">59</td>
+            <td class="headerCovTableEntry">65</td>
+            <td class="headerCovTableEntryHi">90.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryLo">70.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file streamReader.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the the class used to read the streams.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraStreamReader_F6221390_BC44_4B83_B5BB_3485222FF1DD__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraStreamReader_F6221390_BC44_4B83_B5BB_3485222FF1DD__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;streamController.h&quot;
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      59 </span>            : //
+<span class="lineNum">      60 </span>            : // Everything is in the namespace puntoexe
+<span class="lineNum">      61 </span>            : //
+<span class="lineNum">      62 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      63 </span>            : namespace puntoexe
+<span class="lineNum">      64 </span>            : {
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            : /// \addtogroup group_baseclasses
+<span class="lineNum">      67 </span>            : ///
+<span class="lineNum">      68 </span>            : /// @{
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : /// \brief Exception thrown when a jpeg tag is found but
+<span class="lineNum">      71 </span>            : ///         wasn't expected.
+<a name="72"><span class="lineNum">      72 </span>            : ///</a>
+<span class="lineNum">      73 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 : class streamJpegTagInStream : public streamException</span>
+<a name="75"><span class="lineNum">      75 </span>            : {</a>
+<span class="lineNum">      76 </span>            : public:
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :         streamJpegTagInStream(std::string message): streamException(message){}</span>
+<span class="lineNum">      78 </span>            : };
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span>            : /// \brief Represents a stream reader.
+<span class="lineNum">      84 </span>            : ///        A stream reader can read data from a stream.
+<span class="lineNum">      85 </span>            : ///        Several stream readers can share a single
+<span class="lineNum">      86 </span>            : ///        baseStream derived object.
+<span class="lineNum">      87 </span>            : ///
+<span class="lineNum">      88 </span>            : /// The stream reader object is not multithread safe, but
+<span class="lineNum">      89 </span>            : ///  one single stream can have several streamReader
+<span class="lineNum">      90 </span>            : ///  objects (in different threads) connected to it.
+<span class="lineNum">      91 </span>            : ///
+<span class="lineNum">      92 </span>            : /// A stream reader can also be connected only to a part
+<span class="lineNum">      93 </span>            : ///  of a stream: when this feature is used, then the
+<span class="lineNum">      94 </span>            : ///  streamReader's client thinks that he is using a
+<span class="lineNum">      95 </span>            : ///  whole stream, while the reader limits its view
+<span class="lineNum">      96 </span>            : ///  to allowed stream's bytes only.
+<span class="lineNum">      97 </span>            : ///
+<a name="98"><span class="lineNum">      98 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      99 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     100 </span><span class="lineCov">       4632 : class streamReader: public streamController</span>
+<span class="lineNum">     101 </span>            : {
+<span class="lineNum">     102 </span>            : public:
+<span class="lineNum">     103 </span>            :     /// \brief Build a streamReader and connect it to an
+<span class="lineNum">     104 </span>            :     ///         existing stream.
+<span class="lineNum">     105 </span>            :     ///
+<span class="lineNum">     106 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     107 </span>            :     streamReader(ptr&lt;baseStream&gt; pControlledStream);
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span>            :     /// \brief Build a streamReader and connect it to a part
+<span class="lineNum">     110 </span>            :     ///         of an existing stream.
+<span class="lineNum">     111 </span>            :         ///
+<span class="lineNum">     112 </span>            :         /// When the streamReader is connected to a part of a
+<span class="lineNum">     113 </span>            :         ///  stream then all the its functions will act on the
+<span class="lineNum">     114 </span>            :         ///  viewable stream's part only.
+<span class="lineNum">     115 </span>            :         ///
+<span class="lineNum">     116 </span>            :         /// @param pControlledStream  the stream that will be
+<span class="lineNum">     117 </span>            :         ///                            controlled by the reader
+<span class="lineNum">     118 </span>            :         /// @param virtualStart       the first stream's byte
+<span class="lineNum">     119 </span>            :         ///                            visible to the reader
+<span class="lineNum">     120 </span>            :         /// @param virtualLength      the number of bytes visible
+<span class="lineNum">     121 </span>            :         ///                            to the reader. A value of 0
+<span class="lineNum">     122 </span>            :         ///                            means that all the bytes
+<span class="lineNum">     123 </span>            :         ///                            are visible
+<span class="lineNum">     124 </span>            :         ///
+<span class="lineNum">     125 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     126 </span>            :     streamReader(ptr&lt;baseStream&gt; pControlledStream, std::uint32_t virtualStart, std::uint32_t virtualLength);
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            :     /// \brief Returns a new streamReader object that starts
+<span class="lineNum">     129 </span>            :     ///        at the current stream location and continues
+<span class="lineNum">     130 </span>            :     ///        for the specified amount of bytes.
+<span class="lineNum">     131 </span>            :     ///
+<span class="lineNum">     132 </span>            :     /// @param virtualLength the amount of bytes that can be
+<span class="lineNum">     133 </span>            :     ///                      read from the new streamReader.
+<span class="lineNum">     134 </span>            :     ///                      The called streamReader will
+<span class="lineNum">     135 </span>            :     ///                      advance the read position past
+<span class="lineNum">     136 </span>            :     ///                      the end position of the new
+<span class="lineNum">     137 </span>            :     ///                      streamReader
+<span class="lineNum">     138 </span>            :     ptr&lt;streamReader&gt; getReader(std::uint32_t virtualLength);
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :     /// \brief Read raw data from the stream.
+<span class="lineNum">     141 </span>            :         ///
+<span class="lineNum">     142 </span>            :         /// The number of bytes specified in the parameter
+<span class="lineNum">     143 </span>            :         ///  bufferLength will be read from the stream and copied
+<span class="lineNum">     144 </span>            :         ///  into a buffer referenced by the parameter pBuffer.
+<span class="lineNum">     145 </span>            :         /// The buffer's size must be equal or greater than
+<span class="lineNum">     146 </span>            :         ///  the number of bytes to read.
+<span class="lineNum">     147 </span>            :         ///
+<span class="lineNum">     148 </span>            :         /// The functions throws a streamExceptionRead
+<span class="lineNum">     149 </span>            :         ///  exception if an error occurs.
+<span class="lineNum">     150 </span>            :         ///
+<span class="lineNum">     151 </span>            :         /// @param pBuffer   a pointer to the buffer where the
+<span class="lineNum">     152 </span>            :         ///                  read data must be copied.
+<span class="lineNum">     153 </span>            :         ///                  the buffer's size must be at least
+<span class="lineNum">     154 </span>            :         ///                  equal to the size indicated in the
+<span class="lineNum">     155 </span>            :         ///                  bufferLength parameter.
+<span class="lineNum">     156 </span>            :         /// @param bufferLength the number of bytes to read from
+<span class="lineNum">     157 </span>            :         ///                  the stream.
+<span class="lineNum">     158 </span>            :         ///
+<span class="lineNum">     159 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     160 </span>            :         void read(std::uint8_t* pBuffer, std::uint32_t bufferLength);
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            :         /// \brief Returns true if the last byte in the stream
+<span class="lineNum">     163 </span>            :         ///         has already been read.
+<span class="lineNum">     164 </span>            :         ///
+<span class="lineNum">     165 </span>            :         /// @return true if the last byte in the stream has already
+<span class="lineNum">     166 </span>            :         ///          been read
+<span class="lineNum">     167 </span>            :         ///
+<span class="lineNum">     168 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     169 </span>            :         bool endReached();
+<span class="lineNum">     170 </span>            : 
+<span class="lineNum">     171 </span>            :         /// \brief Seek the stream's read position.
+<span class="lineNum">     172 </span>            :         ///
+<span class="lineNum">     173 </span>            :         /// The read position is moved to the specified byte in the
+<span class="lineNum">     174 </span>            :         ///  stream.
+<span class="lineNum">     175 </span>            :         /// Subsequent calls to the read operations like read(),
+<span class="lineNum">     176 </span>            :         ///  readBits(), readBit(), addBit() and readByte() will
+<span class="lineNum">     177 </span>            :         ///  read data from the position specified here.
+<span class="lineNum">     178 </span>            :         ///
+<span class="lineNum">     179 </span>            :         /// @param newPosition the new position to use for read
+<span class="lineNum">     180 </span>            :         ///                   operations, in bytes from the
+<span class="lineNum">     181 </span>            :         ///                   beginning of the stream if bCurrent
+<span class="lineNum">     182 </span>            :         ///                   is false, or in bytes relative to
+<span class="lineNum">     183 </span>            :         ///                   the current position if bCurrent is
+<span class="lineNum">     184 </span>            :         ///                   true
+<span class="lineNum">     185 </span>            :         /// @param bCurrent  when this parameter is true then the
+<span class="lineNum">     186 </span>            :         ///                   new read position is calculated by
+<span class="lineNum">     187 </span>            :         ///                   adding the content of position to
+<span class="lineNum">     188 </span>            :         ///                   the current position, otherwise the
+<span class="lineNum">     189 </span>            :         ///                   parameter position stores the new
+<span class="lineNum">     190 </span>            :         ///                   absolute position
+<span class="lineNum">     191 </span>            :         ///
+<span class="lineNum">     192 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     193 </span>            :         void seek(std::int32_t newPosition, bool bCurrent = false);
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :         /// \brief Read the specified amount of bits from the
+<span class="lineNum">     196 </span>            :         ///         stream.
+<span class="lineNum">     197 </span>            :         ///
+<span class="lineNum">     198 </span>            :         /// The functions uses a special bit pointer to keep track
+<span class="lineNum">     199 </span>            :         ///  of the bytes that haven't been completly read.
+<span class="lineNum">     200 </span>            :         ///
+<span class="lineNum">     201 </span>            :         /// The function throws a streamExceptionRead exception if
+<span class="lineNum">     202 </span>            :         ///  an error occurs.
+<span class="lineNum">     203 </span>            :         ///
+<span class="lineNum">     204 </span>            :         /// @param bitsNum   the number of bits to read.
+<span class="lineNum">     205 </span>            :         ///                  The function can read 32 bits maximum
+<span class="lineNum">     206 </span>            :         /// @return an integer containing the fetched bits, right
+<span class="lineNum">     207 </span>            :         ///                   aligned
+<a name="208"><span class="lineNum">     208 </span>            :         ///</a>
+<span class="lineNum">     209 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     210 </span><span class="lineCov">    4702714 :         inline std::uint32_t readBits(int bitsNum)</span>
+<span class="lineNum">     211 </span>            :         {
+<span class="lineNum">     212 </span>            :                 static const int bufferSize(sizeof(m_inBitsBuffer) * 8);
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            :                 // All the requested bits are already in the buffer.
+<span class="lineNum">     215 </span>            :                 // Just return them.
+<span class="lineNum">     216 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     217 </span><span class="lineCov">    4702714 :                 if(bitsNum &lt;= m_inBitsNum)</span>
+<span class="lineNum">     218 </span>            :                 {
+<span class="lineNum">     219 </span><span class="lineCov">    3422324 :                         std::uint32_t returnValue(m_inBitsBuffer &gt;&gt; (bufferSize - bitsNum));</span>
+<span class="lineNum">     220 </span><span class="lineCov">    3422324 :                         m_inBitsBuffer &lt;&lt;= bitsNum;</span>
+<span class="lineNum">     221 </span><span class="lineCov">    3422324 :                         m_inBitsNum -= bitsNum;</span>
+<span class="lineNum">     222 </span><span class="lineCov">    3422324 :                         return returnValue;</span>
+<span class="lineNum">     223 </span>            :                 }
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            :                 // Fill a local variable with the read bits
+<span class="lineNum">     226 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     227 </span><span class="lineCov">    1280390 :                 std::uint32_t returnValue(0);</span>
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :                 // Some bits are in the bits buffer, copy them and reset
+<span class="lineNum">     230 </span>            :                 //  the bits buffer
+<span class="lineNum">     231 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     232 </span><span class="lineCov">    1280390 :                 if(m_inBitsNum != 0)</span>
+<span class="lineNum">     233 </span>            :                 {
+<span class="lineNum">     234 </span><span class="lineCov">     691432 :                         bitsNum -= m_inBitsNum;</span>
+<span class="lineNum">     235 </span><span class="lineCov">     691432 :                         returnValue = ((std::uint32_t)(m_inBitsBuffer &gt;&gt; (bufferSize - m_inBitsNum))) &lt;&lt; bitsNum;</span>
+<span class="lineNum">     236 </span>            :                 }
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :                 // Read the requested number of bits
+<span class="lineNum">     239 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     240 </span>            :                 for(;;)
+<span class="lineNum">     241 </span>            :                 {
+<span class="lineNum">     242 </span><span class="lineCov">    1288530 :                         if(bitsNum &lt;= 8)</span>
+<span class="lineNum">     243 </span>            :                         {
+<span class="lineNum">     244 </span><span class="lineCov">    1280390 :                                 m_inBitsBuffer = readByte();</span>
+<span class="lineNum">     245 </span><span class="lineCov">    1280390 :                                 returnValue |= (m_inBitsBuffer &gt;&gt; (bufferSize - bitsNum));</span>
+<span class="lineNum">     246 </span><span class="lineCov">    1280390 :                                 m_inBitsBuffer &lt;&lt;= bitsNum;</span>
+<span class="lineNum">     247 </span><span class="lineCov">    1280390 :                                 m_inBitsNum = 8 - bitsNum;</span>
+<span class="lineNum">     248 </span><span class="lineCov">    1280390 :                                 return returnValue;</span>
+<span class="lineNum">     249 </span>            :                         }
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span><span class="lineCov">       8140 :                         bitsNum -= 8;</span>
+<span class="lineNum">     252 </span><span class="lineCov">       8140 :                         returnValue |= ((std::uint32_t)readByte()) &lt;&lt; bitsNum;</span>
+<span class="lineNum">     253 </span><span class="lineCov">       8140 :                 }</span>
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :         /// \brief Read one bit from the stream.
+<span class="lineNum">     257 </span>            :         ///
+<span class="lineNum">     258 </span>            :         /// The returned buffer will store the value 0 or 1,
+<span class="lineNum">     259 </span>            :         ///  depending on the value of the read bit.
+<span class="lineNum">     260 </span>            :         ///
+<span class="lineNum">     261 </span>            :         /// The function throws a streamExceptionRead if an error
+<span class="lineNum">     262 </span>            :         ///  occurs.
+<span class="lineNum">     263 </span>            :         ///
+<span class="lineNum">     264 </span>            :         /// @return the value of the read bit (1 or 0)
+<a name="265"><span class="lineNum">     265 </span>            :         ///</a>
+<span class="lineNum">     266 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     267 </span><span class="lineCov">     692603 :         inline std::uint32_t readBit()</span>
+<span class="lineNum">     268 </span>            :         {
+<span class="lineNum">     269 </span><span class="lineCov">     692603 :                 if(m_inBitsNum != 0)</span>
+<span class="lineNum">     270 </span>            :                 {
+<span class="lineNum">     271 </span><span class="lineCov">     605923 :                         --m_inBitsNum;</span>
+<span class="lineNum">     272 </span><span class="lineCov">     605923 :                         if((std::int8_t)m_inBitsBuffer &lt; 0)</span>
+<span class="lineNum">     273 </span>            :                         {
+<span class="lineNum">     274 </span><span class="lineCov">     152626 :                             m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     275 </span><span class="lineCov">     152626 :                             return 1;</span>
+<span class="lineNum">     276 </span>            :                         }
+<span class="lineNum">     277 </span><span class="lineCov">     453297 :                         m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     278 </span><span class="lineCov">     453297 :                         return 0;</span>
+<span class="lineNum">     279 </span>            :                 }
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;streamReader::readBit&quot;);
+<span class="lineNum">     282 </span>            : 
+<span class="lineNum">     283 </span><span class="lineCov">      86680 :                 m_inBitsBuffer = readByte();</span>
+<span class="lineNum">     284 </span><span class="lineCov">      86680 :                 m_inBitsNum = 7; // We consider that one bit will go away</span>
+<span class="lineNum">     285 </span><span class="lineCov">      86680 :                 if((std::int8_t)m_inBitsBuffer &lt; 0)</span>
+<span class="lineNum">     286 </span>            :                 {
+<span class="lineNum">     287 </span><span class="lineCov">      21217 :                         m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     288 </span><span class="lineCov">      21217 :                         return 1;</span>
+<span class="lineNum">     289 </span>            :                 }
+<span class="lineNum">     290 </span><span class="lineCov">      65463 :                 m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     291 </span><span class="lineCov">      65463 :                 return 0;</span>
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     294 </span>            :         }
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            : 
+<span class="lineNum">     297 </span>            :         /// \brief Read one bit from the stream and add its value
+<span class="lineNum">     298 </span>            :         ///         to the specified buffer.
+<span class="lineNum">     299 </span>            :         ///
+<span class="lineNum">     300 </span>            :         /// The buffer pointed by the pBuffer parameter is
+<span class="lineNum">     301 </span>            :         ///  left-shifted before the read bit is inserted in the
+<span class="lineNum">     302 </span>            :         ///  least significant bit of the buffer.
+<span class="lineNum">     303 </span>            :         ///
+<span class="lineNum">     304 </span>            :         /// The function throws a streamExceptionRead if an error
+<span class="lineNum">     305 </span>            :         ///  occurs.
+<span class="lineNum">     306 </span>            :         ///
+<span class="lineNum">     307 </span>            :         /// @param pBuffer   a pointer to a std::uint32_t value that
+<span class="lineNum">     308 </span>            :         ///                   will be left shifted and filled
+<span class="lineNum">     309 </span>            :         ///                   with the read bit.
+<a name="310"><span class="lineNum">     310 </span>            :         ///</a>
+<span class="lineNum">     311 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     312 </span><span class="lineCov">      16000 :         inline void addBit(std::uint32_t* const pBuffer)</span>
+<span class="lineNum">     313 </span>            :         {
+<span class="lineNum">     314 </span><span class="lineCov">      16000 :                 (*pBuffer) &lt;&lt;= 1;</span>
+<span class="lineNum">     315 </span>            :                 
+<span class="lineNum">     316 </span><span class="lineCov">      16000 :                 if(m_inBitsNum != 0)</span>
+<span class="lineNum">     317 </span>            :                 {
+<span class="lineNum">     318 </span><span class="lineCov">      14000 :                         if((std::int8_t)m_inBitsBuffer &lt; 0)</span>
+<span class="lineNum">     319 </span>            :                         {
+<span class="lineNum">     320 </span><span class="lineCov">       1871 :                                 ++(*pBuffer);</span>
+<span class="lineNum">     321 </span>            :                         }
+<span class="lineNum">     322 </span><span class="lineCov">      14000 :                         --m_inBitsNum;</span>
+<span class="lineNum">     323 </span><span class="lineCov">      14000 :                         m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     324 </span><span class="lineCov">      30000 :                         return;</span>
+<span class="lineNum">     325 </span>            :                 }
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;streamReader::addBit&quot;);
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span><span class="lineCov">       2000 :                 m_inBitsBuffer = readByte();</span>
+<span class="lineNum">     330 </span><span class="lineCov">       2000 :                 m_inBitsNum = 7; // We consider that one bit will go away</span>
+<span class="lineNum">     331 </span><span class="lineCov">       2000 :                 if((std::int8_t)m_inBitsBuffer &lt; 0)</span>
+<span class="lineNum">     332 </span>            :                 {
+<span class="lineNum">     333 </span><span class="lineNoCov">          0 :                         ++(*pBuffer);</span>
+<span class="lineNum">     334 </span>            :                 }
+<span class="lineNum">     335 </span><span class="lineCov">       2000 :                 m_inBitsBuffer &lt;&lt;= 1;</span>
+<span class="lineNum">     336 </span>            : 
+<span class="lineNum">     337 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     338 </span>            :         }
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span>            :         /// \brief Reset the bit pointer used by readBits(),
+<span class="lineNum">     341 </span>            :         ///         readBit() and addBit().
+<span class="lineNum">     342 </span>            :         ///
+<span class="lineNum">     343 </span>            :         /// A subsequent call to readBits(), readBit and
+<span class="lineNum">     344 </span>            :         ///  addBit() will read data from a byte-aligned boundary.
+<a name="345"><span class="lineNum">     345 </span>            :         ///</a>
+<span class="lineNum">     346 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     347 </span><span class="lineCov">        721 :         inline void resetInBitsBuffer()</span>
+<span class="lineNum">     348 </span>            :         {
+<span class="lineNum">     349 </span><span class="lineCov">        721 :                 m_inBitsNum = 0;</span>
+<span class="lineNum">     350 </span><span class="lineCov">        721 :         }</span>
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            :         /// \brief Read a single byte from the stream, parsing it
+<span class="lineNum">     353 </span>            :         ///         if m_pTagByte is not zero.
+<span class="lineNum">     354 </span>            :         ///
+<span class="lineNum">     355 </span>            :         /// The read byte is stored in the buffer pointed by the
+<span class="lineNum">     356 </span>            :         ///  parameter pBuffer.
+<span class="lineNum">     357 </span>            :         ///
+<span class="lineNum">     358 </span>            :         /// If m_pTagByte is zero, then the function reads a byte
+<span class="lineNum">     359 </span>            :         ///  and returns true.
+<span class="lineNum">     360 </span>            :         ///
+<span class="lineNum">     361 </span>            :         /// If m_pTagByte is not zero, then the function skips
+<span class="lineNum">     362 </span>            :         ///  all the bytes in the stream that have the value 0xFF.
+<span class="lineNum">     363 </span>            :         /// If the function doesn't have to skip any 0xFF bytes,
+<span class="lineNum">     364 </span>            :         ///  then the function just read a byte and returns true.
+<span class="lineNum">     365 </span>            :         ///
+<span class="lineNum">     366 </span>            :         /// If one or more 0xFF bytes have been skipped, then
+<span class="lineNum">     367 </span>            :         ///  the function returns a value depending on the byte
+<span class="lineNum">     368 </span>            :         ///  that follows the 0xFF run:
+<span class="lineNum">     369 </span>            :         /// - if the byte is 0, then the function fill the pBuffer
+<span class="lineNum">     370 </span>            :         ///    parameter with a value 0xFF and returns true
+<span class="lineNum">     371 </span>            :         /// - if the byte is not 0, then that value is stored in
+<span class="lineNum">     372 </span>            :         ///    the location pointed by m_pTagByte and the function
+<span class="lineNum">     373 </span>            :         ///    returns false.
+<span class="lineNum">     374 </span>            :         ///
+<span class="lineNum">     375 </span>            :         /// This mechanism is used to parse the jpeg tags in a
+<span class="lineNum">     376 </span>            :         ///  stream.
+<span class="lineNum">     377 </span>            :         ///
+<span class="lineNum">     378 </span>            :         /// @return          the read byte
+<a name="379"><span class="lineNum">     379 </span>            :         ///</a>
+<span class="lineNum">     380 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     381 </span><span class="lineCov">    1381210 :         inline std::uint8_t readByte()</span>
+<span class="lineNum">     382 </span>            :         {
+<span class="lineNum">     383 </span>            :                 // Update the data buffer if it is empty
+<span class="lineNum">     384 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     385 </span><span class="lineCov">    1381210 :                 if(m_pDataBufferCurrent == m_pDataBufferEnd &amp;&amp; fillDataBuffer() == 0)</span>
+<span class="lineNum">     386 </span>            :                 {
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :                     throw(streamExceptionEOF(&quot;Attempt to read past the end of the file&quot;));</span>
+<span class="lineNum">     388 </span>            :                 }
+<span class="lineNum">     389 </span>            : 
+<span class="lineNum">     390 </span>            :                 // Read one byte. Return immediatly if the tags are not
+<span class="lineNum">     391 </span>            :                 //  activated
+<span class="lineNum">     392 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     393 </span><span class="lineCov">    1381210 :                 if(*m_pDataBufferCurrent != 0xff || !m_bJpegTags)</span>
+<span class="lineNum">     394 </span>            :                 {
+<span class="lineNum">     395 </span><span class="lineCov">    1380272 :                     return *(m_pDataBufferCurrent++);</span>
+<span class="lineNum">     396 </span>            :                 }
+<span class="lineNum">     397 </span><span class="lineCov">        938 :                 do</span>
+<span class="lineNum">     398 </span>            :                 {
+<span class="lineNum">     399 </span><span class="lineCov">        938 :                     if(++m_pDataBufferCurrent == m_pDataBufferEnd &amp;&amp; fillDataBuffer() == 0)</span>
+<span class="lineNum">     400 </span>            :                     {
+<span class="lineNum">     401 </span><span class="lineNoCov">          0 :                         throw(streamExceptionEOF(&quot;Attempt to read past the end of the file&quot;));</span>
+<span class="lineNum">     402 </span>            :                     }
+<span class="lineNum">     403 </span><span class="lineCov">        938 :                 }while(*m_pDataBufferCurrent == 0xff);</span>
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span><span class="lineCov">        938 :                 if(*(m_pDataBufferCurrent++) != 0)</span>
+<span class="lineNum">     406 </span>            :                 {
+<span class="lineNum">     407 </span><span class="lineNoCov">          0 :                     throw(streamJpegTagInStream(&quot;Corrupted jpeg stream&quot;));</span>
+<span class="lineNum">     408 </span>            :                 }
+<span class="lineNum">     409 </span>            : 
+<span class="lineNum">     410 </span><span class="lineCov">        938 :                 return 0xff;</span>
+<span class="lineNum">     411 </span>            :         }
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            : private:
+<span class="lineNum">     414 </span>            :         /// \brief Read data from the file into the data buffer.
+<span class="lineNum">     415 </span>            :         ///
+<span class="lineNum">     416 </span>            :         /// The function reads as many bytes as possible until the
+<span class="lineNum">     417 </span>            :         ///  data buffer is full or the controlled stream cannot
+<span class="lineNum">     418 </span>            :         ///  supply any more byte.
+<span class="lineNum">     419 </span>            :         ///
+<span class="lineNum">     420 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     421 </span>            :         std::uint32_t fillDataBuffer();
+<span class="lineNum">     422 </span>            : 
+<span class="lineNum">     423 </span>            :         /// \brief Read data from the file into the data buffer.
+<span class="lineNum">     424 </span>            :         ///
+<span class="lineNum">     425 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     426 </span>            :         std::uint32_t fillDataBuffer(std::uint8_t* pDestinationBuffer, std::uint32_t readLength);
+<span class="lineNum">     427 </span>            : 
+<span class="lineNum">     428 </span>            : private:
+<span class="lineNum">     429 </span>            :         std::uint8_t m_inBitsBuffer;
+<span class="lineNum">     430 </span>            :         int       m_inBitsNum;
+<span class="lineNum">     431 </span>            : 
+<span class="lineNum">     432 </span>            : };
+<span class="lineNum">     433 </span>            : 
+<span class="lineNum">     434 </span>            : ///@}
+<span class="lineNum">     435 </span>            : 
+<span class="lineNum">     436 </span>            : } // namespace puntoexe
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span>            : #endif // !defined(imebraStreamReader_F6221390_BC44_4B83_B5BB_3485222FF1DD__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

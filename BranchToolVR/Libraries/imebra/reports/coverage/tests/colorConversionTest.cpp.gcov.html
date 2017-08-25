@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - tests/colorConversionTest.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">tests</a> - colorConversionTest.cpp<span style="font-size: 80%;"> (source / <a href="colorConversionTest.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;../library/imebra/include/imebra.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;buildImageForTest.h&quot;
+<span class="lineNum">       3 </span>            : #include &lt;gtest/gtest.h&gt;
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : namespace puntoexe
+<span class="lineNum">       6 </span>            : {
+<span class="lineNum">       7 </span>            : 
+<span class="lineNum">       8 </span>            : namespace imebra
+<span class="lineNum">       9 </span>            : {
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : namespace tests
+<a name="12"><span class="lineNum">      12 </span>            : {</a>
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span><span class="lineCov">          5 : TEST(colorConversion, RGB2YBR_FULL)</span>
+<span class="lineNum">      15 </span>            : {
+<span class="lineNum">      16 </span><span class="lineCov">          1 :     ptr&lt;image&gt; rgb(new image());</span>
+<span class="lineNum">      17 </span><span class="lineCov">          1 :     rgb-&gt;create(1, 1, image::depthU8, L&quot;RGB&quot;, 7);</span>
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            :     std::uint32_t rowSize, channelsPixelSize, channelsNumber;
+<span class="lineNum">      20 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; rgbHandler = rgb-&gt;getDataHandler(true, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      21 </span><span class="lineCov">          1 :     rgbHandler-&gt;setUnsignedLong(0, 255);</span>
+<span class="lineNum">      22 </span><span class="lineCov">          1 :     rgbHandler-&gt;setUnsignedLong(1, 255);</span>
+<span class="lineNum">      23 </span><span class="lineCov">          1 :     rgbHandler-&gt;setUnsignedLong(2, 255);</span>
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span><span class="lineCov">          1 :     rgbHandler = 0;</span>
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">          2 :     ptr&lt;transforms::transform&gt; rgb2ybr = transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory()-&gt;getTransform(L&quot;RGB&quot;, L&quot;YBR_FULL&quot;);</span>
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span><span class="lineCov">          2 :     ptr&lt;image&gt; ybr1(new image());</span>
+<span class="lineNum">      30 </span><span class="lineCov">          1 :     ybr1-&gt;create(1, 1, image::depthU8, L&quot;YBR_FULL&quot;, 4);</span>
+<span class="lineNum">      31 </span><span class="lineCov">          1 :     rgb2ybr-&gt;runTransform(rgb, 0, 0, 1, 1, ybr1, 0, 0);</span>
+<span class="lineNum">      32 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; ybr1Handler = ybr1-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span><span class="lineCov">          1 :     ASSERT_EQ(31, ybr1Handler-&gt;getSignedLong(0));</span>
+<span class="lineNum">      35 </span><span class="lineCov">          1 :     ASSERT_EQ(16, ybr1Handler-&gt;getSignedLong(1));</span>
+<span class="lineNum">      36 </span><span class="lineCov">          1 :     ASSERT_EQ(16, ybr1Handler-&gt;getSignedLong(2));</span>
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span><span class="lineCov">          1 :     ptr&lt;image&gt; ybr2(new image());</span>
+<span class="lineNum">      39 </span><span class="lineCov">          1 :     ybr2-&gt;create(1, 1, image::depthS16, L&quot;YBR_FULL&quot;, 12);</span>
+<span class="lineNum">      40 </span><span class="lineCov">          1 :     rgb2ybr-&gt;runTransform(rgb, 0, 0, 1, 1, ybr2, 0, 0);</span>
+<span class="lineNum">      41 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; ybr2Handler = ybr2-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span><span class="lineCov">          1 :     ASSERT_EQ(4064, ybr2Handler-&gt;getSignedLong(0));</span>
+<span class="lineNum">      44 </span><span class="lineCov">          1 :     ASSERT_EQ(0, ybr2Handler-&gt;getSignedLong(1));</span>
+<span class="lineNum">      45 </span><span class="lineCov">          3 :     ASSERT_EQ(0, ybr2Handler-&gt;getSignedLong(2));</span>
+<span class="lineNum">      46 </span>            : 
+<a name="47"><span class="lineNum">      47 </span>            : }</a>
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineCov">          5 : TEST(colorConversion, YBRFULL2RGB)</span>
+<span class="lineNum">      50 </span>            : {
+<span class="lineNum">      51 </span><span class="lineCov">          1 :     ptr&lt;image&gt; ybr(new image());</span>
+<span class="lineNum">      52 </span><span class="lineCov">          1 :     ybr-&gt;create(1, 1, image::depthU8, L&quot;YBR_FULL&quot;, 7);</span>
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            :     std::uint32_t rowSize, channelsPixelSize, channelsNumber;
+<span class="lineNum">      55 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; ybrHandler = ybr-&gt;getDataHandler(true, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      56 </span><span class="lineCov">          1 :     ybrHandler-&gt;setUnsignedLong(0, 255);</span>
+<span class="lineNum">      57 </span><span class="lineCov">          1 :     ybrHandler-&gt;setUnsignedLong(1, 128);</span>
+<span class="lineNum">      58 </span><span class="lineCov">          1 :     ybrHandler-&gt;setUnsignedLong(2, 128);</span>
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span><span class="lineCov">          1 :     ybrHandler = 0;</span>
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span><span class="lineCov">          2 :     ptr&lt;transforms::transform&gt; ybr2rgb = transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory()-&gt;getTransform(L&quot;YBR_FULL&quot;, L&quot;RGB&quot;);</span>
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span><span class="lineCov">          2 :     ptr&lt;image&gt; rgb1(new image());</span>
+<span class="lineNum">      65 </span><span class="lineCov">          1 :     rgb1-&gt;create(1, 1, image::depthU8, L&quot;RGB&quot;, 4);</span>
+<span class="lineNum">      66 </span><span class="lineCov">          1 :     ybr2rgb-&gt;runTransform(ybr, 0, 0, 1, 1, rgb1, 0, 0);</span>
+<span class="lineNum">      67 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; rgb1Handler = rgb1-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span><span class="lineCov">          1 :     ASSERT_EQ(31, rgb1Handler-&gt;getSignedLong(0));</span>
+<span class="lineNum">      70 </span><span class="lineCov">          1 :     ASSERT_EQ(31, rgb1Handler-&gt;getSignedLong(1));</span>
+<span class="lineNum">      71 </span><span class="lineCov">          1 :     ASSERT_EQ(31, rgb1Handler-&gt;getSignedLong(2));</span>
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span><span class="lineCov">          1 :     ptr&lt;image&gt; rgb2(new image());</span>
+<span class="lineNum">      74 </span><span class="lineCov">          1 :     rgb2-&gt;create(1, 1, image::depthS16, L&quot;RGB&quot;, 12);</span>
+<span class="lineNum">      75 </span><span class="lineCov">          1 :     ybr2rgb-&gt;runTransform(ybr, 0, 0, 1, 1, rgb2, 0, 0);</span>
+<span class="lineNum">      76 </span><span class="lineCov">          2 :     ptr&lt;handlers::dataHandlerNumericBase&gt; rgb2Handler = rgb2-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span><span class="lineCov">          1 :     ASSERT_EQ(4064, rgb2Handler-&gt;getSignedLong(0));</span>
+<span class="lineNum">      79 </span><span class="lineCov">          1 :     ASSERT_EQ(4064, rgb2Handler-&gt;getSignedLong(1));</span>
+<span class="lineNum">      80 </span><span class="lineCov">          3 :     ASSERT_EQ(4064, rgb2Handler-&gt;getSignedLong(2));</span>
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : }
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            : }
+<span class="lineNum">      85 </span>            : 
+<a name="86"><span class="lineNum">      86 </span>            : }</a>
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span><span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

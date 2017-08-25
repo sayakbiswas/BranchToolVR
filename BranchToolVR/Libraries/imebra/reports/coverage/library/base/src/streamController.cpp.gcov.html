@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/src/streamController.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/src</a> - streamController.cpp<span style="font-size: 80%;"> (source / <a href="streamController.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">62</td>
+            <td class="headerCovTableEntry">62</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryHi">91.7 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file streamController.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the streamController class.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../include/streamController.h&quot;
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : namespace puntoexe
+<span class="lineNum">      56 </span>            : {
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : // Used for the endian check
+<span class="lineNum">      59 </span>            : ///////////////////////////////////////////////////////////
+<a name="60"><span class="lineNum">      60 </span>            : static const std::uint16_t m_endianCheck(0x00ff);</a>
+<span class="lineNum">      61 </span>            : static std::uint8_t const * const pBytePointer((std::uint8_t*)&amp;m_endianCheck);
+<span class="lineNum">      62 </span><span class="lineCov">          1 : static const streamController::tByteOrdering m_platformByteOrder((*pBytePointer)==0xff ? streamController::lowByteEndian : streamController::highByteEndian);</span>
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      65 </span>            : //
+<span class="lineNum">      66 </span>            : // Constructor
+<a name="67"><span class="lineNum">      67 </span>            : //</a>
+<span class="lineNum">      68 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      69 </span><span class="lineCov">       4406 : streamController::streamController(ptr&lt;baseStream&gt; pControlledStream, std::uint32_t virtualStart /* =0 */, std::uint32_t virtualLength /* =0 */):</span>
+<span class="lineNum">      70 </span>            :         m_bJpegTags(false),
+<span class="lineNum">      71 </span>            :         m_pControlledStream(pControlledStream),
+<span class="lineNum">      72 </span><span class="lineCov">       4406 :                 m_dataBuffer(new std::uint8_t[IMEBRA_STREAM_CONTROLLER_MEMORY_SIZE]),</span>
+<span class="lineNum">      73 </span>            :                 m_virtualStart(virtualStart),
+<span class="lineNum">      74 </span>            :                 m_virtualLength(virtualLength),
+<span class="lineNum">      75 </span><span class="lineCov">       8812 :                 m_dataBufferStreamPosition(0)</span>
+<span class="lineNum">      76 </span>            : {
+<span class="lineNum">      77 </span><span class="lineCov">       4406 :     m_pDataBufferStart = m_pDataBufferEnd = m_pDataBufferCurrent = m_dataBuffer;</span>
+<span class="lineNum">      78 </span><span class="lineCov">       4406 :         m_pDataBufferMaxEnd = m_pDataBufferStart + IMEBRA_STREAM_CONTROLLER_MEMORY_SIZE;</span>
+<span class="lineNum">      79 </span><span class="lineCov">       4406 : }</span>
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span>            : //
+<span class="lineNum">      84 </span>            : // Destructor
+<a name="85"><span class="lineNum">      85 </span>            : //</a>
+<span class="lineNum">      86 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span><span class="lineCov">       8812 : streamController::~streamController()</span>
+<span class="lineNum">      88 </span>            : {
+<span class="lineNum">      89 </span><span class="lineCov">       4406 :     delete[] m_dataBuffer;</span>
+<span class="lineNum">      90 </span><span class="lineCov">       4406 : }</span>
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span>            : //
+<span class="lineNum">      95 </span>            : // Retrieve the current position
+<a name="96"><span class="lineNum">      96 </span>            : //</a>
+<span class="lineNum">      97 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      98 </span><span class="lineCov">     215454 : std::uint32_t streamController::position()</span>
+<span class="lineNum">      99 </span>            : {
+<span class="lineNum">     100 </span><span class="lineCov">     215454 :         return m_dataBufferStreamPosition + (std::uint32_t)(m_pDataBufferCurrent - m_pDataBufferStart);</span>
+<span class="lineNum">     101 </span>            : }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     105 </span>            : //
+<span class="lineNum">     106 </span>            : // Retrieve a pointer to the controlled stream
+<a name="107"><span class="lineNum">     107 </span>            : //</a>
+<span class="lineNum">     108 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     109 </span><span class="lineCov">          6 : ptr&lt;baseStream&gt; streamController::getControlledStream()</span>
+<span class="lineNum">     110 </span>            : {
+<span class="lineNum">     111 </span><span class="lineCov">          6 :         return m_pControlledStream;</span>
+<span class="lineNum">     112 </span>            : }
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            : 
+<span class="lineNum">     115 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     116 </span>            : //
+<span class="lineNum">     117 </span>            : // Retrieve the position without considering the virtual
+<span class="lineNum">     118 </span>            : //  start's position
+<a name="119"><span class="lineNum">     119 </span>            : //</a>
+<span class="lineNum">     120 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     121 </span><span class="lineCov">        674 : std::uint32_t streamController::getControlledStreamPosition()</span>
+<span class="lineNum">     122 </span>            : {
+<span class="lineNum">     123 </span><span class="lineCov">        674 :         return m_dataBufferStreamPosition + (std::uint32_t)(m_pDataBufferCurrent - m_pDataBufferStart) + m_virtualStart;</span>
+<span class="lineNum">     124 </span>            : }
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            : //
+<span class="lineNum">     129 </span>            : // Adjust the byte ordering of pBuffer
+<a name="130"><span class="lineNum">     130 </span>            : //</a>
+<span class="lineNum">     131 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     132 </span><span class="lineCov">   10978401 : void streamController::adjustEndian(std::uint8_t* pBuffer, const std::uint32_t wordLength, const tByteOrdering endianType, const std::uint32_t words /* =1 */)</span>
+<span class="lineNum">     133 </span>            : {
+<span class="lineNum">     134 </span><span class="lineCov">   10978401 :         if(endianType == m_platformByteOrder || wordLength&lt;2L)</span>
+<span class="lineNum">     135 </span>            :         {
+<span class="lineNum">     136 </span><span class="lineCov">   10958143 :                 return;</span>
+<span class="lineNum">     137 </span>            :         }
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span><span class="lineCov">      20258 :         switch(wordLength)</span>
+<span class="lineNum">     140 </span>            :         {
+<span class="lineNum">     141 </span>            :         case 2:
+<span class="lineNum">     142 </span>            :         {
+<span class="lineNum">     143 </span><span class="lineCov">      18976 :             std::uint16_t* pWord((std::uint16_t*)pBuffer);</span>
+<span class="lineNum">     144 </span><span class="lineCov">  133987282 :                         for(std::uint32_t scanWords = words; scanWords != 0; --scanWords)</span>
+<span class="lineNum">     145 </span>            :             {
+<span class="lineNum">     146 </span><span class="lineCov">  133968306 :                 *pWord = ((*pWord &amp; 0x00ff) &lt;&lt; 8) | ((*pWord &amp; 0xff00) &gt;&gt; 8);</span>
+<span class="lineNum">     147 </span><span class="lineCov">  133968306 :                 ++pWord;</span>
+<span class="lineNum">     148 </span>            :                         }
+<span class="lineNum">     149 </span>            :                 }
+<span class="lineNum">     150 </span><span class="lineCov">      18976 :                 return;</span>
+<span class="lineNum">     151 </span>            :         case 4:
+<span class="lineNum">     152 </span>            :         {
+<span class="lineNum">     153 </span><span class="lineCov">       1281 :             std::uint32_t* pDWord((std::uint32_t*)pBuffer);</span>
+<span class="lineNum">     154 </span><span class="lineCov">       2563 :                         for(std::uint32_t scanWords = words; scanWords != 0; --scanWords)</span>
+<span class="lineNum">     155 </span>            :             {
+<span class="lineNum">     156 </span><span class="lineCov">       1282 :                 *pDWord = ((*pDWord &amp; 0xff000000) &gt;&gt; 24) | ((*pDWord &amp; 0x00ff0000) &gt;&gt; 8) | ((*pDWord &amp; 0x0000ff00) &lt;&lt; 8) | ((*pDWord &amp; 0x000000ff) &lt;&lt; 24);</span>
+<span class="lineNum">     157 </span><span class="lineCov">       1282 :                 ++pDWord;</span>
+<span class="lineNum">     158 </span>            :                         }
+<span class="lineNum">     159 </span>            :                 }
+<span class="lineNum">     160 </span><span class="lineCov">       1281 :                 return;</span>
+<span class="lineNum">     161 </span>            :     case 8:
+<span class="lineNum">     162 </span>            :         {
+<span class="lineNum">     163 </span><span class="lineCov">          1 :             std::uint64_t* pQWord((std::uint64_t*)pBuffer);</span>
+<span class="lineNum">     164 </span><span class="lineCov">          3 :             for(std::uint64_t scanWords = words; scanWords != 0; --scanWords)</span>
+<span class="lineNum">     165 </span>            :             {
+<span class="lineNum">     166 </span>            :                 *pQWord =
+<span class="lineNum">     167 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0xff00000000000000) &gt;&gt; 56) |</span>
+<span class="lineNum">     168 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x00ff000000000000) &gt;&gt; 40) |</span>
+<span class="lineNum">     169 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x0000ff0000000000) &gt;&gt; 24) |</span>
+<span class="lineNum">     170 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x000000ff00000000) &gt;&gt; 8) |</span>
+<span class="lineNum">     171 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x00000000ff000000) &lt;&lt; 8) |</span>
+<span class="lineNum">     172 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x0000000000ff0000) &lt;&lt; 24) |</span>
+<span class="lineNum">     173 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x000000000000ff00) &lt;&lt; 40) |</span>
+<span class="lineNum">     174 </span><span class="lineCov">          4 :                         ((*pQWord &amp; 0x00000000000000ff) &lt;&lt; 56);</span>
+<span class="lineNum">     175 </span><span class="lineCov">          2 :                 ++pQWord;</span>
+<span class="lineNum">     176 </span>            :             }
+<span class="lineNum">     177 </span>            :         }
+<span class="lineNum">     178 </span><span class="lineCov">          1 :         return;</span>
+<span class="lineNum">     179 </span>            :     }
+<a name="180"><span class="lineNum">     180 </span>            : }</a>
+<span class="lineNum">     181 </span>            : 
+<span class="lineNum">     182 </span><span class="lineCov">       4702 : std::uint16_t streamController::adjustEndian(std::uint16_t buffer, const tByteOrdering endianType)</span>
+<span class="lineNum">     183 </span>            : {
+<span class="lineNum">     184 </span><span class="lineCov">       4702 :     if(endianType == m_platformByteOrder)</span>
+<span class="lineNum">     185 </span>            :     {
+<span class="lineNum">     186 </span><span class="lineCov">       3677 :         return buffer;</span>
+<span class="lineNum">     187 </span>            :     }
+<span class="lineNum">     188 </span><span class="lineCov">       1025 :     return ((buffer &amp; 0xff00) &gt;&gt; 8) | ((buffer &amp; 0xff) &lt;&lt; 8);</span>
+<a name="189"><span class="lineNum">     189 </span>            : }</a>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span><span class="lineCov">        514 : std::uint32_t streamController::adjustEndian(std::uint32_t buffer, const tByteOrdering endianType)</span>
+<span class="lineNum">     192 </span>            : {
+<span class="lineNum">     193 </span><span class="lineCov">        514 :     if(endianType == m_platformByteOrder)</span>
+<span class="lineNum">     194 </span>            :     {
+<span class="lineNum">     195 </span><span class="lineCov">        513 :         return buffer;</span>
+<span class="lineNum">     196 </span>            :     }
+<span class="lineNum">     197 </span><span class="lineCov">          1 :     return ((buffer &amp; 0xff000000) &gt;&gt; 24) | ((buffer &amp; 0x00ff0000) &gt;&gt; 8) | ((buffer &amp; 0x0000ff00) &lt;&lt; 8) | ((buffer &amp; 0x000000ff) &lt;&lt; 24);</span>
+<a name="198"><span class="lineNum">     198 </span>            : }</a>
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span><span class="lineCov">          2 : std::uint64_t streamController::adjustEndian(std::uint64_t buffer, const tByteOrdering endianType)</span>
+<span class="lineNum">     201 </span>            : {
+<span class="lineNum">     202 </span><span class="lineCov">          2 :     if(endianType == m_platformByteOrder)</span>
+<span class="lineNum">     203 </span>            :     {
+<span class="lineNum">     204 </span><span class="lineCov">          1 :         return buffer;</span>
+<span class="lineNum">     205 </span>            :     }
+<span class="lineNum">     206 </span>            :     return
+<span class="lineNum">     207 </span><span class="lineCov">          2 :         ((buffer &amp; 0xff00000000000000) &gt;&gt; 56) |</span>
+<span class="lineNum">     208 </span><span class="lineCov">          2 :         ((buffer &amp; 0x00ff000000000000) &gt;&gt; 40) |</span>
+<span class="lineNum">     209 </span><span class="lineCov">          2 :         ((buffer &amp; 0x0000ff0000000000) &gt;&gt; 24) |</span>
+<span class="lineNum">     210 </span><span class="lineCov">          2 :         ((buffer &amp; 0x000000ff00000000) &gt;&gt; 8) |</span>
+<span class="lineNum">     211 </span><span class="lineCov">          2 :         ((buffer &amp; 0x00000000ff000000) &lt;&lt; 8) |</span>
+<span class="lineNum">     212 </span><span class="lineCov">          2 :         ((buffer &amp; 0x0000000000ff0000) &lt;&lt; 24) |</span>
+<span class="lineNum">     213 </span><span class="lineCov">          1 :         ((buffer &amp; 0x000000000000ff00) &lt;&lt; 40) |</span>
+<span class="lineNum">     214 </span><span class="lineCov">          1 :         ((buffer &amp; 0x00000000000000ff) &lt;&lt; 56);</span>
+<span class="lineNum">     215 </span>            : }
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span>            : 
+<a name="218"><span class="lineNum">     218 </span>            : </a>
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

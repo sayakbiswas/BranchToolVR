@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/VOILUT.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - VOILUT.cpp<span style="font-size: 80%;"> (source / <a href="VOILUT.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">98</td>
+            <td class="headerCovTableEntryLo">2.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryLo">10.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file VOILUT.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the class VOILUT.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../include/VOILUT.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../include/dataSet.h&quot;
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : namespace puntoexe
+<span class="lineNum">      59 </span>            : {
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : namespace imebra
+<span class="lineNum">      62 </span>            : {
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : namespace transforms
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      69 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      70 </span>            : //
+<span class="lineNum">      71 </span>            : //
+<span class="lineNum">      72 </span>            : // Retrieve an ID for a VOI LUT module.
+<span class="lineNum">      73 </span>            : // Returns NULL if the requested VOI LUT module doesn't
+<span class="lineNum">      74 </span>            : //  exist
+<span class="lineNum">      75 </span>            : //
+<span class="lineNum">      76 </span>            : //
+<a name="77"><span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      78 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 : std::uint32_t VOILUT::getVOILUTId(std::uint32_t VOILUTNumber)</span>
+<span class="lineNum">      80 </span>            : {
+<span class="lineNum">      81 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;VOILUT::getVOILUTId&quot;);
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            :         // reset the LUT's ID
+<span class="lineNum">      84 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      85 </span><span class="lineNoCov">          0 :         std::uint32_t VOILUTId = 0;</span>
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            :         // If the dataset has not been set, then return NULL
+<span class="lineNum">      88 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      89 </span><span class="lineNoCov">          0 :         if(m_pDataSet == 0)</span>
+<span class="lineNum">      90 </span>            :         {
+<span class="lineNum">      91 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">      92 </span>            :         }
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            :         // Reset the window's center and width
+<span class="lineNum">      95 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :         std::int32_t windowWidth = 0;</span>
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            :         // Scan all the window's centers and widths.
+<span class="lineNum">      99 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     100 </span>            :         std::uint32_t scanWindow;
+<span class="lineNum">     101 </span><span class="lineNoCov">          0 :         for(scanWindow=VOILUTNumber; (windowWidth == 0) &amp;&amp; (scanWindow!=0xffffffff); --scanWindow)</span>
+<span class="lineNum">     102 </span>            :         {
+<span class="lineNum">     103 </span><span class="lineNoCov">          0 :                 windowWidth  = m_pDataSet-&gt;getSignedLong(0x0028, 0, 0x1051, scanWindow);</span>
+<span class="lineNum">     104 </span>            :         }
+<span class="lineNum">     105 </span><span class="lineNoCov">          0 :         ++scanWindow;</span>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :         // If the window's center/width has not been found or it
+<span class="lineNum">     108 </span>            :         //  is not inside the VOILUTNumber parameter, then
+<span class="lineNum">     109 </span>            :         //  look in the LUTs
+<span class="lineNum">     110 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     111 </span><span class="lineNoCov">          0 :         if(windowWidth == 0 || scanWindow != VOILUTNumber)</span>
+<span class="lineNum">     112 </span>            :         {
+<span class="lineNum">     113 </span>            :                 // Find the LUT's ID
+<span class="lineNum">     114 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     115 </span><span class="lineNoCov">          0 :                 VOILUTNumber-=scanWindow;</span>
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 :                 ptr&lt;dataSet&gt; voiLut = m_pDataSet-&gt;getSequenceItem(0x0028, 0, 0x3010, VOILUTNumber);</span>
+<span class="lineNum">     117 </span><span class="lineNoCov">          0 :                 if(voiLut != 0)</span>
+<span class="lineNum">     118 </span>            :                 {
+<span class="lineNum">     119 </span>            :                         // Set the VOILUTId
+<span class="lineNum">     120 </span>            :                         ///////////////////////////////////////////////////////////
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :                         VOILUTId=VOILUTNumber | 0x00100000;</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :                 }</span>
+<span class="lineNum">     123 </span>            :         }
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            :         // The window's center/width has been found
+<span class="lineNum">     126 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     127 </span>            :         else
+<span class="lineNum">     128 </span>            :         {
+<span class="lineNum">     129 </span>            :                 // Set the VOILUTId
+<span class="lineNum">     130 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     131 </span><span class="lineNoCov">          0 :                 VOILUTId=VOILUTNumber | 0x00200000;</span>
+<span class="lineNum">     132 </span>            :         }
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            :         // Return the VOILUT's ID
+<span class="lineNum">     135 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :         return VOILUTId;</span>
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     139 </span>            : }
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     143 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     144 </span>            : //
+<span class="lineNum">     145 </span>            : //
+<span class="lineNum">     146 </span>            : // Retrieve a lisz of IDs of the available VOIs and LUTs.
+<span class="lineNum">     147 </span>            : //
+<span class="lineNum">     148 </span>            : //
+<a name="149"><span class="lineNum">     149 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     150 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     151 </span><span class="lineNoCov">          0 : VOILUT::voilutIds_t VOILUT::getVOILUTIds()</span>
+<span class="lineNum">     152 </span>            : {
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :     voilutIds_t returnList;</span>
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :     for(std::uint32_t scanIds(0); ; ++scanIds)</span>
+<span class="lineNum">     155 </span>            :     {
+<span class="lineNum">     156 </span><span class="lineNoCov">          0 :         std::uint32_t id(getVOILUTId(scanIds));</span>
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :         if(id == 0)</span>
+<span class="lineNum">     158 </span>            :         {
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :             return returnList;</span>
+<span class="lineNum">     160 </span>            :         }
+<span class="lineNum">     161 </span><span class="lineNoCov">          0 :         returnList.push_back(id);</span>
+<span class="lineNum">     162 </span><span class="lineNoCov">          0 :     }</span>
+<span class="lineNum">     163 </span>            : }
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     167 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     168 </span>            : //
+<span class="lineNum">     169 </span>            : //
+<span class="lineNum">     170 </span>            : // Returns the VOILUT description
+<span class="lineNum">     171 </span>            : //
+<span class="lineNum">     172 </span>            : //
+<a name="173"><span class="lineNum">     173 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     174 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 : std::wstring VOILUT::getVOILUTDescription(std::uint32_t VOILUTId)</span>
+<span class="lineNum">     176 </span>            : {
+<span class="lineNum">     177 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;VOILUT::getVOILUTDescription&quot;);
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :         std::wstring VOILUTDescription;</span>
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :         // If the dataset has not been, then return NULL
+<span class="lineNum">     182 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     183 </span><span class="lineNoCov">          0 :         if(m_pDataSet == 0)</span>
+<span class="lineNum">     184 </span>            :         {
+<span class="lineNum">     185 </span><span class="lineNoCov">          0 :                 return VOILUTDescription;</span>
+<span class="lineNum">     186 </span>            :         }
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span><span class="lineNoCov">          0 :         std::uint32_t VOILUTNumber=VOILUTId &amp; 0x0000ffff;</span>
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :         // Window's center/width
+<span class="lineNum">     191 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :         if((VOILUTId &amp; 0x00200000))</span>
+<span class="lineNum">     193 </span>            :         {
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :                 VOILUTDescription = m_pDataSet-&gt;getUnicodeString(0x0028, 0, 0x1055, VOILUTNumber);</span>
+<span class="lineNum">     195 </span>            :         }
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            :         // LUT
+<span class="lineNum">     198 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :         if((VOILUTId &amp; 0x00100000))</span>
+<span class="lineNum">     200 </span>            :         {
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :                 ptr&lt;lut&gt; voiLut = m_pDataSet-&gt;getLut(0x0028, 0x3010, VOILUTNumber);</span>
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :                 if(voiLut != 0)</span>
+<span class="lineNum">     203 </span>            :                 {
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :                         VOILUTDescription=voiLut-&gt;getDescription();</span>
+<span class="lineNum">     205 </span><span class="lineNoCov">          0 :                 }</span>
+<span class="lineNum">     206 </span>            :         }
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :         return VOILUTDescription;</span>
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     211 </span>            : }
+<span class="lineNum">     212 </span>            : 
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     215 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     216 </span>            : //
+<span class="lineNum">     217 </span>            : //
+<span class="lineNum">     218 </span>            : // Set the VOI/LUT module to use for the transformation.
+<span class="lineNum">     219 </span>            : // You can retrieve the VOILUTId using the function
+<span class="lineNum">     220 </span>            : //  GetVOILUTId().
+<span class="lineNum">     221 </span>            : //
+<span class="lineNum">     222 </span>            : //
+<a name="223"><span class="lineNum">     223 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     224 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 : void VOILUT::setVOILUT(std::uint32_t VOILUTId)</span>
+<span class="lineNum">     226 </span>            : {
+<span class="lineNum">     227 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;VOILUT::setVOILUT&quot;);
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :         // If the dataset has not been set, then return NULL
+<span class="lineNum">     230 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     231 </span><span class="lineNoCov">          0 :         if(m_pDataSet == 0)</span>
+<span class="lineNum">     232 </span>            :         {
+<span class="lineNum">     233 </span><span class="lineNoCov">          0 :                 return;</span>
+<span class="lineNum">     234 </span>            :         }
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :         std::uint32_t VOILUTNumber=VOILUTId &amp; 0x0000ffff;</span>
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :         // Window's center/width
+<span class="lineNum">     239 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :         if((VOILUTId &amp; 0x00200000))</span>
+<span class="lineNum">     241 </span>            :         {
+<span class="lineNum">     242 </span>            :                 setCenterWidth(
+<span class="lineNum">     243 </span>            :                         m_pDataSet-&gt;getSignedLong(0x0028, 0, 0x1050, VOILUTNumber),
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :                         m_pDataSet-&gt;getSignedLong(0x0028, 0, 0x1051, VOILUTNumber));</span>
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :                 return;</span>
+<span class="lineNum">     246 </span>            :         }
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :         // LUT
+<span class="lineNum">     249 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     250 </span><span class="lineNoCov">          0 :         if((VOILUTId &amp; 0x00100000))</span>
+<span class="lineNum">     251 </span>            :         {
+<span class="lineNum">     252 </span><span class="lineNoCov">          0 :                 setLUT(m_pDataSet-&gt;getLut(0x0028, 0x3010, VOILUTNumber));</span>
+<span class="lineNum">     253 </span><span class="lineNoCov">          0 :                 return;</span>
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span><span class="lineNoCov">          0 :         setCenterWidth(0, 0);</span>
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     259 </span>            : }
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     263 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     264 </span>            : //
+<span class="lineNum">     265 </span>            : //
+<span class="lineNum">     266 </span>            : // Set the lut
+<span class="lineNum">     267 </span>            : //
+<span class="lineNum">     268 </span>            : //
+<a name="269"><span class="lineNum">     269 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     270 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 : void VOILUT::setLUT(ptr&lt;lut&gt; pLut)</span>
+<span class="lineNum">     272 </span>            : {
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :         m_pLUT = pLut;</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :         m_windowCenter = 0;</span>
+<span class="lineNum">     275 </span><span class="lineNoCov">          0 :         m_windowWidth = 0;</span>
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     280 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     281 </span>            : //
+<span class="lineNum">     282 </span>            : //
+<span class="lineNum">     283 </span>            : // Set the center/width
+<span class="lineNum">     284 </span>            : //
+<span class="lineNum">     285 </span>            : //
+<a name="286"><span class="lineNum">     286 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     287 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 : void VOILUT::setCenterWidth(std::int32_t center, std::int32_t width)</span>
+<span class="lineNum">     289 </span>            : {
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 :         m_windowCenter = center;</span>
+<span class="lineNum">     291 </span><span class="lineNoCov">          0 :         m_windowWidth = width;</span>
+<span class="lineNum">     292 </span><span class="lineNoCov">          0 :         m_pLUT.release();</span>
+<span class="lineNum">     293 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     297 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     298 </span>            : //
+<span class="lineNum">     299 </span>            : //
+<span class="lineNum">     300 </span>            : // Get the center/width
+<span class="lineNum">     301 </span>            : //
+<span class="lineNum">     302 </span>            : //
+<a name="303"><span class="lineNum">     303 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     304 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     305 </span><span class="lineNoCov">          0 : void VOILUT::getCenterWidth(std::int32_t* pCenter, std::int32_t* pWidth)</span>
+<span class="lineNum">     306 </span>            : {
+<span class="lineNum">     307 </span><span class="lineNoCov">          0 :         *pCenter = m_windowCenter;</span>
+<span class="lineNum">     308 </span><span class="lineNoCov">          0 :         *pWidth = m_windowWidth;</span>
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     313 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     314 </span>            : //
+<span class="lineNum">     315 </span>            : //
+<span class="lineNum">     316 </span>            : // Returns true if the transform is empty
+<span class="lineNum">     317 </span>            : //
+<span class="lineNum">     318 </span>            : //
+<a name="319"><span class="lineNum">     319 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     320 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     321 </span><span class="lineCov">          2 : bool VOILUT::isEmpty()</span>
+<span class="lineNum">     322 </span>            : {
+<span class="lineNum">     323 </span><span class="lineCov">          2 :         return m_windowWidth &lt;= 1 &amp;&amp; (m_pLUT == 0 || m_pLUT-&gt;getSize() == 0);</span>
+<span class="lineNum">     324 </span>            : }
+<span class="lineNum">     325 </span>            : 
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     328 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     329 </span>            : //
+<span class="lineNum">     330 </span>            : //
+<span class="lineNum">     331 </span>            : // Allocate the output image
+<span class="lineNum">     332 </span>            : //
+<span class="lineNum">     333 </span>            : //
+<a name="334"><span class="lineNum">     334 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     335 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     336 </span><span class="lineNoCov">          0 : ptr&lt;image&gt; VOILUT::allocateOutputImage(ptr&lt;image&gt; pInputImage, std::uint32_t width, std::uint32_t height)</span>
+<span class="lineNum">     337 </span>            : {
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :         if(isEmpty())</span>
+<span class="lineNum">     339 </span>            :         {
+<span class="lineNum">     340 </span><span class="lineNoCov">          0 :         ptr&lt;image&gt; newImage(new image());</span>
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 :                 newImage-&gt;create(width, height, pInputImage-&gt;getDepth(), pInputImage-&gt;getColorSpace(), pInputImage-&gt;getHighBit());</span>
+<span class="lineNum">     342 </span><span class="lineNoCov">          0 :                 return newImage;</span>
+<span class="lineNum">     343 </span>            :         }
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 :         ptr&lt;image&gt; outputImage(new image);</span>
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :         image::bitDepth depth = pInputImage-&gt;getDepth();</span>
+<span class="lineNum">     347 </span><span class="lineNoCov">          0 :         if(m_pLUT != 0 &amp;&amp; m_pLUT-&gt;getSize() != 0)</span>
+<span class="lineNum">     348 </span>            :         {
+<span class="lineNum">     349 </span><span class="lineNoCov">          0 :                 std::uint8_t bits = m_pLUT-&gt;getBits();</span>
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span><span class="lineNoCov">          0 :                 bool bNegative(false);</span>
+<span class="lineNum">     352 </span><span class="lineNoCov">          0 :                 for(std::int32_t index(m_pLUT-&gt;getFirstMapped()), size(m_pLUT-&gt;getSize()); !bNegative &amp;&amp; size != 0; --size, ++index)</span>
+<span class="lineNum">     353 </span>            :                 {
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 :                         bNegative = (m_pLUT-&gt;mappedValue(index) &lt; 0);</span>
+<span class="lineNum">     355 </span>            :                 }
+<span class="lineNum">     356 </span>            : 
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :                 if(bNegative)</span>
+<span class="lineNum">     358 </span>            :                 {
+<span class="lineNum">     359 </span><span class="lineNoCov">          0 :                         depth = bits &gt; 8 ? image::depthS16 : image::depthS8;</span>
+<span class="lineNum">     360 </span>            :                 }
+<span class="lineNum">     361 </span>            :                 else
+<span class="lineNum">     362 </span>            :                 {
+<span class="lineNum">     363 </span><span class="lineNoCov">          0 :                         depth = bits &gt; 8 ? image::depthU16 : image::depthU8;</span>
+<span class="lineNum">     364 </span>            :                 }
+<span class="lineNum">     365 </span><span class="lineNoCov">          0 :                 ptr&lt;image&gt; returnImage(new image);</span>
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 :                 returnImage-&gt;create(width, height, depth, pInputImage-&gt;getColorSpace(), bits - 1);</span>
+<span class="lineNum">     367 </span><span class="lineNoCov">          0 :                 return returnImage;</span>
+<span class="lineNum">     368 </span>            :         }
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            :         //
+<span class="lineNum">     371 </span>            :         // LUT not found.
+<span class="lineNum">     372 </span>            :         // Use the window's center/width
+<span class="lineNum">     373 </span>            :         //
+<span class="lineNum">     374 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     375 </span><span class="lineNoCov">          0 :         if(m_windowWidth &lt;= 1)</span>
+<span class="lineNum">     376 </span>            :         {
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 :                 outputImage-&gt;create(width, height, depth, pInputImage-&gt;getColorSpace(), pInputImage-&gt;getHighBit());</span>
+<span class="lineNum">     378 </span><span class="lineNoCov">          0 :                 return outputImage;</span>
+<span class="lineNum">     379 </span>            :         }
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span><span class="lineNoCov">          0 :         if(depth == image::depthS8)</span>
+<span class="lineNum">     382 </span><span class="lineNoCov">          0 :                 depth = image::depthU8;</span>
+<span class="lineNum">     383 </span><span class="lineNoCov">          0 :         if(depth == image::depthS16 || depth == image::depthU32 || depth == image::depthS32)</span>
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 :                 depth = image::depthU16;</span>
+<span class="lineNum">     385 </span>            : 
+<span class="lineNum">     386 </span><span class="lineNoCov">          0 :         outputImage-&gt;create(width, height, depth, pInputImage-&gt;getColorSpace(), pInputImage-&gt;getHighBit());</span>
+<span class="lineNum">     387 </span>            : 
+<span class="lineNum">     388 </span><span class="lineNoCov">          0 :         return outputImage;</span>
+<span class="lineNum">     389 </span>            : }
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     393 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     394 </span>            : //
+<span class="lineNum">     395 </span>            : //
+<span class="lineNum">     396 </span>            : // Finds and applies the optimal VOI.
+<span class="lineNum">     397 </span>            : //
+<span class="lineNum">     398 </span>            : //
+<a name="399"><span class="lineNum">     399 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     400 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     401 </span><span class="lineNoCov">          0 : void VOILUT::applyOptimalVOI(const ptr&lt;puntoexe::imebra::image&gt;&amp; inputImage, std::uint32_t inputTopLeftX, std::uint32_t inputTopLeftY, std::uint32_t inputWidth, std::uint32_t inputHeight)</span>
+<span class="lineNum">     402 </span>            : {
+<span class="lineNum">     403 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;VOILUT::applyOptimalVOI&quot;);
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span>            :     std::uint32_t width, height;
+<span class="lineNum">     406 </span><span class="lineNoCov">          0 :     inputImage-&gt;getSize(&amp;width, &amp;height);</span>
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span><span class="lineNoCov">          0 :     if(inputTopLeftX + inputWidth &gt; width || inputTopLeftY + inputHeight &gt; height)</span>
+<span class="lineNum">     409 </span>            :     {
+<span class="lineNum">     410 </span><span class="lineNoCov">          0 :         PUNTOEXE_THROW(transformExceptionInvalidArea, &quot;The input and/or output areas are invalid&quot;);</span>
+<span class="lineNum">     411 </span>            :     }
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            :     std::uint32_t rowSize, channelPixelSize, channelsNumber;
+<span class="lineNum">     414 </span><span class="lineNoCov">          0 :     ptr&lt;handlers::dataHandlerNumericBase&gt; handler(inputImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelPixelSize, &amp;channelsNumber));</span>
+<span class="lineNum">     415 </span><span class="lineNoCov">          0 :     HANDLER_CALL_TEMPLATE_FUNCTION_WITH_PARAMS(templateFindOptimalVOI, handler, width, inputTopLeftX, inputTopLeftY, inputWidth, inputHeight);</span>
+<span class="lineNum">     416 </span>            : 
+<span class="lineNum">     417 </span>            :     PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     418 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     419 </span>            : 
+<span class="lineNum">     420 </span>            : 
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            : 
+<span class="lineNum">     423 </span>            : } // namespace transforms
+<span class="lineNum">     424 </span>            : 
+<span class="lineNum">     425 </span>            : } // namespace imebra
+<span class="lineNum">     426 </span>            : 
+<span class="lineNum">     427 </span>            : } // namespace puntoexe
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

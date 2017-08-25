@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/exception.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - exception.h<span style="font-size: 80%;"> (source / <a href="exception.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file exception.h
+<span class="lineNum">      49 </span>            :     \brief Defines the classes and the macros used to handle the
+<span class="lineNum">      50 </span>            :                 exceptions in the library.
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : */
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #if !defined(CImbxException_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+<span class="lineNum">      55 </span>            : #define CImbxException_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &quot;configuration.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;baseObject.h&quot;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : #include &lt;typeinfo&gt;
+<span class="lineNum">      61 </span>            : #include &lt;exception&gt;
+<span class="lineNum">      62 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">      63 </span>            : #include &lt;map&gt;
+<span class="lineNum">      64 </span>            : #include &lt;list&gt;
+<span class="lineNum">      65 </span>            : #include &lt;string&gt;
+<span class="lineNum">      66 </span>            : #include &lt;sstream&gt;
+<span class="lineNum">      67 </span>            : #include &lt;thread&gt;
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            : namespace puntoexe
+<span class="lineNum">      70 </span>            : {
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : /// \addtogroup group_baseclasses
+<span class="lineNum">      73 </span>            : ///
+<span class="lineNum">      74 </span>            : /// @{
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : /// \brief This class is used to store the information
+<span class="lineNum">      79 </span>            : ///         related to the points where the exceptions are
+<span class="lineNum">      80 </span>            : ///         being caught&amp;thrown.
+<span class="lineNum">      81 </span>            : ///
+<span class="lineNum">      82 </span>            : /// The application can use the macros
+<span class="lineNum">      83 </span>            : ///  PUNTOEXE_FUNCTION_START(),
+<span class="lineNum">      84 </span>            : ///  PUNTOEXE_FUNCTION_END(), 
+<span class="lineNum">      85 </span>            : ///  PUNTOEXE_THROW() and
+<span class="lineNum">      86 </span>            : ///  PUNTOEXE_RETHROW()
+<span class="lineNum">      87 </span>            : ///  inside its function: the macros take care of logging
+<span class="lineNum">      88 </span>            : ///  in the exceptions manager the source code's lines
+<span class="lineNum">      89 </span>            : ///  travelled by an exception while it is being thrown
+<span class="lineNum">      90 </span>            : ///  to the catch point.
+<span class="lineNum">      91 </span>            : ///
+<a name="92"><span class="lineNum">      92 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      93 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span><span class="lineCov">        381 : class exceptionInfo</span>
+<span class="lineNum">      95 </span>            : {
+<span class="lineNum">      96 </span>            : public:
+<span class="lineNum">      97 </span>            :         /// \brief Construct the exceptionInfo object.
+<span class="lineNum">      98 </span>            :         ///
+<span class="lineNum">      99 </span>            :         /// @param functionName  the name of the function where
+<span class="lineNum">     100 </span>            :         ///                       the catch&amp;throw is happening
+<span class="lineNum">     101 </span>            :         /// @param fileName      the name of the file where the
+<span class="lineNum">     102 </span>            :         ///                       catch&amp;throw is happening
+<span class="lineNum">     103 </span>            :         /// @param lineNumber    the line where the catch&amp;throw
+<span class="lineNum">     104 </span>            :         ///                       is happening
+<span class="lineNum">     105 </span>            :         /// @param exceptionType the type of the exception being
+<span class="lineNum">     106 </span>            :         ///                       rethrown
+<span class="lineNum">     107 </span>            :         /// @param exceptionMessage the message embedded in the
+<span class="lineNum">     108 </span>            :         ///                       exception being rethrown
+<span class="lineNum">     109 </span>            :         ///
+<span class="lineNum">     110 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     111 </span>            :         exceptionInfo(const std::wstring&amp; functionName, const std::string&amp; fileName, const long lineNumber, const std::string&amp; exceptionType, const std::string&amp; exceptionMessage);
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            :         exceptionInfo();
+<span class="lineNum">     114 </span>            :         
+<span class="lineNum">     115 </span>            :         exceptionInfo(const exceptionInfo&amp; right);
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            :         exceptionInfo&amp; operator=(const exceptionInfo&amp; right);
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            :         /// \brief Return the object's content formatted in
+<span class="lineNum">     120 </span>            :         ///         a string.
+<span class="lineNum">     121 </span>            :         ///
+<span class="lineNum">     122 </span>            :         /// @return the object's content formatted in a string
+<span class="lineNum">     123 </span>            :         ///
+<span class="lineNum">     124 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     125 </span>            :         std::wstring getMessage();
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span>            :         std::wstring m_functionName;   ///&lt; The name of the function where the catch&amp;throw is happening
+<span class="lineNum">     128 </span>            :         std::string m_fileName;        ///&lt; The name of the file where the catch&amp;throw is happening
+<span class="lineNum">     129 </span>            :         long m_lineNumber;             ///&lt; The number of the line where the catch&amp;throw is happening
+<span class="lineNum">     130 </span>            :         std::string m_exceptionType;   ///&lt; The type of the exception being rethrown
+<span class="lineNum">     131 </span>            :         std::string m_exceptionMessage;///&lt; The message embedded in the exception
+<span class="lineNum">     132 </span>            : };
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     136 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     137 </span>            : /// \brief One statically allocated instance of this class
+<span class="lineNum">     138 </span>            : ///         logs the stack positions while an exception is
+<span class="lineNum">     139 </span>            : ///         being processed.
+<span class="lineNum">     140 </span>            : ///
+<span class="lineNum">     141 </span>            : /// In order to log the stack position the application
+<span class="lineNum">     142 </span>            : ///  must use the following macros inside its functions:
+<span class="lineNum">     143 </span>            : /// - PUNTOEXE_FUNCTION_START()
+<span class="lineNum">     144 </span>            : /// - PUNTOEXE_FUNCTION_END()
+<span class="lineNum">     145 </span>            : /// - PUNTOEXE_THROW()
+<span class="lineNum">     146 </span>            : ///
+<span class="lineNum">     147 </span>            : /// The final catch block that processes the exception and
+<span class="lineNum">     148 </span>            : ///  doesn't rethrow it should call 
+<span class="lineNum">     149 </span>            : ///  exceptionsManager::getMessage() in order to
+<span class="lineNum">     150 </span>            : ///  retrieve the exception's history.
+<span class="lineNum">     151 </span>            : ///
+<span class="lineNum">     152 </span>            : /// The retrieved message will contain the position of the
+<span class="lineNum">     153 </span>            : ///  first throw statement and the positions of the
+<span class="lineNum">     154 </span>            : ///  PUNTOEXE_FUNCTION_END() macros that rethrown the
+<span class="lineNum">     155 </span>            : ///  exception.
+<span class="lineNum">     156 </span>            : ///
+<span class="lineNum">     157 </span>            : /// All the catch blocks that don't rethrow the catched
+<span class="lineNum">     158 </span>            : ///  exception and solve the exception's cause should call
+<span class="lineNum">     159 </span>            : ///  exceptionsManager::getMessage() to empty the
+<span class="lineNum">     160 </span>            : ///  messages stack.
+<span class="lineNum">     161 </span>            : ///
+<a name="162"><span class="lineNum">     162 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     163 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     164 </span><span class="lineCov">          3 : class exceptionsManager: public baseObject</span>
+<span class="lineNum">     165 </span>            : {
+<span class="lineNum">     166 </span>            : public:
+<span class="lineNum">     167 </span>            :         /// \brief Add an exceptionInfo object to the active
+<span class="lineNum">     168 </span>            :         ///         thread's information list.
+<span class="lineNum">     169 </span>            :         ///
+<span class="lineNum">     170 </span>            :         /// This function is called by PUNTOEXE_FUNCTION_END() when
+<span class="lineNum">     171 </span>            :         ///  an uncaught exception is found.
+<span class="lineNum">     172 </span>            :         ///
+<span class="lineNum">     173 </span>            :         /// @param info the info object that must be added
+<span class="lineNum">     174 </span>            :         ///         to the active thread's information list
+<span class="lineNum">     175 </span>            :         ///
+<span class="lineNum">     176 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     177 </span>            :         static void addExceptionInfo(const exceptionInfo&amp; info);
+<span class="lineNum">     178 </span>            :         
+<span class="lineNum">     179 </span>            :         /// \brief Returns the same information returned by
+<span class="lineNum">     180 </span>            :         ///         getExceptionInfo(), but formatted in a text
+<span class="lineNum">     181 </span>            :         ///         message.
+<span class="lineNum">     182 </span>            :         ///
+<span class="lineNum">     183 </span>            :         /// The function also clears the information list for
+<span class="lineNum">     184 </span>            :         ///  the current thread.
+<span class="lineNum">     185 </span>            :         ///
+<span class="lineNum">     186 </span>            :         /// @return the information formatted as a text message
+<span class="lineNum">     187 </span>            :         ///
+<span class="lineNum">     188 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span>            :         static std::wstring getMessage();
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :         /// \brief Defines a list of exceptionInfo objects.
+<span class="lineNum">     192 </span>            :         ///
+<span class="lineNum">     193 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     194 </span>            :         typedef std::list&lt;exceptionInfo&gt; tExceptionInfoList;
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :         /// \brief Fill the list with all the collected
+<span class="lineNum">     197 </span>            :         ///         exceptionInfo objects for the current thread.
+<span class="lineNum">     198 </span>            :         ///
+<span class="lineNum">     199 </span>            :         /// The function also clears the information list of
+<span class="lineNum">     200 </span>            :         ///  the current thread.
+<span class="lineNum">     201 </span>            :         ///
+<span class="lineNum">     202 </span>            :         /// @param pList a pointer to the list that will be filled
+<span class="lineNum">     203 </span>            :         ///               with a copy of the exceptionInfo objects
+<span class="lineNum">     204 </span>            :         ///               collected before the call.
+<span class="lineNum">     205 </span>            :         ///
+<span class="lineNum">     206 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     207 </span>            :         static void getExceptionInfo(tExceptionInfoList* pList);
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :         /// \brief Clear the information list for the active
+<span class="lineNum">     210 </span>            :         ///         thread.
+<span class="lineNum">     211 </span>            :         ///
+<span class="lineNum">     212 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     213 </span>            :         static void clearExceptionInfo();
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            :         // Return a pointer to the statically allocated
+<span class="lineNum">     216 </span>            :         //         instance of exceptionsManager.
+<span class="lineNum">     217 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     218 </span>            :         static ptr&lt;exceptionsManager&gt; getExceptionsManager();
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            : protected:
+<span class="lineNum">     221 </span>            :     typedef std::map&lt;std::thread::id, tExceptionInfoList&gt; tInfoMap;
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span>            :         tInfoMap m_information;
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span>            : public:
+<span class="lineNum">     226 </span>            :         // Force the construction of the exceptions manager before
+<span class="lineNum">     227 </span>            :         //  main() starts
+<span class="lineNum">     228 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     229 </span>            :         class forceExceptionsConstruction
+<a name="230"><span class="lineNum">     230 </span>            :         {</a>
+<span class="lineNum">     231 </span>            :         public:
+<span class="lineNum">     232 </span><span class="lineCov">          1 :                 forceExceptionsConstruction()</span>
+<span class="lineNum">     233 </span>            :                 {
+<span class="lineNum">     234 </span><span class="lineCov">          1 :                         exceptionsManager::getExceptionsManager();</span>
+<span class="lineNum">     235 </span><span class="lineCov">          1 :                 }</span>
+<span class="lineNum">     236 </span>            :         };
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            : };
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span>            : 
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            : /// \def PUNTOEXE_FUNCTION_START(functionName)
+<span class="lineNum">     244 </span>            : ///
+<span class="lineNum">     245 </span>            : /// \brief Initialize a try block. The try block must be
+<span class="lineNum">     246 </span>            : ///         matched by a call to the 
+<span class="lineNum">     247 </span>            : ///         PUNTOEXE_FUNCTION_END() macro.
+<span class="lineNum">     248 </span>            : ///
+<span class="lineNum">     249 </span>            : /// This macro should be placed at the very beginning
+<span class="lineNum">     250 </span>            : ///  of a function.
+<span class="lineNum">     251 </span>            : ///
+<span class="lineNum">     252 </span>            : /// All the exceptions not catched by the body of the
+<span class="lineNum">     253 </span>            : ///  function are catched by PUNTOEXE_FUNCTION_END() and 
+<span class="lineNum">     254 </span>            : ///  rethrown, but before being rethrown the function's
+<span class="lineNum">     255 </span>            : ///  name and the line number in the source file are 
+<span class="lineNum">     256 </span>            : ///  logged.
+<span class="lineNum">     257 </span>            : /// All the positions of the PUNTOEXE_FUNCTION_END() that
+<span class="lineNum">     258 </span>            : ///  catch the same exception are logged togheter.
+<span class="lineNum">     259 </span>            : ///
+<span class="lineNum">     260 </span>            : /// Exceptions thrown inside the function should be thrown
+<span class="lineNum">     261 </span>            : ///  by PUNTOEXE_THROW(), but this is not necessary.
+<span class="lineNum">     262 </span>            : ///
+<span class="lineNum">     263 </span>            : /// @param functionName the name of the function in which
+<span class="lineNum">     264 </span>            : ///         the macro is placed.
+<span class="lineNum">     265 </span>            : ///
+<span class="lineNum">     266 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     267 </span>            : #define PUNTOEXE_FUNCTION_START(functionName) \
+<span class="lineNum">     268 </span>            :         static const wchar_t* _puntoexe_function_name = functionName;\
+<span class="lineNum">     269 </span>            :         try{
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            : /// \def PUNTOEXE_FUNCTION_END()
+<span class="lineNum">     272 </span>            : ///
+<span class="lineNum">     273 </span>            : /// \brief Insert a catch block that rethrows the catched
+<span class="lineNum">     274 </span>            : ///         exception and log the function's name and
+<span class="lineNum">     275 </span>            : ///         the position in the source file in which the
+<span class="lineNum">     276 </span>            : ///         exception has been catched and rethrown.
+<span class="lineNum">     277 </span>            : ///
+<span class="lineNum">     278 </span>            : /// This function must be placed at the end of a function
+<span class="lineNum">     279 </span>            : ///  if the PUNTOEXE_FUNCTION_START() has been used in
+<span class="lineNum">     280 </span>            : ///  the function.
+<span class="lineNum">     281 </span>            : ///
+<span class="lineNum">     282 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     283 </span>            : #define PUNTOEXE_FUNCTION_END() \
+<span class="lineNum">     284 </span>            :         }\
+<span class="lineNum">     285 </span>            :         catch(std::exception&amp; e)\
+<span class="lineNum">     286 </span>            :         {\
+<span class="lineNum">     287 </span>            :                 puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, typeid(e).name(), e.what());\
+<span class="lineNum">     288 </span>            :                 puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     289 </span>            :                 throw;\
+<span class="lineNum">     290 </span>            :         }\
+<span class="lineNum">     291 </span>            :         catch(...)\
+<span class="lineNum">     292 </span>            :         {\
+<span class="lineNum">     293 </span>            :                 puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, &quot;unknown&quot;, &quot;&quot;);\
+<span class="lineNum">     294 </span>            :                 puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     295 </span>            :                 throw;\
+<span class="lineNum">     296 </span>            :         }
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            : /// \def PUNTOEXE_FUNCTION_END_MODIFY()
+<span class="lineNum">     299 </span>            : ///
+<span class="lineNum">     300 </span>            : /// \brief Insert a catch block that rethrows the catched
+<span class="lineNum">     301 </span>            : ///         exception and log the function's name and
+<span class="lineNum">     302 </span>            : ///         the position in the source file in which the
+<span class="lineNum">     303 </span>            : ///         exception has been catched and rethrown.
+<span class="lineNum">     304 </span>            : ///        Exception of the type specified in the first
+<span class="lineNum">     305 </span>            : ///         parameter are replaced by the type specified
+<span class="lineNum">     306 </span>            : ///         in the second parameter.
+<span class="lineNum">     307 </span>            : ///
+<span class="lineNum">     308 </span>            : /// @param catchType the exception type that must be
+<span class="lineNum">     309 </span>            : ///                  caught and replace by the exception in
+<span class="lineNum">     310 </span>            : ///                  throwType
+<span class="lineNum">     311 </span>            : /// @param throwType the exception type to throw instead
+<span class="lineNum">     312 </span>            : ///                  of catchType
+<span class="lineNum">     313 </span>            : ///
+<span class="lineNum">     314 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     315 </span>            : #define PUNTOEXE_FUNCTION_END_MODIFY(catchType, throwType) \
+<span class="lineNum">     316 </span>            :     }\
+<span class="lineNum">     317 </span>            :     catch(catchType&amp; e)\
+<span class="lineNum">     318 </span>            :     {\
+<span class="lineNum">     319 </span>            :         puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, typeid(e).name(), e.what());\
+<span class="lineNum">     320 </span>            :         puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     321 </span>            :         PUNTOEXE_THROW(throwType, e.what());\
+<span class="lineNum">     322 </span>            :     }\
+<span class="lineNum">     323 </span>            :     catch(std::exception&amp; e)\
+<span class="lineNum">     324 </span>            :     {\
+<span class="lineNum">     325 </span>            :         puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, typeid(e).name(), e.what());\
+<span class="lineNum">     326 </span>            :         puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     327 </span>            :         throw;\
+<span class="lineNum">     328 </span>            :     }\
+<span class="lineNum">     329 </span>            :     catch(...)\
+<span class="lineNum">     330 </span>            :     {\
+<span class="lineNum">     331 </span>            :         puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, &quot;unknown&quot;, &quot;&quot;);\
+<span class="lineNum">     332 </span>            :         puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     333 </span>            :         throw;\
+<span class="lineNum">     334 </span>            :     }
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            : /// \def PUNTOEXE_THROW(exceptionType, what)
+<span class="lineNum">     337 </span>            : ///
+<span class="lineNum">     338 </span>            : /// \brief Throw an exception of the specified type and log
+<span class="lineNum">     339 </span>            : ///         the function's name and the position in the
+<span class="lineNum">     340 </span>            : ///         file on which the exception has been thrown.
+<span class="lineNum">     341 </span>            : ///
+<span class="lineNum">     342 </span>            : /// This macro can be used only in the functions or blocks
+<span class="lineNum">     343 </span>            : ///  that use the macros PUNTOEXE_FUNCTION_START() and
+<span class="lineNum">     344 </span>            : ///  PUNTOEXE_FUNCTION_END().
+<span class="lineNum">     345 </span>            : ///
+<span class="lineNum">     346 </span>            : /// @param exceptionType the type of exception to throw
+<span class="lineNum">     347 </span>            : /// @param what          a message to be associated with
+<span class="lineNum">     348 </span>            : ///                       the exception
+<span class="lineNum">     349 </span>            : ///
+<span class="lineNum">     350 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     351 </span>            : #define PUNTOEXE_THROW(exceptionType, what) \
+<span class="lineNum">     352 </span>            :         {\
+<span class="lineNum">     353 </span>            :         exceptionType puntoexeTrackException(what);\
+<span class="lineNum">     354 </span>            :         puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, typeid(puntoexeTrackException).name(), what);\
+<span class="lineNum">     355 </span>            :                 puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     356 </span>            :         throw puntoexeTrackException;\
+<span class="lineNum">     357 </span>            :         }
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            : /// \def PUNTOEXE_RETHROW(what)
+<span class="lineNum">     360 </span>            : ///
+<span class="lineNum">     361 </span>            : /// \brief Rethrow an exception caught by a catch block
+<span class="lineNum">     362 </span>            : ///         and add some descriptions to it.
+<span class="lineNum">     363 </span>            : ///
+<span class="lineNum">     364 </span>            : /// This macro can be used only in the functions or blocks
+<span class="lineNum">     365 </span>            : ///  that use the macros PUNTOEXE_FUNCTION_START() and
+<span class="lineNum">     366 </span>            : ///  PUNTOEXE_FUNCTION_END().
+<span class="lineNum">     367 </span>            : ///
+<span class="lineNum">     368 </span>            : /// @param what          a message to be associated with
+<span class="lineNum">     369 </span>            : ///                       the exception
+<span class="lineNum">     370 </span>            : ///
+<span class="lineNum">     371 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     372 </span>            : #define PUNTOEXE_RETHROW(what) \
+<span class="lineNum">     373 </span>            :         {\
+<span class="lineNum">     374 </span>            :                 puntoexe::exceptionInfo info(_puntoexe_function_name, __FILE__, __LINE__, &quot;rethrowing&quot;, what);\
+<span class="lineNum">     375 </span>            :                 puntoexe::exceptionsManager::addExceptionInfo(info);\
+<span class="lineNum">     376 </span>            :                 throw;\
+<span class="lineNum">     377 </span>            :         }
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : ///@}
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            : } // namespace puntoexe
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            : 
+<span class="lineNum">     384 </span>            : #endif // !defined(CImbxException_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

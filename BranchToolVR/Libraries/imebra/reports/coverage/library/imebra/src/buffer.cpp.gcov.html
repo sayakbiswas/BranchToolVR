@@ -1,0 +1,839 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/buffer.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - buffer.cpp<span style="font-size: 80%;"> (source / <a href="buffer.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">147</td>
+            <td class="headerCovTableEntry">168</td>
+            <td class="headerCovTableEntryMed">87.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file buffer.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the buffer class.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../../base/include/streamReader.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../../base/include/streamWriter.h&quot;
+<span class="lineNum">      56 </span>            : #include &quot;../include/buffer.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;../include/bufferStream.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../include/dataHandler.h&quot;
+<span class="lineNum">      59 </span>            : #include &quot;../include/dataHandlerNumeric.h&quot;
+<span class="lineNum">      60 </span>            : #include &quot;../include/dataHandlerStringAE.h&quot;
+<span class="lineNum">      61 </span>            : #include &quot;../include/dataHandlerStringAS.h&quot;
+<span class="lineNum">      62 </span>            : #include &quot;../include/dataHandlerStringCS.h&quot;
+<span class="lineNum">      63 </span>            : #include &quot;../include/dataHandlerStringDS.h&quot;
+<span class="lineNum">      64 </span>            : #include &quot;../include/dataHandlerStringIS.h&quot;
+<span class="lineNum">      65 </span>            : #include &quot;../include/dataHandlerStringLO.h&quot;
+<span class="lineNum">      66 </span>            : #include &quot;../include/dataHandlerStringLT.h&quot;
+<span class="lineNum">      67 </span>            : #include &quot;../include/dataHandlerStringPN.h&quot;
+<span class="lineNum">      68 </span>            : #include &quot;../include/dataHandlerStringSH.h&quot;
+<span class="lineNum">      69 </span>            : #include &quot;../include/dataHandlerStringST.h&quot;
+<span class="lineNum">      70 </span>            : #include &quot;../include/dataHandlerStringUI.h&quot;
+<span class="lineNum">      71 </span>            : #include &quot;../include/dataHandlerStringUT.h&quot;
+<span class="lineNum">      72 </span>            : #include &quot;../include/dataHandlerDate.h&quot;
+<span class="lineNum">      73 </span>            : #include &quot;../include/dataHandlerDateTime.h&quot;
+<span class="lineNum">      74 </span>            : #include &quot;../include/dataHandlerTime.h&quot;
+<span class="lineNum">      75 </span>            : #include &quot;../include/transaction.h&quot;
+<span class="lineNum">      76 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            : namespace puntoexe
+<span class="lineNum">      80 </span>            : {
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : namespace imebra
+<span class="lineNum">      83 </span>            : {
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      86 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      88 </span>            : //
+<span class="lineNum">      89 </span>            : //
+<span class="lineNum">      90 </span>            : //
+<span class="lineNum">      91 </span>            : // imebraBuffer
+<span class="lineNum">      92 </span>            : //
+<span class="lineNum">      93 </span>            : //
+<span class="lineNum">      94 </span>            : //
+<span class="lineNum">      95 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      97 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     100 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     101 </span>            : //
+<span class="lineNum">     102 </span>            : //
+<span class="lineNum">     103 </span>            : // Buffer's constructor
+<span class="lineNum">     104 </span>            : //
+<span class="lineNum">     105 </span>            : //
+<a name="106"><span class="lineNum">     106 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     107 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     108 </span><span class="lineCov">      22167 : buffer::buffer(const ptr&lt;baseObject&gt;&amp; externalLock, const std::string&amp; defaultType /* =&quot;&quot; */):</span>
+<span class="lineNum">     109 </span>            :         baseObject(externalLock),
+<span class="lineNum">     110 </span>            :                 m_originalBufferPosition(0),
+<span class="lineNum">     111 </span>            :                 m_originalBufferLength(0),
+<span class="lineNum">     112 </span>            :                 m_originalWordLength(1),
+<span class="lineNum">     113 </span>            :                 m_originalEndianType(streamController::lowByteEndian),
+<span class="lineNum">     114 </span><span class="lineCov">      22167 :                 m_version(0)</span>
+<span class="lineNum">     115 </span>            : {
+<span class="lineNum">     116 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::buffer&quot;);
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :         // Set the buffer's type.
+<span class="lineNum">     119 </span>            :         // If the buffer's type is unspecified, then the buffer
+<span class="lineNum">     120 </span>            :         //  type is set to OB
+<span class="lineNum">     121 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     122 </span><span class="lineCov">      22167 :         if(defaultType.length()==2L)</span>
+<span class="lineNum">     123 </span><span class="lineCov">      22165 :                 m_bufferType = defaultType;</span>
+<span class="lineNum">     124 </span>            :         else
+<span class="lineNum">     125 </span><span class="lineCov">          2 :                 m_bufferType = &quot;OB&quot;;</span>
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     128 </span><span class="lineCov">      22167 : }</span>
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     132 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     133 </span>            : //
+<span class="lineNum">     134 </span>            : //
+<span class="lineNum">     135 </span>            : // Buffer's constructor (on demand content)
+<span class="lineNum">     136 </span>            : //
+<span class="lineNum">     137 </span>            : //
+<a name="138"><span class="lineNum">     138 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     139 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     140 </span><span class="lineCov">         13 : buffer::buffer(const ptr&lt;baseObject&gt;&amp; externalLock,</span>
+<span class="lineNum">     141 </span>            :                 const std::string&amp; defaultType,
+<span class="lineNum">     142 </span>            :                 const ptr&lt;baseStream&gt;&amp; originalStream,
+<span class="lineNum">     143 </span>            :                 std::uint32_t bufferPosition,
+<span class="lineNum">     144 </span>            :                 std::uint32_t bufferLength,
+<span class="lineNum">     145 </span>            :                 std::uint32_t wordLength,
+<span class="lineNum">     146 </span>            :                 streamController::tByteOrdering endianType):
+<span class="lineNum">     147 </span>            :         baseObject(externalLock),
+<span class="lineNum">     148 </span>            :                 m_originalStream(originalStream),
+<span class="lineNum">     149 </span>            :                 m_originalBufferPosition(bufferPosition),
+<span class="lineNum">     150 </span>            :                 m_originalBufferLength(bufferLength),
+<span class="lineNum">     151 </span>            :                 m_originalWordLength(wordLength),
+<span class="lineNum">     152 </span>            :                 m_originalEndianType(endianType),
+<span class="lineNum">     153 </span><span class="lineCov">         13 :                 m_version(0)</span>
+<span class="lineNum">     154 </span>            : {
+<span class="lineNum">     155 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::buffer (on demand)&quot;);
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            :         // Set the buffer's type.
+<span class="lineNum">     158 </span>            :         // If the buffer's type is unspecified, then the buffer
+<span class="lineNum">     159 </span>            :         //  type is set to OB
+<span class="lineNum">     160 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     161 </span><span class="lineCov">         13 :         if(defaultType.length()==2L)</span>
+<span class="lineNum">     162 </span><span class="lineCov">         13 :                 m_bufferType = defaultType;</span>
+<span class="lineNum">     163 </span>            :         else
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :                 m_bufferType = &quot;OB&quot;;</span>
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     167 </span><span class="lineCov">         13 : }</span>
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     171 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     172 </span>            : //
+<span class="lineNum">     173 </span>            : //
+<span class="lineNum">     174 </span>            : // Create a data handler and connect it to the buffer
+<span class="lineNum">     175 </span>            : // (raw or normal)
+<span class="lineNum">     176 </span>            : //
+<span class="lineNum">     177 </span>            : //
+<a name="178"><span class="lineNum">     178 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     179 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     180 </span><span class="lineCov">      84138 : ptr&lt;handlers::dataHandler&gt; buffer::getDataHandler(bool bWrite, bool bRaw, std::uint32_t size)</span>
+<span class="lineNum">     181 </span>            : {
+<span class="lineNum">     182 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getDataHandler&quot;);
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            :         // Lock the object
+<span class="lineNum">     185 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     186 </span><span class="lineCov">      84138 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span><span class="lineCov">     168276 :         ptr&lt;memory&gt; localMemory(m_memory);</span>
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :         // If the object must be loaded from the original stream,
+<span class="lineNum">     191 </span>            :         //  then load it...
+<span class="lineNum">     192 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     193 </span><span class="lineCov">      84138 :         if(m_originalStream != 0 &amp;&amp; (localMemory == 0 || localMemory-&gt;empty()) )</span>
+<span class="lineNum">     194 </span>            :         {
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 :                 localMemory = ptr&lt;memory&gt;(memoryPool::getMemoryPool()-&gt;getMemory(m_originalBufferLength));</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :                 if(m_originalBufferLength != 0)</span>
+<span class="lineNum">     197 </span>            :                 {
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :                         ptr&lt;streamReader&gt; reader(new streamReader(m_originalStream, m_originalBufferPosition, m_originalBufferLength));</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :                         std::vector&lt;std::uint8_t&gt; localBuffer;</span>
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :                         localBuffer.resize(m_originalBufferLength);</span>
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :                         reader-&gt;read(&amp;localBuffer[0], m_originalBufferLength);</span>
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :                         if(m_originalWordLength != 0)</span>
+<span class="lineNum">     203 </span>            :                         {
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :                                 reader-&gt;adjustEndian(&amp;localBuffer[0], m_originalWordLength, m_originalEndianType, m_originalBufferLength/m_originalWordLength);</span>
+<span class="lineNum">     205 </span>            :                         }
+<span class="lineNum">     206 </span><span class="lineNoCov">          0 :                         localMemory-&gt;assign(&amp;localBuffer[0], m_originalBufferLength);</span>
+<span class="lineNum">     207 </span>            :                 }
+<span class="lineNum">     208 </span>            :         }
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            :         // Reset the pointer to the data handler
+<span class="lineNum">     211 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     212 </span><span class="lineCov">     168276 :         ptr&lt;handlers::dataHandler&gt; handler;</span>
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            :         // Allocate a raw data handler if bRaw==true
+<span class="lineNum">     215 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     216 </span><span class="lineCov">      84138 :         if(bRaw)</span>
+<span class="lineNum">     217 </span>            :         {
+<span class="lineNum">     218 </span><span class="lineCov">      22829 :                 handler = new handlers::dataHandlerRaw;</span>
+<span class="lineNum">     219 </span>            :         }
+<span class="lineNum">     220 </span>            :         else
+<span class="lineNum">     221 </span>            :         {
+<span class="lineNum">     222 </span>            :                 // Retrieve an Application entity handler
+<span class="lineNum">     223 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     224 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;AE&quot;)</span>
+<span class="lineNum">     225 </span>            :                 {
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerStringAE;</span>
+<span class="lineNum">     227 </span>            :                 }
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :                 // Retrieve an Age string data handler
+<span class="lineNum">     230 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     231 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;AS&quot;)</span>
+<span class="lineNum">     232 </span>            :                 {
+<span class="lineNum">     233 </span><span class="lineCov">          1 :                         handler = new handlers::dataHandlerStringAS;</span>
+<span class="lineNum">     234 </span>            :                 }
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span>            :                 // Retrieve a Code string data handler
+<span class="lineNum">     237 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     238 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;CS&quot;)</span>
+<span class="lineNum">     239 </span>            :                 {
+<span class="lineNum">     240 </span><span class="lineCov">       5968 :                         handler = new handlers::dataHandlerStringCS;</span>
+<span class="lineNum">     241 </span>            :                 }
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :                 // Retrieve a Decimal string data handler
+<span class="lineNum">     244 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     245 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;DS&quot;)</span>
+<span class="lineNum">     246 </span>            :                 {
+<span class="lineNum">     247 </span><span class="lineCov">          1 :                         handler = new handlers::dataHandlerStringDS;</span>
+<span class="lineNum">     248 </span>            :                 }
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            :                 // Retrieve an Integer string data handler
+<span class="lineNum">     251 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     252 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;IS&quot;)</span>
+<span class="lineNum">     253 </span>            :                 {
+<span class="lineNum">     254 </span><span class="lineCov">       4154 :                         handler = new handlers::dataHandlerStringIS;</span>
+<span class="lineNum">     255 </span>            :                 }
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :                 // Retrieve a Long string data handler
+<span class="lineNum">     258 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     259 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;LO&quot;)</span>
+<span class="lineNum">     260 </span>            :                 {
+<span class="lineNum">     261 </span><span class="lineCov">          6 :                         handler = new handlers::dataHandlerStringLO;</span>
+<span class="lineNum">     262 </span>            :                 }
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span>            :                 // Retrieve a Long text data handler
+<span class="lineNum">     265 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     266 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;LT&quot;)</span>
+<span class="lineNum">     267 </span>            :                 {
+<span class="lineNum">     268 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerStringLT;</span>
+<span class="lineNum">     269 </span>            :                 }
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :                 // Retrieve a Person Name data handler
+<span class="lineNum">     272 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     273 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;PN&quot;)</span>
+<span class="lineNum">     274 </span>            :                 {
+<span class="lineNum">     275 </span><span class="lineCov">       3208 :                         handler = new handlers::dataHandlerStringPN;</span>
+<span class="lineNum">     276 </span>            :                 }
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span>            :                 // Retrieve a Short string data handler
+<span class="lineNum">     279 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     280 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;SH&quot;)</span>
+<span class="lineNum">     281 </span>            :                 {
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerStringSH;</span>
+<span class="lineNum">     283 </span>            :                 }
+<span class="lineNum">     284 </span>            : 
+<span class="lineNum">     285 </span>            :                 // Retrieve a Short text data handler
+<span class="lineNum">     286 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     287 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;ST&quot;)</span>
+<span class="lineNum">     288 </span>            :                 {
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerStringST;</span>
+<span class="lineNum">     290 </span>            :                 }
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span>            :                 // Retrieve an Unique Identifier data handler
+<span class="lineNum">     293 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     294 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;UI&quot;)</span>
+<span class="lineNum">     295 </span>            :                 {
+<span class="lineNum">     296 </span><span class="lineCov">       6479 :                         handler = new handlers::dataHandlerStringUI;</span>
+<span class="lineNum">     297 </span>            :                 }
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :                 // Retrieve an Unlimited text data handler
+<span class="lineNum">     300 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     301 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;UT&quot;)</span>
+<span class="lineNum">     302 </span>            :                 {
+<span class="lineNum">     303 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerStringUT;</span>
+<span class="lineNum">     304 </span>            :                 }
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            :                 // Retrieve an object handler
+<span class="lineNum">     307 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     308 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;OB&quot;)</span>
+<span class="lineNum">     309 </span>            :                 {
+<span class="lineNum">     310 </span><span class="lineCov">       2502 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint8_t&gt;;</span>
+<span class="lineNum">     311 </span>            :                 }
+<span class="lineNum">     312 </span>            : 
+<span class="lineNum">     313 </span>            :                 // Retrieve a signed-byte object handler.
+<span class="lineNum">     314 </span>            :                 // Non standard: used by the images handler.
+<span class="lineNum">     315 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     316 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;SB&quot;)</span>
+<span class="lineNum">     317 </span>            :                 {
+<span class="lineNum">     318 </span><span class="lineCov">       1056 :                         handler = new handlers::dataHandlerNumeric&lt;std::int8_t&gt;;</span>
+<span class="lineNum">     319 </span>            :                 }
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span>            :                 // Retrieve an unknown object handler
+<span class="lineNum">     322 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     323 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;UN&quot;)</span>
+<span class="lineNum">     324 </span>            :                 {
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint8_t&gt;;</span>
+<span class="lineNum">     326 </span>            :                 }
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            :                 // Retrieve a WORD handler
+<span class="lineNum">     329 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     330 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;OW&quot;)</span>
+<span class="lineNum">     331 </span>            :                 {
+<span class="lineNum">     332 </span><span class="lineCov">          2 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint16_t&gt;;</span>
+<span class="lineNum">     333 </span>            :                 }
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            :                 // Retrieve a WORD handler (AT)
+<span class="lineNum">     336 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     337 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;AT&quot;)</span>
+<span class="lineNum">     338 </span>            :                 {
+<span class="lineNum">     339 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint16_t&gt;;</span>
+<span class="lineNum">     340 </span>            :                 }
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :                 // Retrieve a float handler
+<span class="lineNum">     343 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     344 </span><span class="lineCov">      61309 :         if(m_bufferType==&quot;FL&quot; || m_bufferType == &quot;OF&quot;)</span>
+<span class="lineNum">     345 </span>            :                 {
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerNumeric&lt;float&gt;;</span>
+<span class="lineNum">     347 </span>            :                 }
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            :                 // Retrieve a double float handler
+<span class="lineNum">     350 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     351 </span><span class="lineCov">      61309 :         if(m_bufferType == &quot;FD&quot; || m_bufferType == &quot;OD&quot;)</span>
+<span class="lineNum">     352 </span>            :                 {
+<span class="lineNum">     353 </span><span class="lineNoCov">          0 :                         handler = new handlers::dataHandlerNumeric&lt;double&gt;;</span>
+<span class="lineNum">     354 </span>            :                 }
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span>            :                 // Retrieve a signed long handler
+<span class="lineNum">     357 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     358 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;SL&quot;)</span>
+<span class="lineNum">     359 </span>            :                 {
+<span class="lineNum">     360 </span><span class="lineCov">       2112 :                         handler = new handlers::dataHandlerNumeric&lt;std::int32_t&gt;;</span>
+<span class="lineNum">     361 </span>            :                 }
+<span class="lineNum">     362 </span>            : 
+<span class="lineNum">     363 </span>            :                 // Retrieve a signed short handler
+<span class="lineNum">     364 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     365 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;SS&quot;)</span>
+<span class="lineNum">     366 </span>            :                 {
+<span class="lineNum">     367 </span><span class="lineCov">       1064 :                         handler = new handlers::dataHandlerNumeric&lt;std::int16_t&gt;;</span>
+<span class="lineNum">     368 </span>            :                 }
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span>            :                 // Retrieve an unsigned long handler
+<span class="lineNum">     371 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     372 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;UL&quot;)</span>
+<span class="lineNum">     373 </span>            :                 {
+<span class="lineNum">     374 </span><span class="lineCov">       2152 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint32_t&gt;;</span>
+<span class="lineNum">     375 </span>            :                 }
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            :                 // Retrieve an unsigned short handler
+<span class="lineNum">     378 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     379 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;US&quot;)</span>
+<span class="lineNum">     380 </span>            :                 {
+<span class="lineNum">     381 </span><span class="lineCov">      32592 :                         handler = new handlers::dataHandlerNumeric&lt;std::uint16_t&gt;;</span>
+<span class="lineNum">     382 </span>            :                 }
+<span class="lineNum">     383 </span>            : 
+<span class="lineNum">     384 </span>            :                 // Retrieve date
+<span class="lineNum">     385 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     386 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;DA&quot;)</span>
+<span class="lineNum">     387 </span>            :                 {
+<span class="lineNum">     388 </span><span class="lineCov">          2 :                         handler = new handlers::dataHandlerDate;</span>
+<span class="lineNum">     389 </span>            :                 }
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span>            :                 // Retrieve date-time
+<span class="lineNum">     392 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     393 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;DT&quot;)</span>
+<span class="lineNum">     394 </span>            :                 {
+<span class="lineNum">     395 </span><span class="lineCov">          8 :                         handler = new handlers::dataHandlerDateTime;</span>
+<span class="lineNum">     396 </span>            :                 }
+<span class="lineNum">     397 </span>            : 
+<span class="lineNum">     398 </span>            :                 // Retrieve time
+<span class="lineNum">     399 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     400 </span><span class="lineCov">      61309 :                 if(m_bufferType==&quot;TM&quot;)</span>
+<span class="lineNum">     401 </span>            :                 {
+<span class="lineNum">     402 </span><span class="lineCov">          2 :                         handler = new handlers::dataHandlerTime;</span>
+<span class="lineNum">     403 </span>            :                 }
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span>            :         } // check bRaw
+<span class="lineNum">     406 </span>            : 
+<span class="lineNum">     407 </span>            :         // If an error occurred during the data handler creation,
+<span class="lineNum">     408 </span>            :         //  then throw an exception
+<span class="lineNum">     409 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     410 </span><span class="lineCov">      84138 :         if(handler == 0)</span>
+<span class="lineNum">     411 </span>            :         {
+<span class="lineNum">     412 </span><span class="lineNoCov">          0 :                 PUNTOEXE_THROW(bufferExceptionUnknownType, &quot;Unknown data type requested&quot;);</span>
+<span class="lineNum">     413 </span>            :         }
+<span class="lineNum">     414 </span>            : 
+<span class="lineNum">     415 </span>            :         //  Connect the handler to this buffer
+<span class="lineNum">     416 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     417 </span><span class="lineCov">      84138 :         if(localMemory == 0)</span>
+<span class="lineNum">     418 </span>            :         {
+<span class="lineNum">     419 </span><span class="lineCov">      22208 :                 localMemory = ptr&lt;memory&gt;(new memory);</span>
+<span class="lineNum">     420 </span>            :         }
+<span class="lineNum">     421 </span><span class="lineCov">     168276 :         ptr&lt;memory&gt; parseMemory(localMemory);</span>
+<span class="lineNum">     422 </span>            : 
+<span class="lineNum">     423 </span>            :         // Set the handler's attributes
+<span class="lineNum">     424 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     425 </span><span class="lineCov">      84138 :         if(bWrite)</span>
+<span class="lineNum">     426 </span>            :         {
+<span class="lineNum">     427 </span><span class="lineCov">      25885 :                 handler-&gt;m_buffer = this;</span>
+<span class="lineNum">     428 </span>            : 
+<span class="lineNum">     429 </span><span class="lineCov">      25885 :                 std::uint32_t currentMemorySize(localMemory-&gt;size());</span>
+<span class="lineNum">     430 </span><span class="lineCov">      25885 :                 std::uint32_t newMemorySize(currentMemorySize);</span>
+<span class="lineNum">     431 </span><span class="lineCov">      25885 :                 if(newMemorySize == 0)</span>
+<span class="lineNum">     432 </span>            :                 {
+<span class="lineNum">     433 </span><span class="lineCov">      22184 :                         newMemorySize = size * handler-&gt;getUnitSize();</span>
+<span class="lineNum">     434 </span>            :                 }
+<span class="lineNum">     435 </span><span class="lineCov">      25885 :                 parseMemory = memoryPool::getMemoryPool()-&gt;getMemory(newMemorySize);</span>
+<span class="lineNum">     436 </span><span class="lineCov">      25885 :                 if(currentMemorySize != 0)</span>
+<span class="lineNum">     437 </span>            :                 {
+<span class="lineNum">     438 </span><span class="lineCov">       3701 :                         parseMemory-&gt;copyFrom(localMemory);</span>
+<span class="lineNum">     439 </span>            :                 }
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span>            :                 // Add writing handlers to the current transaction
+<span class="lineNum">     442 </span>            :                 ///////////////////////////////////////////////////////////
+<span class="lineNum">     443 </span><span class="lineCov">      25885 :                 transactionsManager::addHandlerToTransaction(handler);</span>
+<span class="lineNum">     444 </span>            :         }
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span><span class="lineCov">      84138 :         handler-&gt;m_bufferType = m_bufferType;</span>
+<span class="lineNum">     447 </span><span class="lineCov">      84138 :         handler-&gt;setCharsetsList(&amp;m_charsetsList);</span>
+<span class="lineNum">     448 </span><span class="lineCov">      84138 :         handler-&gt;parseBuffer(parseMemory);</span>
+<span class="lineNum">     449 </span>            : 
+<span class="lineNum">     450 </span>            :         // Return the allocated handler
+<span class="lineNum">     451 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     452 </span><span class="lineCov">     168276 :         return handler;</span>
+<span class="lineNum">     453 </span>            : 
+<span class="lineNum">     454 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     455 </span>            : }
+<span class="lineNum">     456 </span>            : 
+<span class="lineNum">     457 </span>            : 
+<span class="lineNum">     458 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     459 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     460 </span>            : //
+<span class="lineNum">     461 </span>            : //
+<span class="lineNum">     462 </span>            : // Create a data handler and connect it to the buffer
+<span class="lineNum">     463 </span>            : //
+<span class="lineNum">     464 </span>            : //
+<a name="465"><span class="lineNum">     465 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     466 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     467 </span><span class="lineCov">      61309 : ptr&lt;handlers::dataHandler&gt; buffer::getDataHandler(bool bWrite, std::uint32_t size)</span>
+<span class="lineNum">     468 </span>            : {
+<span class="lineNum">     469 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getDataHandler&quot;);
+<span class="lineNum">     470 </span>            : 
+<span class="lineNum">     471 </span><span class="lineCov">      61309 :         return getDataHandler(bWrite, false, size);</span>
+<span class="lineNum">     472 </span>            : 
+<span class="lineNum">     473 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     474 </span>            : }
+<span class="lineNum">     475 </span>            : 
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     478 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     479 </span>            : //
+<span class="lineNum">     480 </span>            : //
+<span class="lineNum">     481 </span>            : // Get a reading stream for the buffer
+<span class="lineNum">     482 </span>            : //
+<span class="lineNum">     483 </span>            : //
+<a name="484"><span class="lineNum">     484 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     485 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     486 </span><span class="lineCov">       1562 : ptr&lt;streamReader&gt; buffer::getStreamReader()</span>
+<span class="lineNum">     487 </span>            : {
+<span class="lineNum">     488 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getStreamReader&quot;);
+<span class="lineNum">     489 </span>            : 
+<span class="lineNum">     490 </span>            :         // Lock the object
+<span class="lineNum">     491 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     492 </span><span class="lineCov">       1562 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     493 </span>            : 
+<span class="lineNum">     494 </span>            :         // If the object must be loaded from the original stream,
+<span class="lineNum">     495 </span>            :         //  then return the original stream
+<span class="lineNum">     496 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     497 </span><span class="lineCov">       1562 :         if(m_originalStream != 0 &amp;&amp; (m_memory == 0 || m_memory-&gt;empty()) )</span>
+<span class="lineNum">     498 </span>            :         {
+<span class="lineNum">     499 </span><span class="lineCov">          6 :                 ptr&lt;streamReader&gt; reader(new streamReader(m_originalStream, m_originalBufferPosition, m_originalBufferLength));</span>
+<span class="lineNum">     500 </span><span class="lineCov">          6 :                 return reader;</span>
+<span class="lineNum">     501 </span>            :         }
+<span class="lineNum">     502 </span>            : 
+<span class="lineNum">     503 </span>            : 
+<span class="lineNum">     504 </span>            :         // Build a stream from the buffer's memory
+<span class="lineNum">     505 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     506 </span><span class="lineCov">       3112 :         ptr&lt;streamReader&gt; reader;</span>
+<span class="lineNum">     507 </span><span class="lineCov">       3112 :         ptr&lt;handlers::dataHandlerRaw&gt; tempHandlerRaw = getDataHandlerRaw(false);</span>
+<span class="lineNum">     508 </span><span class="lineCov">       1556 :     if(tempHandlerRaw != 0 &amp;&amp; tempHandlerRaw-&gt;getSize() != 0)</span>
+<span class="lineNum">     509 </span>            :         {
+<span class="lineNum">     510 </span><span class="lineCov">       1556 :                 ptr&lt;baseStream&gt; localStream(new bufferStream(tempHandlerRaw));</span>
+<span class="lineNum">     511 </span><span class="lineCov">       1556 :                 reader = ptr&lt;streamReader&gt;(new streamReader(localStream));</span>
+<span class="lineNum">     512 </span>            :         }
+<span class="lineNum">     513 </span>            : 
+<span class="lineNum">     514 </span><span class="lineCov">       3118 :         return reader;</span>
+<span class="lineNum">     515 </span>            : 
+<span class="lineNum">     516 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     517 </span>            : }
+<span class="lineNum">     518 </span>            : 
+<span class="lineNum">     519 </span>            : 
+<span class="lineNum">     520 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     521 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     522 </span>            : //
+<span class="lineNum">     523 </span>            : //
+<span class="lineNum">     524 </span>            : // Get a writing stream for the buffer
+<span class="lineNum">     525 </span>            : //
+<span class="lineNum">     526 </span>            : //
+<a name="527"><span class="lineNum">     527 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     528 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     529 </span><span class="lineCov">        780 : ptr&lt;streamWriter&gt; buffer::getStreamWriter()</span>
+<span class="lineNum">     530 </span>            : {
+<span class="lineNum">     531 </span>            :     PUNTOEXE_FUNCTION_START(L&quot;buffer::getStreamWriter&quot;);
+<span class="lineNum">     532 </span>            : 
+<span class="lineNum">     533 </span>            :         // Lock the object
+<span class="lineNum">     534 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     535 </span><span class="lineCov">        780 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     536 </span>            : 
+<span class="lineNum">     537 </span>            :         // Build a stream from the buffer's memory
+<span class="lineNum">     538 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     539 </span><span class="lineCov">       1560 :         ptr&lt;streamWriter&gt; writer;</span>
+<span class="lineNum">     540 </span><span class="lineCov">       1560 :         ptr&lt;handlers::dataHandlerRaw&gt; tempHandlerRaw = getDataHandlerRaw(true);</span>
+<span class="lineNum">     541 </span><span class="lineCov">        780 :         if(tempHandlerRaw != 0)</span>
+<span class="lineNum">     542 </span>            :         {
+<span class="lineNum">     543 </span><span class="lineCov">        780 :                 ptr&lt;baseStream&gt; localStream(new bufferStream(tempHandlerRaw));</span>
+<span class="lineNum">     544 </span><span class="lineCov">        780 :                 writer = ptr&lt;streamWriter&gt;(new streamWriter(localStream, tempHandlerRaw-&gt;getSize()));</span>
+<span class="lineNum">     545 </span>            :         }
+<span class="lineNum">     546 </span>            : 
+<span class="lineNum">     547 </span><span class="lineCov">       1560 :         return writer;</span>
+<span class="lineNum">     548 </span>            : 
+<span class="lineNum">     549 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     550 </span>            : }
+<span class="lineNum">     551 </span>            : 
+<span class="lineNum">     552 </span>            : 
+<span class="lineNum">     553 </span>            : 
+<span class="lineNum">     554 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     555 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     556 </span>            : //
+<span class="lineNum">     557 </span>            : //
+<span class="lineNum">     558 </span>            : // Create a raw data handler and connect it to the buffer
+<span class="lineNum">     559 </span>            : //
+<span class="lineNum">     560 </span>            : //
+<a name="561"><span class="lineNum">     561 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     562 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     563 </span><span class="lineCov">      22829 : ptr&lt;handlers::dataHandlerRaw&gt; buffer::getDataHandlerRaw(bool bWrite, std::uint32_t size)</span>
+<span class="lineNum">     564 </span>            : {
+<span class="lineNum">     565 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getDataHandlerRaw&quot;);
+<span class="lineNum">     566 </span>            : 
+<span class="lineNum">     567 </span><span class="lineCov">      22829 :         ptr&lt;handlers::dataHandler&gt; returnValue = getDataHandler(bWrite, true, size);</span>
+<span class="lineNum">     568 </span><span class="lineCov">      22829 :         return ptr&lt;handlers::dataHandlerRaw&gt;((handlers::dataHandlerRaw*)returnValue.get());</span>
+<span class="lineNum">     569 </span>            : 
+<span class="lineNum">     570 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     571 </span>            : }
+<span class="lineNum">     572 </span>            : 
+<span class="lineNum">     573 </span>            : 
+<span class="lineNum">     574 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     575 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     576 </span>            : //
+<span class="lineNum">     577 </span>            : // Return the buffer's size in bytes
+<span class="lineNum">     578 </span>            : //
+<a name="579"><span class="lineNum">     579 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     580 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     581 </span><span class="lineCov">      17871 : std::uint32_t buffer::getBufferSizeBytes()</span>
+<span class="lineNum">     582 </span>            : {
+<span class="lineNum">     583 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getBufferSizeBytes&quot;);
+<span class="lineNum">     584 </span>            : 
+<span class="lineNum">     585 </span>            :         // Lock the object
+<span class="lineNum">     586 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     587 </span><span class="lineCov">      17871 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     588 </span>            : 
+<span class="lineNum">     589 </span><span class="lineCov">      35742 :         ptr&lt;memory&gt; localMemory(m_memory);</span>
+<span class="lineNum">     590 </span>            : 
+<span class="lineNum">     591 </span>            :         // The buffer has not been loaded yet
+<span class="lineNum">     592 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     593 </span><span class="lineCov">      17871 :         if(m_originalStream != 0 &amp;&amp; (m_memory == 0 || m_memory-&gt;empty()) )</span>
+<span class="lineNum">     594 </span>            :         {
+<span class="lineNum">     595 </span><span class="lineCov">         12 :                 return m_originalBufferLength;</span>
+<span class="lineNum">     596 </span>            :         }
+<span class="lineNum">     597 </span>            : 
+<span class="lineNum">     598 </span>            :         // The buffer has no memory
+<span class="lineNum">     599 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     600 </span><span class="lineCov">      17859 :         if(m_memory == 0)</span>
+<span class="lineNum">     601 </span>            :         {
+<span class="lineNum">     602 </span><span class="lineNoCov">          0 :                 return 0;</span>
+<span class="lineNum">     603 </span>            :         }
+<span class="lineNum">     604 </span>            : 
+<span class="lineNum">     605 </span>            :         // Return the memory's size
+<span class="lineNum">     606 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     607 </span><span class="lineCov">      35730 :         return m_memory-&gt;size();</span>
+<span class="lineNum">     608 </span>            : 
+<span class="lineNum">     609 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     610 </span>            : }
+<span class="lineNum">     611 </span>            : 
+<span class="lineNum">     612 </span>            : 
+<span class="lineNum">     613 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     614 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     615 </span>            : //
+<span class="lineNum">     616 </span>            : // Disconnect an handler from this buffer and copy the
+<span class="lineNum">     617 </span>            : //  data from the handler back to the buffer
+<span class="lineNum">     618 </span>            : //
+<a name="619"><span class="lineNum">     619 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     620 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     621 </span><span class="lineCov">      25862 : void buffer::copyBack(handlers::dataHandler* pDisconnectHandler)</span>
+<span class="lineNum">     622 </span>            : {
+<span class="lineNum">     623 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::copyBack&quot;);
+<span class="lineNum">     624 </span>            : 
+<span class="lineNum">     625 </span>            :         // Lock the object
+<span class="lineNum">     626 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     627 </span><span class="lineCov">      25862 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     628 </span>            : 
+<span class="lineNum">     629 </span>            :         // Get the buffer's content
+<span class="lineNum">     630 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     631 </span><span class="lineCov">      25862 :         m_temporaryMemory = ptr&lt;memory&gt;(new memory);</span>
+<span class="lineNum">     632 </span><span class="lineCov">      25862 :         pDisconnectHandler-&gt;buildBuffer(m_temporaryMemory);</span>
+<span class="lineNum">     633 </span>            : 
+<span class="lineNum">     634 </span>            :         // Update the charsets
+<span class="lineNum">     635 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     636 </span><span class="lineCov">      25862 :         m_temporaryCharsets.clear();</span>
+<span class="lineNum">     637 </span><span class="lineCov">      25862 :     m_temporaryCharsets.insert(m_temporaryCharsets.begin(), m_charsetsList.begin(), m_charsetsList.end());</span>
+<span class="lineNum">     638 </span><span class="lineCov">      51724 :         charsetsList::tCharsetsList charsets;</span>
+<span class="lineNum">     639 </span><span class="lineCov">      25862 :         pDisconnectHandler-&gt;getCharsetsList(&amp;charsets);</span>
+<span class="lineNum">     640 </span><span class="lineCov">      25862 :         charsetsList::updateCharsets(&amp;charsets, &amp;m_temporaryCharsets);</span>
+<span class="lineNum">     641 </span>            : 
+<span class="lineNum">     642 </span>            :         // The buffer's size must be an even number
+<span class="lineNum">     643 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     644 </span><span class="lineCov">      25862 :         std::uint32_t memorySize = m_temporaryMemory-&gt;size();</span>
+<span class="lineNum">     645 </span><span class="lineCov">      25862 :         if((memorySize &amp; 0x1) != 0)</span>
+<span class="lineNum">     646 </span>            :         {
+<span class="lineNum">     647 </span><span class="lineCov">       5178 :                 m_temporaryMemory-&gt;resize(++memorySize);</span>
+<span class="lineNum">     648 </span><span class="lineCov">       5178 :                 *(m_temporaryMemory-&gt;data() + (memorySize - 1)) = pDisconnectHandler-&gt;getPaddingByte();</span>
+<span class="lineNum">     649 </span>            :         }
+<span class="lineNum">     650 </span>            : 
+<span class="lineNum">     651 </span>            :         // Adjust the buffer's type
+<span class="lineNum">     652 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     653 </span><span class="lineCov">      51724 :         m_temporaryBufferType = pDisconnectHandler-&gt;m_bufferType;</span>
+<span class="lineNum">     654 </span>            : 
+<span class="lineNum">     655 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     656 </span><span class="lineCov">      25862 : }</span>
+<span class="lineNum">     657 </span>            : 
+<span class="lineNum">     658 </span>            : 
+<span class="lineNum">     659 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     660 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     661 </span>            : //
+<span class="lineNum">     662 </span>            : // Commit the changes made by copyBack
+<span class="lineNum">     663 </span>            : //
+<a name="664"><span class="lineNum">     664 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     665 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     666 </span><span class="lineCov">      25862 : void buffer::commit()</span>
+<span class="lineNum">     667 </span>            : {
+<span class="lineNum">     668 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::commit&quot;);
+<span class="lineNum">     669 </span>            : 
+<span class="lineNum">     670 </span>            :         // Lock the object
+<span class="lineNum">     671 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     672 </span><span class="lineCov">      25862 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     673 </span>            : 
+<span class="lineNum">     674 </span>            :         // Commit the memory buffer
+<span class="lineNum">     675 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     676 </span><span class="lineCov">      25862 :         m_memory = m_temporaryMemory;</span>
+<span class="lineNum">     677 </span><span class="lineCov">      25862 :         m_temporaryMemory.release();</span>
+<span class="lineNum">     678 </span>            : 
+<span class="lineNum">     679 </span>            :         // Commit the buffer type
+<span class="lineNum">     680 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     681 </span><span class="lineCov">      25862 :         m_bufferType = m_temporaryBufferType;</span>
+<span class="lineNum">     682 </span><span class="lineCov">      25862 :         m_temporaryBufferType.clear();</span>
+<span class="lineNum">     683 </span>            : 
+<span class="lineNum">     684 </span>            :         // Commit the charsets
+<span class="lineNum">     685 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     686 </span><span class="lineCov">      25862 :         m_charsetsList.clear();</span>
+<span class="lineNum">     687 </span><span class="lineCov">      25862 :     m_charsetsList.splice(m_charsetsList.end(), m_temporaryCharsets);</span>
+<span class="lineNum">     688 </span>            : 
+<span class="lineNum">     689 </span>            :         // Increase the buffer's version
+<span class="lineNum">     690 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     691 </span><span class="lineCov">      25862 :         ++m_version;</span>
+<span class="lineNum">     692 </span>            : 
+<span class="lineNum">     693 </span>            :         // The buffer has been updated and the original stream
+<span class="lineNum">     694 </span>            :         //  is still storing the old version. We don't need
+<span class="lineNum">     695 </span>            :         //  the original stream anymore, then release it.
+<span class="lineNum">     696 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     697 </span><span class="lineCov">      51724 :         ptr&lt;baseStream&gt; emptyBaseStream;</span>
+<span class="lineNum">     698 </span><span class="lineCov">      51724 :         m_originalStream = emptyBaseStream;</span>
+<span class="lineNum">     699 </span>            : 
+<span class="lineNum">     700 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     701 </span><span class="lineCov">      25862 : }</span>
+<span class="lineNum">     702 </span>            : 
+<span class="lineNum">     703 </span>            : 
+<span class="lineNum">     704 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     705 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     706 </span>            : //
+<span class="lineNum">     707 </span>            : //
+<span class="lineNum">     708 </span>            : // Returns the data type
+<span class="lineNum">     709 </span>            : //
+<span class="lineNum">     710 </span>            : //
+<a name="711"><span class="lineNum">     711 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     712 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     713 </span><span class="lineCov">     134183 : std::string buffer::getDataType()</span>
+<span class="lineNum">     714 </span>            : {
+<span class="lineNum">     715 </span><span class="lineCov">     134183 :         return std::string(m_bufferType);</span>
+<span class="lineNum">     716 </span>            : }
+<span class="lineNum">     717 </span>            : 
+<span class="lineNum">     718 </span>            : 
+<span class="lineNum">     719 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     720 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     721 </span>            : //
+<span class="lineNum">     722 </span>            : //
+<span class="lineNum">     723 </span>            : // Set the charsets used by the buffer
+<span class="lineNum">     724 </span>            : //
+<span class="lineNum">     725 </span>            : //
+<a name="726"><span class="lineNum">     726 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     727 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     728 </span><span class="lineCov">      27917 : void buffer::setCharsetsList(charsetsList::tCharsetsList* pCharsetsList)</span>
+<span class="lineNum">     729 </span>            : {
+<span class="lineNum">     730 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::setCharsetsList&quot;);
+<span class="lineNum">     731 </span>            : 
+<span class="lineNum">     732 </span><span class="lineCov">      27917 :         lockObject lockAccess(this);</span>
+<span class="lineNum">     733 </span>            : 
+<span class="lineNum">     734 </span><span class="lineCov">      27917 :         m_charsetsList.clear();</span>
+<span class="lineNum">     735 </span><span class="lineCov">      27917 :         charsetsList::updateCharsets(pCharsetsList, &amp;m_charsetsList);</span>
+<span class="lineNum">     736 </span>            : 
+<span class="lineNum">     737 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     738 </span><span class="lineCov">      27917 : }</span>
+<span class="lineNum">     739 </span>            : 
+<span class="lineNum">     740 </span>            : 
+<span class="lineNum">     741 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     742 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     743 </span>            : //
+<span class="lineNum">     744 </span>            : //
+<span class="lineNum">     745 </span>            : // Retrieve the charsets used by the buffer
+<span class="lineNum">     746 </span>            : //
+<span class="lineNum">     747 </span>            : //
+<a name="748"><span class="lineNum">     748 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     749 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     750 </span><span class="lineCov">       7169 : void buffer::getCharsetsList(charsetsList::tCharsetsList* pCharsetsList)</span>
+<span class="lineNum">     751 </span>            : {
+<span class="lineNum">     752 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;buffer::getCharsetsList&quot;);
+<span class="lineNum">     753 </span>            : 
+<span class="lineNum">     754 </span><span class="lineCov">       7169 :     pCharsetsList-&gt;insert(pCharsetsList-&gt;end(), m_charsetsList.begin(), m_charsetsList.end());</span>
+<span class="lineNum">     755 </span>            : 
+<span class="lineNum">     756 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     757 </span><span class="lineCov">       7169 : }</span>
+<span class="lineNum">     758 </span>            : 
+<span class="lineNum">     759 </span>            : 
+<span class="lineNum">     760 </span>            : } // namespace imebra
+<span class="lineNum">     761 </span>            : 
+<span class="lineNum">     762 </span>            : } // namespace puntoexe
+<span class="lineNum">     763 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

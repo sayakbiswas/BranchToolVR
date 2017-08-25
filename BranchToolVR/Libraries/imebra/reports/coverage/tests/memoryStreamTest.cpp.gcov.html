@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - tests/memoryStreamTest.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">tests</a> - memoryStreamTest.cpp<span style="font-size: 80%;"> (source / <a href="memoryStreamTest.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">64</td>
+            <td class="headerCovTableEntry">65</td>
+            <td class="headerCovTableEntryHi">98.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;../library/imebra/include/imebra.h&quot;</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : #include &lt;vector&gt;
+<span class="lineNum">       4 </span>            : #include &lt;array&gt;
+<span class="lineNum">       5 </span>            : #include &lt;stdlib.h&gt;
+<span class="lineNum">       6 </span>            : #include &lt;gtest/gtest.h&gt;
+<span class="lineNum">       7 </span>            : 
+<span class="lineNum">       8 </span>            : namespace puntoexe
+<span class="lineNum">       9 </span>            : {
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : namespace imebra
+<span class="lineNum">      12 </span>            : {
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : namespace tests
+<span class="lineNum">      15 </span>            : {
+<span class="lineNum">      16 </span>            : 
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<span class="lineNum">      18 </span>            : // A buffer initialized to a default data type should use the data type OB
+<span class="lineNum">      19 </span><span class="lineCov">          5 : TEST(memoryStreamTest, test)</span>
+<span class="lineNum">      20 </span>            : {
+<span class="lineNum">      21 </span><span class="lineCov">          1 :         ptr&lt;memory&gt; myMemory(new memory);</span>
+<span class="lineNum">      22 </span><span class="lineCov">          2 :         ptr&lt;baseStream&gt; theMemoryStream(new memoryStream(myMemory));</span>
+<span class="lineNum">      23 </span><span class="lineCov">          2 :         ptr&lt;streamWriter&gt; writer(new streamWriter(theMemoryStream));</span>
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span><span class="lineCov">          2 :         std::vector&lt;std::uint8_t&gt; values(4000);</span>
+<span class="lineNum">      26 </span><span class="lineCov">       4001 :         for(size_t fillValues = 0; fillValues &lt; values.size(); ++fillValues)</span>
+<span class="lineNum">      27 </span>            :         {
+<span class="lineNum">      28 </span><span class="lineCov">       4000 :                 std::uint8_t value =  rand() * 255 / RAND_MAX;</span>
+<span class="lineNum">      29 </span><span class="lineCov">       4000 :                 values[fillValues] = value;</span>
+<span class="lineNum">      30 </span><span class="lineCov">       4000 :                 writer-&gt;write(&amp;value, 1);</span>
+<span class="lineNum">      31 </span>            :         }
+<span class="lineNum">      32 </span><span class="lineCov">          1 :         writer-&gt;flushDataBuffer();</span>
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span><span class="lineCov">          2 :         ptr&lt;streamReader&gt; reader(new streamReader(theMemoryStream));</span>
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span><span class="lineCov">       4001 :         for(size_t readValues = 0; readValues &lt; values.size(); ++readValues)</span>
+<span class="lineNum">      37 </span>            :         {
+<span class="lineNum">      38 </span>            :                 std::uint8_t value;
+<span class="lineNum">      39 </span><span class="lineCov">       4000 :                 reader-&gt;read(&amp;value, 1);</span>
+<span class="lineNum">      40 </span><span class="lineCov">       4000 :         EXPECT_EQ(values[readValues], value);</span>
+<span class="lineNum">      41 </span><span class="lineCov">          1 :         }</span>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">          5 : TEST(memoryStreamTest, testBytes)</span>
+<span class="lineNum">      45 </span>            : {
+<span class="lineNum">      46 </span><span class="lineCov">          1 :         ptr&lt;memory&gt; myMemory(new memory);</span>
+<span class="lineNum">      47 </span><span class="lineCov">          2 :         ptr&lt;baseStream&gt; theMemoryStream(new memoryStream(myMemory));</span>
+<span class="lineNum">      48 </span><span class="lineCov">          2 :         ptr&lt;streamWriter&gt; writer(new streamWriter(theMemoryStream));</span>
+<span class="lineNum">      49 </span><span class="lineCov">          1 :         writer-&gt;m_bJpegTags = true;</span>
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span><span class="lineCov">          2 :         std::vector&lt;std::uint8_t&gt; values(4000);</span>
+<span class="lineNum">      52 </span><span class="lineCov">       4001 :         for(size_t fillValues = 0; fillValues &lt; values.size(); ++fillValues)</span>
+<span class="lineNum">      53 </span>            :         {
+<span class="lineNum">      54 </span><span class="lineCov">       4000 :                 std::uint8_t value =  rand() * 255 / RAND_MAX;</span>
+<span class="lineNum">      55 </span><span class="lineCov">       4000 :                 if(fillValues % 10 == 0)</span>
+<span class="lineNum">      56 </span>            :                 {
+<span class="lineNum">      57 </span><span class="lineCov">        400 :                         value = 0xff;</span>
+<span class="lineNum">      58 </span>            :                 }
+<span class="lineNum">      59 </span><span class="lineCov">       4000 :                 values[fillValues] = value;</span>
+<span class="lineNum">      60 </span><span class="lineCov">       4000 :                 writer-&gt;writeByte(value);</span>
+<span class="lineNum">      61 </span>            :         }
+<span class="lineNum">      62 </span><span class="lineCov">          1 :         writer-&gt;flushDataBuffer();</span>
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span><span class="lineCov">          2 :         ptr&lt;streamReader&gt; reader(new streamReader(theMemoryStream));</span>
+<span class="lineNum">      65 </span><span class="lineCov">          1 :         reader-&gt;m_bJpegTags = true;</span>
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span><span class="lineCov">       4001 :         for(size_t readValues = 0; readValues &lt; values.size(); ++readValues)</span>
+<span class="lineNum">      68 </span>            :         {
+<span class="lineNum">      69 </span><span class="lineCov">       4000 :                 std::uint8_t value(reader-&gt;readByte());</span>
+<span class="lineNum">      70 </span><span class="lineCov">       4000 :         EXPECT_EQ(values[readValues], value);</span>
+<span class="lineNum">      71 </span><span class="lineCov">          1 :         }</span>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span><span class="lineCov">          5 : bool compareStreamContent(std::uint8_t* buffer, size_t streamPosition, size_t numBytes)</span>
+<span class="lineNum">      75 </span>            : {
+<span class="lineNum">      76 </span><span class="lineCov">         55 :     for(size_t position(streamPosition); position != streamPosition + numBytes; ++position)</span>
+<span class="lineNum">      77 </span>            :     {
+<span class="lineNum">      78 </span><span class="lineCov">         50 :         std::uint8_t value = (std::uint8_t)(position &amp; 0xff);</span>
+<span class="lineNum">      79 </span><span class="lineCov">         50 :         if(value != *buffer++)</span>
+<span class="lineNum">      80 </span>            :         {
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :             return false;</span>
+<span class="lineNum">      82 </span>            :         }
+<span class="lineNum">      83 </span>            :     }
+<span class="lineNum">      84 </span><span class="lineCov">          5 :     return true;</span>
+<a name="85"><span class="lineNum">      85 </span>            : }</a>
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span><span class="lineCov">          5 : TEST(memoryStreamTest, testVirtualStream)</span>
+<span class="lineNum">      88 </span>            : {
+<span class="lineNum">      89 </span><span class="lineCov">          1 :     ptr&lt;memory&gt; streamMemory(new memory(4098));</span>
+<span class="lineNum">      90 </span>            : 
+<span class="lineNum">      91 </span>            :     // Fill the memory
+<span class="lineNum">      92 </span><span class="lineCov">          1 :     std::uint8_t* data = streamMemory-&gt;data();</span>
+<span class="lineNum">      93 </span><span class="lineCov">       4099 :     for(size_t fillMemory(0); fillMemory != streamMemory-&gt;size(); ++fillMemory)</span>
+<span class="lineNum">      94 </span>            :     {
+<span class="lineNum">      95 </span><span class="lineCov">       4098 :         data[fillMemory] = (std::uint8_t)(fillMemory &amp; 0xff);</span>
+<span class="lineNum">      96 </span>            :     }
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span><span class="lineCov">          2 :     ptr&lt;memoryStream&gt; myStream(new memoryStream(streamMemory));</span>
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span><span class="lineCov">          2 :     ptr&lt;streamReader&gt; reader(new streamReader(myStream));</span>
+<span class="lineNum">     101 </span><span class="lineCov">          2 :     ptr&lt;streamReader&gt; readerPosition95_20(new streamReader(myStream, 95, 20));</span>
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span><span class="lineCov">          2 :     std::vector&lt;std::uint8_t&gt; buffer10(10);</span>
+<span class="lineNum">     104 </span><span class="lineCov">          1 :     reader-&gt;read(buffer10.data(), buffer10.size());</span>
+<span class="lineNum">     105 </span><span class="lineCov">          1 :     ASSERT_TRUE(compareStreamContent(buffer10.data(), 0, buffer10.size()));</span>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">          1 :     ptr&lt;streamReader&gt; embeddedReader_10_60 = reader-&gt;getReader(60);</span>
+<span class="lineNum">     108 </span><span class="lineCov">          1 :     reader-&gt;read(buffer10.data(), buffer10.size());</span>
+<span class="lineNum">     109 </span><span class="lineCov">          1 :     ASSERT_TRUE(compareStreamContent(buffer10.data(), 70, buffer10.size()));</span>
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span><span class="lineCov">          1 :     embeddedReader_10_60-&gt;read(buffer10.data(), buffer10.size());</span>
+<span class="lineNum">     112 </span><span class="lineCov">          1 :     ASSERT_TRUE(compareStreamContent(buffer10.data(), 10, buffer10.size()));</span>
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span><span class="lineCov">          1 :     readerPosition95_20-&gt;read(buffer10.data(), buffer10.size());</span>
+<span class="lineNum">     115 </span><span class="lineCov">          1 :     ASSERT_TRUE(compareStreamContent(buffer10.data(), 95, buffer10.size()));</span>
+<span class="lineNum">     116 </span><span class="lineCov">          1 :     ptr&lt;streamReader&gt; embeddedReader_105_10 = readerPosition95_20-&gt;getReader(10);</span>
+<span class="lineNum">     117 </span><span class="lineCov">          1 :     embeddedReader_105_10-&gt;read(buffer10.data(), buffer10.size());</span>
+<span class="lineNum">     118 </span><span class="lineCov">          1 :     ASSERT_TRUE(compareStreamContent(buffer10.data(), 105, buffer10.size()));</span>
+<span class="lineNum">     119 </span><span class="lineCov">          3 :     ASSERT_THROW(readerPosition95_20-&gt;read(buffer10.data(), 1), streamExceptionEOF);</span>
+<span class="lineNum">     120 </span>            : }
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            : } // namespace tests
+<span class="lineNum">     124 </span>            : 
+<a name="125"><span class="lineNum">     125 </span>            : } // namespace imebra</a>
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

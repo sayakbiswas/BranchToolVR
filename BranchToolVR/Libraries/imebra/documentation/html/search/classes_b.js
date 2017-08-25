@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['palette',['palette',['../classpuntoexe_1_1imebra_1_1palette.html',1,'puntoexe::imebra']]],
+  ['palettecolortorgb',['PALETTECOLORToRGB',['../classpuntoexe_1_1imebra_1_1transforms_1_1color_transforms_1_1_p_a_l_e_t_t_e_c_o_l_o_r_to_r_g_b.html',1,'puntoexe::imebra::transforms::colorTransforms']]],
+  ['ptr',['ptr',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20buffer_20_3e',['ptr&lt; buffer &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20collectiontype_20_3e',['ptr&lt; collectionType &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20colortransform_20_3e',['ptr&lt; colorTransform &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20data_20_3e',['ptr&lt; data &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20datagroup_20_3e',['ptr&lt; dataGroup &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20directoryrecord_20_3e',['ptr&lt; directoryRecord &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20handlers_3a_3adatahandlerraw_20_3e',['ptr&lt; handlers::dataHandlerRaw &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20image_20_3e',['ptr&lt; image &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20imebra_3a_3apuntoexe_3a_3aimebra_3a_3adrawbitmap_20_3e',['ptr&lt; imebra::puntoexe::imebra::drawBitmap &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3abaseobject_20_3e',['ptr&lt; puntoexe::baseObject &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3abasestream_20_3e',['ptr&lt; puntoexe::baseStream &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3ahuffmantable_20_3e',['ptr&lt; puntoexe::huffmanTable &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3abuffer_20_3e',['ptr&lt; puntoexe::imebra::buffer &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3acodecs_3a_3acodec_20_3e',['ptr&lt; puntoexe::imebra::codecs::codec &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3adataset_20_3e',['ptr&lt; puntoexe::imebra::dataSet &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3adirectoryrecord_20_3e',['ptr&lt; puntoexe::imebra::directoryRecord &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3aimage_20_3e',['ptr&lt; puntoexe::imebra::image &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3alut_20_3e',['ptr&lt; puntoexe::imebra::lut &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3aimebra_3a_3apalette_20_3e',['ptr&lt; puntoexe::imebra::palette &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20puntoexe_3a_3amemory_20_3e',['ptr&lt; puntoexe::memory &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20transform_20_3e',['ptr&lt; transform &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]],
+  ['ptr_3c_20transforms_3a_3atransformschain_20_3e',['ptr&lt; transforms::transformsChain &gt;',['../classpuntoexe_1_1ptr.html',1,'puntoexe']]]
+];

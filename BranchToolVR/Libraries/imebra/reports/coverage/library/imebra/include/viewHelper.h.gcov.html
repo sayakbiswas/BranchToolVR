@@ -1,0 +1,956 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/viewHelper.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - viewHelper.h<span style="font-size: 80%;"> (source / <a href="viewHelper.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file viewHelper.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the a class that help a view or window class to draw
+<span class="lineNum">      50 </span>            :             a dicom image on the screen.
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : This file is not included automatically by imebra.h
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : */
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #if !defined(imebraView_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+<span class="lineNum">      57 </span>            : #define imebraView_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      60 </span>            : #include &quot;image.h&quot;
+<span class="lineNum">      61 </span>            : #include &quot;dataSet.h&quot;
+<span class="lineNum">      62 </span>            : #include &quot;drawBitmap.h&quot;
+<span class="lineNum">      63 </span>            : #include &lt;list&gt;
+<span class="lineNum">      64 </span>            : //#include &lt;memory&gt;
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            : namespace puntoexe
+<span class="lineNum">      67 </span>            : {
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            : namespace imebra
+<span class="lineNum">      70 </span>            : {
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : /// \addtogroup group_helpers
+<span class="lineNum">      73 </span>            : ///
+<span class="lineNum">      74 </span>            : /// @{
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      79 </span>            : /// \internal
+<span class="lineNum">      80 </span>            : /// \brief This class saves the properties of one cursor's
+<span class="lineNum">      81 </span>            : ///        line.
+<span class="lineNum">      82 </span>            : ///
+<a name="83"><span class="lineNum">      83 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      84 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      85 </span><span class="lineNoCov">          0 : class cursorLine: public baseObject</span>
+<span class="lineNum">      86 </span>            : {
+<span class="lineNum">      87 </span>            : public:
+<span class="lineNum">      88 </span>            :         std::int32_t m_x0;
+<span class="lineNum">      89 </span>            :         std::int32_t m_y0;
+<span class="lineNum">      90 </span>            :         std::int32_t m_x1;
+<span class="lineNum">      91 </span>            :         std::int32_t m_y1;
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :         std::uint8_t m_red;
+<span class="lineNum">      94 </span>            :         std::uint8_t m_green;
+<span class="lineNum">      95 </span>            :         std::uint8_t m_blue;
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            :         enum tStyle
+<span class="lineNum">      98 </span>            :         {
+<span class="lineNum">      99 </span>            :                 line,
+<span class="lineNum">     100 </span>            :                 dotted
+<span class="lineNum">     101 </span>            :         } m_style;
+<span class="lineNum">     102 </span>            :         std::uint32_t m_width;
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : public:
+<span class="lineNum">     105 </span>            :         cursorLine();
+<span class="lineNum">     106 </span>            :         cursorLine(
+<span class="lineNum">     107 </span>            :                 std::int32_t x0,
+<span class="lineNum">     108 </span>            :                 std::int32_t y0,
+<span class="lineNum">     109 </span>            :                 std::int32_t x1,
+<span class="lineNum">     110 </span>            :                 std::int32_t y1,
+<span class="lineNum">     111 </span>            :                 std::uint8_t red,
+<span class="lineNum">     112 </span>            :                 std::uint8_t green,
+<span class="lineNum">     113 </span>            :                 std::uint8_t blue,
+<span class="lineNum">     114 </span>            :                 tStyle style,
+<span class="lineNum">     115 </span>            :                 std::uint32_t width);
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            :         cursorLine(const cursorLine&amp; right);
+<span class="lineNum">     118 </span>            :         cursorLine&amp; operator=(const cursorLine&amp; right);
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            : protected:
+<span class="lineNum">     121 </span>            :         void copy(const cursorLine&amp; right);
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            : };
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     127 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            : /// \brief This class can be used as a base class by
+<span class="lineNum">     129 </span>            : ///         the windows that need to display a Dicom image.
+<span class="lineNum">     130 </span>            : ///
+<span class="lineNum">     131 </span>            : /// The is an abstract class, so it cannot be used alone;
+<span class="lineNum">     132 </span>            : /// it provides some functions that the derived class must
+<span class="lineNum">     133 </span>            : ///  always overwrite because they are platform specific.
+<span class="lineNum">     134 </span>            : ///
+<span class="lineNum">     135 </span>            : /// Because this class must always be overwritten its
+<span class="lineNum">     136 </span>            : ///  header is not included in the file imebra.h and
+<span class="lineNum">     137 </span>            : ///  should be included in the header file of the
+<span class="lineNum">     138 </span>            : ///  derived class.
+<span class="lineNum">     139 </span>            : ///
+<span class="lineNum">     140 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     141 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     142 </span>            : class view
+<span class="lineNum">     143 </span>            : {
+<span class="lineNum">     144 </span>            : public:
+<span class="lineNum">     145 </span>            :         /// \brief Costructor.
+<span class="lineNum">     146 </span>            :         ///
+<span class="lineNum">     147 </span>            :         /// Each time a redraw operation is needed this class
+<span class="lineNum">     148 </span>            :         ///  generates a bitmap that is then passed to the
+<span class="lineNum">     149 </span>            :         ///  virtual function drawBitmap().
+<span class="lineNum">     150 </span>            :         ///
+<span class="lineNum">     151 </span>            :         /// The derived class can specify the byte alignment for
+<span class="lineNum">     152 </span>            :         ///  each bitmap's row and the order of the RGB components.
+<span class="lineNum">     153 </span>            :         ///
+<span class="lineNum">     154 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     155 </span>            :     view();
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     158 </span>            :         /// \name Get/Set the image to be show
+<span class="lineNum">     159 </span>            :         ///
+<span class="lineNum">     160 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     161 </span>            :         //@{
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            :         /// \brief Define the image that the window must display
+<span class="lineNum">     164 </span>            :         ///
+<span class="lineNum">     165 </span>            :         /// After the image has been set the function will
+<span class="lineNum">     166 </span>            :         ///  invalidate the window and the operating framework
+<span class="lineNum">     167 </span>            :         ///  will take care of sending a repaint message to it.
+<span class="lineNum">     168 </span>            :         ///
+<span class="lineNum">     169 </span>            :         /// If the view already had an image set with setImage()
+<span class="lineNum">     170 </span>            :         ///  then the function will take one of the following
+<span class="lineNum">     171 </span>            :         ///  actions:
+<span class="lineNum">     172 </span>            :         ///  - if the new image has the same size of the old one
+<span class="lineNum">     173 </span>            :         ///     (in pixels and millimiters), then the new image
+<span class="lineNum">     174 </span>            :         ///     will be displayed in the same position of the old
+<span class="lineNum">     175 </span>            :         ///     one
+<span class="lineNum">     176 </span>            :         ///  - if the new image's size differs from the old one
+<span class="lineNum">     177 </span>            :         ///     then a new position will be calculated for the
+<span class="lineNum">     178 </span>            :         ///     new image so it will fit completly in the window's
+<span class="lineNum">     179 </span>            :         ///     client area
+<span class="lineNum">     180 </span>            :         ///
+<span class="lineNum">     181 </span>            :         /// @param pImage       the image to be displayed in the
+<span class="lineNum">     182 </span>            :         ///                      window, or a null pointer to
+<span class="lineNum">     183 </span>            :         ///                      remove the image from the window
+<span class="lineNum">     184 </span>            :         /// @param pChain       the chain of transforms to be
+<span class="lineNum">     185 </span>            :         ///                      applied to the image before it is
+<span class="lineNum">     186 </span>            :         ///                      displayed. Can be null
+<span class="lineNum">     187 </span>            :         ///
+<span class="lineNum">     188 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span>            :         void setImage(ptr&lt;image&gt; pImage, ptr&lt;transforms::transformsChain&gt; pChain);
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :         /// \brief Retrieve the image currently displayed in the
+<span class="lineNum">     192 </span>            :         ///         window
+<span class="lineNum">     193 </span>            :         ///
+<span class="lineNum">     194 </span>            :         /// @return the image currently displayed in the window
+<span class="lineNum">     195 </span>            :         ///
+<span class="lineNum">     196 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     197 </span>            :         ptr&lt;image&gt; getImage();
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            :         //@}
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     203 </span>            :         /// \name Get/Set the background color
+<span class="lineNum">     204 </span>            :         ///
+<span class="lineNum">     205 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     206 </span>            :         //@{
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span>            :         /// \brief Get the  color used to draw the background
+<span class="lineNum">     209 </span>            :         ///         around the image.
+<span class="lineNum">     210 </span>            :         ///
+<span class="lineNum">     211 </span>            :         /// @param pRed   a pointer to a variable filled with the
+<span class="lineNum">     212 </span>            :         ///                red component of the background
+<span class="lineNum">     213 </span>            :         /// @param pGreen a pointer to a variable filled with the
+<span class="lineNum">     214 </span>            :         ///                green component of the background
+<span class="lineNum">     215 </span>            :         /// @param pBlue  a pointer to a variable filled with the
+<span class="lineNum">     216 </span>            :         ///                blue component of the background
+<span class="lineNum">     217 </span>            :         ///
+<span class="lineNum">     218 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     219 </span>            :         void getBackgroundColor(std::uint8_t* pRed, std::uint8_t* pGreen, std::uint8_t* pBlue);
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span>            :         /// \brief Set the color to be used to draw the
+<span class="lineNum">     222 </span>            :         ///         background around the image.
+<span class="lineNum">     223 </span>            :         ///
+<span class="lineNum">     224 </span>            :         /// @param red   the red component of the background color
+<span class="lineNum">     225 </span>            :         /// @param green the green component of the background
+<span class="lineNum">     226 </span>            :         ///               color
+<span class="lineNum">     227 </span>            :         /// @param blue  the blue component of the background color
+<span class="lineNum">     228 </span>            :         ///
+<span class="lineNum">     229 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     230 </span>            :         void setBackgroundColor(std::uint8_t red, std::uint8_t green, std::uint8_t blue);
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span>            :         //@}
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     236 </span>            :         /// \name Zoom and image's position
+<span class="lineNum">     237 </span>            :         ///
+<span class="lineNum">     238 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     239 </span>            :         //@{
+<span class="lineNum">     240 </span>            : public:
+<span class="lineNum">     241 </span>            :         /// \brief Retrieve the coordinates of the rectangle that
+<span class="lineNum">     242 </span>            :         ///         contains the image.
+<span class="lineNum">     243 </span>            :         ///
+<span class="lineNum">     244 </span>            :         /// When an image is set with setImage() or the zoom factor
+<span class="lineNum">     245 </span>            :         ///  is changed, the rectangle containing the image is
+<span class="lineNum">     246 </span>            :         ///  recalculated by updateImageRect().
+<span class="lineNum">     247 </span>            :         ///
+<span class="lineNum">     248 </span>            :         /// This function retrieves the latest rectangle calculated
+<span class="lineNum">     249 </span>            :         ///  by updateImageRect().
+<span class="lineNum">     250 </span>            :         ///
+<span class="lineNum">     251 </span>            :         /// @param pLeft    a pointer to a variable filled with the
+<span class="lineNum">     252 </span>            :         ///                  horizontal coordinate of the
+<span class="lineNum">     253 </span>            :         ///                  rectangle's top-left corner
+<span class="lineNum">     254 </span>            :         /// @param pTop     a pointer to a variable filled with the
+<span class="lineNum">     255 </span>            :         ///                  vertical coordinate of the rectangle's
+<span class="lineNum">     256 </span>            :         ///                  top-left corner
+<span class="lineNum">     257 </span>            :         /// @param pRight   a pointer to a variable filled with the
+<span class="lineNum">     258 </span>            :         ///                  horizontal coordinate of the
+<span class="lineNum">     259 </span>            :         ///                  rectangle's bottom-right corner
+<span class="lineNum">     260 </span>            :         /// @param pBottom  a pointer to a variable filled with the
+<span class="lineNum">     261 </span>            :         ///                  vertical coordinate of the rectangle's
+<span class="lineNum">     262 </span>            :         ///                  bottom-right corner
+<span class="lineNum">     263 </span>            :         ///
+<span class="lineNum">     264 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     265 </span>            :         void getImageRect(std::int32_t* pLeft, std::int32_t* pTop, std::int32_t* pRight, std::int32_t* pBottom);
+<span class="lineNum">     266 </span>            : 
+<span class="lineNum">     267 </span>            :         /// \brief Retrieve the active zoom factor.
+<span class="lineNum">     268 </span>            :         ///
+<span class="lineNum">     269 </span>            :         /// The zoom factor is used to calculate the rectangle in
+<span class="lineNum">     270 </span>            :         ///  which the image is drawn.
+<span class="lineNum">     271 </span>            :         ///
+<span class="lineNum">     272 </span>            :         /// The zoom factor can be set by one of the following
+<span class="lineNum">     273 </span>            :         ///  functions:
+<span class="lineNum">     274 </span>            :         /// - setZoomFactor()
+<span class="lineNum">     275 </span>            :         /// - setZoomRect()
+<span class="lineNum">     276 </span>            :         /// - zoomInOut()
+<span class="lineNum">     277 </span>            :         ///
+<span class="lineNum">     278 </span>            :         /// Even when the zoom factor has been set to an automatic
+<span class="lineNum">     279 </span>            :         ///  value (-1) this function retrieve the real zoom
+<span class="lineNum">     280 </span>            :         ///  factor.
+<span class="lineNum">     281 </span>            :         ///
+<span class="lineNum">     282 </span>            :         /// @return the active zoom factor.
+<span class="lineNum">     283 </span>            :         ///
+<span class="lineNum">     284 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     285 </span>            :         double getZoomFactor();
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :         /// \brief Set the active zoom factor.
+<span class="lineNum">     288 </span>            :         ///
+<span class="lineNum">     289 </span>            :         /// The active zoom factor uses the display's size and the
+<span class="lineNum">     290 </span>            :         ///  image's size (in millimeters) to calculate the
+<span class="lineNum">     291 </span>            :         ///  rectangle in which the image is displayed.
+<span class="lineNum">     292 </span>            :         ///
+<span class="lineNum">     293 </span>            :         /// When the zoom factor is 1 then the image's size on the
+<span class="lineNum">     294 </span>            :         ///  display will be a one-to-one representation of the
+<span class="lineNum">     295 </span>            :         ///  real image.
+<span class="lineNum">     296 </span>            :         ///
+<span class="lineNum">     297 </span>            :         /// A negative zoom factor enables the automatic zoom which
+<span class="lineNum">     298 </span>            :         ///  displays the whole image in the window.
+<span class="lineNum">     299 </span>            :         /// When the zoom factor is in automatic mode then the
+<span class="lineNum">     300 </span>            :         ///  size of the displayed image changes if the window's
+<span class="lineNum">     301 </span>            :         ///  size is modified.
+<span class="lineNum">     302 </span>            :         ///
+<span class="lineNum">     303 </span>            :         /// This function calls updateImageRect() and updates the
+<span class="lineNum">     304 </span>            :         ///  window.
+<span class="lineNum">     305 </span>            :         ///
+<span class="lineNum">     306 </span>            :         /// @param zoomFactor       the zoom factor to use when
+<span class="lineNum">     307 </span>            :         ///                          drawing the image
+<span class="lineNum">     308 </span>            :         /// @param centerPointX     the horizontal coordinate of
+<span class="lineNum">     309 </span>            :         ///                          the image's pixel that should
+<span class="lineNum">     310 </span>            :         ///                          be centered in the window's
+<span class="lineNum">     311 </span>            :         ///                          area. If -1 then the function
+<span class="lineNum">     312 </span>            :         ///                          calculates its value
+<span class="lineNum">     313 </span>            :         ///                          automatically
+<span class="lineNum">     314 </span>            :         /// @param centerPointY     the vertical coordinate of the
+<span class="lineNum">     315 </span>            :         ///                          image's pixek that should be
+<span class="lineNum">     316 </span>            :         ///                          centered in the window's area.
+<span class="lineNum">     317 </span>            :         ///                          If -1 then the function
+<span class="lineNum">     318 </span>            :         ///                          calculates its value
+<span class="lineNum">     319 </span>            :         ///                          automatically
+<span class="lineNum">     320 </span>            :         ///
+<span class="lineNum">     321 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     322 </span>            :         void setZoomFactor(double zoomFactor, std::int32_t centerPointX=-1, std::int32_t centerPointY=-1);
+<span class="lineNum">     323 </span>            : 
+<span class="lineNum">     324 </span>            :         /// \brief Zoom to the selected image's area.
+<span class="lineNum">     325 </span>            :         ///        The rectangle's coordinates are in image's
+<span class="lineNum">     326 </span>            :         ///         pixels.
+<span class="lineNum">     327 </span>            :         ///
+<span class="lineNum">     328 </span>            :         /// This function calls updateImageRect() and updates the
+<span class="lineNum">     329 </span>            :         ///  window.
+<span class="lineNum">     330 </span>            :         ///
+<span class="lineNum">     331 </span>            :         /// @param left    the horizontal coordinate of the
+<span class="lineNum">     332 </span>            :         ///                 top-left corner of the image's
+<span class="lineNum">     333 </span>            :         ///                 rectangle that must be shown in the
+<span class="lineNum">     334 </span>            :         ///                 window
+<span class="lineNum">     335 </span>            :         /// @param top     the vertical coordinate of the top-left
+<span class="lineNum">     336 </span>            :         ///                 corner of the image's rectangle that
+<span class="lineNum">     337 </span>            :         ///                 must be shown in the window
+<span class="lineNum">     338 </span>            :         /// @param right   the horizontal coordinate of the
+<span class="lineNum">     339 </span>            :         ///                 bottom-right corner of the image's
+<span class="lineNum">     340 </span>            :         ///                 rectangle that must be shown in the
+<span class="lineNum">     341 </span>            :         ///                 window
+<span class="lineNum">     342 </span>            :         /// @param bottom  the vertical coordinate of the
+<span class="lineNum">     343 </span>            :         ///                 bottom-right corner of the image's
+<span class="lineNum">     344 </span>            :         ///                 rectangle that must be shown in the
+<span class="lineNum">     345 </span>            :         ///                 window
+<span class="lineNum">     346 </span>            :         ///
+<span class="lineNum">     347 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     348 </span>            :         void setZoomRect(std::int32_t left, std::int32_t top, std::int32_t right, std::int32_t bottom);
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            :         /// \brief Increase or decrease the zoom factor.
+<span class="lineNum">     351 </span>            :         ///
+<span class="lineNum">     352 </span>            :         /// This function calls updateImageRect() and updates the
+<span class="lineNum">     353 </span>            :         ///  window.
+<span class="lineNum">     354 </span>            :         ///
+<span class="lineNum">     355 </span>            :         /// @param bZoomIn      when true the function increase the
+<span class="lineNum">     356 </span>            :         ///                      zoom factor, otherwise it
+<span class="lineNum">     357 </span>            :         ///                      decreases the zoom factor
+<span class="lineNum">     358 </span>            :         /// @param centerPointX the horizontal coordinate of the
+<span class="lineNum">     359 </span>            :         ///                      image's pixel that must be
+<span class="lineNum">     360 </span>            :         ///                      centered in the window's area
+<span class="lineNum">     361 </span>            :         /// @param centerPointY the vertical coordinate of the
+<span class="lineNum">     362 </span>            :         ///                      image's pixel that must be
+<span class="lineNum">     363 </span>            :         ///                      centered in the window's area
+<span class="lineNum">     364 </span>            :         ///
+<span class="lineNum">     365 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     366 </span>            :         void zoomInOut(bool bZoomIn=true, std::int32_t centerPointX=-1, std::int32_t centerPointY=-1);
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            :         /// \brief Return true if the zoom is in automatic mode.
+<span class="lineNum">     369 </span>            :         ///        The zoom can be set in automatic mode by
+<span class="lineNum">     370 </span>            :         ///         calling setZoomFactor() with a negative zoom
+<span class="lineNum">     371 </span>            :         ///         factor.
+<span class="lineNum">     372 </span>            :         ///
+<span class="lineNum">     373 </span>            :         /// When the zoom is in automatic mode then the size of
+<span class="lineNum">     374 </span>            :         ///  the rectangle that contains the image is modified
+<span class="lineNum">     375 </span>            :         ///  when the window's size is modified.
+<span class="lineNum">     376 </span>            :         ///
+<span class="lineNum">     377 </span>            :         /// @return true if the zoom is in automatic mode, false
+<span class="lineNum">     378 </span>            :         ///          otherwise
+<span class="lineNum">     379 </span>            :         ///
+<span class="lineNum">     380 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     381 </span>            :         bool isAutoZoom();
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            :         void getCenterPoint(std::int32_t* pCenterPointX, std::int32_t* pCenterPointY);
+<span class="lineNum">     384 </span>            :         void setCenterPoint(std::int32_t centerPointX, std::int32_t centerPointY);
+<span class="lineNum">     385 </span>            : 
+<span class="lineNum">     386 </span>            :         //@}
+<span class="lineNum">     387 </span>            : 
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     390 </span>            :         //
+<span class="lineNum">     391 </span>            :         // Cursor
+<span class="lineNum">     392 </span>            :         //
+<span class="lineNum">     393 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     394 </span>            : public:
+<span class="lineNum">     395 </span>            :         // Begin the cursor definition
+<span class="lineNum">     396 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     397 </span>            :         void startCursorDef();
+<span class="lineNum">     398 </span>            : 
+<span class="lineNum">     399 </span>            :         /// End the cursor definition and make the hotspot visible
+<span class="lineNum">     400 </span>            :         ///
+<span class="lineNum">     401 </span>            :         /// @param cursorHotSpotX the current horizontal position 
+<span class="lineNum">     402 </span>            :         ///                        of the mouse, in image's pixels
+<span class="lineNum">     403 </span>            :         /// @param cursorHotSpotY the current vertical position of
+<span class="lineNum">     404 </span>            :         ///                        the mouse, in image's pixels
+<span class="lineNum">     405 </span>            :         ///          
+<span class="lineNum">     406 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     407 </span>            :         void endCursorDef(std::int32_t cursorHotSpotX, std::int32_t cursorHotSpotY);
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span>            :         // End the cursor definition
+<span class="lineNum">     410 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     411 </span>            :         void endCursorDef();
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            :         // Define a cursor's line
+<span class="lineNum">     414 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     415 </span>            :         void defCursorLine(std::int32_t startPointX, std::int32_t startPointY, std::int32_t endPointX, std::int32_t endPointY, std::uint8_t colorRed, std::uint8_t colorGreen, std::uint8_t colorBlue, cursorLine::tStyle style = cursorLine::line, int width=0);
+<span class="lineNum">     416 </span>            : 
+<span class="lineNum">     417 </span>            :         /// \brief Translate the window's horizontal coordinate
+<span class="lineNum">     418 </span>            :         ///         into the image's horizontal coordinate.
+<span class="lineNum">     419 </span>            :         ///
+<span class="lineNum">     420 </span>            :         /// Use in pair with windowPosToImageY to translate the
+<span class="lineNum">     421 </span>            :         ///  horizontal and the vertical coordinates.
+<span class="lineNum">     422 </span>            :         ///
+<span class="lineNum">     423 </span>            :         /// The window's coordinates must include any scroll
+<span class="lineNum">     424 </span>            :         ///  adjustment.
+<span class="lineNum">     425 </span>            :         ///
+<span class="lineNum">     426 </span>            :         /// @param windowPosX  the horizontal window's coordinate,
+<span class="lineNum">     427 </span>            :         ///                     adjusted with the current
+<span class="lineNum">     428 </span>            :         ///                     horizontal scroll position
+<span class="lineNum">     429 </span>            :         /// @return            the image's horizontal coordinate.
+<span class="lineNum">     430 </span>            :         ///                    The returned is always adjusted to
+<span class="lineNum">     431 </span>            :         ///                     the valid range (is never less than
+<span class="lineNum">     432 </span>            :         ///                     0 and never more than the image's
+<span class="lineNum">     433 </span>            :         ///                     horizontal size)
+<span class="lineNum">     434 </span>            :         ///
+<span class="lineNum">     435 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     436 </span>            :         std::int32_t windowPosToImageX(std::int32_t windowPosX);
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span>            :         /// \brief Translate the window's vertical coordinate into
+<span class="lineNum">     439 </span>            :         ///         the image's vertical coordinate.
+<span class="lineNum">     440 </span>            :         ///
+<span class="lineNum">     441 </span>            :         /// Use in pair with windowPosToImageX to translate the
+<span class="lineNum">     442 </span>            :         ///  horizontal and the vertical coordinates.
+<span class="lineNum">     443 </span>            :         ///
+<span class="lineNum">     444 </span>            :         /// The window's coordinates must include any scroll adjustment.
+<span class="lineNum">     445 </span>            :         ///
+<span class="lineNum">     446 </span>            :         /// @param windowPosY  the vertical window's coordinate,
+<span class="lineNum">     447 </span>            :         ///                     adjusted with the current vertical
+<span class="lineNum">     448 </span>            :         ///                     scroll position
+<span class="lineNum">     449 </span>            :         /// @return            the image's vertical coordinate.
+<span class="lineNum">     450 </span>            :         ///                    The returned is always adjusted to the
+<span class="lineNum">     451 </span>            :         ///                     valid range (is never less than 0 and
+<span class="lineNum">     452 </span>            :         ///                     never more than the image's vertical
+<span class="lineNum">     453 </span>            :         ///                     size)
+<span class="lineNum">     454 </span>            :         ///
+<span class="lineNum">     455 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     456 </span>            :         std::int32_t windowPosToImageY(std::int32_t windowPosY);
+<span class="lineNum">     457 </span>            : 
+<span class="lineNum">     458 </span>            :         /// \brief Return a pixel's horizontal position in
+<span class="lineNum">     459 </span>            :         ///         millimeters.
+<span class="lineNum">     460 </span>            :         ///
+<span class="lineNum">     461 </span>            :         /// @param imagePosX   the horizontal pixel position for
+<span class="lineNum">     462 </span>            :         ///                     which the position in millimeters
+<span class="lineNum">     463 </span>            :         ///                     has to be retrieved
+<span class="lineNum">     464 </span>            :         /// @return the horizontal position of the specified pixel,
+<span class="lineNum">     465 </span>            :         ///          in millimeters
+<span class="lineNum">     466 </span>            :         ///
+<span class="lineNum">     467 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     468 </span>            :         double imagePosToMillimitersX(std::int32_t imagePosX);
+<span class="lineNum">     469 </span>            : 
+<span class="lineNum">     470 </span>            :         /// \brief Return a pixel's vertical position in
+<span class="lineNum">     471 </span>            :         ///         millimeters.
+<span class="lineNum">     472 </span>            :         ///
+<span class="lineNum">     473 </span>            :         /// @param imagePosY   the vertical pixel position for
+<span class="lineNum">     474 </span>            :         ///                     which the position in millimeters
+<span class="lineNum">     475 </span>            :         ///                     has to be retrieved
+<span class="lineNum">     476 </span>            :         /// @return the vertical position of the specified pixel,
+<span class="lineNum">     477 </span>            :         ///          in millimeters
+<span class="lineNum">     478 </span>            :         ///
+<span class="lineNum">     479 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     480 </span>            :         double imagePosToMillimitersY(std::int32_t imagePosY);
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span>            :         /// \brief Return the horizontal pixel's index that
+<span class="lineNum">     483 </span>            :         ///         lays at the specified horizontal position, in
+<span class="lineNum">     484 </span>            :         ///         millimeters
+<span class="lineNum">     485 </span>            :         ///
+<span class="lineNum">     486 </span>            :         /// @param millimitersX the horizontal position in
+<span class="lineNum">     487 </span>            :         ///                      millimiters
+<span class="lineNum">     488 </span>            :         /// @return the index of the pixel that lays at the
+<span class="lineNum">     489 </span>            :         ///          specified position
+<span class="lineNum">     490 </span>            :         ///
+<span class="lineNum">     491 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     492 </span>            :         std::int32_t millimitersToImagePosX(double millimitersX);
+<span class="lineNum">     493 </span>            : 
+<span class="lineNum">     494 </span>            :         /// \brief Return the vertical pixel's index that
+<span class="lineNum">     495 </span>            :         ///         lays at the specified vertical position, in
+<span class="lineNum">     496 </span>            :         ///         millimeters
+<span class="lineNum">     497 </span>            :         ///
+<span class="lineNum">     498 </span>            :         /// @param millimitersY the vertical position in
+<span class="lineNum">     499 </span>            :         ///                      millimiters
+<span class="lineNum">     500 </span>            :         /// @return the index of the pixel that lays at the
+<span class="lineNum">     501 </span>            :         ///          specified position
+<span class="lineNum">     502 </span>            :         ///
+<span class="lineNum">     503 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     504 </span>            :         std::int32_t millimitersToImagePosY(double millimitersY);
+<span class="lineNum">     505 </span>            : 
+<span class="lineNum">     506 </span>            :         // This function must be called by your window class after
+<span class="lineNum">     507 </span>            :         //  the window's size has been updated or when some image's
+<span class="lineNum">     508 </span>            :         //  parameters have been changed
+<span class="lineNum">     509 </span>            :         //
+<span class="lineNum">     510 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     511 </span>            :         void updateImageRect(std::int32_t centerPointX, std::int32_t centerPointY);
+<span class="lineNum">     512 </span>            : 
+<span class="lineNum">     513 </span>            :         /// \brief Draw the image.
+<span class="lineNum">     514 </span>            :         ///
+<span class="lineNum">     515 </span>            :         /// @param pDeviceContext   the pointer or the handle of
+<span class="lineNum">     516 </span>            :         ///                          the device context that
+<span class="lineNum">     517 </span>            :         ///                          must be used. This value is
+<span class="lineNum">     518 </span>            :         ///                          passed directly to the
+<span class="lineNum">     519 </span>            :         ///                          functions called by this one:
+<span class="lineNum">     520 </span>            :         ///                          - drawRectangle()
+<span class="lineNum">     521 </span>            :         ///                          - drawBitmap()
+<span class="lineNum">     522 </span>            :         ///                          - drawCursorLine()
+<span class="lineNum">     523 </span>            :         /// @param left             the left side of the visible
+<span class="lineNum">     524 </span>            :         ///                          rectangle
+<span class="lineNum">     525 </span>            :         /// @param top              the top side of the visible
+<span class="lineNum">     526 </span>            :         ///                          rectangle
+<span class="lineNum">     527 </span>            :         /// @param right            the right side of the visible
+<span class="lineNum">     528 </span>            :         ///                          rectangle
+<span class="lineNum">     529 </span>            :         /// @param bottom           the bottom side of the visible
+<span class="lineNum">     530 </span>            :         ///                          rectangle
+<span class="lineNum">     531 </span>            :         ///
+<span class="lineNum">     532 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     533 </span>            :         template &lt;tDrawBitmapType drawBitmapType, int rowAlignBytes&gt;
+<span class="lineNum">     534 </span>            :         void draw(void* pDeviceContext, std::int32_t left, std::int32_t top, std::int32_t right, std::int32_t bottom)
+<span class="lineNum">     535 </span>            :         {
+<span class="lineNum">     536 </span>            :             // Check if the image is visible in the specified area
+<span class="lineNum">     537 </span>            :             ///////////////////////////////////////////////////////////
+<span class="lineNum">     538 </span>            :             if(m_originalImage == 0 ||
+<span class="lineNum">     539 </span>            :                     left &gt;= m_rightPosition ||
+<span class="lineNum">     540 </span>            :                     top &gt;= m_bottomPosition ||
+<span class="lineNum">     541 </span>            :                     right &lt;= m_leftPosition ||
+<span class="lineNum">     542 </span>            :                     bottom &lt;= m_topPosition)
+<span class="lineNum">     543 </span>            :             {
+<span class="lineNum">     544 </span>            :                     drawRectangle(pDeviceContext, left, top, right, bottom, m_backgroundRed, m_backgroundGreen, m_backgroundBlue);
+<span class="lineNum">     545 </span>            :                     return;
+<span class="lineNum">     546 </span>            :             }
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            :             if(left==right || top==bottom)
+<span class="lineNum">     549 </span>            :             {
+<span class="lineNum">     550 </span>            :                     return;
+<span class="lineNum">     551 </span>            :             }
+<span class="lineNum">     552 </span>            : 
+<span class="lineNum">     553 </span>            :             // Adjust the area to be drawn
+<span class="lineNum">     554 </span>            :             ///////////////////////////////////////////////////////////
+<span class="lineNum">     555 </span>            :             std::int32_t bitmapLeft   = left;
+<span class="lineNum">     556 </span>            :             std::int32_t bitmapTop    = top;
+<span class="lineNum">     557 </span>            :             std::int32_t bitmapRight  = right;
+<span class="lineNum">     558 </span>            :             std::int32_t bitmapBottom = bottom;
+<span class="lineNum">     559 </span>            : 
+<span class="lineNum">     560 </span>            :             if(bitmapLeft &lt; m_leftPosition) bitmapLeft = m_leftPosition;
+<span class="lineNum">     561 </span>            :             if(bitmapTop &lt; m_topPosition) bitmapTop = m_topPosition;
+<span class="lineNum">     562 </span>            :             if(bitmapRight &gt; m_rightPosition) bitmapRight = m_rightPosition;
+<span class="lineNum">     563 </span>            :             if(bitmapBottom &gt; m_bottomPosition) bitmapBottom = m_bottomPosition;
+<span class="lineNum">     564 </span>            : 
+<span class="lineNum">     565 </span>            : 
+<span class="lineNum">     566 </span>            :             if(bitmapRight &gt; bitmapLeft &amp;&amp; bitmapBottom &gt; bitmapTop)
+<span class="lineNum">     567 </span>            :             {
+<span class="lineNum">     568 </span>            :                 std::uint32_t bitmapRowLength = ((3 * (bitmapRight - bitmapLeft) + rowAlignBytes - 1) / rowAlignBytes) * rowAlignBytes;
+<span class="lineNum">     569 </span>            :                                 if(
+<span class="lineNum">     570 </span>            :                                         m_bUpdateImage ||
+<span class="lineNum">     571 </span>            :                     m_cachedWidth != (std::uint32_t)(m_rightPosition - m_leftPosition) ||
+<span class="lineNum">     572 </span>            :                     m_cachedHeight != (std::uint32_t)(m_bottomPosition - m_topPosition) ||
+<span class="lineNum">     573 </span>            :                                         m_cachedVisibleLeft != (bitmapLeft - m_leftPosition) ||
+<span class="lineNum">     574 </span>            :                                         m_cachedVisibleTop != (bitmapTop - m_topPosition) ||
+<span class="lineNum">     575 </span>            :                                         m_cachedVisibleRight != (bitmapRight - m_leftPosition) ||
+<span class="lineNum">     576 </span>            :                                         m_cachedVisibleBottom != (bitmapBottom - m_topPosition) ||
+<span class="lineNum">     577 </span>            :                                         m_bitmapMemory == 0)
+<span class="lineNum">     578 </span>            :                                 {
+<span class="lineNum">     579 </span>            :                                         m_cachedWidth = m_rightPosition - m_leftPosition;
+<span class="lineNum">     580 </span>            :                                         m_cachedHeight = m_bottomPosition - m_topPosition;
+<span class="lineNum">     581 </span>            :                                         m_cachedVisibleLeft = bitmapLeft - m_leftPosition;
+<span class="lineNum">     582 </span>            :                                         m_cachedVisibleTop = bitmapTop - m_topPosition;
+<span class="lineNum">     583 </span>            :                                         m_cachedVisibleRight = bitmapRight - m_leftPosition;
+<span class="lineNum">     584 </span>            :                                         m_cachedVisibleBottom = bitmapBottom - m_topPosition;
+<span class="lineNum">     585 </span>            :                                         m_bUpdateImage = false;
+<span class="lineNum">     586 </span>            :                                         m_bitmapMemory = m_drawBitmap-&gt;getBitmap&lt;drawBitmapType, rowAlignBytes&gt;(m_cachedWidth, m_cachedHeight,
+<span class="lineNum">     587 </span>            :                         m_cachedVisibleLeft, m_cachedVisibleTop, m_cachedVisibleRight, m_cachedVisibleBottom, m_bitmapMemory);
+<span class="lineNum">     588 </span>            :                                 }
+<span class="lineNum">     589 </span>            :                 drawBitmap(pDeviceContext, bitmapLeft, bitmapTop, bitmapRight, bitmapBottom, bitmapRowLength, m_bitmapMemory-&gt;data());
+<span class="lineNum">     590 </span>            :             }
+<span class="lineNum">     591 </span>            : 
+<span class="lineNum">     592 </span>            :             if(top &lt; m_topPosition)
+<span class="lineNum">     593 </span>            :             {
+<span class="lineNum">     594 </span>            :                     drawRectangle(pDeviceContext, left, top, right, m_topPosition, m_backgroundRed, m_backgroundGreen, m_backgroundBlue);
+<span class="lineNum">     595 </span>            :             }
+<span class="lineNum">     596 </span>            : 
+<span class="lineNum">     597 </span>            :             if(bottom &gt; m_bottomPosition)
+<span class="lineNum">     598 </span>            :             {
+<span class="lineNum">     599 </span>            :                     drawRectangle(pDeviceContext, left, m_bottomPosition, right, bottom, m_backgroundRed, m_backgroundGreen, m_backgroundBlue);
+<span class="lineNum">     600 </span>            :             }
+<span class="lineNum">     601 </span>            : 
+<span class="lineNum">     602 </span>            :             if(left &lt; m_leftPosition)
+<span class="lineNum">     603 </span>            :             {
+<span class="lineNum">     604 </span>            :                     drawRectangle(pDeviceContext, left, top, m_leftPosition, bottom, m_backgroundRed, m_backgroundGreen, m_backgroundBlue);
+<span class="lineNum">     605 </span>            :             }
+<span class="lineNum">     606 </span>            : 
+<span class="lineNum">     607 </span>            :             if(right &gt; m_rightPosition)
+<span class="lineNum">     608 </span>            :             {
+<span class="lineNum">     609 </span>            :                     drawRectangle(pDeviceContext, m_rightPosition, top, right, bottom, m_backgroundRed, m_backgroundGreen, m_backgroundBlue);
+<span class="lineNum">     610 </span>            :             }
+<span class="lineNum">     611 </span>            : 
+<span class="lineNum">     612 </span>            :         }
+<span class="lineNum">     613 </span>            : 
+<span class="lineNum">     614 </span>            :         void drawCursor(void* pDeviceContext);
+<span class="lineNum">     615 </span>            : 
+<span class="lineNum">     616 </span>            : 
+<span class="lineNum">     617 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     618 </span>            :         /// \name Pure virtual functions
+<span class="lineNum">     619 </span>            :         ///
+<span class="lineNum">     620 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     621 </span>            :         //@{
+<span class="lineNum">     622 </span>            : public:
+<span class="lineNum">     623 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     624 </span>            :         ///         retrieve the size of the window's client area,
+<span class="lineNum">     625 </span>            :         ///         in screen's pixels.
+<span class="lineNum">     626 </span>            :         ///
+<span class="lineNum">     627 </span>            :         /// @param pSizeX    a pointer to the value that the
+<span class="lineNum">     628 </span>            :         ///                   function fills with the window's
+<span class="lineNum">     629 </span>            :         ///                   width, in pixels
+<span class="lineNum">     630 </span>            :         /// @param pSizeY    a pointer to the value that the
+<span class="lineNum">     631 </span>            :         ///                   function fills with the window's
+<span class="lineNum">     632 </span>            :         ///                   height, in pixels
+<span class="lineNum">     633 </span>            :         ///
+<span class="lineNum">     634 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     635 </span>            :         virtual void getWindowSize(std::uint32_t* pSizeX, std::uint32_t* pSizeY) = 0;
+<span class="lineNum">     636 </span>            : 
+<span class="lineNum">     637 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     638 </span>            :         ///         retrieves the total virtual size of the window.
+<span class="lineNum">     639 </span>            :         ///
+<span class="lineNum">     640 </span>            :         /// The virtual size is the size managed by the window's
+<span class="lineNum">     641 </span>            :         ///  scroll bars, in screen's pixels.
+<span class="lineNum">     642 </span>            :         ///
+<span class="lineNum">     643 </span>            :         /// @param pScrollSizeX a pointer to the value that the
+<span class="lineNum">     644 </span>            :         ///                      function fills with the window's
+<span class="lineNum">     645 </span>            :         ///                      virtual width, in pixels
+<span class="lineNum">     646 </span>            :         /// @param pScrollSizeY a pointer to the value that the
+<span class="lineNum">     647 </span>            :         ///                      function fills with the window's
+<span class="lineNum">     648 </span>            :         ///                      virtual height, in pixels
+<span class="lineNum">     649 </span>            :         ///
+<span class="lineNum">     650 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     651 </span>            :         virtual void getScrollSize(std::uint32_t* pScrollSizeX, std::uint32_t* pScrollSizeY) = 0;
+<span class="lineNum">     652 </span>            : 
+<span class="lineNum">     653 </span>            :         /// \brief Overwrite this method with a function that sets
+<span class="lineNum">     654 </span>            :         ///         the window's virtual size.
+<span class="lineNum">     655 </span>            :         ///
+<span class="lineNum">     656 </span>            :         /// The virtual size is the size managed by the window's
+<span class="lineNum">     657 </span>            :         ///  scroll bars, in screen's pixels.
+<span class="lineNum">     658 </span>            :         ///
+<span class="lineNum">     659 </span>            :         /// @param newScrollSizeX  the virtual window's width that
+<span class="lineNum">     660 </span>            :         ///                         must be set
+<span class="lineNum">     661 </span>            :         /// @param newScrollSizeY  the virtual window's height that
+<span class="lineNum">     662 </span>            :         ///                         must be set
+<span class="lineNum">     663 </span>            :         /// @param bInvalidate     is true if the function must
+<span class="lineNum">     664 </span>            :         ///                         invalidate the window after
+<span class="lineNum">     665 </span>            :         ///                         changing the virtual size,
+<span class="lineNum">     666 </span>            :         ///                         false otherwise.
+<span class="lineNum">     667 </span>            :         ///                         Note that the background
+<span class="lineNum">     668 </span>            :         ///                          doesn't need to be invalidated
+<span class="lineNum">     669 </span>            :         ///
+<span class="lineNum">     670 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     671 </span>            :         virtual void setScrollSize(std::uint32_t newScrollSizeX, std::uint32_t newScrollSizeY, bool bInvalidate) = 0;
+<span class="lineNum">     672 </span>            : 
+<span class="lineNum">     673 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     674 </span>            :         ///         retrieves the current position in the scroll
+<span class="lineNum">     675 </span>            :         ///         bars, in screen's pixels.
+<span class="lineNum">     676 </span>            :         ///
+<span class="lineNum">     677 </span>            :         /// @param pScrollX    a pointer to a variable that the
+<span class="lineNum">     678 </span>            :         ///                     function must fill with the
+<span class="lineNum">     679 </span>            :         ///                     horizontal scroll bar's position
+<span class="lineNum">     680 </span>            :         /// @param pScrollY    a pointer to a variable that the
+<span class="lineNum">     681 </span>            :         ///                     function must fill with the
+<span class="lineNum">     682 </span>            :         ///                     vertical scroll bar's position
+<span class="lineNum">     683 </span>            :         ///
+<span class="lineNum">     684 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     685 </span>            :         virtual void getScrollPosition(std::int32_t* pScrollX, std::int32_t* pScrollY) = 0;
+<span class="lineNum">     686 </span>            : 
+<span class="lineNum">     687 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     688 </span>            :         ///         changes the position in the scroll bars, in
+<span class="lineNum">     689 </span>            :         ///         screen's pixels.
+<span class="lineNum">     690 </span>            :         ///
+<span class="lineNum">     691 </span>            :         /// @param scrollX  the new position for the horizontal
+<span class="lineNum">     692 </span>            :         ///                  scroll bar, in pixels
+<span class="lineNum">     693 </span>            :         /// @param scrollY  the new position for the vertical
+<span class="lineNum">     694 </span>            :         ///                  scroll bar, in pixels
+<span class="lineNum">     695 </span>            :         ///
+<span class="lineNum">     696 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     697 </span>            :         virtual void setScrollPosition(std::int32_t scrollX, std::int32_t scrollY)=0;
+<span class="lineNum">     698 </span>            : 
+<span class="lineNum">     699 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     700 </span>            :         ///         draws a rectangle on a device context.
+<span class="lineNum">     701 </span>            :         ///
+<span class="lineNum">     702 </span>            :         /// @param pDeviceContext a pointer to a device context
+<span class="lineNum">     703 </span>            :         ///                        class. Is the same pointer
+<span class="lineNum">     704 </span>            :         ///                        that your application passes
+<span class="lineNum">     705 </span>            :         ///                        to the draw() or the
+<span class="lineNum">     706 </span>            :         ///                        drawCursor() functions.
+<span class="lineNum">     707 </span>            :         /// @param left           the horizontal coordinate of the
+<span class="lineNum">     708 </span>            :         ///                        rectangle's top-left corner
+<span class="lineNum">     709 </span>            :         /// @param top            the vertical coordinate of the
+<span class="lineNum">     710 </span>            :         ///                        rectangle's top-left corner
+<span class="lineNum">     711 </span>            :         /// @param right          the horizontal coordinate of the
+<span class="lineNum">     712 </span>            :         ///                        rectangle's bottom-right corner
+<span class="lineNum">     713 </span>            :         /// @param bottom         the vertical coordinate of the
+<span class="lineNum">     714 </span>            :         ///                        rectangle's bottom-right corner
+<span class="lineNum">     715 </span>            :         /// @param colorRed       the red component of the
+<span class="lineNum">     716 </span>            :         ///                        rectangle's color
+<span class="lineNum">     717 </span>            :         /// @param colorGreen     the green component of the
+<span class="lineNum">     718 </span>            :         ///                        rectangle's color
+<span class="lineNum">     719 </span>            :         /// @param colorBlue      the blue component of the
+<span class="lineNum">     720 </span>            :         ///                        rectangle's color
+<span class="lineNum">     721 </span>            :         ///
+<span class="lineNum">     722 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     723 </span>            :         virtual void drawRectangle(void* pDeviceContext, std::int32_t left, std::int32_t top, std::int32_t right, std::int32_t bottom, std::uint8_t colorRed, std::uint8_t colorGreen, std::uint8_t colorBlue)=0;
+<span class="lineNum">     724 </span>            : 
+<span class="lineNum">     725 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     726 </span>            :         ///         draws a bitmap on the screen in the specified
+<span class="lineNum">     727 </span>            :         ///         window's rectangle.
+<span class="lineNum">     728 </span>            :         ///
+<span class="lineNum">     729 </span>            :         /// @param pDeviceContext the device context to use for
+<span class="lineNum">     730 </span>            :         ///                        the drawing. This is the same
+<span class="lineNum">     731 </span>            :         ///                        value that your application
+<span class="lineNum">     732 </span>            :         ///                        passes to the draw() function
+<span class="lineNum">     733 </span>            :         /// @param left           the horizontal coordinate of the
+<span class="lineNum">     734 </span>            :         ///                        top-left corner of the rectangle
+<span class="lineNum">     735 </span>            :         ///                        that contains the bitmap
+<span class="lineNum">     736 </span>            :         /// @param top            the vertical coordinate of the
+<span class="lineNum">     737 </span>            :         ///                        top-left corner of the rectangle
+<span class="lineNum">     738 </span>            :         ///                        that contains the bitmap
+<span class="lineNum">     739 </span>            :         /// @param right          the horizontal coordinate of the
+<span class="lineNum">     740 </span>            :         ///                        bottom-right corner of the
+<span class="lineNum">     741 </span>            :         ///                        rectangle that contains the
+<span class="lineNum">     742 </span>            :         ///                        bitmap
+<span class="lineNum">     743 </span>            :         /// @param bottom         the vertical coordinate of the
+<span class="lineNum">     744 </span>            :         ///                        bottom-right corner of the
+<span class="lineNum">     745 </span>            :         ///                        rectangle that contains the
+<span class="lineNum">     746 </span>            :         ///                        bitmap
+<span class="lineNum">     747 </span>            :         /// @param bufferRowSizeBytes the size of a bitmap's row,
+<span class="lineNum">     748 </span>            :         ///                        in bytes
+<span class="lineNum">     749 </span>            :         /// @param pBuffer        a pointer to an array if bytes
+<span class="lineNum">     750 </span>            :         ///                        representing the bitmap.
+<span class="lineNum">     751 </span>            :         ///
+<span class="lineNum">     752 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     753 </span>            :         virtual void drawBitmap(void* pDeviceContext, std::int32_t left, std::int32_t top, std::int32_t right, std::int32_t bottom, std::uint32_t bufferRowSizeBytes, std::uint8_t* pBuffer)=0;
+<span class="lineNum">     754 </span>            : 
+<span class="lineNum">     755 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     756 </span>            :         ///         draws a line on the specified device context.
+<span class="lineNum">     757 </span>            :         ///
+<span class="lineNum">     758 </span>            :         /// @param pDeviceContext the device context to use for
+<span class="lineNum">     759 </span>            :         ///                        the drawing. This is the same
+<span class="lineNum">     760 </span>            :         ///                        value that your application
+<span class="lineNum">     761 </span>            :         ///                        passes to the drawCursor()
+<span class="lineNum">     762 </span>            :         ///                        function
+<span class="lineNum">     763 </span>            :         /// @param startPointX    the horizontal coordinate of the
+<span class="lineNum">     764 </span>            :         ///                        line's starting point, in
+<span class="lineNum">     765 </span>            :         ///                        pixels
+<span class="lineNum">     766 </span>            :         /// @param startPointY    the vertical coordinate of the
+<span class="lineNum">     767 </span>            :         ///                        line's starting point, in
+<span class="lineNum">     768 </span>            :         ///                        pixels
+<span class="lineNum">     769 </span>            :         /// @param endPointX      the horizontal coordinate of the
+<span class="lineNum">     770 </span>            :         ///                        line's ending point, in
+<span class="lineNum">     771 </span>            :         ///                        pixels
+<span class="lineNum">     772 </span>            :         /// @param endPointY      the vertical coordinate of the
+<span class="lineNum">     773 </span>            :         ///                        line's ending point, in
+<span class="lineNum">     774 </span>            :         ///                        pixels
+<span class="lineNum">     775 </span>            :         /// @param colorRed       the red component of the
+<span class="lineNum">     776 </span>            :         ///                        line's color
+<span class="lineNum">     777 </span>            :         /// @param colorGreen     the green component of the
+<span class="lineNum">     778 </span>            :         ///                        line's color
+<span class="lineNum">     779 </span>            :         /// @param colorBlue      the blue component of the
+<span class="lineNum">     780 </span>            :         ///                        line's color
+<span class="lineNum">     781 </span>            :         /// @param style          the line's style. It can be one
+<span class="lineNum">     782 </span>            :         ///                        of the following values:
+<span class="lineNum">     783 </span>            :         ///                        - cursorLine::line
+<span class="lineNum">     784 </span>            :         ///                        - cursorLine::dotted
+<span class="lineNum">     785 </span>            :         /// @param width          the line's width, in pixels.
+<span class="lineNum">     786 </span>            :         ///                       0 means really thin.
+<span class="lineNum">     787 </span>            :         ///
+<span class="lineNum">     788 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     789 </span>            :         virtual void drawCursorLine(void* pDeviceContext, std::int32_t startPointX, std::int32_t startPointY, std::int32_t endPointX, std::int32_t endPointY, std::uint8_t colorRed, std::uint8_t colorGreen, std::uint8_t colorBlue, cursorLine::tStyle style, std::uint32_t width)=0;
+<span class="lineNum">     790 </span>            : 
+<span class="lineNum">     791 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     792 </span>            :         ///         invalidate the window, without
+<span class="lineNum">     793 </span>            :         ///         redrawing it immediatly. The code doesn't
+<span class="lineNum">     794 </span>            :         ///         have to invalidate the background.
+<span class="lineNum">     795 </span>            :         ///
+<span class="lineNum">     796 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     797 </span>            :         virtual void invalidate()=0;
+<span class="lineNum">     798 </span>            : 
+<span class="lineNum">     799 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     800 </span>            :         ///         launches a redraw of the invalidated areas of
+<span class="lineNum">     801 </span>            :         ///         the window.
+<span class="lineNum">     802 </span>            :         ///
+<span class="lineNum">     803 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     804 </span>            :         virtual void updateWindow()=0;
+<span class="lineNum">     805 </span>            : 
+<span class="lineNum">     806 </span>            :         /// \brief Overwrite this method with a function that
+<span class="lineNum">     807 </span>            :         ///         retrieve the screen's resolution, in pixels
+<span class="lineNum">     808 </span>            :         ///         per inch.
+<span class="lineNum">     809 </span>            :         ///
+<span class="lineNum">     810 </span>            :         /// @param pHorzDPI a pointer to a variable that the
+<span class="lineNum">     811 </span>            :         ///                  function must fill with the
+<span class="lineNum">     812 </span>            :         ///                  horizontal resolution, in pixels
+<span class="lineNum">     813 </span>            :         ///                  per inch
+<span class="lineNum">     814 </span>            :         /// @param pVertDPI a pointer to a variable that the
+<span class="lineNum">     815 </span>            :         ///                  function must fill with the
+<span class="lineNum">     816 </span>            :         ///                  vertical resolution, in pixels
+<span class="lineNum">     817 </span>            :         ///                  per inch
+<span class="lineNum">     818 </span>            :         ///
+<span class="lineNum">     819 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     820 </span>            :         virtual void getScreenDPI(std::uint32_t* pHorzDPI, std::uint32_t* pVertDPI)=0;
+<span class="lineNum">     821 </span>            : 
+<span class="lineNum">     822 </span>            :         virtual bool isMouseCaptured()=0;
+<span class="lineNum">     823 </span>            : 
+<span class="lineNum">     824 </span>            :         //@}
+<span class="lineNum">     825 </span>            : 
+<span class="lineNum">     826 </span>            : 
+<span class="lineNum">     827 </span>            : private:
+<span class="lineNum">     828 </span>            :         typedef std::list&lt;cursorLine&gt; tCursorLinesList;
+<span class="lineNum">     829 </span>            : 
+<span class="lineNum">     830 </span>            :         // Image's position
+<span class="lineNum">     831 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     832 </span>            :         std::int32_t m_leftPosition;
+<span class="lineNum">     833 </span>            :         std::int32_t m_topPosition;
+<span class="lineNum">     834 </span>            :         std::int32_t m_rightPosition;
+<span class="lineNum">     835 </span>            :         std::int32_t m_bottomPosition;
+<span class="lineNum">     836 </span>            : 
+<span class="lineNum">     837 </span>            :         // Background color
+<span class="lineNum">     838 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     839 </span>            :         std::uint8_t m_backgroundRed;
+<span class="lineNum">     840 </span>            :         std::uint8_t m_backgroundGreen;
+<span class="lineNum">     841 </span>            :         std::uint8_t m_backgroundBlue;
+<span class="lineNum">     842 </span>            : 
+<span class="lineNum">     843 </span>            :         // Active image's zoom
+<span class="lineNum">     844 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     845 </span>            :         double m_zoom;
+<span class="lineNum">     846 </span>            : 
+<span class="lineNum">     847 </span>            :         ptr&lt;imebra::drawBitmap&gt; m_drawBitmap;
+<span class="lineNum">     848 </span>            : 
+<span class="lineNum">     849 </span>            :         ptr&lt;image&gt; m_originalImage;
+<span class="lineNum">     850 </span>            : 
+<span class="lineNum">     851 </span>            :         ptr&lt;memory&gt; m_bitmapMemory;
+<span class="lineNum">     852 </span>            : 
+<span class="lineNum">     853 </span>            :         // Values used to retrieve the last bitmap
+<span class="lineNum">     854 </span>            :                 bool m_bUpdateImage;
+<span class="lineNum">     855 </span>            :         std::uint32_t m_cachedWidth;
+<span class="lineNum">     856 </span>            :         std::uint32_t m_cachedHeight;
+<span class="lineNum">     857 </span>            :         std::int32_t m_cachedVisibleTop;
+<span class="lineNum">     858 </span>            :         std::int32_t m_cachedVisibleLeft;
+<span class="lineNum">     859 </span>            :         std::int32_t m_cachedVisibleBottom;
+<span class="lineNum">     860 </span>            :         std::int32_t m_cachedVisibleRight;
+<span class="lineNum">     861 </span>            : 
+<span class="lineNum">     862 </span>            : 
+<span class="lineNum">     863 </span>            : 
+<span class="lineNum">     864 </span>            :         // Cursor lines
+<span class="lineNum">     865 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     866 </span>            :         tCursorLinesList m_cursorLines;
+<span class="lineNum">     867 </span>            : 
+<span class="lineNum">     868 </span>            :         // Temporary cursor lines
+<span class="lineNum">     869 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     870 </span>            :         tCursorLinesList m_tempCursorLines;
+<span class="lineNum">     871 </span>            : 
+<span class="lineNum">     872 </span>            : };
+<span class="lineNum">     873 </span>            : 
+<span class="lineNum">     874 </span>            : /// @}
+<span class="lineNum">     875 </span>            : 
+<span class="lineNum">     876 </span>            : } // namespace imebra
+<span class="lineNum">     877 </span>            : 
+<span class="lineNum">     878 </span>            : } // namespace puntoexe
+<span class="lineNum">     879 </span>            : 
+<span class="lineNum">     880 </span>            : #endif // imebraView_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

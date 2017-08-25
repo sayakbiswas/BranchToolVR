@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/huffmanTable.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - huffmanTable.h<span style="font-size: 80%;"> (source / <a href="huffmanTable.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntryLo">73.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryLo">52.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file huffmanTable.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the huffman codec
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraHuffmanTable_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraHuffmanTable_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;baseObject.h&quot;
+<span class="lineNum">      57 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      58 </span>            : #include &lt;map&gt;
+<span class="lineNum">      59 </span>            : #include &lt;array&gt;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      62 </span>            : //
+<span class="lineNum">      63 </span>            : // Everything is in the namespace puntoexe
+<span class="lineNum">      64 </span>            : //
+<span class="lineNum">      65 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      66 </span>            : namespace puntoexe
+<span class="lineNum">      67 </span>            : {
+<span class="lineNum">      68 </span>            : class streamReader;
+<span class="lineNum">      69 </span>            : class streamWriter;
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : /// \addtogroup group_baseclasses
+<span class="lineNum">      72 </span>            : ///
+<span class="lineNum">      73 </span>            : /// @{
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      76 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      77 </span>            : /// \brief This class calculates the huffman table from
+<span class="lineNum">      78 </span>            : ///         a set of values and their frequency, and
+<span class="lineNum">      79 </span>            : ///         can read or write huffman codes from/to a
+<span class="lineNum">      80 </span>            : ///         baseStream object.
+<a name="81"><span class="lineNum">      81 </span>            : ///</a>
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span><span class="lineCov">      37697 : class huffmanTable: public baseObject</span>
+<span class="lineNum">      84 </span>            : {
+<span class="lineNum">      85 </span>            : public:
+<span class="lineNum">      86 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      87 </span>            :         /// \name Initialization
+<span class="lineNum">      88 </span>            :         ///
+<span class="lineNum">      89 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      90 </span>            :         //@{
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            :         /// \brief Construct the huffman table and specify the
+<span class="lineNum">      93 </span>            :         ///         maximum numbed of bits used by the values to
+<span class="lineNum">      94 </span>            :         ///         be encoded.
+<span class="lineNum">      95 </span>            :         ///
+<span class="lineNum">      96 </span>            :         /// @param maxValueLength the maximum lenght, in bits, of
+<span class="lineNum">      97 </span>            :         ///                        the value that must be encoded.
+<span class="lineNum">      98 </span>            :         ///                       Please note that this is not
+<span class="lineNum">      99 </span>            :         ///                        the length of the huffman values
+<span class="lineNum">     100 </span>            :         ///
+<span class="lineNum">     101 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     102 </span>            :         huffmanTable(std::uint32_t maxValueLength);
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            :         /// \brief Reset the internal data of the huffmanTable
+<span class="lineNum">     105 </span>            :         ///         class.
+<span class="lineNum">     106 </span>            :         ///
+<span class="lineNum">     107 </span>            :         /// The function removes all the calculated tables.
+<span class="lineNum">     108 </span>            :         /// The I/O functions readHuffmanCode() and 
+<span class="lineNum">     109 </span>            :         ///  writeHuffmanCode() will not work until the tables are
+<span class="lineNum">     110 </span>            :         ///  calculated by calcHuffmanCodesLength and 
+<span class="lineNum">     111 </span>            :         ///  calcHuffmanTables().
+<span class="lineNum">     112 </span>            :         ///
+<span class="lineNum">     113 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     114 </span>            :         void reset();
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            :         //@}
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            :         
+<span class="lineNum">     119 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     120 </span>            :         /// \name Huffman table generation
+<span class="lineNum">     121 </span>            :         ///
+<span class="lineNum">     122 </span>            :         /// First, call incValueFreq() the right number of times
+<span class="lineNum">     123 </span>            :         ///  for each value that appears in the stream, then
+<span class="lineNum">     124 </span>            :         ///  call calcHuffmanCodesLength() and then
+<span class="lineNum">     125 </span>            :         ///  calcHuffmanTables().
+<span class="lineNum">     126 </span>            :         ///
+<span class="lineNum">     127 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     128 </span>            :         //@{
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            :         /// \brief Increase the frequency of a value that will be
+<span class="lineNum">     131 </span>            :         ///         huffman encoded.
+<span class="lineNum">     132 </span>            :         ///
+<span class="lineNum">     133 </span>            :         /// This function must be called for each time a value
+<span class="lineNum">     134 </span>            :         ///  appears in a stream. Values with an higher frequency
+<span class="lineNum">     135 </span>            :         ///  will have a shorted huffman code.
+<span class="lineNum">     136 </span>            :         ///
+<span class="lineNum">     137 </span>            :         /// After the function has been called the right amount of
+<span class="lineNum">     138 </span>            :         ///  times for every value that must be encoded, call 
+<span class="lineNum">     139 </span>            :         ///  calcHuffmanCodesLength() and then calcHuffmanTables().
+<span class="lineNum">     140 </span>            :         ///
+<span class="lineNum">     141 </span>            :         /// @param value   the value for wich the frequency must
+<span class="lineNum">     142 </span>            :         ///                 be increased.
+<span class="lineNum">     143 </span>            :         ///                The number of bits that form the value
+<span class="lineNum">     144 </span>            :         ///                 must be less or equal to the number
+<span class="lineNum">     145 </span>            :         ///                 of bits specified in the constructor
+<span class="lineNum">     146 </span>            :         ///                 huffmanTable()
+<span class="lineNum">     147 </span>            :         ///
+<span class="lineNum">     148 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     149 </span>            :         void incValueFreq(const std::uint32_t value);
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :         /// \brief Calculates the length of the huffman codes.
+<span class="lineNum">     152 </span>            :         ///
+<span class="lineNum">     153 </span>            :         /// This function must be called after incValueFreq() has
+<span class="lineNum">     154 </span>            :         ///  been called to set the frequency of the values to be
+<span class="lineNum">     155 </span>            :         ///  encoded.
+<span class="lineNum">     156 </span>            :         ///
+<span class="lineNum">     157 </span>            :         /// After this function calculates the codes length, call
+<span class="lineNum">     158 </span>            :         ///  calcHuffmanTables() to calculate the huffman codes 
+<span class="lineNum">     159 </span>            :         ///  used by readHuffmanCode() and writeHuffmanCode().
+<span class="lineNum">     160 </span>            :         ///
+<span class="lineNum">     161 </span>            :         /// @param maxCodeLength the maximum length in bits of the
+<span class="lineNum">     162 </span>            :         ///                       generated huffman codes.
+<span class="lineNum">     163 </span>            :         ///
+<span class="lineNum">     164 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     165 </span>            :         void calcHuffmanCodesLength(const std::uint32_t maxCodeLength);
+<span class="lineNum">     166 </span>            :         
+<span class="lineNum">     167 </span>            :         /// \brief Generates the huffman table used by 
+<span class="lineNum">     168 </span>            :         ///         readHuffmanCode() and writeHuffmanCode().
+<span class="lineNum">     169 </span>            :         ///
+<span class="lineNum">     170 </span>            :         /// This function need the codes length generated by
+<span class="lineNum">     171 </span>            :         ///  calcHuffmanCodesLength(): it will not work if the
+<span class="lineNum">     172 </span>            :         ///  code lengths are not available.
+<span class="lineNum">     173 </span>            :         ///
+<span class="lineNum">     174 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     175 </span>            :         void calcHuffmanTables();
+<span class="lineNum">     176 </span>            :         
+<span class="lineNum">     177 </span>            :         /// \brief Remove the code with the higher value and the
+<span class="lineNum">     178 </span>            :         ///         longer code from the code lengths table.
+<span class="lineNum">     179 </span>            :         ///
+<span class="lineNum">     180 </span>            :         /// This function is usefull when extra data has been
+<span class="lineNum">     181 </span>            :         ///  inserted through incValueFreq() but must not generate
+<span class="lineNum">     182 </span>            :         ///  an huffman code.
+<span class="lineNum">     183 </span>            :         ///
+<span class="lineNum">     184 </span>            :         /// E.g.: the jpeg coded insert an extra value with low
+<span class="lineNum">     185 </span>            :         ///       frequency to reserve the last generated huffman 
+<span class="lineNum">     186 </span>            :         ///       code, so the reserver huffman code will never
+<span class="lineNum">     187 </span>            :         ///       be generated
+<span class="lineNum">     188 </span>            :         ///
+<span class="lineNum">     189 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     190 </span>            :         void removeLastCode();
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            :     void setValuesPerLength(std::uint32_t length, std::uint32_t numValues);
+<span class="lineNum">     193 </span>            :     void addOrderedValue(std::uint32_t index, std::uint32_t value);
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :     std::uint32_t getValuesPerLength(std::uint32_t length);
+<span class="lineNum">     196 </span>            :     std::uint32_t getOrderedValue(std::uint32_t index);
+<span class="lineNum">     197 </span>            : 
+<span class="lineNum">     198 </span>            :         //@}
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            : 
+<span class="lineNum">     201 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     202 </span>            :         /// \name Huffman I/O
+<span class="lineNum">     203 </span>            :         ///
+<span class="lineNum">     204 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     205 </span>            :         //@{
+<span class="lineNum">     206 </span>            :         
+<span class="lineNum">     207 </span>            :         /// \brief Read and decode an huffman code from the 
+<span class="lineNum">     208 </span>            :         ///         specified stream.
+<span class="lineNum">     209 </span>            :         ///
+<span class="lineNum">     210 </span>            :         /// The function throws a huffmanExceptionRead exception
+<span class="lineNum">     211 </span>            :         ///  if the read code cannot be decoded.
+<span class="lineNum">     212 </span>            :         ///
+<span class="lineNum">     213 </span>            :         /// @param pStream  a pointer to the stream reader used to
+<span class="lineNum">     214 </span>            :         ///                  read the code
+<span class="lineNum">     215 </span>            :         /// @return the decoded value
+<span class="lineNum">     216 </span>            :         ///
+<span class="lineNum">     217 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     218 </span>            :         std::uint32_t readHuffmanCode(streamReader* pStream);
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            :         /// \brief Write an huffman code to the specified stream.
+<span class="lineNum">     221 </span>            :         ///
+<span class="lineNum">     222 </span>            :         /// The function throws a huffmanExceptionWrite exception
+<span class="lineNum">     223 </span>            :         ///  if the specified value cannot be encoded.
+<span class="lineNum">     224 </span>            :         ///
+<span class="lineNum">     225 </span>            :         /// @param code     the value to be encoded and written to
+<span class="lineNum">     226 </span>            :         ///                  the stream
+<span class="lineNum">     227 </span>            :         /// @param pStream  a pointer to the stream writer used to
+<span class="lineNum">     228 </span>            :         ///                  write the code
+<span class="lineNum">     229 </span>            :         ///
+<span class="lineNum">     230 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     231 </span>            :         void writeHuffmanCode(const std::uint32_t code, streamWriter* pStream);
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            :         //@}
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            : protected:
+<span class="lineNum">     236 </span>            :         class valueObject
+<a name="237"><span class="lineNum">     237 </span>            :         {</a>
+<a name="238"><span class="lineNum">     238 </span>            :         public:</a>
+<span class="lineNum">     239 </span><span class="lineCov">   10850720 :                 valueObject():m_freq(0), m_codeLength(0), m_nextCode(-1){}</span>
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :                 valueObject(const valueObject&amp; right):m_freq(right.m_freq), m_codeLength(right.m_codeLength), m_nextCode(right.m_nextCode){}</span>
+<span class="lineNum">     241 </span>            :                 std::uint32_t m_freq;
+<span class="lineNum">     242 </span>            :                 std::uint32_t m_codeLength;
+<span class="lineNum">     243 </span>            :                 std::int32_t m_nextCode;
+<span class="lineNum">     244 </span>            :         };
+<span class="lineNum">     245 </span>            : 
+<span class="lineNum">     246 </span>            :         class freqValue
+<a name="247"><span class="lineNum">     247 </span>            :         {</a>
+<a name="248"><span class="lineNum">     248 </span>            :         public:</a>
+<span class="lineNum">     249 </span><span class="lineCov">        767 :                 freqValue(std::uint32_t freq = 0, std::uint32_t value = 0):m_freq(freq), m_value(value){}</span>
+<span class="lineNum">     250 </span><span class="lineCov">       2861 :                 freqValue(const freqValue&amp; right):m_freq(right.m_freq), m_value(right.m_value){}</span>
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :                 std::uint32_t m_freq;
+<span class="lineNum">     253 </span>            :                 std::uint32_t m_value;
+<span class="lineNum">     254 </span>            :         };
+<a name="255"><span class="lineNum">     255 </span>            :         struct freqValueCompare</a>
+<span class="lineNum">     256 </span>            :         {
+<span class="lineNum">     257 </span><span class="lineCov">      10427 :                 bool operator()(const freqValue&amp; left, const freqValue&amp; right) const</span>
+<span class="lineNum">     258 </span>            :                 {
+<span class="lineNum">     259 </span><span class="lineCov">      10427 :                         return left.m_freq &lt; right.m_freq || (left.m_freq == right.m_freq &amp;&amp; left.m_value &gt; right.m_value);</span>
+<span class="lineNum">     260 </span>            :                 }
+<span class="lineNum">     261 </span>            :         };
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :         class lengthValue
+<a name="264"><span class="lineNum">     264 </span>            :         {</a>
+<a name="265"><span class="lineNum">     265 </span>            :         public:</a>
+<span class="lineNum">     266 </span><span class="lineCov">        753 :                 lengthValue(std::uint32_t length = 0, std::uint32_t value = 0):m_length(length), m_value(value){}</span>
+<span class="lineNum">     267 </span><span class="lineCov">        753 :                 lengthValue(const lengthValue&amp; right):m_length(right.m_length), m_value(right.m_value){}</span>
+<span class="lineNum">     268 </span>            : 
+<span class="lineNum">     269 </span>            :                 std::uint32_t m_length;
+<span class="lineNum">     270 </span>            :                 std::uint32_t m_value;
+<span class="lineNum">     271 </span>            :         };
+<a name="272"><span class="lineNum">     272 </span>            :         struct lengthValueCompare</a>
+<span class="lineNum">     273 </span>            :         {
+<span class="lineNum">     274 </span><span class="lineCov">       6126 :                 bool operator()(const lengthValue&amp; left, const lengthValue&amp; right) const</span>
+<span class="lineNum">     275 </span>            :                 {
+<span class="lineNum">     276 </span><span class="lineCov">       6126 :                         return left.m_length &lt; right.m_length || (left.m_length == right.m_length &amp;&amp; left.m_value &lt; right.m_value);</span>
+<span class="lineNum">     277 </span>            :                 }
+<span class="lineNum">     278 </span>            :         };
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            :         std::uint32_t m_numValues;
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            :         // Values' frequency
+<span class="lineNum">     283 </span>            :         std::vector&lt;valueObject&gt; m_valuesFreq;
+<span class="lineNum">     284 </span>            :         
+<span class="lineNum">     285 </span>            : private:
+<span class="lineNum">     286 </span>            :     // Used to calculate the huffman codes
+<span class="lineNum">     287 </span>            :         std::vector&lt;std::uint32_t&gt; m_orderedValues;
+<span class="lineNum">     288 </span>            :     std::array&lt;std::uint32_t, 128&gt; m_valuesPerLength;
+<span class="lineNum">     289 </span>            :     std::uint8_t m_firstValidLength;
+<span class="lineNum">     290 </span>            :     std::uint32_t m_firstMinValue;
+<span class="lineNum">     291 </span>            :     std::uint32_t m_firstMaxValue;
+<span class="lineNum">     292 </span>            :     std::uint32_t m_firstValuesPerLength;
+<span class="lineNum">     293 </span>            :     std::uint32_t m_minValuePerLength[128];
+<span class="lineNum">     294 </span>            :     std::uint32_t m_maxValuePerLength[128];
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span>            :         // Final huffman table
+<span class="lineNum">     297 </span>            :         std::vector&lt;std::uint32_t&gt; m_valuesToHuffman;
+<span class="lineNum">     298 </span>            :         std::vector&lt;std::uint32_t&gt; m_valuesToHuffmanLength;
+<span class="lineNum">     299 </span>            : 
+<a name="300"><span class="lineNum">     300 </span>            : };</a>
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span><span class="lineCov">          3 : class huffmanException: public std::runtime_error</span>
+<a name="303"><span class="lineNum">     303 </span>            : {</a>
+<span class="lineNum">     304 </span>            : public:
+<span class="lineNum">     305 </span><span class="lineCov">          3 :         huffmanException(const std::string&amp; message): std::runtime_error(message){}</span>
+<a name="306"><span class="lineNum">     306 </span>            : };</a>
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span><span class="lineCov">          3 : class huffmanExceptionCreateTable: public huffmanException</span>
+<a name="309"><span class="lineNum">     309 </span>            : {</a>
+<span class="lineNum">     310 </span>            : public:
+<span class="lineNum">     311 </span><span class="lineCov">          3 :     huffmanExceptionCreateTable(const std::string&amp; message): huffmanException(message){}</span>
+<a name="312"><span class="lineNum">     312 </span>            : };</a>
+<span class="lineNum">     313 </span>            : 
+<span class="lineNum">     314 </span><span class="lineNoCov">          0 : class huffmanExceptionRead : public huffmanException</span>
+<a name="315"><span class="lineNum">     315 </span>            : {</a>
+<span class="lineNum">     316 </span>            : public:
+<span class="lineNum">     317 </span><span class="lineNoCov">          0 :         huffmanExceptionRead(const std::string&amp; message): huffmanException(message){}</span>
+<a name="318"><span class="lineNum">     318 </span>            : };</a>
+<span class="lineNum">     319 </span>            : 
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 : class huffmanExceptionWrite : public huffmanException</span>
+<a name="321"><span class="lineNum">     321 </span>            : {</a>
+<span class="lineNum">     322 </span>            : public:
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :         huffmanExceptionWrite(const std::string&amp; message): huffmanException(message){}</span>
+<span class="lineNum">     324 </span>            : };
+<span class="lineNum">     325 </span>            : 
+<span class="lineNum">     326 </span>            : ///@}
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            : } // namespace puntoexe
+<span class="lineNum">     329 </span>            : 
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            : #endif // !defined(imebraHuffmanTable_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

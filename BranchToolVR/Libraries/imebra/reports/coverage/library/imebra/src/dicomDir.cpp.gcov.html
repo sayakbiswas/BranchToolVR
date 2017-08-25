@@ -1,0 +1,771 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/dicomDir.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - dicomDir.cpp<span style="font-size: 80%;"> (source / <a href="dicomDir.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">126</td>
+            <td class="headerCovTableEntry">147</td>
+            <td class="headerCovTableEntryMed">85.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntryMed">85.7 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file dicomDir.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the classes dicomDir and directoryRecord.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../include/dicomDir.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../include/dataSet.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../include/dicomCodec.h&quot;
+<span class="lineNum">      56 </span>            : #include &quot;../include/dataHandlerNumeric.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;../../base/include/nullStream.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../../base/include/streamWriter.h&quot;
+<span class="lineNum">      59 </span>            : #include &lt;map&gt;
+<span class="lineNum">      60 </span>            : #include &lt;string&gt;
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : namespace puntoexe
+<span class="lineNum">      63 </span>            : {
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            : namespace imebra
+<a name="66"><span class="lineNum">      66 </span>            : {</a>
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span><span class="lineCov">         28 :         struct tDirectoryRecordTypeDef</span>
+<span class="lineNum">      69 </span>            :         {
+<span class="lineNum">      70 </span>            :                 std::wstring m_name;
+<span class="lineNum">      71 </span>            :                 directoryRecord::tDirectoryRecordType m_type;
+<a name="72"><span class="lineNum">      72 </span>            :         };</a>
+<span class="lineNum">      73 </span>            :         
+<span class="lineNum">      74 </span><span class="lineCov">          2 :         static const tDirectoryRecordTypeDef typesList[] =</span>
+<span class="lineNum">      75 </span>            :         {
+<span class="lineNum">      76 </span>            :                 {L&quot;PATIENT&quot;, directoryRecord::patient},
+<span class="lineNum">      77 </span>            :                 {L&quot;STUDY&quot;, directoryRecord::study},
+<span class="lineNum">      78 </span>            :                 {L&quot;SERIES&quot;, directoryRecord::series},
+<span class="lineNum">      79 </span>            :                 {L&quot;IMAGE&quot;, directoryRecord::image},
+<span class="lineNum">      80 </span>            :                 {L&quot;OVERLAY&quot;, directoryRecord::overlay},
+<span class="lineNum">      81 </span>            :                 {L&quot;MODALITY LUT&quot;, directoryRecord::modality_lut},
+<span class="lineNum">      82 </span>            :                 {L&quot;VOI LUT&quot;, directoryRecord::voi_lut},
+<span class="lineNum">      83 </span>            :                 {L&quot;CURVE&quot;, directoryRecord::curve},
+<span class="lineNum">      84 </span>            :                 {L&quot;TOPIC&quot;, directoryRecord::topic},
+<span class="lineNum">      85 </span>            :                 {L&quot;VISIT&quot;, directoryRecord::visit},
+<span class="lineNum">      86 </span>            :                 {L&quot;RESULTS&quot;, directoryRecord::results},
+<span class="lineNum">      87 </span>            :                 {L&quot;INTERPRETATION&quot;, directoryRecord::interpretation},
+<span class="lineNum">      88 </span>            :                 {L&quot;STUDY COMPONENT&quot;, directoryRecord::study_component},
+<span class="lineNum">      89 </span>            :                 {L&quot;STORED PRINT&quot;, directoryRecord::stored_print},
+<span class="lineNum">      90 </span>            :                 {L&quot;RT DOSE&quot;, directoryRecord::rt_dose},
+<span class="lineNum">      91 </span>            :                 {L&quot;RT STRUCTURE SET&quot;, directoryRecord::rt_structure_set},
+<span class="lineNum">      92 </span>            :                 {L&quot;RT PLAN&quot;, directoryRecord::rt_plan},
+<span class="lineNum">      93 </span>            :                 {L&quot;RT TREAT RECORD&quot;, directoryRecord::rt_treat_record},
+<span class="lineNum">      94 </span>            :                 {L&quot;PRESENTATION&quot;, directoryRecord::presentation},
+<span class="lineNum">      95 </span>            :                 {L&quot;WAVEFORM&quot;, directoryRecord::waveform},
+<span class="lineNum">      96 </span>            :                 {L&quot;SR DOCUMENT&quot;, directoryRecord::sr_document},
+<span class="lineNum">      97 </span>            :                 {L&quot;KEY OBJECT DOC&quot;, directoryRecord::key_object_doc},
+<span class="lineNum">      98 </span>            :                 {L&quot;SPECTROSCOPY&quot;, directoryRecord::spectroscopy},
+<span class="lineNum">      99 </span>            :                 {L&quot;RAW DATA&quot;, directoryRecord::raw_data},
+<span class="lineNum">     100 </span>            :                 {L&quot;REGISTRATION&quot;, directoryRecord::registration},
+<span class="lineNum">     101 </span>            :                 {L&quot;FIDUCIAL&quot;, directoryRecord::fiducial},
+<span class="lineNum">     102 </span>            :                 {L&quot;MRDR&quot;, directoryRecord::mrdr},
+<span class="lineNum">     103 </span>            :                 {L&quot;&quot;, directoryRecord::endOfDirectoryRecordTypes}
+<span class="lineNum">     104 </span><span class="lineCov">          1 :         };</span>
+<span class="lineNum">     105 </span>            : 
+<span class="lineNum">     106 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     107 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     108 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     109 </span>            : //
+<span class="lineNum">     110 </span>            : //
+<span class="lineNum">     111 </span>            : //
+<span class="lineNum">     112 </span>            : // directoryRecord
+<span class="lineNum">     113 </span>            : //
+<span class="lineNum">     114 </span>            : //
+<span class="lineNum">     115 </span>            : //
+<span class="lineNum">     116 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     117 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     118 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     121 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     122 </span>            : //
+<span class="lineNum">     123 </span>            : //
+<span class="lineNum">     124 </span>            : // Constructor
+<span class="lineNum">     125 </span>            : //
+<span class="lineNum">     126 </span>            : //
+<a name="127"><span class="lineNum">     127 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     128 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     129 </span><span class="lineCov">          6 : directoryRecord::directoryRecord(ptr&lt;dataSet&gt; pDataSet):</span>
+<span class="lineNum">     130 </span><span class="lineCov">          6 :         m_pDataSet(pDataSet)</span>
+<span class="lineNum">     131 </span>            : {
+<span class="lineNum">     132 </span><span class="lineCov">          6 : }</span>
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     136 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     137 </span>            : //
+<span class="lineNum">     138 </span>            : //
+<span class="lineNum">     139 </span>            : // Return the record's dataset
+<span class="lineNum">     140 </span>            : //
+<span class="lineNum">     141 </span>            : //
+<a name="142"><span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     143 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     144 </span><span class="lineCov">         48 : ptr&lt;dataSet&gt; directoryRecord::getRecordDataSet()</span>
+<span class="lineNum">     145 </span>            : {
+<span class="lineNum">     146 </span><span class="lineCov">         48 :         return m_pDataSet;</span>
+<span class="lineNum">     147 </span>            : }
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            : 
+<span class="lineNum">     150 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     151 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     152 </span>            : //
+<span class="lineNum">     153 </span>            : //
+<span class="lineNum">     154 </span>            : // Returns the next sibling record
+<span class="lineNum">     155 </span>            : //
+<span class="lineNum">     156 </span>            : //
+<a name="157"><span class="lineNum">     157 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     158 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     159 </span><span class="lineCov">          1 : ptr&lt;directoryRecord&gt; directoryRecord::getNextRecord()</span>
+<span class="lineNum">     160 </span>            : {
+<span class="lineNum">     161 </span><span class="lineCov">          1 :         return m_pNextRecord;</span>
+<span class="lineNum">     162 </span>            : }
+<span class="lineNum">     163 </span>            : 
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     166 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     167 </span>            : //
+<span class="lineNum">     168 </span>            : //
+<span class="lineNum">     169 </span>            : // Returns the first child record
+<span class="lineNum">     170 </span>            : //
+<span class="lineNum">     171 </span>            : //
+<a name="172"><span class="lineNum">     172 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     173 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     174 </span><span class="lineCov">          1 : ptr&lt;directoryRecord&gt; directoryRecord::getFirstChildRecord()</span>
+<span class="lineNum">     175 </span>            : {
+<span class="lineNum">     176 </span><span class="lineCov">          1 :         return m_pFirstChildRecord;</span>
+<span class="lineNum">     177 </span>            : }
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     181 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     182 </span>            : //
+<span class="lineNum">     183 </span>            : //
+<span class="lineNum">     184 </span>            : // Returns the referenced record
+<span class="lineNum">     185 </span>            : //
+<span class="lineNum">     186 </span>            : //
+<a name="187"><span class="lineNum">     187 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     188 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span><span class="lineNoCov">          0 : ptr&lt;directoryRecord&gt; directoryRecord::getReferencedRecord()</span>
+<span class="lineNum">     190 </span>            : {
+<span class="lineNum">     191 </span><span class="lineNoCov">          0 :         return m_pReferencedRecord;</span>
+<span class="lineNum">     192 </span>            : }
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     196 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     197 </span>            : //
+<span class="lineNum">     198 </span>            : //
+<span class="lineNum">     199 </span>            : // Sets the next sibling record
+<span class="lineNum">     200 </span>            : //
+<span class="lineNum">     201 </span>            : //
+<a name="202"><span class="lineNum">     202 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     203 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     204 </span><span class="lineCov">          2 : void directoryRecord::setNextRecord(ptr&lt;directoryRecord&gt; pNextRecord)</span>
+<span class="lineNum">     205 </span>            : {
+<span class="lineNum">     206 </span><span class="lineCov">          2 :         if(pNextRecord != 0)</span>
+<span class="lineNum">     207 </span>            :         {
+<span class="lineNum">     208 </span><span class="lineCov">          2 :                 pNextRecord-&gt;checkCircularReference(this);</span>
+<span class="lineNum">     209 </span>            :         }
+<span class="lineNum">     210 </span><span class="lineCov">          2 :         m_pNextRecord = pNextRecord;</span>
+<span class="lineNum">     211 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">     212 </span>            :         
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     215 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     216 </span>            : //
+<span class="lineNum">     217 </span>            : //
+<span class="lineNum">     218 </span>            : // Set the first child record
+<span class="lineNum">     219 </span>            : //
+<span class="lineNum">     220 </span>            : //
+<a name="221"><span class="lineNum">     221 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     222 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     223 </span><span class="lineCov">          2 : void directoryRecord::setFirstChildRecord(ptr&lt;directoryRecord&gt; pFirstChildRecord)</span>
+<span class="lineNum">     224 </span>            : {
+<span class="lineNum">     225 </span><span class="lineCov">          2 :         if(pFirstChildRecord != 0)</span>
+<span class="lineNum">     226 </span>            :         {
+<span class="lineNum">     227 </span><span class="lineCov">          2 :                 pFirstChildRecord-&gt;checkCircularReference(this);</span>
+<span class="lineNum">     228 </span>            :         }
+<span class="lineNum">     229 </span><span class="lineCov">          2 :         m_pFirstChildRecord = pFirstChildRecord;</span>
+<span class="lineNum">     230 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">     231 </span>            :         
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     234 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     235 </span>            : //
+<span class="lineNum">     236 </span>            : //
+<span class="lineNum">     237 </span>            : // Sets the referenced record
+<span class="lineNum">     238 </span>            : //
+<span class="lineNum">     239 </span>            : //
+<a name="240"><span class="lineNum">     240 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     241 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     242 </span><span class="lineNoCov">          0 : void directoryRecord::setReferencedRecord(ptr&lt;directoryRecord&gt; pReferencedRecord)</span>
+<span class="lineNum">     243 </span>            : {
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :         if(pReferencedRecord != 0)</span>
+<span class="lineNum">     245 </span>            :         {
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :                 pReferencedRecord-&gt;checkCircularReference(this);</span>
+<span class="lineNum">     247 </span>            :         }
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :         m_pReferencedRecord = pReferencedRecord;</span>
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     253 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     254 </span>            : //
+<span class="lineNum">     255 </span>            : //
+<span class="lineNum">     256 </span>            : // Returns a part of the full file path
+<span class="lineNum">     257 </span>            : //
+<span class="lineNum">     258 </span>            : //
+<a name="259"><span class="lineNum">     259 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     260 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     261 </span><span class="lineCov">          2 : std::wstring directoryRecord::getFilePart(std::uint32_t part)</span>
+<span class="lineNum">     262 </span>            : {
+<span class="lineNum">     263 </span><span class="lineCov">          2 :         return getRecordDataSet()-&gt;getUnicodeString(0x0004, 0, 0x1500, part);</span>
+<span class="lineNum">     264 </span>            : }
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span>            : 
+<span class="lineNum">     267 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     268 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     269 </span>            : //
+<span class="lineNum">     270 </span>            : //
+<span class="lineNum">     271 </span>            : // Set a part of the full file path
+<span class="lineNum">     272 </span>            : //
+<span class="lineNum">     273 </span>            : //
+<a name="274"><span class="lineNum">     274 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     275 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     276 </span><span class="lineCov">          2 : void directoryRecord::setFilePart(std::uint32_t part, const std::wstring partName)</span>
+<span class="lineNum">     277 </span>            : {
+<span class="lineNum">     278 </span><span class="lineCov">          2 :     getRecordDataSet()-&gt;setUnicodeString(0x0004, 0, 0x1500, part, partName);</span>
+<span class="lineNum">     279 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     283 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     284 </span>            : //
+<span class="lineNum">     285 </span>            : //
+<span class="lineNum">     286 </span>            : // Returns the record's type (enum)
+<span class="lineNum">     287 </span>            : //
+<span class="lineNum">     288 </span>            : //
+<a name="289"><span class="lineNum">     289 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     290 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     291 </span><span class="lineCov">          3 : directoryRecord::tDirectoryRecordType directoryRecord::getType()</span>
+<span class="lineNum">     292 </span>            : {
+<span class="lineNum">     293 </span><span class="lineCov">          3 :         std::wstring typeString(getTypeString());</span>
+<span class="lineNum">     294 </span>            : 
+<span class="lineNum">     295 </span><span class="lineCov">          6 :         for(size_t scanTypes(0); typesList[scanTypes].m_type != endOfDirectoryRecordTypes; ++scanTypes)</span>
+<span class="lineNum">     296 </span>            :         {
+<span class="lineNum">     297 </span><span class="lineCov">          6 :                 if(typesList[scanTypes].m_name == typeString)</span>
+<span class="lineNum">     298 </span>            :                 {
+<span class="lineNum">     299 </span><span class="lineCov">          6 :                         return typesList[scanTypes].m_type;</span>
+<span class="lineNum">     300 </span>            :                 }
+<span class="lineNum">     301 </span>            :         }
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            :         // Invalid value found . Throw an exception
+<span class="lineNum">     304 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     305 </span><span class="lineCov">          3 :         throw dicomDirUnknownDirectoryRecordType(&quot;Unknown directory record type&quot;);</span>
+<span class="lineNum">     306 </span>            : }
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     310 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     311 </span>            : //
+<span class="lineNum">     312 </span>            : //
+<span class="lineNum">     313 </span>            : // Returns the record's type (string)
+<span class="lineNum">     314 </span>            : //
+<span class="lineNum">     315 </span>            : //
+<a name="316"><span class="lineNum">     316 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     317 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     318 </span><span class="lineCov">          3 : std::wstring directoryRecord::getTypeString()</span>
+<span class="lineNum">     319 </span>            : {
+<span class="lineNum">     320 </span><span class="lineCov">          3 :         return getRecordDataSet()-&gt;getUnicodeString(0x0004, 0, 0x1430, 0);</span>
+<span class="lineNum">     321 </span>            : }
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            : 
+<span class="lineNum">     324 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     325 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     326 </span>            : //
+<span class="lineNum">     327 </span>            : //
+<span class="lineNum">     328 </span>            : // Set the item's type
+<span class="lineNum">     329 </span>            : //
+<span class="lineNum">     330 </span>            : //
+<a name="331"><span class="lineNum">     331 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     332 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     333 </span><span class="lineCov">          3 : void directoryRecord::setType(tDirectoryRecordType recordType)</span>
+<span class="lineNum">     334 </span>            : {
+<span class="lineNum">     335 </span><span class="lineCov">          6 :         for(size_t scanTypes(0); typesList[scanTypes].m_type != endOfDirectoryRecordTypes; ++scanTypes)</span>
+<span class="lineNum">     336 </span>            :         {
+<span class="lineNum">     337 </span><span class="lineCov">          6 :                 if(typesList[scanTypes].m_type == recordType)</span>
+<span class="lineNum">     338 </span>            :                 {
+<span class="lineNum">     339 </span><span class="lineCov">          3 :                         getRecordDataSet()-&gt;setUnicodeString(0x0004, 0, 0x1430, 0, typesList[scanTypes].m_name);</span>
+<span class="lineNum">     340 </span><span class="lineCov">          6 :                         return;</span>
+<span class="lineNum">     341 </span>            :                 }
+<span class="lineNum">     342 </span>            :         }
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :         // Trying to set an invalid type. Throw an exception
+<span class="lineNum">     345 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :         throw dicomDirUnknownDirectoryRecordType(&quot;Unknown directory record type&quot;);</span>
+<span class="lineNum">     347 </span>            : }
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     351 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     352 </span>            : //
+<span class="lineNum">     353 </span>            : //
+<span class="lineNum">     354 </span>            : // Set the item's type
+<span class="lineNum">     355 </span>            : //
+<span class="lineNum">     356 </span>            : //
+<a name="357"><span class="lineNum">     357 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     358 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     359 </span><span class="lineNoCov">          0 : void directoryRecord::setTypeString(std::wstring recordType)</span>
+<span class="lineNum">     360 </span>            : {
+<span class="lineNum">     361 </span><span class="lineNoCov">          0 :         getRecordDataSet()-&gt;setUnicodeString(0x0004, 0, 0x1430, 0, recordType);</span>
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span>            : 
+<span class="lineNum">     365 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     366 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     367 </span>            : //
+<span class="lineNum">     368 </span>            : //
+<span class="lineNum">     369 </span>            : // Update the dataSet's offsets. 
+<span class="lineNum">     370 </span>            : //
+<span class="lineNum">     371 </span>            : //
+<a name="372"><span class="lineNum">     372 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     373 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     374 </span><span class="lineCov">          6 : void directoryRecord::updateOffsets()</span>
+<span class="lineNum">     375 </span>            : {
+<span class="lineNum">     376 </span>            :         // Update offset for the next record
+<span class="lineNum">     377 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     378 </span><span class="lineCov">          6 :         if(m_pNextRecord == 0)</span>
+<span class="lineNum">     379 </span>            :         {
+<span class="lineNum">     380 </span><span class="lineCov">          4 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1400, 0, 0);</span>
+<span class="lineNum">     381 </span>            :         }
+<span class="lineNum">     382 </span>            :         else
+<span class="lineNum">     383 </span>            :         {
+<span class="lineNum">     384 </span><span class="lineCov">          2 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1400, 0, m_pNextRecord-&gt;getRecordDataSet()-&gt;getItemOffset());</span>
+<span class="lineNum">     385 </span><span class="lineCov">          2 :                 m_pNextRecord-&gt;updateOffsets();</span>
+<span class="lineNum">     386 </span>            :         }
+<span class="lineNum">     387 </span>            : 
+<span class="lineNum">     388 </span>            :         // Update offset for the first child record
+<span class="lineNum">     389 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     390 </span><span class="lineCov">          6 :         if(m_pFirstChildRecord == 0)</span>
+<span class="lineNum">     391 </span>            :         {
+<span class="lineNum">     392 </span><span class="lineCov">          4 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1420, 0, 0);</span>
+<span class="lineNum">     393 </span>            :         }
+<span class="lineNum">     394 </span>            :         else
+<span class="lineNum">     395 </span>            :         {
+<span class="lineNum">     396 </span><span class="lineCov">          2 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1420, 0, m_pFirstChildRecord-&gt;getRecordDataSet()-&gt;getItemOffset());</span>
+<span class="lineNum">     397 </span><span class="lineCov">          2 :                 m_pFirstChildRecord-&gt;updateOffsets();</span>
+<span class="lineNum">     398 </span>            :         }
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span>            :         // Update offset for the referenced record
+<span class="lineNum">     401 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     402 </span><span class="lineCov">          6 :         if(m_pReferencedRecord == 0)</span>
+<span class="lineNum">     403 </span>            :         {
+<span class="lineNum">     404 </span><span class="lineCov">          6 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1504, 0, 0);</span>
+<span class="lineNum">     405 </span>            :         }
+<span class="lineNum">     406 </span>            :         else
+<span class="lineNum">     407 </span>            :         {
+<span class="lineNum">     408 </span><span class="lineNoCov">          0 :                 getRecordDataSet()-&gt;setUnsignedLong(0x0004, 0, 0x1504, 0, m_pReferencedRecord-&gt;getRecordDataSet()-&gt;getItemOffset());</span>
+<span class="lineNum">     409 </span><span class="lineNoCov">          0 :                 m_pReferencedRecord-&gt;updateOffsets();</span>
+<span class="lineNum">     410 </span>            :         }
+<span class="lineNum">     411 </span><span class="lineCov">          6 : }</span>
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     415 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     416 </span>            : //
+<span class="lineNum">     417 </span>            : //
+<span class="lineNum">     418 </span>            : // Check circular (recursive) references between the
+<span class="lineNum">     419 </span>            : //  dicomdir's items
+<span class="lineNum">     420 </span>            : //
+<span class="lineNum">     421 </span>            : //
+<a name="422"><span class="lineNum">     422 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     423 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     424 </span><span class="lineCov">          4 : void directoryRecord::checkCircularReference(directoryRecord* pStartRecord)</span>
+<span class="lineNum">     425 </span>            : {
+<span class="lineNum">     426 </span><span class="lineCov">          4 :         if(this == pStartRecord)</span>
+<span class="lineNum">     427 </span>            :         {
+<span class="lineNum">     428 </span><span class="lineNoCov">          0 :                 throw dicomDirCircularReferenceException(&quot;Circular reference detected&quot;);</span>
+<span class="lineNum">     429 </span>            :         }
+<span class="lineNum">     430 </span>            : 
+<span class="lineNum">     431 </span><span class="lineCov">          4 :         if(m_pNextRecord != 0)</span>
+<span class="lineNum">     432 </span>            :         {
+<span class="lineNum">     433 </span><span class="lineNoCov">          0 :                 m_pNextRecord-&gt;checkCircularReference(pStartRecord);</span>
+<span class="lineNum">     434 </span>            :         }
+<span class="lineNum">     435 </span>            : 
+<span class="lineNum">     436 </span><span class="lineCov">          4 :         if(m_pFirstChildRecord != 0)</span>
+<span class="lineNum">     437 </span>            :         {
+<span class="lineNum">     438 </span><span class="lineNoCov">          0 :                 m_pFirstChildRecord-&gt;checkCircularReference(pStartRecord);</span>
+<span class="lineNum">     439 </span>            :         }
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span><span class="lineCov">          4 :         if(m_pReferencedRecord != 0)</span>
+<span class="lineNum">     442 </span>            :         {
+<span class="lineNum">     443 </span><span class="lineNoCov">          0 :                 m_pReferencedRecord-&gt;checkCircularReference(pStartRecord);</span>
+<span class="lineNum">     444 </span>            :         }
+<span class="lineNum">     445 </span><span class="lineCov">          4 : }</span>
+<span class="lineNum">     446 </span>            : 
+<span class="lineNum">     447 </span>            : 
+<span class="lineNum">     448 </span>            : 
+<span class="lineNum">     449 </span>            : 
+<span class="lineNum">     450 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     451 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     452 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     453 </span>            : //
+<span class="lineNum">     454 </span>            : //
+<span class="lineNum">     455 </span>            : //
+<span class="lineNum">     456 </span>            : // dicomDir class
+<span class="lineNum">     457 </span>            : //
+<span class="lineNum">     458 </span>            : //
+<span class="lineNum">     459 </span>            : //
+<span class="lineNum">     460 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     461 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     462 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     463 </span>            : 
+<span class="lineNum">     464 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     465 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     466 </span>            : //
+<span class="lineNum">     467 </span>            : //
+<span class="lineNum">     468 </span>            : // Constructor
+<span class="lineNum">     469 </span>            : //
+<span class="lineNum">     470 </span>            : //
+<a name="471"><span class="lineNum">     471 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     472 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     473 </span><span class="lineCov">          2 : dicomDir::dicomDir(ptr&lt;dataSet&gt; pDataSet):</span>
+<span class="lineNum">     474 </span><span class="lineCov">          2 :         m_pDataSet(pDataSet)</span>
+<span class="lineNum">     475 </span>            : {
+<span class="lineNum">     476 </span><span class="lineCov">          2 :         if(m_pDataSet == 0)</span>
+<span class="lineNum">     477 </span>            :         {
+<span class="lineNum">     478 </span><span class="lineNoCov">          0 :                 m_pDataSet =new dataSet;</span>
+<span class="lineNum">     479 </span>            :         }
+<span class="lineNum">     480 </span>            : 
+<span class="lineNum">     481 </span>            :         // Parse the dataset
+<span class="lineNum">     482 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     483 </span><span class="lineCov">          2 :         lockObject lockDataSet(pDataSet);</span>
+<span class="lineNum">     484 </span>            : 
+<span class="lineNum">     485 </span>            :         // Get the DICOMDIR sequence
+<span class="lineNum">     486 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     487 </span>            :         typedef std::map&lt;std::uint32_t, ptr&lt;directoryRecord&gt; &gt; tOffsetsToRecords;
+<span class="lineNum">     488 </span><span class="lineCov">          3 :         tOffsetsToRecords offsetsToRecords;</span>
+<span class="lineNum">     489 </span><span class="lineCov">          5 :         for(std::uint32_t scanItems(0); ; ++scanItems)</span>
+<span class="lineNum">     490 </span>            :         {
+<span class="lineNum">     491 </span><span class="lineCov">          5 :                 ptr&lt;dataSet&gt; pDataSet(m_pDataSet-&gt;getSequenceItem(0x0004, 0, 0x1220, scanItems));</span>
+<span class="lineNum">     492 </span><span class="lineCov">          5 :                 if(pDataSet == 0)</span>
+<span class="lineNum">     493 </span>            :                 {
+<span class="lineNum">     494 </span><span class="lineCov">          2 :                         break;</span>
+<span class="lineNum">     495 </span>            :                 }
+<span class="lineNum">     496 </span><span class="lineCov">          6 :                 ptr&lt;directoryRecord&gt; newRecord(new directoryRecord(pDataSet));</span>
+<span class="lineNum">     497 </span><span class="lineCov">          3 :                 offsetsToRecords[pDataSet-&gt;getItemOffset()] = newRecord;</span>
+<span class="lineNum">     498 </span><span class="lineCov">          3 :                 m_recordsList.push_back(newRecord);</span>
+<span class="lineNum">     499 </span><span class="lineCov">          6 :         }</span>
+<span class="lineNum">     500 </span>            : 
+<span class="lineNum">     501 </span>            :         // Scan all the records and update the pointers
+<span class="lineNum">     502 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     503 </span><span class="lineCov">          5 :         for(tOffsetsToRecords::iterator scanRecords(offsetsToRecords.begin()); scanRecords != offsetsToRecords.end(); ++scanRecords)</span>
+<span class="lineNum">     504 </span>            :         {
+<span class="lineNum">     505 </span><span class="lineCov">          3 :                 std::uint32_t nextRecordOffset(scanRecords-&gt;second-&gt;getRecordDataSet()-&gt;getUnsignedLong(0x0004, 0, 0x1400, 0));</span>
+<span class="lineNum">     506 </span><span class="lineCov">          3 :                 std::uint32_t childRecordOffset(scanRecords-&gt;second-&gt;getRecordDataSet()-&gt;getUnsignedLong(0x0004, 0, 0x1420, 0));</span>
+<span class="lineNum">     507 </span><span class="lineCov">          3 :                 std::uint32_t referencedRecordOffset(scanRecords-&gt;second-&gt;getRecordDataSet()-&gt;getUnsignedLong(0x0004, 0, 0x1504, 0));</span>
+<span class="lineNum">     508 </span>            : 
+<span class="lineNum">     509 </span><span class="lineCov">          3 :                 tOffsetsToRecords::iterator findNextRecord(offsetsToRecords.find(nextRecordOffset));</span>
+<span class="lineNum">     510 </span><span class="lineCov">          3 :                 if(findNextRecord != offsetsToRecords.end())</span>
+<span class="lineNum">     511 </span>            :                 {
+<span class="lineNum">     512 </span><span class="lineCov">          1 :                         scanRecords-&gt;second-&gt;setNextRecord(findNextRecord-&gt;second);</span>
+<span class="lineNum">     513 </span>            :                 }
+<span class="lineNum">     514 </span>            : 
+<span class="lineNum">     515 </span><span class="lineCov">          3 :                 tOffsetsToRecords::iterator findChildRecord(offsetsToRecords.find(childRecordOffset));</span>
+<span class="lineNum">     516 </span><span class="lineCov">          3 :                 if(findChildRecord != offsetsToRecords.end())</span>
+<span class="lineNum">     517 </span>            :                 {
+<span class="lineNum">     518 </span><span class="lineCov">          1 :                         scanRecords-&gt;second-&gt;setFirstChildRecord(findChildRecord-&gt;second);</span>
+<span class="lineNum">     519 </span>            :                 }
+<span class="lineNum">     520 </span>            : 
+<span class="lineNum">     521 </span><span class="lineCov">          3 :                 tOffsetsToRecords::iterator findReferencedRecord(offsetsToRecords.find(referencedRecordOffset));</span>
+<span class="lineNum">     522 </span><span class="lineCov">          3 :                 if(findReferencedRecord != offsetsToRecords.end())</span>
+<span class="lineNum">     523 </span>            :                 {
+<span class="lineNum">     524 </span><span class="lineNoCov">          0 :                         scanRecords-&gt;second-&gt;setReferencedRecord(findReferencedRecord-&gt;second);</span>
+<span class="lineNum">     525 </span>            :                 }
+<span class="lineNum">     526 </span>            :         }
+<span class="lineNum">     527 </span>            : 
+<span class="lineNum">     528 </span>            :         // Get the position of the first record
+<span class="lineNum">     529 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     530 </span><span class="lineCov">          2 :         tOffsetsToRecords::iterator findRecord(offsetsToRecords.find(m_pDataSet-&gt;getUnsignedLong(0x0004, 0, 0x1200, 0)));</span>
+<span class="lineNum">     531 </span><span class="lineCov">          2 :         if(findRecord == offsetsToRecords.end())</span>
+<span class="lineNum">     532 </span>            :         {
+<span class="lineNum">     533 </span><span class="lineCov">          3 :                 return;</span>
+<span class="lineNum">     534 </span>            :         }
+<span class="lineNum">     535 </span><span class="lineCov">          2 :         setFirstRootRecord(findRecord-&gt;second);</span>
+<span class="lineNum">     536 </span>            : }
+<span class="lineNum">     537 </span>            : 
+<span class="lineNum">     538 </span>            : 
+<span class="lineNum">     539 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     540 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     541 </span>            : //
+<span class="lineNum">     542 </span>            : //
+<span class="lineNum">     543 </span>            : // Destructor, make sure that the records are released
+<span class="lineNum">     544 </span>            : //  after the root record.
+<span class="lineNum">     545 </span>            : // This resolves a stack overflow when a large number
+<span class="lineNum">     546 </span>            : //  sibling records is present
+<span class="lineNum">     547 </span>            : //
+<span class="lineNum">     548 </span>            : //
+<a name="549"><span class="lineNum">     549 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     550 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     551 </span><span class="lineCov">          6 : dicomDir::~dicomDir()</span>
+<span class="lineNum">     552 </span>            : {
+<span class="lineNum">     553 </span><span class="lineCov">          2 :         m_pFirstRootRecord.release();</span>
+<span class="lineNum">     554 </span><span class="lineCov">          2 :         m_recordsList.clear();</span>
+<span class="lineNum">     555 </span><span class="lineCov">          4 : }</span>
+<span class="lineNum">     556 </span>            : 
+<span class="lineNum">     557 </span>            : 
+<span class="lineNum">     558 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     559 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     560 </span>            : //
+<span class="lineNum">     561 </span>            : //
+<span class="lineNum">     562 </span>            : // Returns the dataSet
+<span class="lineNum">     563 </span>            : //
+<span class="lineNum">     564 </span>            : //
+<a name="565"><span class="lineNum">     565 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     566 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     567 </span><span class="lineNoCov">          0 : ptr&lt;dataSet&gt; dicomDir::getDirectoryDataSet()</span>
+<span class="lineNum">     568 </span>            : {
+<span class="lineNum">     569 </span><span class="lineNoCov">          0 :         return m_pDataSet;</span>
+<span class="lineNum">     570 </span>            : }
+<span class="lineNum">     571 </span>            : 
+<span class="lineNum">     572 </span>            : 
+<span class="lineNum">     573 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     574 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     575 </span>            : //
+<span class="lineNum">     576 </span>            : //
+<span class="lineNum">     577 </span>            : // Returns a new record that can be inserted in the
+<span class="lineNum">     578 </span>            : //  folder
+<span class="lineNum">     579 </span>            : //
+<span class="lineNum">     580 </span>            : //
+<a name="581"><span class="lineNum">     581 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     582 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     583 </span><span class="lineCov">          3 : ptr&lt;directoryRecord&gt; dicomDir::getNewRecord()</span>
+<span class="lineNum">     584 </span>            : {
+<span class="lineNum">     585 </span><span class="lineCov">          3 :         ptr&lt;data&gt; recordsTag(m_pDataSet-&gt;getTag(0x0004, 0, 0x1220, true));</span>
+<span class="lineNum">     586 </span><span class="lineCov">          6 :         ptr&lt;dataSet&gt; recordDataSet(new dataSet);</span>
+<span class="lineNum">     587 </span><span class="lineCov">          3 :         recordsTag-&gt;appendDataSet(recordDataSet);</span>
+<span class="lineNum">     588 </span>            : 
+<span class="lineNum">     589 </span><span class="lineCov">          3 :         ptr&lt;directoryRecord&gt; newRecord(new directoryRecord(recordDataSet));</span>
+<span class="lineNum">     590 </span><span class="lineCov">          3 :         m_recordsList.push_back(newRecord);</span>
+<span class="lineNum">     591 </span>            : 
+<span class="lineNum">     592 </span><span class="lineCov">          6 :         return newRecord;</span>
+<span class="lineNum">     593 </span>            : }
+<span class="lineNum">     594 </span>            : 
+<span class="lineNum">     595 </span>            : 
+<span class="lineNum">     596 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     597 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     598 </span>            : //
+<span class="lineNum">     599 </span>            : //
+<span class="lineNum">     600 </span>            : // Build the a dicom dataset that contain the directory's
+<span class="lineNum">     601 </span>            : //  information.
+<span class="lineNum">     602 </span>            : //
+<span class="lineNum">     603 </span>            : //
+<a name="604"><span class="lineNum">     604 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     605 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     606 </span><span class="lineCov">          1 : ptr&lt;dataSet&gt; dicomDir::buildDataSet()</span>
+<span class="lineNum">     607 </span>            : {
+<span class="lineNum">     608 </span>            :         // Adjust the transfer syntax if it isn't already set
+<span class="lineNum">     609 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     610 </span><span class="lineCov">          1 :         if(m_pDataSet-&gt;getString(0x2, 0, 0x10, 0) == &quot;&quot;)</span>
+<span class="lineNum">     611 </span>            :         {
+<span class="lineNum">     612 </span><span class="lineCov">          1 :                 m_pDataSet-&gt;setString(0x2, 0, 0x10, 0, &quot;1.2.840.10008.1.2.1&quot;);</span>
+<span class="lineNum">     613 </span>            :         }
+<span class="lineNum">     614 </span>            : 
+<span class="lineNum">     615 </span>            :         // Adjust the version if it isn't already set
+<span class="lineNum">     616 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     617 </span><span class="lineCov">          1 :         ptr&lt;handlers::dataHandlerRaw&gt; versionHandler(m_pDataSet-&gt;getDataHandlerRaw(0x2, 0, 0x1, 0, true, &quot;OB&quot;));</span>
+<span class="lineNum">     618 </span><span class="lineCov">          1 :         if(versionHandler-&gt;getSize() != 2)</span>
+<span class="lineNum">     619 </span>            :         {
+<span class="lineNum">     620 </span><span class="lineCov">          1 :                 versionHandler-&gt;setSize(2);</span>
+<span class="lineNum">     621 </span><span class="lineCov">          1 :                 versionHandler-&gt;setUnsignedLong(0, 0);</span>
+<span class="lineNum">     622 </span><span class="lineCov">          1 :                 versionHandler-&gt;setUnsignedLong(1, 1);</span>
+<span class="lineNum">     623 </span>            :         }
+<span class="lineNum">     624 </span><span class="lineCov">          1 :         versionHandler.release();</span>
+<span class="lineNum">     625 </span>            : 
+<span class="lineNum">     626 </span>            :         // Adjust the SOP class UID if it isn't already set
+<span class="lineNum">     627 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     628 </span><span class="lineCov">          1 :         if(m_pDataSet-&gt;getString(0x2, 0, 0x2, 0) == &quot;&quot;)</span>
+<span class="lineNum">     629 </span>            :         {
+<span class="lineNum">     630 </span><span class="lineCov">          1 :                 m_pDataSet-&gt;setString(0x2, 0, 0x2, 0, &quot;1.2.840.10008.1.3.10&quot;);</span>
+<span class="lineNum">     631 </span>            :         }
+<span class="lineNum">     632 </span>            : 
+<span class="lineNum">     633 </span>            :         // Allocate offset fields
+<span class="lineNum">     634 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     635 </span><span class="lineCov">          1 :         if(m_pFirstRootRecord != 0)</span>
+<span class="lineNum">     636 </span>            :         {
+<span class="lineNum">     637 </span><span class="lineCov">          1 :                 m_pFirstRootRecord-&gt;updateOffsets();</span>
+<span class="lineNum">     638 </span>            :         }
+<span class="lineNum">     639 </span><span class="lineCov">          1 :         m_pDataSet-&gt;setUnsignedLong(0x0004, 0, 0x1200, 0, 0);</span>
+<span class="lineNum">     640 </span>            : 
+<span class="lineNum">     641 </span>            : 
+<span class="lineNum">     642 </span>            :         // Save to a null stream in order to update the offsets
+<span class="lineNum">     643 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     644 </span><span class="lineCov">          2 :         ptr&lt;nullStream&gt; saveStream(new nullStream);</span>
+<span class="lineNum">     645 </span><span class="lineCov">          2 :         ptr&lt;streamWriter&gt; writer(new streamWriter(saveStream));</span>
+<span class="lineNum">     646 </span><span class="lineCov">          2 :         ptr&lt;codecs::dicomCodec&gt; writerCodec(new codecs::dicomCodec);</span>
+<span class="lineNum">     647 </span><span class="lineCov">          1 :         writerCodec-&gt;write(writer, m_pDataSet);</span>
+<span class="lineNum">     648 </span>            : 
+<span class="lineNum">     649 </span>            :         // Scan all the records and update the pointers
+<span class="lineNum">     650 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     651 </span><span class="lineCov">          1 :         if(m_pFirstRootRecord != 0)</span>
+<span class="lineNum">     652 </span>            :         {
+<span class="lineNum">     653 </span><span class="lineCov">          1 :                 m_pFirstRootRecord-&gt;updateOffsets();</span>
+<span class="lineNum">     654 </span><span class="lineCov">          1 :                 m_pDataSet-&gt;setUnsignedLong(0x0004, 0, 0x1200, 0, m_pFirstRootRecord-&gt;getRecordDataSet()-&gt;getItemOffset());</span>
+<span class="lineNum">     655 </span>            :         }
+<span class="lineNum">     656 </span>            : 
+<span class="lineNum">     657 </span><span class="lineCov">          2 :         return m_pDataSet;</span>
+<span class="lineNum">     658 </span>            : 
+<span class="lineNum">     659 </span>            : }
+<span class="lineNum">     660 </span>            : 
+<span class="lineNum">     661 </span>            : 
+<span class="lineNum">     662 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     663 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     664 </span>            : //
+<span class="lineNum">     665 </span>            : //
+<span class="lineNum">     666 </span>            : // Returns the first root record
+<span class="lineNum">     667 </span>            : //
+<span class="lineNum">     668 </span>            : //
+<a name="669"><span class="lineNum">     669 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     670 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     671 </span><span class="lineCov">          1 : ptr&lt;directoryRecord&gt; dicomDir::getFirstRootRecord()</span>
+<span class="lineNum">     672 </span>            : {
+<span class="lineNum">     673 </span><span class="lineCov">          1 :         return m_pFirstRootRecord;</span>
+<span class="lineNum">     674 </span>            : }
+<span class="lineNum">     675 </span>            : 
+<span class="lineNum">     676 </span>            : 
+<span class="lineNum">     677 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     678 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     679 </span>            : //
+<span class="lineNum">     680 </span>            : //
+<span class="lineNum">     681 </span>            : // Set the first root record
+<span class="lineNum">     682 </span>            : //
+<span class="lineNum">     683 </span>            : //
+<a name="684"><span class="lineNum">     684 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     685 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     686 </span><span class="lineCov">          2 : void dicomDir::setFirstRootRecord(ptr&lt;directoryRecord&gt; pFirstRootRecord)</span>
+<span class="lineNum">     687 </span>            : {
+<span class="lineNum">     688 </span><span class="lineCov">          2 :         m_pFirstRootRecord = pFirstRootRecord;</span>
+<span class="lineNum">     689 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">     690 </span>            : 
+<span class="lineNum">     691 </span>            : 
+<span class="lineNum">     692 </span>            : 
+<a name="693"><span class="lineNum">     693 </span>            : } // namespace imebra</a>
+<span class="lineNum">     694 </span>            : 
+<span class="lineNum">     695 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

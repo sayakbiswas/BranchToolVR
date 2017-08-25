@@ -1,0 +1,659 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/baseObject.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - baseObject.h<span style="font-size: 80%;"> (source / <a href="baseObject.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">239</td>
+            <td class="headerCovTableEntry">301</td>
+            <td class="headerCovTableEntryMed">79.4 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file baseObject.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the base classes used by the puntoexe library.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(CImbxBaseObject_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define CImbxBaseObject_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;configuration.h&quot;
+<span class="lineNum">      57 </span>            : #include &quot;criticalSection.h&quot;
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : #include &lt;string&gt;
+<span class="lineNum">      60 </span>            : #include &lt;memory&gt;
+<span class="lineNum">      61 </span>            : #include &lt;atomic&gt;
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      64 </span>            : /// \namespace puntoexe
+<span class="lineNum">      65 </span>            : /// \brief The base services and classes are defined
+<span class="lineNum">      66 </span>            : ///         in this namespace.
+<span class="lineNum">      67 </span>            : ///
+<span class="lineNum">      68 </span>            : /// Other namespace in the library are usually children
+<span class="lineNum">      69 </span>            : ///  of this namespace.
+<span class="lineNum">      70 </span>            : ///
+<span class="lineNum">      71 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      72 </span>            : namespace puntoexe
+<span class="lineNum">      73 </span>            : {
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : /// \addtogroup group_baseclasses Base classes
+<span class="lineNum">      76 </span>            : ///
+<span class="lineNum">      77 </span>            : /// The base classes supply basic services like streams,
+<span class="lineNum">      78 </span>            : ///  memory management and exceptions management.
+<span class="lineNum">      79 </span>            : ///
+<span class="lineNum">      80 </span>            : /// They also implement the smart pointer puntoexe::ptr and
+<span class="lineNum">      81 </span>            : ///  the base class puntoexe::baseObject
+<span class="lineNum">      82 </span>            : ///
+<span class="lineNum">      83 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      84 </span>            : /// @{
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : class baseObject;
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span>            : /// \internal
+<span class="lineNum">      89 </span>            : /// \brief This is the base class for the template class
+<span class="lineNum">      90 </span>            : ///         ptr.
+<span class="lineNum">      91 </span>            : ///
+<span class="lineNum">      92 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      93 </span>            : class basePtr
+<span class="lineNum">      94 </span>            : {
+<span class="lineNum">      95 </span>            : protected:
+<span class="lineNum">      96 </span>            :         // Default constructor
+<span class="lineNum">      97 </span>            :         //
+<span class="lineNum">      98 </span>            :         // Set the internal pointer to null.
+<span class="lineNum">      99 </span>            :         //
+<span class="lineNum">     100 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     101 </span>            :         basePtr();
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :         // Construct the ptr object and keeps track of
+<span class="lineNum">     104 </span>            :         //         the object referenced by the pointer pObject.
+<span class="lineNum">     105 </span>            :         //
+<span class="lineNum">     106 </span>            :         // @param pObject a pointer to the allocated object.
+<span class="lineNum">     107 </span>            :         //        The allocated object will be automatically
+<span class="lineNum">     108 </span>            :         //         released by the class' destructor.\n
+<span class="lineNum">     109 </span>            :         //        The object must be allocated by the C++ new
+<span class="lineNum">     110 </span>            :         //         statement.\n
+<span class="lineNum">     111 </span>            :         //        The object's reference counter is increased by
+<span class="lineNum">     112 </span>            :         //         this function.
+<span class="lineNum">     113 </span>            :         //
+<span class="lineNum">     114 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     115 </span>            :         basePtr(baseObject* pObject);
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            : public:
+<span class="lineNum">     118 </span>            :         // The destructor.
+<span class="lineNum">     119 </span>            :         //
+<span class="lineNum">     120 </span>            :         // The reference to the tracked object is decreased
+<span class="lineNum">     121 </span>            :         //  automatically.
+<span class="lineNum">     122 </span>            :         //
+<span class="lineNum">     123 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     124 </span>            :         virtual ~basePtr();
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            :         // Release the tracked object and reset the
+<span class="lineNum">     127 </span>            :         //         internal pointer.
+<span class="lineNum">     128 </span>            :         //
+<span class="lineNum">     129 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     130 </span>            :         void release();
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span>            : protected:
+<span class="lineNum">     133 </span>            :         void addRef();
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span>            :         // A pointer to the tracked object
+<span class="lineNum">     136 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     137 </span>            :         baseObject* object;
+<span class="lineNum">     138 </span>            : };
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     143 </span>            : /// \brief This class represents a shared pointer which
+<span class="lineNum">     144 </span>            : ///         keeps track of the allocated objects that
+<span class="lineNum">     145 </span>            : ///         derive from the class baseObject.
+<span class="lineNum">     146 </span>            : ///
+<span class="lineNum">     147 </span>            : /// Most of the classes in this library derive from
+<span class="lineNum">     148 </span>            : ///  baseObject.
+<span class="lineNum">     149 </span>            : ///
+<span class="lineNum">     150 </span>            : /// When a ptr object is initialized with a pointer
+<span class="lineNum">     151 </span>            : ///  to a baseObject derived object then it increases by 1
+<span class="lineNum">     152 </span>            : ///  the reference counter of baseObject.
+<span class="lineNum">     153 </span>            : ///
+<span class="lineNum">     154 </span>            : /// When ptr goes out of scope (destroyed) then the
+<span class="lineNum">     155 </span>            : ///  reference counter of baseObject is decreased by 1,
+<span class="lineNum">     156 </span>            : ///  and eventually baseObject is destroyed when its
+<span class="lineNum">     157 </span>            : ///  reference counter reaches 0.
+<span class="lineNum">     158 </span>            : ///
+<span class="lineNum">     159 </span>            : ///////////////////////////////////////////////////////////
+<a name="160"><span class="lineNum">     160 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     161 </span>            : template&lt;class objectType&gt;
+<span class="lineNum">     162 </span><span class="lineCov">    2125771 : class ptr: public basePtr</span>
+<span class="lineNum">     163 </span>            : {
+<span class="lineNum">     164 </span>            : public:
+<span class="lineNum">     165 </span>            :         /// \brief Default constructor.
+<span class="lineNum">     166 </span>            :         ///
+<span class="lineNum">     167 </span>            :         /// Set the internal pointer to null.
+<a name="168"><span class="lineNum">     168 </span>            :         ///</a>
+<span class="lineNum">     169 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span><span class="lineCov">     798670 :         ptr(): basePtr(0){}</span>
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :         /// \brief Initializes the ptr object with a reference to
+<span class="lineNum">     173 </span>            :         ///         a baseObject.
+<span class="lineNum">     174 </span>            :         ///
+<span class="lineNum">     175 </span>            :         /// The baseObject's reference counter is increased by
+<span class="lineNum">     176 </span>            :         ///  one: this will keep the baseObject allocate at least
+<span class="lineNum">     177 </span>            :         ///  until ptr stays allocated, release() is called
+<span class="lineNum">     178 </span>            :         ///  or a new baseObject is associated to ptr.
+<span class="lineNum">     179 </span>            :         ///
+<span class="lineNum">     180 </span>            :         /// @param pObject a pointer to the allocated object.
+<span class="lineNum">     181 </span>            :         ///        The allocated object will be automatically
+<span class="lineNum">     182 </span>            :         ///         released by the class' destructor.\n
+<span class="lineNum">     183 </span>            :         ///        The object must be allocated by the C++ new
+<span class="lineNum">     184 </span>            :         ///         statement.\n
+<span class="lineNum">     185 </span>            :         ///        The object's reference counter is increased by
+<span class="lineNum">     186 </span>            :         ///         this function.
+<a name="187"><span class="lineNum">     187 </span>            :         ///</a>
+<span class="lineNum">     188 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     189 </span><span class="lineCov">     447588 :         ptr(objectType* pObject): basePtr(pObject){}</span>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :         /// \brief Copy constructor.
+<span class="lineNum">     192 </span>            :         ///
+<span class="lineNum">     193 </span>            :         /// The object tracked by another ptr is copied into the
+<span class="lineNum">     194 </span>            :         ///  current ptr and the reference counter is increased.
+<span class="lineNum">     195 </span>            :         ///
+<span class="lineNum">     196 </span>            :         /// @param ptrSource  the source ptr object that must be
+<span class="lineNum">     197 </span>            :         ///                    copied into the current \ref ptr.
+<a name="198"><span class="lineNum">     198 </span>            :         ///</a>
+<span class="lineNum">     199 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     200 </span><span class="lineCov">     879526 :         ptr (ptr&lt;objectType&gt; const &amp;ptrSource):</span>
+<span class="lineNum">     201 </span><span class="lineCov">     879526 :                         basePtr(ptrSource.object)</span>
+<span class="lineNum">     202 </span>            :         {
+<span class="lineNum">     203 </span><span class="lineCov">     879526 :         }</span>
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            :         /// \brief Copy the object tracked by another
+<span class="lineNum">     206 </span>            :         ///         \ref ptr.
+<span class="lineNum">     207 </span>            :         ///
+<span class="lineNum">     208 </span>            :         /// @param ptrSource the ptr object that is
+<span class="lineNum">     209 </span>            :         ///         currently tracking the object to be tracked
+<span class="lineNum">     210 </span>            :         ///         by this ptr object.
+<span class="lineNum">     211 </span>            :         ///        The reference counter of the new object is
+<span class="lineNum">     212 </span>            :         ///         increased.
+<span class="lineNum">     213 </span>            :         ///        The object previously tracked by this ptr is
+<span class="lineNum">     214 </span>            :         ///         released.
+<span class="lineNum">     215 </span>            :         /// @return a reference to the ptr object.
+<a name="216"><span class="lineNum">     216 </span>            :         ///</a>
+<span class="lineNum">     217 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     218 </span><span class="lineCov">     745574 :         ptr&lt;objectType&gt;&amp; operator=(const ptr&lt;objectType&gt;&amp; ptrSource)</span>
+<span class="lineNum">     219 </span>            :         {
+<span class="lineNum">     220 </span><span class="lineCov">     745574 :                 if(ptrSource.object != object)</span>
+<span class="lineNum">     221 </span>            :                 {
+<span class="lineNum">     222 </span><span class="lineCov">     714277 :                         release();</span>
+<span class="lineNum">     223 </span><span class="lineCov">     714277 :                         object = ptrSource.object;</span>
+<span class="lineNum">     224 </span><span class="lineCov">     714277 :                         addRef();</span>
+<span class="lineNum">     225 </span>            :                 }
+<span class="lineNum">     226 </span><span class="lineCov">     745574 :                 return *this;</span>
+<span class="lineNum">     227 </span>            :         }
+<span class="lineNum">     228 </span>            : 
+<span class="lineNum">     229 </span>            :         /// \brief Compare the pointer to the tracked object with
+<span class="lineNum">     230 </span>            :         ///         the pointer specified in the parameter.
+<span class="lineNum">     231 </span>            :         ///
+<span class="lineNum">     232 </span>            :         /// @param ptrCompare the pointer to be compared with the
+<span class="lineNum">     233 </span>            :         ///                    pointer to the tracked object
+<span class="lineNum">     234 </span>            :         /// @return true if the ptrCompare pointer is equal to
+<span class="lineNum">     235 </span>            :         ///                    the pointer of the tracked object
+<a name="236"><span class="lineNum">     236 </span>            :         ///</a>
+<span class="lineNum">     237 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     238 </span><span class="lineCov">     927855 :         inline bool operator == (const objectType* ptrCompare) const</span>
+<span class="lineNum">     239 </span>            :         {
+<span class="lineNum">     240 </span><span class="lineCov">     927855 :                 return object == ptrCompare;</span>
+<span class="lineNum">     241 </span>            :         }
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :         /// \brief Compare the pointer to the tracked object with
+<span class="lineNum">     244 </span>            :         ///         the pointer tracked by another ptr.
+<span class="lineNum">     245 </span>            :         ///
+<span class="lineNum">     246 </span>            :         /// @param ptrCompare the ptr tracking the object to be
+<span class="lineNum">     247 </span>            :         ///                    compared
+<span class="lineNum">     248 </span>            :         /// @return true if the ptrCompare pointer is equal to
+<span class="lineNum">     249 </span>            :         ///                    the pointer of the tracked object
+<span class="lineNum">     250 </span>            :         ///
+<span class="lineNum">     251 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     252 </span>            :         inline bool operator == (const ptr&lt;objectType&gt;&amp; ptrCompare) const
+<span class="lineNum">     253 </span>            :         {
+<span class="lineNum">     254 </span>            :                 return object == ptrCompare.object;
+<a name="255"><span class="lineNum">     255 </span>            :         }</a>
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span><span class="lineCov">     195599 :         inline bool operator != (const objectType* ptrCompare) const</span>
+<span class="lineNum">     258 </span>            :         {
+<span class="lineNum">     259 </span><span class="lineCov">     195599 :                 return object != ptrCompare;</span>
+<span class="lineNum">     260 </span>            :         }
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            :         inline bool operator != (const ptr&lt;objectType&gt;&amp; ptrCompare) const
+<span class="lineNum">     263 </span>            :         {
+<span class="lineNum">     264 </span>            :                 return object != ptrCompare.object;
+<span class="lineNum">     265 </span>            :         }
+<span class="lineNum">     266 </span>            : 
+<span class="lineNum">     267 </span>            :         /// \brief Return the pointer to the tracked object.
+<span class="lineNum">     268 </span>            :         ///
+<span class="lineNum">     269 </span>            :         /// @return the pointer to the tracked object
+<a name="270"><span class="lineNum">     270 </span>            :         ///</a>
+<span class="lineNum">     271 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     272 </span><span class="lineCov"> 1152780312 :         inline objectType* operator -&gt;() const</span>
+<span class="lineNum">     273 </span>            :         {
+<span class="lineNum">     274 </span><span class="lineCov"> 1152780312 :                 return static_cast&lt;objectType*&gt;(object);</span>
+<span class="lineNum">     275 </span>            :         }
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :         /// \brief Return the pointer to the tracked object.
+<span class="lineNum">     278 </span>            :         ///
+<span class="lineNum">     279 </span>            :         /// @return the pointer to the tracked object
+<a name="280"><span class="lineNum">     280 </span>            :         ///</a>
+<span class="lineNum">     281 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     282 </span><span class="lineCov">     171354 :         inline objectType* get() const</span>
+<span class="lineNum">     283 </span>            :         {
+<span class="lineNum">     284 </span><span class="lineCov">     171354 :                 return static_cast&lt;objectType*&gt;(object);</span>
+<span class="lineNum">     285 </span>            :         }
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :         /// \brief Return the pointer to the tracked object,
+<span class="lineNum">     288 </span>            :         ///         type casted in the specified class pointer.
+<span class="lineNum">     289 </span>            :         ///
+<span class="lineNum">     290 </span>            :         /// The cast is static, so its validity is checked at
+<span class="lineNum">     291 </span>            :         ///  compile time.
+<span class="lineNum">     292 </span>            :         ///
+<span class="lineNum">     293 </span>            :         /// @return the pointer to the tracked object
+<span class="lineNum">     294 </span>            :         ///
+<a name="295"><span class="lineNum">     295 </span>            :         ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     296 </span>            :         template &lt;class destType&gt;
+<span class="lineNum">     297 </span><span class="lineCov">          6 :                 inline operator destType*() const</span>
+<span class="lineNum">     298 </span>            :         {
+<span class="lineNum">     299 </span><span class="lineCov">          6 :                 return static_cast&lt;destType*&gt;(object);</span>
+<span class="lineNum">     300 </span>            :         }
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span>            :         /// \brief Return a new ptr object tracking the object
+<span class="lineNum">     303 </span>            :         ///         tracked by this ptr. A type cast is performed
+<span class="lineNum">     304 </span>            :         ///         if necessary.
+<span class="lineNum">     305 </span>            :         ///
+<span class="lineNum">     306 </span>            :         /// The type cast is static, so its validity is checked at
+<span class="lineNum">     307 </span>            :         ///  compile time.
+<span class="lineNum">     308 </span>            :         ///
+<span class="lineNum">     309 </span>            :         /// @return the pointer to the tracked object
+<span class="lineNum">     310 </span>            :         ///
+<a name="311"><span class="lineNum">     311 </span>            :         ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     312 </span>            :         template &lt;class destType&gt;
+<span class="lineNum">     313 </span><span class="lineCov">      10054 :                 inline operator ptr&lt;destType&gt;() const</span>
+<span class="lineNum">     314 </span>            :         {
+<span class="lineNum">     315 </span><span class="lineCov">      10054 :                 return ptr&lt;destType&gt;(static_cast&lt;destType*&gt;(object));</span>
+<span class="lineNum">     316 </span>            :         }
+<span class="lineNum">     317 </span>            : };
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            : class lockObject;
+<span class="lineNum">     320 </span>            : class lockMultipleObjects;
+<span class="lineNum">     321 </span>            : class exceptionsManager;
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     324 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     325 </span>            : /// \brief This is the base class of the library.
+<span class="lineNum">     326 </span>            : ///        Almost all the classes in the library are
+<span class="lineNum">     327 </span>            : ///         derived from this one.
+<span class="lineNum">     328 </span>            : ///
+<span class="lineNum">     329 </span>            : /// The class supplies a basic mechanism for multithrading
+<span class="lineNum">     330 </span>            : ///  locking and a reference counter, used by the helper
+<span class="lineNum">     331 </span>            : ///  class \ref ptr.
+<span class="lineNum">     332 </span>            : ///
+<span class="lineNum">     333 </span>            : /// At construction time the reference counter is set to
+<span class="lineNum">     334 </span>            : ///  0 and must be incremented with addRef(); the helper
+<span class="lineNum">     335 </span>            : ///  class ptr does this automatically.\n
+<span class="lineNum">     336 </span>            : ///
+<span class="lineNum">     337 </span>            : /// Use release() to decrement the reference counter.\n
+<span class="lineNum">     338 </span>            : /// The object automatically destroy itself when the
+<span class="lineNum">     339 </span>            : ///  reference counter reaches 0, but only if the function
+<span class="lineNum">     340 </span>            : ///  preDelete() returns true.
+<span class="lineNum">     341 </span>            : ///
+<span class="lineNum">     342 </span>            : /// An object of type baseObject should never be deleted
+<span class="lineNum">     343 </span>            : ///  using the C++ statement &quot;delete&quot;.
+<span class="lineNum">     344 </span>            : ///
+<span class="lineNum">     345 </span>            : /// In order to manage the reference counter easily
+<span class="lineNum">     346 </span>            : ///  your application should use the objects derived from
+<span class="lineNum">     347 </span>            : ///  baseObject through the helper class \ref ptr.
+<span class="lineNum">     348 </span>            : ///
+<span class="lineNum">     349 </span>            : /// The locking mechanism is exposed through the class
+<span class="lineNum">     350 </span>            : ///  lockObject.
+<span class="lineNum">     351 </span>            : ///
+<span class="lineNum">     352 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     353 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     354 </span>            : class baseObject
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span>            :         friend class lockObject;
+<span class="lineNum">     357 </span>            :         friend class lockMultipleObjects;
+<span class="lineNum">     358 </span>            :         friend class basePtr;
+<span class="lineNum">     359 </span>            :         friend class exceptionsManager;
+<span class="lineNum">     360 </span>            : 
+<span class="lineNum">     361 </span>            : public:
+<span class="lineNum">     362 </span>            :     /// \internal
+<span class="lineNum">     363 </span>            :         /// \brief Creates the baseObject object. The reference
+<span class="lineNum">     364 </span>            :         ///         counter is set to 0.
+<span class="lineNum">     365 </span>            :         ///
+<span class="lineNum">     366 </span>            :         /// The object should be unallocated by the release()
+<span class="lineNum">     367 </span>            :         ///  function, not by deleting it using the C++ instruction
+<span class="lineNum">     368 </span>            :         ///  delete.
+<span class="lineNum">     369 </span>            :         ///
+<span class="lineNum">     370 </span>            :         /// In order to avoid mistakes and memory leaks, objects
+<span class="lineNum">     371 </span>            :         ///  derived from baseObject should be assigned to a
+<span class="lineNum">     372 </span>            :         ///  \ref ptr object.
+<span class="lineNum">     373 </span>            :         ///
+<span class="lineNum">     374 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     375 </span>            :         baseObject();
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            :         /// \brief Creates the baseObject object and set an
+<span class="lineNum">     378 </span>            :         ///         external object to be used for the lock.
+<span class="lineNum">     379 </span>            :         ///        The reference counter is set to 0.
+<span class="lineNum">     380 </span>            :         ///
+<span class="lineNum">     381 </span>            :         /// The object should be unallocated by the release()
+<span class="lineNum">     382 </span>            :         ///  function, not by deleting it using the C++ instruction
+<span class="lineNum">     383 </span>            :         ///  delete.
+<span class="lineNum">     384 </span>            :         ///
+<span class="lineNum">     385 </span>            :         /// In order to avoid mistakes and memory leaks, objects
+<span class="lineNum">     386 </span>            :         ///  derived from baseObject should be assigned to a
+<span class="lineNum">     387 </span>            :         ///  \ref ptr object.
+<span class="lineNum">     388 </span>            :         ///
+<span class="lineNum">     389 </span>            :         /// @param externalLock a pointer to the object to use
+<span class="lineNum">     390 </span>            :         ///                      to lock this one
+<span class="lineNum">     391 </span>            :         ///
+<span class="lineNum">     392 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     393 </span>            :         baseObject(const ptr&lt;baseObject&gt;&amp; externalLock);
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span>            :         /// \brief Returns one if the reference count is set to 1.
+<span class="lineNum">     396 </span>            :         ///
+<span class="lineNum">     397 </span>            :         /// @return true if the reference counter is set to 1
+<span class="lineNum">     398 </span>            :         ///
+<span class="lineNum">     399 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     400 </span>            :         bool isReferencedOnce();
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            : protected:
+<span class="lineNum">     403 </span>            :         // The destructor is protected because the object must
+<span class="lineNum">     404 </span>            :         //  be deleted using release()
+<span class="lineNum">     405 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     406 </span>            :         virtual ~baseObject();
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            : private:
+<span class="lineNum">     409 </span>            :         /// \brief Increase the object's references counter.
+<span class="lineNum">     410 </span>            :         ///
+<span class="lineNum">     411 </span>            :         /// This function is called by the smart pointer \ref ptr.
+<span class="lineNum">     412 </span>            :         ///
+<span class="lineNum">     413 </span>            :         /// Each call to addRef() must be matched by a call to
+<span class="lineNum">     414 </span>            :         ///  release().
+<span class="lineNum">     415 </span>            :         ///
+<span class="lineNum">     416 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     417 </span>            :         void addRef();
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span>            :         /// \brief Decreases the object's references counter.
+<span class="lineNum">     420 </span>            :         ///        When the references counter reaches zero, then
+<span class="lineNum">     421 </span>            :         ///         the object is deleted.
+<span class="lineNum">     422 </span>            :         ///
+<span class="lineNum">     423 </span>            :         /// This function is called by the smart pointer \ref ptr.
+<span class="lineNum">     424 </span>            :         ///
+<span class="lineNum">     425 </span>            :         /// See also addRef().
+<span class="lineNum">     426 </span>            :         ///
+<span class="lineNum">     427 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     428 </span>            :         void release();
+<span class="lineNum">     429 </span>            : 
+<span class="lineNum">     430 </span>            :         /// \internal
+<span class="lineNum">     431 </span>            :         /// \brief This function is called by release() before the
+<span class="lineNum">     432 </span>            :         ///         deletion of the object.
+<span class="lineNum">     433 </span>            :         ///
+<span class="lineNum">     434 </span>            :         /// The base version of this function just returns true.
+<span class="lineNum">     435 </span>            :         /// When the function returns true then the function
+<span class="lineNum">     436 </span>            :         ///  release() deletes the object normally when its
+<span class="lineNum">     437 </span>            :         ///  references counter reaches 0, otherwise the object
+<span class="lineNum">     438 </span>            :         ///  will NOT be deleted when the references counter
+<span class="lineNum">     439 </span>            :         ///  reaches 0.
+<span class="lineNum">     440 </span>            :         ///
+<span class="lineNum">     441 </span>            :         /// @return true if the object should be deleted when
+<span class="lineNum">     442 </span>            :         ///          the references counter reaches 0, false if
+<span class="lineNum">     443 </span>            :         ///          the object should NOT be deleted when the
+<span class="lineNum">     444 </span>            :         ///          references counter reaches 0.
+<span class="lineNum">     445 </span>            :         ///
+<span class="lineNum">     446 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     447 </span>            :         virtual bool preDelete();
+<span class="lineNum">     448 </span>            : 
+<span class="lineNum">     449 </span>            :         /// \brief References counter.
+<span class="lineNum">     450 </span>            :         ///
+<span class="lineNum">     451 </span>            :         /// When the object is created it is set to 0, then the
+<span class="lineNum">     452 </span>            :         ///  smart pointer that controls the object increases it
+<span class="lineNum">     453 </span>            :         ///  by calling addRef().
+<span class="lineNum">     454 </span>            :         ///
+<span class="lineNum">     455 </span>            :         /// When the reference counter reaches zero then the object
+<span class="lineNum">     456 </span>            :         ///  is deleted.
+<span class="lineNum">     457 </span>            :         ///
+<span class="lineNum">     458 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     459 </span>            :     volatile std::atomic&lt;long&gt; m_lockCounter;
+<span class="lineNum">     460 </span>            : 
+<span class="lineNum">     461 </span>            :         // Lock/Unlock the objects.
+<span class="lineNum">     462 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     463 </span>            :         void lock();
+<span class="lineNum">     464 </span>            :         void unlock();
+<span class="lineNum">     465 </span>            : 
+<a name="466"><span class="lineNum">     466 </span>            :         bool m_bValid;</a>
+<span class="lineNum">     467 </span>            : 
+<span class="lineNum">     468 </span><span class="lineCov">     244587 :         class CObjectCriticalSection</span>
+<a name="469"><span class="lineNum">     469 </span>            :         {</a>
+<span class="lineNum">     470 </span>            :         public:
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">     244600 :             CObjectCriticalSection(): m_counter(0){}</span></a>
+<a name="472"><span class="lineNum">     472 </span>            :             criticalSection m_criticalSection;</a>
+<span class="lineNum">     473 </span><span class="lineCov">     290552 :             void addRef(){++m_counter;}</span>
+<span class="lineNum">     474 </span><span class="lineCov">     290539 :             void release(){if(--m_counter == 0)delete this;}</span>
+<span class="lineNum">     475 </span>            :         private:
+<span class="lineNum">     476 </span>            :             unsigned long m_counter;
+<span class="lineNum">     477 </span>            :         };
+<span class="lineNum">     478 </span>            :         CObjectCriticalSection* m_pCriticalSection;
+<span class="lineNum">     479 </span>            : 
+<span class="lineNum">     480 </span>            : };
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span>            : 
+<span class="lineNum">     483 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     484 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     485 </span>            : /// \brief Locks the access to an object of type
+<span class="lineNum">     486 </span>            : ///         baseObject.
+<span class="lineNum">     487 </span>            : ///
+<span class="lineNum">     488 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     489 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     490 </span>            : class lockObject
+<span class="lineNum">     491 </span>            : {
+<span class="lineNum">     492 </span>            : public:
+<span class="lineNum">     493 </span>            :         /// \brief Lock the access to the pObject's attributes.
+<span class="lineNum">     494 </span>            :         ///
+<span class="lineNum">     495 </span>            :         /// The lock is per thread: this means that if a lockObject
+<span class="lineNum">     496 </span>            :         ///  successfully locks a baseObject class, then all the
+<span class="lineNum">     497 </span>            :         ///  other threads in the application will enter in a
+<span class="lineNum">     498 </span>            :         ///  wait mode when they try to lock the same object until
+<span class="lineNum">     499 </span>            :         ///  the original lock is released.
+<span class="lineNum">     500 </span>            :         ///
+<span class="lineNum">     501 </span>            :         /// @param pObject a pointer to the object to lock
+<span class="lineNum">     502 </span>            :         ///
+<span class="lineNum">     503 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     504 </span>            :         lockObject(baseObject* pObject);
+<span class="lineNum">     505 </span>            : 
+<span class="lineNum">     506 </span>            :         /// \brief Unlock the access to the locked object.
+<span class="lineNum">     507 </span>            :         ///
+<span class="lineNum">     508 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     509 </span>            :         virtual ~lockObject();
+<span class="lineNum">     510 </span>            : 
+<span class="lineNum">     511 </span>            :         /// \brief Release the lock on the locked object.
+<span class="lineNum">     512 </span>            :         ///
+<span class="lineNum">     513 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     514 </span>            :         void unlock();
+<span class="lineNum">     515 </span>            : 
+<span class="lineNum">     516 </span>            : protected:
+<span class="lineNum">     517 </span>            :         // Pointer to the locked object
+<span class="lineNum">     518 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     519 </span>            :         baseObject* m_pObject;
+<span class="lineNum">     520 </span>            : };
+<span class="lineNum">     521 </span>            : 
+<span class="lineNum">     522 </span>            : 
+<span class="lineNum">     523 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     524 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     525 </span>            : /// \brief Locks the access to several objects of type
+<span class="lineNum">     526 </span>            : ///         baseObject.
+<span class="lineNum">     527 </span>            : ///
+<span class="lineNum">     528 </span>            : /// The class lock ALL the objects listed in the
+<span class="lineNum">     529 </span>            : ///  constructor's parameter.
+<span class="lineNum">     530 </span>            : /// If the objects cannot be locked at once, then all of
+<span class="lineNum">     531 </span>            : ///  them are left unlocked until all of them can be locked
+<span class="lineNum">     532 </span>            : ///  all togheter.
+<span class="lineNum">     533 </span>            : ///
+<span class="lineNum">     534 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     535 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     536 </span>            : class lockMultipleObjects
+<span class="lineNum">     537 </span>            : {
+<span class="lineNum">     538 </span>            : public:
+<span class="lineNum">     539 </span>            :         /// \typedef std::list&lt;ptr&lt;baseObject&gt; &gt; tObjectsList
+<span class="lineNum">     540 </span>            :         /// \brief Represents a std::list of pointers to the
+<span class="lineNum">     541 </span>            :         ///         objects to be locked (see puntoexe::ptr).
+<span class="lineNum">     542 </span>            :         ///
+<span class="lineNum">     543 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     544 </span>            :         typedef std::list&lt;ptr&lt;baseObject&gt; &gt; tObjectsList;
+<span class="lineNum">     545 </span>            : 
+<span class="lineNum">     546 </span>            :         /// \brief Construct the locker and lock all the objects
+<span class="lineNum">     547 </span>            :         ///         listed in the pObjectsList.
+<span class="lineNum">     548 </span>            :         ///
+<span class="lineNum">     549 </span>            :         /// The function looks for the external lockers (if any).
+<span class="lineNum">     550 </span>            :         /// An object may be listed several times in the list.
+<span class="lineNum">     551 </span>            :         ///
+<span class="lineNum">     552 </span>            :         /// @param pObjectsList  a list of pointers to the
+<span class="lineNum">     553 </span>            :         ///                       objects to be locked
+<span class="lineNum">     554 </span>            :         ///
+<span class="lineNum">     555 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     556 </span>            :         lockMultipleObjects(tObjectsList* pObjectsList);
+<span class="lineNum">     557 </span>            : 
+<span class="lineNum">     558 </span>            :         /// \brief Destroy the locker and unlock all the locked
+<span class="lineNum">     559 </span>            :         ///         objects
+<span class="lineNum">     560 </span>            :         ///
+<span class="lineNum">     561 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     562 </span>            :         virtual ~lockMultipleObjects();
+<span class="lineNum">     563 </span>            : 
+<span class="lineNum">     564 </span>            :         /// \brief Unlock all the locked objects
+<span class="lineNum">     565 </span>            :         ///
+<span class="lineNum">     566 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     567 </span>            :         void unlock();
+<span class="lineNum">     568 </span>            : 
+<span class="lineNum">     569 </span>            : protected:
+<span class="lineNum">     570 </span>            :         /// \internal
+<span class="lineNum">     571 </span>            :         /// \brief A list of locked critical sections
+<span class="lineNum">     572 </span>            :         ///
+<span class="lineNum">     573 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     574 </span>            :     std::unique_ptr&lt;tCriticalSectionsList&gt; m_pLockedCS;
+<span class="lineNum">     575 </span>            : };
+<span class="lineNum">     576 </span>            : 
+<span class="lineNum">     577 </span>            : ///@}
+<span class="lineNum">     578 </span>            : 
+<span class="lineNum">     579 </span>            : } // namespace puntoexe
+<span class="lineNum">     580 </span>            : 
+<span class="lineNum">     581 </span>            : 
+<span class="lineNum">     582 </span>            : #endif // !defined(CImbxBaseObject_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+<span class="lineNum">     583 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - tests/jpegCodecTest.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">tests</a> - jpegCodecTest.cpp<span style="font-size: 80%;"> (source / <a href="jpegCodecTest.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">191</td>
+            <td class="headerCovTableEntry">191</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;../library/imebra/include/imebra.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &lt;gtest/gtest.h&gt;
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : namespace puntoexe
+<span class="lineNum">       5 </span>            : {
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : namespace imebra
+<span class="lineNum">       8 </span>            : {
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : namespace tests
+<span class="lineNum">      11 </span>            : {
+<a name="12"><span class="lineNum">      12 </span>            : </a>
+<span class="lineNum">      13 </span>            : // A buffer initialized to a default data type should use the data type OB
+<span class="lineNum">      14 </span><span class="lineCov">          5 : TEST(jpegCodecTest, testBaseline)</span>
+<span class="lineNum">      15 </span>            : {
+<span class="lineNum">      16 </span><span class="lineCov">          3 :         for(int precision=0; precision != 2; ++precision)</span>
+<span class="lineNum">      17 </span>            :         {
+<span class="lineNum">      18 </span><span class="lineCov">          2 :                 ptr&lt;imebra::dataSet&gt; dataset(new imebra::dataSet);</span>
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span><span class="lineCov">          2 :                 std::uint32_t sizeX = 600;</span>
+<span class="lineNum">      21 </span><span class="lineCov">          2 :                 std::uint32_t sizeY = 400;</span>
+<span class="lineNum">      22 </span><span class="lineCov">          4 :                 ptr&lt;image&gt; baselineImage(new image);</span>
+<span class="lineNum">      23 </span><span class="lineCov">          2 :                 baselineImage-&gt;create(sizeX, sizeY, precision == 0 ? image::depthU8 : image::depthU16, L&quot;RGB&quot;, precision == 0 ? 7 : 11);</span>
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            :                 std::uint32_t rowSize, channelsPixelSize, channelsNumber;
+<span class="lineNum">      26 </span><span class="lineCov">          4 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; imageHandler = baselineImage-&gt;getDataHandler(true, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            :                 // Make 3 bands (RGB)
+<span class="lineNum">      29 </span><span class="lineCov">          2 :                 int elementPointer(0);</span>
+<span class="lineNum">      30 </span><span class="lineCov">        802 :                 for(std::uint32_t y=0; y&lt;sizeY; ++y)</span>
+<span class="lineNum">      31 </span>            :                 {
+<span class="lineNum">      32 </span><span class="lineCov">     480800 :                         for(std::uint32_t x=0; x&lt;sizeX; ++x)</span>
+<span class="lineNum">      33 </span>            :                         {
+<span class="lineNum">      34 </span>            :                                 std::int32_t r, g, b;
+<span class="lineNum">      35 </span><span class="lineCov">     480000 :                                 std::uint32_t value = y * (precision == 0 ? 255 : 4095) / sizeY;</span>
+<span class="lineNum">      36 </span><span class="lineCov">     480000 :                                 r = g = 0;</span>
+<span class="lineNum">      37 </span><span class="lineCov">     480000 :                                 b = value;</span>
+<span class="lineNum">      38 </span><span class="lineCov">     480000 :                                 if(x &lt; sizeX - sizeX/3)</span>
+<span class="lineNum">      39 </span>            :                                 {
+<span class="lineNum">      40 </span><span class="lineCov">     320000 :                                         r = 0;</span>
+<span class="lineNum">      41 </span><span class="lineCov">     320000 :                                         g = value;</span>
+<span class="lineNum">      42 </span><span class="lineCov">     320000 :                                         b = 0;</span>
+<span class="lineNum">      43 </span>            :                                 }
+<span class="lineNum">      44 </span><span class="lineCov">     480000 :                                 if(x &lt; sizeX / 3)</span>
+<span class="lineNum">      45 </span>            :                                 {
+<span class="lineNum">      46 </span><span class="lineCov">     160000 :                                         r = value;</span>
+<span class="lineNum">      47 </span><span class="lineCov">     160000 :                                         g = 0;</span>
+<span class="lineNum">      48 </span><span class="lineCov">     160000 :                                         b = 0;</span>
+<span class="lineNum">      49 </span>            :                                 }
+<span class="lineNum">      50 </span><span class="lineCov">     480000 :                                 imageHandler-&gt;setUnsignedLong(elementPointer++, r);</span>
+<span class="lineNum">      51 </span><span class="lineCov">     480000 :                                 imageHandler-&gt;setUnsignedLong(elementPointer++, g);</span>
+<span class="lineNum">      52 </span><span class="lineCov">     480000 :                                 imageHandler-&gt;setUnsignedLong(elementPointer++, b);</span>
+<span class="lineNum">      53 </span>            :                         }
+<span class="lineNum">      54 </span>            :                 }
+<span class="lineNum">      55 </span><span class="lineCov">          2 :                 imageHandler.release();</span>
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span><span class="lineCov">          4 :                 ptr&lt;transforms::colorTransforms::colorTransformsFactory&gt; colorFactory;</span>
+<span class="lineNum">      58 </span><span class="lineCov">          2 :                 colorFactory = transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory();</span>
+<span class="lineNum">      59 </span><span class="lineCov">          4 :                 ptr&lt;transforms::colorTransforms::colorTransform&gt; colorTransform = colorFactory-&gt;getTransform(L&quot;RGB&quot;, L&quot;YBR_FULL&quot;);</span>
+<span class="lineNum">      60 </span><span class="lineCov">          4 :                 ptr&lt;image&gt; ybrImage = colorTransform-&gt;allocateOutputImage(baselineImage, sizeX, sizeY);</span>
+<span class="lineNum">      61 </span><span class="lineCov">          2 :                 colorTransform-&gt;runTransform(baselineImage, 0, 0, sizeX, sizeY, ybrImage, 0, 0);</span>
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineCov">          4 :                 std::wstring fileName;</span>
+<span class="lineNum">      64 </span><span class="lineCov">          2 :                 if(precision == 0)</span>
+<span class="lineNum">      65 </span>            :                 {
+<span class="lineNum">      66 </span><span class="lineCov">          1 :                         fileName = L&quot;testDicomLossyJpeg8bit.dcm&quot;;</span>
+<span class="lineNum">      67 </span><span class="lineCov">          1 :                         dataset-&gt;setImage(0, ybrImage, L&quot;1.2.840.10008.1.2.4.50&quot;, codecs::codec::veryHigh);</span>
+<span class="lineNum">      68 </span>            :                 }
+<span class="lineNum">      69 </span>            :                 else
+<span class="lineNum">      70 </span>            :                 {
+<span class="lineNum">      71 </span><span class="lineCov">          1 :                         fileName = L&quot;testDicomLossyJpeg12bit.dcm&quot;;</span>
+<span class="lineNum">      72 </span><span class="lineCov">          1 :                         dataset-&gt;setImage(0, ybrImage, L&quot;1.2.840.10008.1.2.4.51&quot;, codecs::codec::veryHigh);</span>
+<span class="lineNum">      73 </span>            :                 }
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span><span class="lineCov">          4 :                 ptr&lt;imebra::codecs::dicomCodec&gt; saveDicom(new imebra::codecs::dicomCodec);</span>
+<span class="lineNum">      76 </span><span class="lineCov">          4 :                 ptr&lt;puntoexe::stream&gt; saveDicomStream(new puntoexe::stream);</span>
+<span class="lineNum">      77 </span><span class="lineCov">          2 :                 saveDicomStream-&gt;openFile(fileName, std::ios_base::out | std::ios_base::trunc);</span>
+<span class="lineNum">      78 </span><span class="lineCov">          4 :                 ptr&lt;puntoexe::streamWriter&gt; saveDicomStreamWriter(new puntoexe::streamWriter(saveDicomStream));</span>
+<span class="lineNum">      79 </span><span class="lineCov">          2 :                 saveDicom-&gt;write(saveDicomStreamWriter, dataset);</span>
+<span class="lineNum">      80 </span><span class="lineCov">          2 :                 saveDicomStreamWriter.release();</span>
+<span class="lineNum">      81 </span><span class="lineCov">          2 :                 saveDicomStream.release();</span>
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span><span class="lineCov">          4 :                 ptr&lt;image&gt; checkImage = dataset-&gt;getImage(0);</span>
+<span class="lineNum">      84 </span>            :                 std::uint32_t checkSizeX, checkSizeY;
+<span class="lineNum">      85 </span><span class="lineCov">          2 :                 checkImage-&gt;getSize(&amp;checkSizeX, &amp;checkSizeY);</span>
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span><span class="lineCov">          2 :                 colorTransform = colorFactory-&gt;getTransform(L&quot;YBR_FULL&quot;, L&quot;RGB&quot;);</span>
+<span class="lineNum">      88 </span><span class="lineCov">          4 :                 ptr&lt;image&gt; rgbImage = colorTransform-&gt;allocateOutputImage(checkImage, checkSizeX, checkSizeY);</span>
+<span class="lineNum">      89 </span><span class="lineCov">          2 :                 colorTransform-&gt;runTransform(checkImage, 0, 0, checkSizeX, checkSizeY, rgbImage, 0, 0);</span>
+<span class="lineNum">      90 </span><span class="lineCov">          4 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; rgbHandler = rgbImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      91 </span><span class="lineCov">          4 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; originalHandler = baselineImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            :                 // Compare the buffers. A little difference is allowed
+<span class="lineNum">      94 </span><span class="lineCov">          2 :         EXPECT_EQ(sizeX, checkSizeX);</span>
+<span class="lineNum">      95 </span><span class="lineCov">          2 :         EXPECT_EQ(sizeY, checkSizeY);</span>
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span><span class="lineCov">          2 :                 elementPointer = 0;</span>
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span><span class="lineCov">          2 :                 std::uint32_t difference = 0;</span>
+<span class="lineNum">     100 </span><span class="lineCov">        802 :                 for(std::uint32_t checkY = 0; checkY &lt; sizeY; ++checkY)</span>
+<span class="lineNum">     101 </span>            :                 {
+<span class="lineNum">     102 </span><span class="lineCov">     480800 :                         for(std::uint32_t checkX = 0; checkX &lt; sizeX; ++checkX)</span>
+<span class="lineNum">     103 </span>            :                         {
+<span class="lineNum">     104 </span><span class="lineCov">    1920000 :                                 for(std::uint32_t channel = 3; channel != 0; --channel)</span>
+<span class="lineNum">     105 </span>            :                                 {
+<span class="lineNum">     106 </span><span class="lineCov">    1440000 :                                         std::int32_t value0 = rgbHandler-&gt;getUnsignedLong(elementPointer);</span>
+<span class="lineNum">     107 </span><span class="lineCov">    1440000 :                                         std::int32_t value1 = originalHandler-&gt;getUnsignedLong(elementPointer++);</span>
+<span class="lineNum">     108 </span><span class="lineCov">    1440000 :                                         if(value0 &gt; value1)</span>
+<span class="lineNum">     109 </span>            :                                         {
+<span class="lineNum">     110 </span><span class="lineCov">     122200 :                                                 difference += value0 - value1;</span>
+<span class="lineNum">     111 </span>            :                                         }
+<span class="lineNum">     112 </span>            :                                         else
+<span class="lineNum">     113 </span>            :                                         {
+<span class="lineNum">     114 </span><span class="lineCov">    1317800 :                                                 difference += value1 - value0;</span>
+<span class="lineNum">     115 </span>            :                                         }
+<span class="lineNum">     116 </span>            :                                 }
+<span class="lineNum">     117 </span>            :                         }
+<span class="lineNum">     118 </span>            :                 }
+<span class="lineNum">     119 </span><span class="lineCov">          3 :         ASSERT_LE(difference, sizeX * sizeY);</span>
+<span class="lineNum">     120 </span><span class="lineCov">          2 :         }</span>
+<span class="lineNum">     121 </span>            : }
+<a name="122"><span class="lineNum">     122 </span>            : </a>
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span><span class="lineCov">          5 : TEST(jpegCodecTest, testBaselineSubsampled)</span>
+<span class="lineNum">     125 </span>            : {
+<span class="lineNum">     126 </span><span class="lineCov">          3 :     for(int subsampledX = 0; subsampledX != 2; ++subsampledX)</span>
+<span class="lineNum">     127 </span>            :     {
+<span class="lineNum">     128 </span><span class="lineCov">          6 :         for(int subsampledY = 0; subsampledY != 2; ++subsampledY)</span>
+<span class="lineNum">     129 </span>            :         {
+<span class="lineNum">     130 </span><span class="lineCov">         12 :             for(int interleaved = 0; interleaved != 2; ++interleaved)</span>
+<span class="lineNum">     131 </span>            :             {
+<span class="lineNum">     132 </span><span class="lineCov">          8 :                 std::uint32_t sizeX = 600;</span>
+<span class="lineNum">     133 </span><span class="lineCov">          8 :                 std::uint32_t sizeY = 400;</span>
+<span class="lineNum">     134 </span><span class="lineCov">          8 :                 ptr&lt;image&gt; baselineImage(new image);</span>
+<span class="lineNum">     135 </span><span class="lineCov">          8 :                 baselineImage-&gt;create(sizeX, sizeY, image::depthU8, L&quot;RGB&quot;, 7);</span>
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            :                 std::uint32_t rowSize, channelsPixelSize, channelsNumber;
+<span class="lineNum">     138 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; imageHandler = baselineImage-&gt;getDataHandler(true, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span>            :                 // Make 3 bands (RGB)
+<span class="lineNum">     141 </span><span class="lineCov">          8 :                 std::uint32_t elementNumber(0);</span>
+<span class="lineNum">     142 </span><span class="lineCov">       3208 :                 for(std::uint32_t y=0; y&lt;sizeY; ++y)</span>
+<span class="lineNum">     143 </span>            :                 {
+<span class="lineNum">     144 </span><span class="lineCov">    1923200 :                     for(std::uint32_t x=0; x&lt;sizeX; ++x)</span>
+<span class="lineNum">     145 </span>            :                     {
+<span class="lineNum">     146 </span>            :                         std::int32_t r, g, b;
+<span class="lineNum">     147 </span><span class="lineCov">    1920000 :                         std::uint32_t value = y * 255 / sizeY;</span>
+<span class="lineNum">     148 </span><span class="lineCov">    1920000 :                         r = g = 0;</span>
+<span class="lineNum">     149 </span><span class="lineCov">    1920000 :                         b = value;</span>
+<span class="lineNum">     150 </span><span class="lineCov">    1920000 :                         if(x &lt; sizeX - sizeX/3)</span>
+<span class="lineNum">     151 </span>            :                         {
+<span class="lineNum">     152 </span><span class="lineCov">    1280000 :                             r = 0;</span>
+<span class="lineNum">     153 </span><span class="lineCov">    1280000 :                             g = value;</span>
+<span class="lineNum">     154 </span><span class="lineCov">    1280000 :                             b = 0;</span>
+<span class="lineNum">     155 </span>            :                         }
+<span class="lineNum">     156 </span><span class="lineCov">    1920000 :                         if(x &lt; sizeX / 3)</span>
+<span class="lineNum">     157 </span>            :                         {
+<span class="lineNum">     158 </span><span class="lineCov">     640000 :                             r = value;</span>
+<span class="lineNum">     159 </span><span class="lineCov">     640000 :                             g = 0;</span>
+<span class="lineNum">     160 </span><span class="lineCov">     640000 :                             b = 0;</span>
+<span class="lineNum">     161 </span>            :                         }
+<span class="lineNum">     162 </span><span class="lineCov">    1920000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, r);</span>
+<span class="lineNum">     163 </span><span class="lineCov">    1920000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, g);</span>
+<span class="lineNum">     164 </span><span class="lineCov">    1920000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, b);</span>
+<span class="lineNum">     165 </span>            :                     }
+<span class="lineNum">     166 </span>            :                 }
+<span class="lineNum">     167 </span><span class="lineCov">          8 :                 imageHandler.release();</span>
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span><span class="lineCov">         16 :                 ptr&lt;transforms::colorTransforms::colorTransformsFactory&gt; colorFactory;</span>
+<span class="lineNum">     170 </span><span class="lineCov">          8 :                 colorFactory = transforms::colorTransforms::colorTransformsFactory::getColorTransformsFactory();</span>
+<span class="lineNum">     171 </span><span class="lineCov">         16 :                 ptr&lt;transforms::colorTransforms::colorTransform&gt; colorTransform = colorFactory-&gt;getTransform(L&quot;RGB&quot;, L&quot;YBR_FULL&quot;);</span>
+<span class="lineNum">     172 </span><span class="lineCov">         16 :                 ptr&lt;image&gt; ybrImage = colorTransform-&gt;allocateOutputImage(baselineImage, sizeX, sizeY);</span>
+<span class="lineNum">     173 </span><span class="lineCov">          8 :                 colorTransform-&gt;runTransform(baselineImage, 0, 0, sizeX, sizeY, ybrImage, 0, 0);</span>
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span><span class="lineCov">         16 :                 ptr&lt;memory&gt; streamMemory(new memory);</span>
+<span class="lineNum">     176 </span>            :                 {
+<span class="lineNum">     177 </span><span class="lineCov">          8 :                     ptr&lt;baseStream&gt; writeStream(new memoryStream(streamMemory));</span>
+<span class="lineNum">     178 </span><span class="lineCov">         16 :                     ptr&lt;streamWriter&gt; writer(new streamWriter(writeStream));</span>
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span><span class="lineCov">         16 :                     ptr&lt;codecs::jpegCodec&gt; testCodec(new codecs::jpegCodec);</span>
+<span class="lineNum">     181 </span><span class="lineCov">         16 :                     testCodec-&gt;setImage(writer, ybrImage, L&quot;1.2.840.10008.1.2.4.50&quot;, codecs::codec::medium, &quot;OB&quot;, 8, subsampledX != 0, subsampledY != 0, interleaved != 0, false);</span>
+<span class="lineNum">     182 </span>            :                 }
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineCov">         16 :                 ptr&lt;baseStream&gt; readStream(new memoryStream(streamMemory));</span>
+<span class="lineNum">     185 </span><span class="lineCov">         16 :                 ptr&lt;streamReader&gt; reader(new streamReader(readStream));</span>
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span><span class="lineCov">         16 :                 ptr&lt;codecs::jpegCodec&gt; testCodec(new codecs::jpegCodec);</span>
+<span class="lineNum">     188 </span><span class="lineCov">         16 :                 ptr&lt;dataSet&gt; readDataSet = testCodec-&gt;read(reader);</span>
+<span class="lineNum">     189 </span><span class="lineCov">         16 :                 ptr&lt;image&gt; checkImage = readDataSet-&gt;getImage(0);</span>
+<span class="lineNum">     190 </span>            :                 std::uint32_t checkSizeX, checkSizeY;
+<span class="lineNum">     191 </span><span class="lineCov">          8 :                 checkImage-&gt;getSize(&amp;checkSizeX, &amp;checkSizeY);</span>
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span><span class="lineCov">          8 :                 colorTransform = colorFactory-&gt;getTransform(L&quot;YBR_FULL&quot;, L&quot;RGB&quot;);</span>
+<span class="lineNum">     194 </span><span class="lineCov">         16 :                 ptr&lt;image&gt; rgbImage = colorTransform-&gt;allocateOutputImage(checkImage, checkSizeX, checkSizeY);</span>
+<span class="lineNum">     195 </span><span class="lineCov">          8 :                 colorTransform-&gt;runTransform(checkImage, 0, 0, checkSizeX, checkSizeY, rgbImage, 0, 0);</span>
+<span class="lineNum">     196 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; rgbHandler = rgbImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     197 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; originalHandler = baselineImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            :                 // Compare the buffers. A little difference is allowed
+<span class="lineNum">     200 </span><span class="lineCov">          8 :                 EXPECT_EQ(sizeX, checkSizeX);</span>
+<span class="lineNum">     201 </span><span class="lineCov">          8 :                 EXPECT_EQ(sizeY, checkSizeY);</span>
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span><span class="lineCov">          8 :                 std::uint32_t difference = 0;</span>
+<span class="lineNum">     204 </span><span class="lineCov">          8 :                 elementNumber = 0;</span>
+<span class="lineNum">     205 </span><span class="lineCov">       3208 :                 for(std::uint32_t checkY = 0; checkY &lt; sizeY; ++checkY)</span>
+<span class="lineNum">     206 </span>            :                 {
+<span class="lineNum">     207 </span><span class="lineCov">    1923200 :                     for(std::uint32_t checkX = 0; checkX &lt; sizeX; ++checkX)</span>
+<span class="lineNum">     208 </span>            :                     {
+<span class="lineNum">     209 </span><span class="lineCov">    7680000 :                         for(std::uint32_t channel = 3; channel != 0; --channel)</span>
+<span class="lineNum">     210 </span>            :                         {
+<span class="lineNum">     211 </span><span class="lineCov">    5760000 :                             std::int32_t value0 = rgbHandler-&gt;getUnsignedLong(elementNumber);</span>
+<span class="lineNum">     212 </span><span class="lineCov">    5760000 :                             std::int32_t value1 = originalHandler-&gt;getUnsignedLong(elementNumber++);</span>
+<span class="lineNum">     213 </span><span class="lineCov">    5760000 :                             if(value0 &gt; value1)</span>
+<span class="lineNum">     214 </span>            :                             {
+<span class="lineNum">     215 </span><span class="lineCov">    4000348 :                                 difference += value0 - value1;</span>
+<span class="lineNum">     216 </span>            :                             }
+<span class="lineNum">     217 </span>            :                             else
+<span class="lineNum">     218 </span>            :                             {
+<span class="lineNum">     219 </span><span class="lineCov">    1759652 :                                 difference += value1 - value0;</span>
+<span class="lineNum">     220 </span>            :                             }
+<span class="lineNum">     221 </span>            :                         }
+<span class="lineNum">     222 </span>            :                     }
+<span class="lineNum">     223 </span>            :                 }
+<span class="lineNum">     224 </span><span class="lineCov">          9 :                 ASSERT_LE(difference, sizeX * sizeY * 12);</span>
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span><span class="lineCov">          8 :             }</span>
+<span class="lineNum">     227 </span>            :         }
+<span class="lineNum">     228 </span>            :     }
+<a name="229"><span class="lineNum">     229 </span>            : }</a>
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span><span class="lineCov">          5 : TEST(jpegCodecTest, testLossless)</span>
+<span class="lineNum">     232 </span>            : {
+<span class="lineNum">     233 </span><span class="lineCov">          3 :     for(int interleaved = 0; interleaved != 2; ++interleaved)</span>
+<span class="lineNum">     234 </span>            :     {
+<span class="lineNum">     235 </span><span class="lineCov">          6 :         for(int bits = 8; bits &lt;= 16; bits += 8)</span>
+<span class="lineNum">     236 </span>            :         {
+<span class="lineNum">     237 </span><span class="lineCov">         12 :             for(int firstOrderPrediction = 0; firstOrderPrediction != 2; ++firstOrderPrediction)</span>
+<span class="lineNum">     238 </span>            :             {
+<span class="lineNum">     239 </span><span class="lineCov">          8 :                 ptr&lt;imebra::dataSet&gt; dataset(new imebra::dataSet);</span>
+<span class="lineNum">     240 </span>            : 
+<span class="lineNum">     241 </span><span class="lineCov">          8 :                 std::uint32_t sizeX = 115;</span>
+<span class="lineNum">     242 </span><span class="lineCov">          8 :                 std::uint32_t sizeY = 400;</span>
+<span class="lineNum">     243 </span><span class="lineCov">         16 :                 ptr&lt;image&gt; baselineImage(new image);</span>
+<span class="lineNum">     244 </span><span class="lineCov">          8 :                 baselineImage-&gt;create(sizeX, sizeY, bits == 8 ? image::depthU8 : image::depthU16, L&quot;RGB&quot;, bits - 1);</span>
+<span class="lineNum">     245 </span>            : 
+<span class="lineNum">     246 </span>            :                 std::uint32_t rowSize, channelsPixelSize, channelsNumber;
+<span class="lineNum">     247 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; imageHandler = baselineImage-&gt;getDataHandler(true, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     248 </span>            : 
+<span class="lineNum">     249 </span>            :                 // Make 3 bands (RGB)
+<span class="lineNum">     250 </span><span class="lineCov">          8 :                 std::uint32_t elementNumber(0);</span>
+<span class="lineNum">     251 </span><span class="lineCov">       3208 :                 for(std::uint32_t y=0; y&lt;sizeY; ++y)</span>
+<span class="lineNum">     252 </span>            :                 {
+<span class="lineNum">     253 </span><span class="lineCov">     371200 :                     for(std::uint32_t x=0; x&lt;sizeX; ++x)</span>
+<span class="lineNum">     254 </span>            :                     {
+<span class="lineNum">     255 </span>            :                         std::int32_t r, g, b;
+<span class="lineNum">     256 </span><span class="lineCov">     368000 :                         std::uint32_t value = y * ((std::uint32_t)0x00ff &lt;&lt; (bits - 8)) / sizeY;</span>
+<span class="lineNum">     257 </span><span class="lineCov">     368000 :                         r = g = 0;</span>
+<span class="lineNum">     258 </span><span class="lineCov">     368000 :                         b = value;</span>
+<span class="lineNum">     259 </span><span class="lineCov">     368000 :                         if(x &lt; sizeX - sizeX/3)</span>
+<span class="lineNum">     260 </span>            :                         {
+<span class="lineNum">     261 </span><span class="lineCov">     246400 :                             r = 0;</span>
+<span class="lineNum">     262 </span><span class="lineCov">     246400 :                             g = value;</span>
+<span class="lineNum">     263 </span><span class="lineCov">     246400 :                             b = 0;</span>
+<span class="lineNum">     264 </span>            :                         }
+<span class="lineNum">     265 </span><span class="lineCov">     368000 :                         if(x &lt; sizeX / 3)</span>
+<span class="lineNum">     266 </span>            :                         {
+<span class="lineNum">     267 </span><span class="lineCov">     121600 :                             r = value;</span>
+<span class="lineNum">     268 </span><span class="lineCov">     121600 :                             g = 0;</span>
+<span class="lineNum">     269 </span><span class="lineCov">     121600 :                             b = 0;</span>
+<span class="lineNum">     270 </span>            :                         }
+<span class="lineNum">     271 </span><span class="lineCov">     368000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, r);</span>
+<span class="lineNum">     272 </span><span class="lineCov">     368000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, g);</span>
+<span class="lineNum">     273 </span><span class="lineCov">     368000 :                         imageHandler-&gt;setUnsignedLong(elementNumber++, b);</span>
+<span class="lineNum">     274 </span>            :                     }
+<span class="lineNum">     275 </span>            :                 }
+<span class="lineNum">     276 </span><span class="lineCov">          8 :                 imageHandler.release();</span>
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span><span class="lineCov">         16 :                 std::wstring transferSyntax = (firstOrderPrediction == 0) ? L&quot;1.2.840.10008.1.2.4.57&quot; : L&quot;1.2.840.10008.1.2.4.70&quot;;</span>
+<span class="lineNum">     279 </span><span class="lineCov">         16 :                 ptr&lt;memory&gt; streamMemory(new memory);</span>
+<span class="lineNum">     280 </span>            :                 {
+<span class="lineNum">     281 </span><span class="lineCov">          8 :                     ptr&lt;baseStream&gt; writeStream(new memoryStream(streamMemory));</span>
+<span class="lineNum">     282 </span><span class="lineCov">         16 :                     ptr&lt;streamWriter&gt; writer(new streamWriter(writeStream));</span>
+<span class="lineNum">     283 </span><span class="lineCov">         16 :                     ptr&lt;codecs::jpegCodec&gt; testCodec(new codecs::jpegCodec);</span>
+<span class="lineNum">     284 </span><span class="lineCov">         16 :                     testCodec-&gt;setImage(writer, baselineImage, transferSyntax, codecs::codec::veryHigh, &quot;OB&quot;, bits, false, false, interleaved != 0, false);</span>
+<span class="lineNum">     285 </span>            :                 }
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span><span class="lineCov">         16 :                 ptr&lt;baseStream&gt; readStream(new memoryStream(streamMemory));</span>
+<span class="lineNum">     288 </span><span class="lineCov">         16 :                 ptr&lt;streamReader&gt; reader(new streamReader(readStream));</span>
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span><span class="lineCov">         16 :                 ptr&lt;codecs::jpegCodec&gt; testCodec(new codecs::jpegCodec);</span>
+<span class="lineNum">     291 </span><span class="lineCov">         16 :                 ptr&lt;dataSet&gt; readDataSet = testCodec-&gt;read(reader);</span>
+<span class="lineNum">     292 </span><span class="lineCov">         16 :                 ptr&lt;image&gt; checkImage = readDataSet-&gt;getImage(0);</span>
+<span class="lineNum">     293 </span>            :                 std::uint32_t checkSizeX, checkSizeY;
+<span class="lineNum">     294 </span><span class="lineCov">          8 :                 checkImage-&gt;getSize(&amp;checkSizeX, &amp;checkSizeY);</span>
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; rgbHandler = checkImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     297 </span><span class="lineCov">         16 :                 ptr&lt;handlers::dataHandlerNumericBase&gt; originalHandler = baselineImage-&gt;getDataHandler(false, &amp;rowSize, &amp;channelsPixelSize, &amp;channelsNumber);</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span><span class="lineCov">          8 :                 if(interleaved == 0)</span>
+<span class="lineNum">     300 </span>            :                 {
+<span class="lineNum">     301 </span><span class="lineCov">          4 :                     dataset-&gt;setImage(0, baselineImage, transferSyntax, puntoexe::imebra::codecs::codec::veryHigh);</span>
+<span class="lineNum">     302 </span><span class="lineCov">          4 :                     std::wostringstream fileName;</span>
+<span class="lineNum">     303 </span><span class="lineCov">          4 :                     fileName &lt;&lt; L&quot;dicom_&quot; &lt;&lt; transferSyntax &lt;&lt; L&quot;_bits&quot; &lt;&lt; bits &lt;&lt; L&quot;.dcm&quot;;</span>
+<span class="lineNum">     304 </span><span class="lineCov">          8 :                     ptr&lt;imebra::codecs::dicomCodec&gt; saveDicom(new imebra::codecs::dicomCodec);</span>
+<span class="lineNum">     305 </span><span class="lineCov">          8 :                     ptr&lt;puntoexe::stream&gt; saveDicomStream(new puntoexe::stream);</span>
+<span class="lineNum">     306 </span><span class="lineCov">          4 :                     saveDicomStream-&gt;openFile(fileName.str(), std::ios_base::out | std::ios_base::trunc);</span>
+<span class="lineNum">     307 </span><span class="lineCov">          8 :                     ptr&lt;puntoexe::streamWriter&gt; saveDicomStreamWriter(new puntoexe::streamWriter(saveDicomStream));</span>
+<span class="lineNum">     308 </span><span class="lineCov">          4 :                     saveDicom-&gt;write(saveDicomStreamWriter, dataset);</span>
+<span class="lineNum">     309 </span><span class="lineCov">          4 :                     saveDicomStreamWriter.release();</span>
+<span class="lineNum">     310 </span><span class="lineCov">          8 :                     saveDicomStream.release();</span>
+<span class="lineNum">     311 </span>            :                 }
+<span class="lineNum">     312 </span>            : 
+<span class="lineNum">     313 </span>            :                 // Compare the buffers. No difference is allowed
+<span class="lineNum">     314 </span><span class="lineCov">          8 :                 ASSERT_EQ(sizeX, checkSizeX);</span>
+<span class="lineNum">     315 </span><span class="lineCov">          8 :                 ASSERT_EQ(sizeY, checkSizeY);</span>
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span><span class="lineCov">          8 :                 elementNumber = 0;</span>
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span><span class="lineCov">       3208 :                 for(std::uint32_t checkY = 0; checkY &lt; sizeY; ++checkY)</span>
+<span class="lineNum">     320 </span>            :                 {
+<span class="lineNum">     321 </span><span class="lineCov">     371200 :                     for(std::uint32_t checkX = 0; checkX &lt; sizeX; ++checkX)</span>
+<span class="lineNum">     322 </span>            :                     {
+<span class="lineNum">     323 </span><span class="lineCov">    1472000 :                         for(std::uint32_t channel = 3; channel != 0; --channel)</span>
+<span class="lineNum">     324 </span>            :                         {
+<span class="lineNum">     325 </span><span class="lineCov">    1104000 :                             std::int32_t value0 = originalHandler-&gt;getUnsignedLong(elementNumber);</span>
+<span class="lineNum">     326 </span><span class="lineCov">    1104000 :                             std::int32_t value1 = rgbHandler-&gt;getUnsignedLong(elementNumber++);</span>
+<span class="lineNum">     327 </span><span class="lineCov">    1104000 :                             EXPECT_EQ(value0, value1);</span>
+<span class="lineNum">     328 </span>            :                         }
+<span class="lineNum">     329 </span>            :                     }
+<span class="lineNum">     330 </span>            :                 }
+<span class="lineNum">     331 </span><span class="lineCov">          8 :             }</span>
+<span class="lineNum">     332 </span>            :         }
+<span class="lineNum">     333 </span>            :     }
+<span class="lineNum">     334 </span>            : }
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            : 
+<span class="lineNum">     337 </span>            : } // namespace tests
+<span class="lineNum">     338 </span>            : 
+<a name="339"><span class="lineNum">     339 </span>            : } // namespace imebra</a>
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span><span class="lineCov">          3 : } // namespace puntoexe</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

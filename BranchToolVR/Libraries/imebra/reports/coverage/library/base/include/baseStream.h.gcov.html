@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/base/include/baseStream.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/base/include</a> - baseStream.h<span style="font-size: 80%;"> (source / <a href="baseStream.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryLo">45.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntryLo">34.8 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file baseStream.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the the base class for the streams (memory, file, ...)
+<span class="lineNum">      50 </span>            :             used by the puntoexe library.
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : */
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #if !defined(imebraBaseStream_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+<span class="lineNum">      55 </span>            : #define imebraBaseStream_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &quot;baseObject.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../include/exception.h&quot;
+<span class="lineNum">      59 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      60 </span>            : #include &lt;map&gt;
+<span class="lineNum">      61 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      64 </span>            : //
+<span class="lineNum">      65 </span>            : // Everything is in the namespace puntoexe
+<span class="lineNum">      66 </span>            : //
+<span class="lineNum">      67 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      68 </span>            : namespace puntoexe
+<span class="lineNum">      69 </span>            : {
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : /// \addtogroup group_baseclasses
+<span class="lineNum">      72 </span>            : ///
+<span class="lineNum">      73 </span>            : /// @{
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      76 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      77 </span>            : /// \brief This class represents a stream.
+<span class="lineNum">      78 </span>            : ///
+<span class="lineNum">      79 </span>            : /// Specialized classes derived from this class can
+<span class="lineNum">      80 </span>            : ///  read/write from/to files stored on the computer's
+<span class="lineNum">      81 </span>            : ///  disks, on the network or in memory.
+<span class="lineNum">      82 </span>            : ///
+<span class="lineNum">      83 </span>            : /// The application can read or write into the stream
+<span class="lineNum">      84 </span>            : ///  by using the streamReader or the streamWriter.
+<span class="lineNum">      85 </span>            : ///
+<span class="lineNum">      86 </span>            : /// While this class can be used across several threads,
+<span class="lineNum">      87 </span>            : ///  the streamReader and the streamWriter can be used in
+<span class="lineNum">      88 </span>            : ///  one thread only. This is not a big deal, since one
+<span class="lineNum">      89 </span>            : ///  stream can be connected to several streamReaders and
+<span class="lineNum">      90 </span>            : ///  streamWriters.
+<span class="lineNum">      91 </span>            : ///
+<span class="lineNum">      92 </span>            : /// The library supplies two specialized streams derived
+<span class="lineNum">      93 </span>            : ///  from this class:
+<span class="lineNum">      94 </span>            : /// - puntoexe::stream (used to read or write into physical
+<span class="lineNum">      95 </span>            : ///    files)
+<span class="lineNum">      96 </span>            : /// - puntoexe::memoryStream (used to read or write into
+<span class="lineNum">      97 </span>            : ///    puntoexe::memory objects)
+<span class="lineNum">      98 </span>            : ///
+<a name="99"><span class="lineNum">      99 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     100 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     101 </span><span class="lineCov">       8372 : class baseStream : public baseObject</span>
+<span class="lineNum">     102 </span>            : {
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : public:
+<span class="lineNum">     105 </span>            :         /// \brief Writes raw data into the stream.
+<span class="lineNum">     106 </span>            :         ///
+<span class="lineNum">     107 </span>            :         /// The function is multithreading-safe and is called by
+<span class="lineNum">     108 </span>            :         ///  the streamWriter class when its buffer has to be
+<span class="lineNum">     109 </span>            :         ///  flushed.
+<span class="lineNum">     110 </span>            :         ///
+<span class="lineNum">     111 </span>            :         /// @param startPosition  the position in the file where
+<span class="lineNum">     112 </span>            :         ///                        the data has to be written
+<span class="lineNum">     113 </span>            :         /// @param pBuffer        pointer to the data that has to
+<span class="lineNum">     114 </span>            :         ///                        be written
+<span class="lineNum">     115 </span>            :         /// @param bufferLength   number of bytes in the data 
+<span class="lineNum">     116 </span>            :         ///                        buffer that has to be written
+<span class="lineNum">     117 </span>            :         ///
+<span class="lineNum">     118 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     119 </span>            :         virtual void write(std::uint32_t startPosition, const std::uint8_t* pBuffer, std::uint32_t bufferLength) = 0;
+<span class="lineNum">     120 </span>            :         
+<span class="lineNum">     121 </span>            :         /// \brief Read raw data from the stream.
+<span class="lineNum">     122 </span>            :         ///
+<span class="lineNum">     123 </span>            :         /// The function is multithreading-safe and is called by
+<span class="lineNum">     124 </span>            :         ///  the streamReader class when its buffer has to be
+<span class="lineNum">     125 </span>            :         ///  refilled.
+<span class="lineNum">     126 </span>            :         ///
+<span class="lineNum">     127 </span>            :         /// @param startPosition  the position in the file from
+<span class="lineNum">     128 </span>            :         ///                        which the data has to be read
+<span class="lineNum">     129 </span>            :         /// @param pBuffer        a pointer to the memory where the
+<span class="lineNum">     130 </span>            :         ///                        read data has to be placed
+<span class="lineNum">     131 </span>            :         /// @param bufferLength   the number of bytes to read from
+<span class="lineNum">     132 </span>            :         ///                        the file
+<span class="lineNum">     133 </span>            :         /// @return the number of bytes read from the file. When
+<span class="lineNum">     134 </span>            :         ///          it is 0 then the end of the file has been
+<span class="lineNum">     135 </span>            :         ///          reached
+<span class="lineNum">     136 </span>            :         ///
+<span class="lineNum">     137 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     138 </span>            :         virtual std::uint32_t read(std::uint32_t startPosition, std::uint8_t* pBuffer, std::uint32_t bufferLength) = 0;
+<span class="lineNum">     139 </span>            : };
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     143 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     144 </span>            : /// \brief The base exception for all the exceptions
+<span class="lineNum">     145 </span>            : ///         thrown by the function in baseStream.
+<span class="lineNum">     146 </span>            : ///
+<a name="147"><span class="lineNum">     147 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     148 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     149 </span><span class="lineCov">          6 : class streamException: public std::runtime_error</span>
+<a name="150"><span class="lineNum">     150 </span>            : {</a>
+<span class="lineNum">     151 </span>            : public:
+<span class="lineNum">     152 </span><span class="lineCov">          4 :         streamException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     153 </span>            : };
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            : 
+<span class="lineNum">     156 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     157 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     158 </span>            : /// \brief Exception thrown when the stream cannot be
+<span class="lineNum">     159 </span>            : ///         open.
+<a name="160"><span class="lineNum">     160 </span>            : ///</a>
+<span class="lineNum">     161 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     162 </span><span class="lineCov">          3 : class streamExceptionOpen : public streamException</span>
+<a name="163"><span class="lineNum">     163 </span>            : {</a>
+<span class="lineNum">     164 </span>            : public:
+<span class="lineNum">     165 </span><span class="lineCov">          1 :         streamExceptionOpen(const std::string&amp; message): streamException(message){}</span>
+<span class="lineNum">     166 </span>            : };
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     171 </span>            : /// \brief Exception thrown when there is an error during
+<span class="lineNum">     172 </span>            : ///         the read phase.
+<span class="lineNum">     173 </span>            : ///
+<a name="174"><span class="lineNum">     174 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     175 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 : class streamExceptionRead : public streamException</span>
+<a name="177"><span class="lineNum">     177 </span>            : {</a>
+<span class="lineNum">     178 </span>            : public:
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :         streamExceptionRead(const std::string&amp; message): streamException(message){}</span>
+<span class="lineNum">     180 </span>            : };
+<span class="lineNum">     181 </span>            : 
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     184 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     185 </span>            : /// \brief Exception thrown when there is an error during
+<span class="lineNum">     186 </span>            : ///         the write phase.
+<span class="lineNum">     187 </span>            : ///
+<a name="188"><span class="lineNum">     188 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     189 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     190 </span><span class="lineNoCov">          0 : class streamExceptionWrite : public streamException</span>
+<a name="191"><span class="lineNum">     191 </span>            : {</a>
+<span class="lineNum">     192 </span>            : public:
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :         streamExceptionWrite(const std::string&amp; message): streamException(message){}</span>
+<span class="lineNum">     194 </span>            : };
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     198 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     199 </span>            : /// \brief Exception thrown when there are problems during
+<span class="lineNum">     200 </span>            : ///         the closure of the stream.
+<span class="lineNum">     201 </span>            : ///
+<a name="202"><span class="lineNum">     202 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     203 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 : class streamExceptionClose : public streamException</span>
+<a name="205"><span class="lineNum">     205 </span>            : {</a>
+<span class="lineNum">     206 </span>            : public:
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :         streamExceptionClose(const std::string&amp; message): streamException(message){}</span>
+<span class="lineNum">     208 </span>            : };
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            : ///@}
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            : } // namespace puntoexe
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            : #endif // !defined(imebraBaseStream_3146DA5A_5276_4804_B9AB_A3D54C6B123A__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

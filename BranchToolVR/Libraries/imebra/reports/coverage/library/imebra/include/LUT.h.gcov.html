@@ -1,0 +1,424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/LUT.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - LUT.h<span style="font-size: 80%;"> (source / <a href="LUT.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryLo">20.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file LUT.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the class lut.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraLUT_C2D59748_5D38_4b12_BA16_5EC22DA7C0E7__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraLUT_C2D59748_5D38_4b12_BA16_5EC22DA7C0E7__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &lt;map&gt;
+<span class="lineNum">      57 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      61 </span>            : //
+<span class="lineNum">      62 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">      63 </span>            : //
+<span class="lineNum">      64 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      65 </span>            : namespace puntoexe
+<span class="lineNum">      66 </span>            : {
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : namespace imebra
+<span class="lineNum">      69 </span>            : {
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : namespace handlers
+<span class="lineNum">      72 </span>            : {
+<span class="lineNum">      73 </span>            :         class dataHandler;
+<span class="lineNum">      74 </span>            : }
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : /// \addtogroup group_image
+<span class="lineNum">      77 </span>            : ///
+<span class="lineNum">      78 </span>            : /// @{
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      81 </span>            : /// \brief Represents a Lookup table (LUT).
+<span class="lineNum">      82 </span>            : ///
+<span class="lineNum">      83 </span>            : /// The lookup table maps a value stored into an image
+<span class="lineNum">      84 </span>            : ///  into another value that must be used for the
+<span class="lineNum">      85 </span>            : ///  visualization or for the analysis of the image.
+<span class="lineNum">      86 </span>            : ///
+<span class="lineNum">      87 </span>            : /// 3 lookups tables can be joined together to form a
+<span class="lineNum">      88 </span>            : ///  color palette.
+<span class="lineNum">      89 </span>            : ///
+<span class="lineNum">      90 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      91 </span>            : class lut : public baseObject
+<span class="lineNum">      92 </span>            : {
+<span class="lineNum">      93 </span>            : public:
+<a name="94"><span class="lineNum">      94 </span>            :         // Constructor</a>
+<span class="lineNum">      95 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      96 </span><span class="lineCov">          3 :         lut():</span>
+<span class="lineNum">      97 </span>            :           m_size(0),
+<span class="lineNum">      98 </span>            :                 m_firstMapped(0),
+<span class="lineNum">      99 </span>            :                 m_bits(0),
+<span class="lineNum">     100 </span>            :                 m_bChecked(false),
+<span class="lineNum">     101 </span>            :                 m_bValid(false),
+<span class="lineNum">     102 </span><span class="lineCov">          3 :                 m_pMappedValues(0){}</span>
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span>            :         /// \brief Initializes the lut with the values stored in
+<span class="lineNum">     106 </span>            :         ///         three data handlers, usually retrieved from
+<span class="lineNum">     107 </span>            :         ///         a dataset.
+<span class="lineNum">     108 </span>            :         ///
+<span class="lineNum">     109 </span>            :         /// @param pDescriptor   the handler that manages the
+<span class="lineNum">     110 </span>            :         ///                       lut descriptor (size, first
+<span class="lineNum">     111 </span>            :         ///                       mapped value and number of bits)
+<span class="lineNum">     112 </span>            :         /// @param pData         the handler that manages the
+<span class="lineNum">     113 </span>            :         ///                       lut data
+<span class="lineNum">     114 </span>            :         /// @param description   a string that describes the
+<span class="lineNum">     115 </span>            :         ///                       lut
+<span class="lineNum">     116 </span>            :         ///
+<span class="lineNum">     117 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     118 </span>            :         void setLut(ptr&lt;handlers::dataHandler&gt; pDescriptor, ptr&lt;handlers::dataHandler&gt; pData, std::wstring description);
+<span class="lineNum">     119 </span>            : 
+<span class="lineNum">     120 </span>            :         /// \brief Create an empty lut.
+<span class="lineNum">     121 </span>            :         ///
+<span class="lineNum">     122 </span>            :         /// Subsequent calls to setLutValue() must be made in
+<span class="lineNum">     123 </span>            :         ///  order to fill the lut with the data.
+<span class="lineNum">     124 </span>            :         ///
+<span class="lineNum">     125 </span>            :         /// @param size          the number of mapped values that
+<span class="lineNum">     126 </span>            :         ///                       will be set by setLutValue()
+<span class="lineNum">     127 </span>            :         /// @param firstMapped   the id of the first mapped value
+<span class="lineNum">     128 </span>            :         /// @param bits          the number of bits to use to
+<span class="lineNum">     129 </span>            :         ///                       store the mapped values
+<span class="lineNum">     130 </span>            :         /// @param description   a string that describes the lut
+<span class="lineNum">     131 </span>            :         ///
+<span class="lineNum">     132 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     133 </span>            :         void create(std::uint32_t size, std::int32_t firstMapped, std::uint8_t bits, std::wstring description);
+<span class="lineNum">     134 </span>            : 
+<span class="lineNum">     135 </span>            :         /// \brief Store a mapped value in the lut.
+<span class="lineNum">     136 </span>            :         ///
+<span class="lineNum">     137 </span>            :         /// This function has to be called if the lut has been
+<span class="lineNum">     138 </span>            :         ///  created by create().
+<span class="lineNum">     139 </span>            :         ///
+<span class="lineNum">     140 </span>            :         /// Call this function for every mapped value that must be
+<span class="lineNum">     141 </span>            :         ///  stored in the lut.
+<span class="lineNum">     142 </span>            :         ///
+<span class="lineNum">     143 </span>            :         /// @param startValue   the id of the mapped value
+<span class="lineNum">     144 </span>            :         /// @param lutValue     the mapped value
+<span class="lineNum">     145 </span>            :         ///
+<span class="lineNum">     146 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     147 </span>            :         void setLutValue(std::int32_t startValue, std::int32_t lutValue);
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            :         /// \brief Fill the data handlers with the lut's descriptor
+<span class="lineNum">     150 </span>            :         ///         and the lut's data.
+<span class="lineNum">     151 </span>            :         ///
+<span class="lineNum">     152 </span>            :         /// This function is usually called when a lut has to be
+<span class="lineNum">     153 </span>            :         ///  written in a dataSet.
+<span class="lineNum">     154 </span>            :         ///
+<span class="lineNum">     155 </span>            :         /// @param pDescriptor   the data handler that manages the
+<span class="lineNum">     156 </span>            :         ///                       buffer that will store the lut
+<span class="lineNum">     157 </span>            :         ///                       descriptor
+<span class="lineNum">     158 </span>            :         /// @param pData         the data handler that manages the
+<span class="lineNum">     159 </span>            :         ///                       buffer that will store the lut
+<span class="lineNum">     160 </span>            :         ///                       data
+<span class="lineNum">     161 </span>            :         ///
+<span class="lineNum">     162 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     163 </span>            :         void fillHandlers(ptr&lt;handlers::dataHandler&gt; pDescriptor, ptr&lt;handlers::dataHandler&gt; pData);
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :         /// \brief Return the lut's description.
+<span class="lineNum">     166 </span>            :         ///
+<span class="lineNum">     167 </span>            :         /// @return the lut description
+<span class="lineNum">     168 </span>            :         ///
+<span class="lineNum">     169 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     170 </span>            :         std::wstring getDescription();
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :         /// \brief Return the number of bits used to store a mapped
+<span class="lineNum">     173 </span>            :         ///         value.
+<span class="lineNum">     174 </span>            :         ///
+<span class="lineNum">     175 </span>            :         /// @return the number of bits used to store a mapped value
+<span class="lineNum">     176 </span>            :         ///
+<span class="lineNum">     177 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     178 </span>            :         std::uint8_t getBits();
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            :         /// \brief Return the lut's size.
+<span class="lineNum">     181 </span>            :         ///
+<span class="lineNum">     182 </span>            :         /// @return the number of mapped value stored in the lut
+<span class="lineNum">     183 </span>            :         ///
+<span class="lineNum">     184 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     185 </span>            :         std::uint32_t getSize();
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :         /// \brief Checks if the data in the LUT is consistent
+<span class="lineNum">     188 </span>            :         ///         with the number of bits specified in number
+<span class="lineNum">     189 </span>            :         ///         of bits.
+<span class="lineNum">     190 </span>            :         ///
+<span class="lineNum">     191 </span>            :         /// @return true if the data is correct, false otherwise
+<span class="lineNum">     192 </span>            :         ///
+<span class="lineNum">     193 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     194 </span>            :         bool checkValidDataRange();
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :         /// \brief Return the id of the first mapped value
+<span class="lineNum">     197 </span>            :         ///
+<span class="lineNum">     198 </span>            :         /// @return the id of the first mapped value
+<span class="lineNum">     199 </span>            :         ///
+<span class="lineNum">     200 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     201 </span>            :         std::int32_t getFirstMapped();
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span>            :         /// \brief Retrieve the value mapped by the specified id.
+<span class="lineNum">     204 </span>            :         ///
+<span class="lineNum">     205 </span>            :         /// @param  id the id to look for
+<span class="lineNum">     206 </span>            :         /// @return the value mapped by the specified id
+<span class="lineNum">     207 </span>            :         ///
+<span class="lineNum">     208 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     209 </span>            :         std::int32_t mappedValue(std::int32_t id);
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span>            :         /// \brief Retrieve tha id that maps the specified value.
+<span class="lineNum">     212 </span>            :         ///
+<span class="lineNum">     213 </span>            :         /// @param  lutValue the value to look for in the lut
+<span class="lineNum">     214 </span>            :         /// @return the id that maps the specified value
+<span class="lineNum">     215 </span>            :         ///
+<span class="lineNum">     216 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     217 </span>            :         std::int32_t mappedValueRev(std::int32_t lutValue);
+<span class="lineNum">     218 </span>            : 
+<span class="lineNum">     219 </span>            :         /// \brief Copy the lut's data into an std::int32_t array.
+<span class="lineNum">     220 </span>            :         ///
+<span class="lineNum">     221 </span>            :         /// @param pDestination a pointer to the first element of
+<span class="lineNum">     222 </span>            :         ///                      the std::int32_t array
+<span class="lineNum">     223 </span>            :         /// @param destSize     the size of the array, in elements
+<span class="lineNum">     224 </span>            :         /// @param pFirstMapped a pointer to a variable that this
+<span class="lineNum">     225 </span>            :         ///                      function will fill with the id
+<span class="lineNum">     226 </span>            :         ///                      of the first mapped element
+<span class="lineNum">     227 </span>            :         ///
+<span class="lineNum">     228 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     229 </span>            :         void copyToInt32(std::int32_t* pDestination, std::uint32_t destSize, std::int32_t* pFirstMapped);
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span>            : protected:
+<span class="lineNum">     232 </span>            :         // Destructor
+<span class="lineNum">     233 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     234 </span>            :         virtual ~lut();
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span>            :         std::uint32_t m_size;
+<span class="lineNum">     237 </span>            :         std::int32_t m_firstMapped;
+<span class="lineNum">     238 </span>            :         std::uint8_t m_bits;
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :         bool m_bChecked;
+<span class="lineNum">     241 </span>            :         bool m_bValid;
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :         std::wstring m_description;
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span>            :         std::int32_t* m_pMappedValues;
+<span class="lineNum">     246 </span>            :         std::map&lt;std::int32_t, std::int32_t&gt; m_mappedValuesRev;
+<span class="lineNum">     247 </span>            : };
+<span class="lineNum">     248 </span>            : 
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            : /// \brief Represents an RGB color palette.
+<span class="lineNum">     251 </span>            : ///
+<span class="lineNum">     252 </span>            : /// A color palette uses 3 lut objects to represent the
+<span class="lineNum">     253 </span>            : ///  colors.
+<a name="254"><span class="lineNum">     254 </span>            : ///</a>
+<span class="lineNum">     255 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     256 </span><span class="lineCov">          2 : class palette: public baseObject</span>
+<span class="lineNum">     257 </span>            : {
+<span class="lineNum">     258 </span>            : public:
+<span class="lineNum">     259 </span>            :     /// \brief Construct the color palette.
+<span class="lineNum">     260 </span>            :     ///
+<span class="lineNum">     261 </span>            :     /// @param red   the lut containing the red components
+<span class="lineNum">     262 </span>            :     /// @param green the lut containing the green components
+<span class="lineNum">     263 </span>            :     /// @param blue  the lut containing the blue components
+<span class="lineNum">     264 </span>            :     ///
+<span class="lineNum">     265 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     266 </span>            :     palette(ptr&lt;lut&gt; red, ptr&lt;lut&gt; green, ptr&lt;lut&gt; blue);
+<span class="lineNum">     267 </span>            : 
+<span class="lineNum">     268 </span>            :     /// \brief Set the luts that form the color palette.
+<span class="lineNum">     269 </span>            :     ///
+<span class="lineNum">     270 </span>            :     /// @param red   the lut containing the red components
+<span class="lineNum">     271 </span>            :     /// @param green the lut containing the green components
+<span class="lineNum">     272 </span>            :     /// @param blue  the lut containing the blue components
+<span class="lineNum">     273 </span>            :     ///
+<span class="lineNum">     274 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     275 </span>            :     void setLuts(ptr&lt;lut&gt; red, ptr&lt;lut&gt; green, ptr&lt;lut&gt; blue);
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :     /// \brief Retrieve the lut containing the red components.
+<span class="lineNum">     278 </span>            :     ///
+<span class="lineNum">     279 </span>            :     /// @return the lut containing the red components
+<span class="lineNum">     280 </span>            :     ///
+<span class="lineNum">     281 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     282 </span>            :     ptr&lt;lut&gt; getRed();
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            :     /// \brief Retrieve the lut containing the green components.
+<span class="lineNum">     285 </span>            :     ///
+<span class="lineNum">     286 </span>            :     /// @return the lut containing the green components
+<span class="lineNum">     287 </span>            :     ///
+<span class="lineNum">     288 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     289 </span>            :     ptr&lt;lut&gt; getGreen();
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span>            :     /// \brief Retrieve the lut containing the blue components.
+<span class="lineNum">     292 </span>            :     ///
+<span class="lineNum">     293 </span>            :     /// @return the lut containing the blue components
+<span class="lineNum">     294 </span>            :     ///
+<span class="lineNum">     295 </span>            :     ///////////////////////////////////////////////////////////
+<span class="lineNum">     296 </span>            :     ptr&lt;lut&gt; getBlue();
+<span class="lineNum">     297 </span>            : 
+<span class="lineNum">     298 </span>            : protected:
+<span class="lineNum">     299 </span>            :     ptr&lt;lut&gt; m_redLut;
+<span class="lineNum">     300 </span>            :     ptr&lt;lut&gt; m_greenLut;
+<span class="lineNum">     301 </span>            :     ptr&lt;lut&gt; m_blueLut;
+<span class="lineNum">     302 </span>            : };
+<span class="lineNum">     303 </span>            : 
+<span class="lineNum">     304 </span>            : 
+<span class="lineNum">     305 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     306 </span>            : /// \brief This is the base class for the exceptions thrown
+<span class="lineNum">     307 </span>            : ///         by the lut class
+<a name="308"><span class="lineNum">     308 </span>            : ///</a>
+<span class="lineNum">     309 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     310 </span><span class="lineNoCov">          0 : class lutException: public std::runtime_error</span>
+<a name="311"><span class="lineNum">     311 </span>            : {</a>
+<span class="lineNum">     312 </span>            : public:
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :         lutException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     314 </span>            : };
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     318 </span>            : /// \brief This exception is thrown by the lut class when
+<span class="lineNum">     319 </span>            : ///         the wrong index or id is specified as a
+<span class="lineNum">     320 </span>            : ///         parameter.
+<a name="321"><span class="lineNum">     321 </span>            : ///</a>
+<span class="lineNum">     322 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 : class lutExceptionWrongIndex: public lutException</span>
+<a name="324"><span class="lineNum">     324 </span>            : {</a>
+<span class="lineNum">     325 </span>            : public:
+<span class="lineNum">     326 </span><span class="lineNoCov">          0 :         lutExceptionWrongIndex(const std::string&amp; message): lutException(message){}</span>
+<span class="lineNum">     327 </span>            : };
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span>            : 
+<span class="lineNum">     330 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     331 </span>            : /// \brief This exception is thrown by the lut class when
+<span class="lineNum">     332 </span>            : ///         the the LUT information is corrupted.
+<a name="333"><span class="lineNum">     333 </span>            : ///</a>
+<span class="lineNum">     334 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     335 </span><span class="lineNoCov">          0 : class lutExceptionCorrupted: public lutException</span>
+<a name="336"><span class="lineNum">     336 </span>            : {</a>
+<span class="lineNum">     337 </span>            : public:
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :         lutExceptionCorrupted(const std::string&amp; message): lutException(message){}</span>
+<span class="lineNum">     339 </span>            : };
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span>            : /// @}
+<span class="lineNum">     342 </span>            : 
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            : } // namespace imebra
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span>            : } // namespace puntoexe
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            : #endif // !defined(imebraLUT_C2D59748_5D38_4b12_BA16_5EC22DA7C0E7__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

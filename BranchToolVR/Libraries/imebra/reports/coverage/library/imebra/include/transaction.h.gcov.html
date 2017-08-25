@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/transaction.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - transaction.h<span style="font-size: 80%;"> (source / <a href="transaction.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file transaction.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the classes that allow to use the transactions
+<span class="lineNum">      50 </span>            :             on the writing handlers (see dataHandler).
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : */
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #if !defined(CImbxTransaction_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+<span class="lineNum">      55 </span>            : #define CImbxTransaction_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &quot;../../base/include/configuration.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      59 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : #include &quot;dataHandler.h&quot;
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : #include &lt;typeinfo&gt;
+<span class="lineNum">      64 </span>            : #include &lt;map&gt;
+<span class="lineNum">      65 </span>            : #include &lt;list&gt;
+<span class="lineNum">      66 </span>            : #include &lt;thread&gt;
+<span class="lineNum">      67 </span>            : 
+<span class="lineNum">      68 </span>            : namespace puntoexe
+<span class="lineNum">      69 </span>            : {
+<span class="lineNum">      70 </span>            : 
+<span class="lineNum">      71 </span>            : namespace imebra
+<span class="lineNum">      72 </span>            : {
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            : class transaction;
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      77 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      78 </span>            : /// \internal
+<span class="lineNum">      79 </span>            : /// \brief Manages the transactions.
+<span class="lineNum">      80 </span>            : ///
+<a name="81"><span class="lineNum">      81 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      82 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      83 </span><span class="lineCov">          1 : class transactionsManager</span>
+<span class="lineNum">      84 </span>            : {
+<span class="lineNum">      85 </span>            : public:
+<a name="86"><span class="lineNum">      86 </span>            :         // Constructor</a>
+<span class="lineNum">      87 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">      88 </span><span class="lineCov">          1 :         transactionsManager(): m_lockObject(new baseObject){}</span>
+<span class="lineNum">      89 </span>            : 
+<span class="lineNum">      90 </span>            :     static bool addTransaction(std::thread::id threadId, transaction* pTransaction);
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            :     static void removeTransaction(std::thread::id threadId);
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            :         static void addHandlerToTransaction(ptr&lt;handlers::dataHandler&gt; newHandler);
+<span class="lineNum">      95 </span>            : 
+<span class="lineNum">      96 </span>            : protected:
+<span class="lineNum">      97 </span>            :         // Return a pointer to the statically allocated
+<span class="lineNum">      98 </span>            :         //         instance of transactionsManager.
+<span class="lineNum">      99 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     100 </span>            :         static transactionsManager* getTransactionsManager();
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span>            :         typedef std::list&lt;transaction*&gt; tTransactionsStack;
+<span class="lineNum">     103 </span>            :     typedef std::map&lt;std::thread::id, tTransactionsStack&gt; tTransactionsMap;
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span>            :         tTransactionsMap m_transactions;
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :         ptr&lt;baseObject&gt; m_lockObject;
+<span class="lineNum">     108 </span>            : };
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     111 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     112 </span>            : /// \brief Represents a single transaction.
+<span class="lineNum">     113 </span>            : ///
+<span class="lineNum">     114 </span>            : /// When a transaction is created it is inserted into
+<span class="lineNum">     115 </span>            : ///  the current thread's transactions stack; the 
+<span class="lineNum">     116 </span>            : ///  transaction object on the top of the stack will be
+<span class="lineNum">     117 </span>            : ///  used by all the writing handlers (see dataHandler)
+<span class="lineNum">     118 </span>            : ///  created AFTER the transaction's creation.
+<span class="lineNum">     119 </span>            : ///
+<span class="lineNum">     120 </span>            : /// The writing handlers that are included in a transaction
+<span class="lineNum">     121 </span>            : ///  don't write the modified data back to the buffer
+<span class="lineNum">     122 </span>            : ///  when they go out of scope, but when the first 
+<span class="lineNum">     123 </span>            : ///  committing transaction goes out of scope.
+<span class="lineNum">     124 </span>            : ///
+<span class="lineNum">     125 </span>            : /// The transaction writes the data back to the buffers in
+<span class="lineNum">     126 </span>            : ///  two phases:
+<span class="lineNum">     127 </span>            : ///  - the first phase build the data for all the buffers
+<span class="lineNum">     128 </span>            : ///    and check for errors
+<span class="lineNum">     129 </span>            : ///  - if there are no errors in the first phase then the
+<span class="lineNum">     130 </span>            : ///    second phase commits all the changes and the
+<span class="lineNum">     131 </span>            : ///    modifications are finalized.
+<span class="lineNum">     132 </span>            : ///
+<span class="lineNum">     133 </span>            : /// If the transaction is aborted or an unhandled exception
+<span class="lineNum">     134 </span>            : ///  is thrown inside a transaction block (see the 
+<span class="lineNum">     135 </span>            : ///  transaction macros) then all the modifications are 
+<span class="lineNum">     136 </span>            : ///  rolled back and no changes are written back to the 
+<span class="lineNum">     137 </span>            : ///  buffers.
+<span class="lineNum">     138 </span>            : ///
+<span class="lineNum">     139 </span>            : /// Transactions should be used through the macros
+<span class="lineNum">     140 </span>            : /// - IMEBRA_TRANSACTION_START()
+<span class="lineNum">     141 </span>            : /// - IMEBRA_COMMIT_TRANSACTION_START()
+<span class="lineNum">     142 </span>            : /// - IMEBRA_TRANSACTION_END()
+<span class="lineNum">     143 </span>            : /// - IMEBRA_TRANSACTION_ABORT()
+<span class="lineNum">     144 </span>            : ///
+<span class="lineNum">     145 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     146 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     147 </span>            : class transaction
+<span class="lineNum">     148 </span>            : {
+<span class="lineNum">     149 </span>            :         friend class transactionsManager;
+<span class="lineNum">     150 </span>            : public:
+<span class="lineNum">     151 </span>            :         /// \brief Initialize a transaction.
+<span class="lineNum">     152 </span>            :         ///
+<span class="lineNum">     153 </span>            :         /// @param bCommitTransaction if this parameter is true
+<span class="lineNum">     154 </span>            :         ///                            then the transaction will
+<span class="lineNum">     155 </span>            :         ///                            commit the changes in the
+<span class="lineNum">     156 </span>            :         ///                            destructor, otherwise
+<span class="lineNum">     157 </span>            :         ///                            the changes will be 
+<span class="lineNum">     158 </span>            :         ///                            committed by the parent
+<span class="lineNum">     159 </span>            :         ///                            transaction.
+<span class="lineNum">     160 </span>            :         ///                           When there are no parent
+<span class="lineNum">     161 </span>            :         ///                            transactions, then the 
+<span class="lineNum">     162 </span>            :         ///                            commit happens anyway
+<span class="lineNum">     163 </span>            :         ///
+<span class="lineNum">     164 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     165 </span>            :         transaction(bool bCommitTransaction = false);
+<span class="lineNum">     166 </span>            : 
+<span class="lineNum">     167 </span>            :         /// \brief Destroy the transaction and commit the changes
+<span class="lineNum">     168 </span>            :         ///         if bCommitTransaction was set to true in the
+<span class="lineNum">     169 </span>            :         ///         constructor or there are no parent 
+<span class="lineNum">     170 </span>            :         ///         transactions.
+<span class="lineNum">     171 </span>            :         ///
+<span class="lineNum">     172 </span>            :         /// If abort() was called before the destruction of the
+<span class="lineNum">     173 </span>            :         ///  transaction then the modified data will not be copied
+<span class="lineNum">     174 </span>            :         ///  back to the buffers.
+<span class="lineNum">     175 </span>            :         ///
+<span class="lineNum">     176 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     177 </span>            :         virtual ~transaction();
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            :         /// \brief Rollback all the changes made to far.
+<span class="lineNum">     180 </span>            :         ///
+<span class="lineNum">     181 </span>            :         /// Data handlers (see dataHandler) created AFTER the call
+<span class="lineNum">     182 </span>            :         ///  to abort() will be committed unless another call to
+<span class="lineNum">     183 </span>            :         ///  abort is made().
+<span class="lineNum">     184 </span>            :         ///
+<span class="lineNum">     185 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     186 </span>            :         void abort();
+<span class="lineNum">     187 </span>            : 
+<span class="lineNum">     188 </span>            : protected:
+<span class="lineNum">     189 </span>            :         /// \internal
+<span class="lineNum">     190 </span>            :         /// \brief Copy all the dataHandler from this transaction 
+<span class="lineNum">     191 </span>            :         ///         to another transaction.
+<span class="lineNum">     192 </span>            :         ///
+<span class="lineNum">     193 </span>            :         /// @param pDestination a pointer to the transaction where
+<span class="lineNum">     194 </span>            :         ///                      the all the dataHandler must be
+<span class="lineNum">     195 </span>            :         ///                      copied.
+<span class="lineNum">     196 </span>            :         ///
+<span class="lineNum">     197 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     198 </span>            :         void copyHandlersTo(transaction* pDestination);
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            :         void addHandler(ptr&lt;handlers::dataHandler&gt; newHandler);
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            :         typedef ptr&lt;handlers::dataHandler&gt; tDataHandlerPtr;
+<span class="lineNum">     203 </span>            :         typedef std::map&lt;buffer*, tDataHandlerPtr&gt; tHandlersList;
+<span class="lineNum">     204 </span>            :         tHandlersList m_transactionHandlers;
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :     std::thread::id m_threadId;
+<span class="lineNum">     207 </span>            :         bool m_bCommit;
+<span class="lineNum">     208 </span>            : };
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            : /// \def IMEBRA_COMMIT_TRANSACTION_START()
+<span class="lineNum">     211 </span>            : /// \brief Start a committing transaction block.
+<span class="lineNum">     212 </span>            : ///
+<span class="lineNum">     213 </span>            : /// The transaction block must be terminated by
+<span class="lineNum">     214 </span>            : ///  the macro IMEBRA_TRANSACTION_END().
+<span class="lineNum">     215 </span>            : ///
+<span class="lineNum">     216 </span>            : /// All the writing data handlers that are created in
+<span class="lineNum">     217 </span>            : ///  the transaction's block will commit the modifications
+<span class="lineNum">     218 </span>            : ///  only at the end of the transaction's block.
+<span class="lineNum">     219 </span>            : /// If one of the modifications cannot be committed or
+<span class="lineNum">     220 </span>            : ///  if an uncaught exception occurs, then all the buffers
+<span class="lineNum">     221 </span>            : ///  are rolled back to the status they had at the 
+<span class="lineNum">     222 </span>            : ///  beginning of the transaction.
+<span class="lineNum">     223 </span>            : ///
+<span class="lineNum">     224 </span>            : /// Committing transactions commit also the data of the
+<span class="lineNum">     225 </span>            : ///  nested non-committing transactions
+<span class="lineNum">     226 </span>            : ///
+<span class="lineNum">     227 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     228 </span>            : #define IMEBRA_COMMIT_TRANSACTION_START() \
+<span class="lineNum">     229 </span>            :         {\
+<span class="lineNum">     230 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;Imebra Commit Transaction&quot;);\
+<span class="lineNum">     231 </span>            :                 puntoexe::imebra::transaction imebraNestedTransaction(true);\
+<span class="lineNum">     232 </span>            :                 try{
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span>            : /// \def IMEBRA_TRANSACTION_START()
+<span class="lineNum">     235 </span>            : /// \brief Start a non-committing transaction block.
+<span class="lineNum">     236 </span>            : ///
+<span class="lineNum">     237 </span>            : /// The transaction block must be terminated by
+<span class="lineNum">     238 </span>            : ///  the macro IMEBRA_TRANSACTION_END().
+<span class="lineNum">     239 </span>            : ///
+<span class="lineNum">     240 </span>            : /// If the transaction is not nested into another
+<span class="lineNum">     241 </span>            : ///  one, then a committing transaction is created
+<span class="lineNum">     242 </span>            : ///  anyway, as in IMEBRA_COMMIT_TRANSACTION_START().
+<span class="lineNum">     243 </span>            : ///
+<span class="lineNum">     244 </span>            : /// All the writing data handlers that are created in
+<span class="lineNum">     245 </span>            : ///  the transaction's block will commit the modifications
+<span class="lineNum">     246 </span>            : ///  only at the end first parent committing transaction.
+<span class="lineNum">     247 </span>            : /// If one of the modifications cannot be committed or
+<span class="lineNum">     248 </span>            : ///  if an uncaught exception occurs, then all the buffers
+<span class="lineNum">     249 </span>            : ///  are rolled back to the status they had at the 
+<span class="lineNum">     250 </span>            : ///  beginning of the transaction.
+<span class="lineNum">     251 </span>            : ///
+<span class="lineNum">     252 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     253 </span>            : #define IMEBRA_TRANSACTION_START() \
+<span class="lineNum">     254 </span>            :         {\
+<span class="lineNum">     255 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;Imebra Transaction&quot;);\
+<span class="lineNum">     256 </span>            :                 puntoexe::imebra::transaction imebraNestedTransaction(false);\
+<span class="lineNum">     257 </span>            :                 try{
+<span class="lineNum">     258 </span>            : 
+<span class="lineNum">     259 </span>            : /// \def IMEBRA_TRANSACTION_END()
+<span class="lineNum">     260 </span>            : /// \brief Terminates a transaction block initiated by
+<span class="lineNum">     261 </span>            : ///         IMEBRA_COMMIT_TRANSACTION_START() or
+<span class="lineNum">     262 </span>            : ///         IMEBRA_TRANSACTION_START().
+<span class="lineNum">     263 </span>            : ///
+<span class="lineNum">     264 </span>            : /// If the macro terminates a committing transaction then
+<span class="lineNum">     265 </span>            : ///  it tries to commit all the changes made through the
+<span class="lineNum">     266 </span>            : ///  writing handlers, otherwise it passes the 
+<span class="lineNum">     267 </span>            : ///  modifications to the parent transaction.
+<span class="lineNum">     268 </span>            : ///
+<span class="lineNum">     269 </span>            : /// If an uncaught exception occurs or one of the changes 
+<span class="lineNum">     270 </span>            : ///  cannot be committed, then all the modifications are
+<span class="lineNum">     271 </span>            : ///  rolled back to the status they had at the beginning
+<span class="lineNum">     272 </span>            : ///  of the transaction.
+<span class="lineNum">     273 </span>            : ///
+<span class="lineNum">     274 </span>            : /// Uncaught exceptions are rethrown by this macro.
+<span class="lineNum">     275 </span>            : ///
+<span class="lineNum">     276 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     277 </span>            : #define IMEBRA_TRANSACTION_END() \
+<span class="lineNum">     278 </span>            :                 }\
+<span class="lineNum">     279 </span>            :                 catch(...)\
+<span class="lineNum">     280 </span>            :                 {\
+<span class="lineNum">     281 </span>            :                         imebraNestedTransaction.abort();\
+<span class="lineNum">     282 </span>            :                         PUNTOEXE_RETHROW(&quot;Transaction aborted&quot;);\
+<span class="lineNum">     283 </span>            :                 }\
+<span class="lineNum">     284 </span>            :                 PUNTOEXE_FUNCTION_END();\
+<span class="lineNum">     285 </span>            :         }
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            : /// \def IMEBRA_TRANSACTION_ABORT()
+<span class="lineNum">     288 </span>            : /// \brief Delete the modifications made in the 
+<span class="lineNum">     289 </span>            : ///         transaction's block before this macro is
+<span class="lineNum">     290 </span>            : ///         called.
+<span class="lineNum">     291 </span>            : ///
+<span class="lineNum">     292 </span>            : /// This macro is called by IMEBRA_TRANSACTION_END() in
+<span class="lineNum">     293 </span>            : ///  case an uncaught exception is detected.
+<span class="lineNum">     294 </span>            : ///
+<span class="lineNum">     295 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     296 </span>            : #define IMEBRA_TRANSACTION_ABORT() \
+<span class="lineNum">     297 </span>            :         imebraNestedTransaction.abort();
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            : } // namespace imebra
+<span class="lineNum">     300 </span>            : 
+<span class="lineNum">     301 </span>            : } // namespace puntoexe
+<span class="lineNum">     302 </span>            : 
+<span class="lineNum">     303 </span>            : #endif // !defined(CImbxException_F1BAF067_21DE_466b_AEA1_6CC4F006FAFA__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

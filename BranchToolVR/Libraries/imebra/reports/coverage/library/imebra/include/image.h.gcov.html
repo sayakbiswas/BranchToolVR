@@ -1,0 +1,488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/image.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - image.h<span style="font-size: 80%;"> (source / <a href="image.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryLo">27.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntryLo">15.8 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file image.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the class image.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #if !defined(imebraImage_A807A3CA_FA04_44f4_85D2_C7AA2FE103C4__INCLUDED_)
+<span class="lineNum">      54 </span>            : #define imebraImage_A807A3CA_FA04_44f4_85D2_C7AA2FE103C4__INCLUDED_
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : #include &quot;../../base/include/baseObject.h&quot;
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      60 </span>            : //
+<span class="lineNum">      61 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">      62 </span>            : //
+<span class="lineNum">      63 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      64 </span>            : namespace puntoexe
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : namespace imebra
+<span class="lineNum">      68 </span>            : {
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            :     namespace handlers
+<span class="lineNum">      71 </span>            :     {
+<span class="lineNum">      72 </span>            :         class dataHandlerNumericBase;
+<span class="lineNum">      73 </span>            :     }
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : class palette;
+<span class="lineNum">      76 </span>            : class buffer;
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            : /// \addtogroup group_image Image data
+<span class="lineNum">      79 </span>            : /// \brief The class image contains the data of one DICOM image.
+<span class="lineNum">      80 </span>            : ///
+<span class="lineNum">      81 </span>            : /// The image's data includes:
+<span class="lineNum">      82 </span>            : /// - the image's size, in pixels
+<span class="lineNum">      83 </span>            : /// - the image's size, in millimeters
+<span class="lineNum">      84 </span>            : /// - the bit depth (bytes per color channel) and high
+<span class="lineNum">      85 </span>            : ///   bit
+<span class="lineNum">      86 </span>            : /// - the color palette (if available)
+<span class="lineNum">      87 </span>            : /// - the pixels' data
+<span class="lineNum">      88 </span>            : ///
+<span class="lineNum">      89 </span>            : /// An image can be obtained from a dataSet object by
+<span class="lineNum">      90 </span>            : ///  calling dataSet::getImage(), or it can be initialized
+<span class="lineNum">      91 </span>            : ///  with image::create().
+<span class="lineNum">      92 </span>            : ///
+<span class="lineNum">      93 </span>            : /// Images can also be allocated by the transforms
+<span class="lineNum">      94 </span>            : ///  by calling
+<span class="lineNum">      95 </span>            : ///  transforms::transform::allocateOutputImage().
+<span class="lineNum">      96 </span>            : ///
+<span class="lineNum">      97 </span>            : /// @{
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     101 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     102 </span>            : /// \brief Represents a single image of a dicom data set.
+<span class="lineNum">     103 </span>            : ///
+<span class="lineNum">     104 </span>            : /// Images are embedded into the dicom structures
+<span class="lineNum">     105 </span>            : ///  (represented by the dataSet class), stored in
+<span class="lineNum">     106 </span>            : ///  a compressed format.
+<span class="lineNum">     107 </span>            : ///
+<span class="lineNum">     108 </span>            : /// The class image represents a decompressed raw image,
+<span class="lineNum">     109 </span>            : ///  extracted from a dicom structure using
+<span class="lineNum">     110 </span>            : ///  dataSet::getImage().
+<span class="lineNum">     111 </span>            : ///
+<span class="lineNum">     112 </span>            : /// image objects can also be created by the
+<span class="lineNum">     113 </span>            : ///  application and stored into a dicom structure using
+<span class="lineNum">     114 </span>            : ///  the function dataSet::setImage().
+<span class="lineNum">     115 </span>            : ///
+<span class="lineNum">     116 </span>            : /// The image and its buffer share a common lock object:
+<span class="lineNum">     117 </span>            : ///  this means that a lock to the image object will also
+<span class="lineNum">     118 </span>            : ///  locks the image's buffer and viceversa.
+<span class="lineNum">     119 </span>            : ///
+<a name="120"><span class="lineNum">     120 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     121 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     122 </span><span class="lineCov">       7862 : class image : public baseObject</span>
+<span class="lineNum">     123 </span>            : {
+<span class="lineNum">     124 </span>            : public:
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     127 </span>            :         ///
+<span class="lineNum">     128 </span>            :         /// \brief Define the number of allocated bytes per
+<span class="lineNum">     129 </span>            :         ///        value.
+<span class="lineNum">     130 </span>            :         ///
+<span class="lineNum">     131 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     132 </span>            :         enum bitDepth
+<span class="lineNum">     133 </span>            :         {
+<span class="lineNum">     134 </span>            :                         depthU8,    ///&lt; unsigned integer, 1 byte
+<span class="lineNum">     135 </span>            :                         depthS8,    ///&lt; signed integer, 1 byte
+<span class="lineNum">     136 </span>            :                         depthU16,   ///&lt; unsigned integer, 2 bytes
+<span class="lineNum">     137 </span>            :                         depthS16,   ///&lt; signed integer, 2 bytes
+<span class="lineNum">     138 </span>            :                         depthU32,   ///&lt; unsigned integer, 4 bytes
+<span class="lineNum">     139 </span>            :                         depthS32,   ///&lt; signed integer, 4 bytes
+<span class="lineNum">     140 </span>            :             endOfDepths
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            :         };
+<span class="lineNum">     143 </span>            : 
+<a name="144"><span class="lineNum">     144 </span>            :         // Constructor</a>
+<span class="lineNum">     145 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     146 </span><span class="lineCov">       3931 :         image():</span>
+<span class="lineNum">     147 </span>            :                         m_rowLength(0),
+<span class="lineNum">     148 </span>            :                         m_channelPixelSize(0),
+<span class="lineNum">     149 </span>            :                         m_channelsNumber(0),
+<span class="lineNum">     150 </span>            :                         m_imageDepth(depthU8),
+<span class="lineNum">     151 </span>            :                         m_highBit(0),
+<span class="lineNum">     152 </span>            :                         m_sizeX(0),
+<span class="lineNum">     153 </span>            :                         m_sizeY(0),
+<span class="lineNum">     154 </span>            :                         m_sizeMmX(0),
+<span class="lineNum">     155 </span><span class="lineCov">       3931 :                         m_sizeMmY(0){}</span>
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            :         /// \brief Create the image.
+<span class="lineNum">     159 </span>            :         ///
+<span class="lineNum">     160 </span>            :         /// An image with the specified size (in pixels), bit depth
+<span class="lineNum">     161 </span>            :         ///  and color space is allocated.
+<span class="lineNum">     162 </span>            :         /// The number of channels to allocate is automatically
+<span class="lineNum">     163 </span>            :         ///  calculated using the colorSpace parameter.
+<span class="lineNum">     164 </span>            :         ///
+<span class="lineNum">     165 </span>            :         /// @param sizeX    the image's width, in pixels.
+<span class="lineNum">     166 </span>            :         /// @param sizeY    the image's height, in pixels.
+<span class="lineNum">     167 </span>            :         /// @param depth    the size of a single color's component.
+<span class="lineNum">     168 </span>            :         /// @param colorSpace The color space as defined by the
+<span class="lineNum">     169 </span>            :         ///                 DICOM standard.
+<span class="lineNum">     170 </span>            :         ///                 Valid colorspace are:
+<span class="lineNum">     171 </span>            :         ///                 - &quot;RGB&quot;
+<span class="lineNum">     172 </span>            :         ///                 - &quot;YBR_FULL&quot;
+<span class="lineNum">     173 </span>            :         ///                 - &quot;YBR_PARTIAL&quot;
+<span class="lineNum">     174 </span>            :         ///                 - &quot;YBR_RCT&quot; (Not yet supported)
+<span class="lineNum">     175 </span>            :         ///                 - &quot;YBR_ICT&quot; (Not yet supported)
+<span class="lineNum">     176 </span>            :         ///                 - &quot;PALETTE COLOR&quot;
+<span class="lineNum">     177 </span>            :         ///                 - &quot;MONOCHROME2&quot;
+<span class="lineNum">     178 </span>            :         ///                 - &quot;MONOCHROME1&quot;
+<span class="lineNum">     179 </span>            :         /// @param highBit  the highest bit used for integer
+<span class="lineNum">     180 </span>            :         ///                  values.
+<span class="lineNum">     181 </span>            :         /// @return         the data handler containing the image's
+<span class="lineNum">     182 </span>            :         ///                  data
+<span class="lineNum">     183 </span>            :         ///
+<span class="lineNum">     184 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     185 </span>            :         ptr&lt;handlers::dataHandlerNumericBase&gt; create(
+<span class="lineNum">     186 </span>            :                 const std::uint32_t sizeX,
+<span class="lineNum">     187 </span>            :                 const std::uint32_t sizeY,
+<span class="lineNum">     188 </span>            :                 const bitDepth depth,
+<span class="lineNum">     189 </span>            :                 std::wstring colorSpace,
+<span class="lineNum">     190 </span>            :                 const std::uint8_t  highBit);
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            :         /// \brief Set the high bit.
+<span class="lineNum">     193 </span>            :         ///
+<span class="lineNum">     194 </span>            :         /// @param highBit       the image's high bit
+<span class="lineNum">     195 </span>            :         ///
+<span class="lineNum">     196 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     197 </span>            :         void setHighBit(std::uint32_t highBit);
+<span class="lineNum">     198 </span>            : 
+<span class="lineNum">     199 </span>            :         /// \brief Set the palette for the image
+<span class="lineNum">     200 </span>            :         ///
+<span class="lineNum">     201 </span>            :         /// @param imagePalette  the palette used in the image
+<span class="lineNum">     202 </span>            :         ///
+<span class="lineNum">     203 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     204 </span>            :         void setPalette(ptr&lt;palette&gt; imagePalette);
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :         /// \brief Retrieve the image's size, in millimeters.
+<span class="lineNum">     207 </span>            :         ///
+<span class="lineNum">     208 </span>            :         /// The image's size in millimeters is automatically read
+<span class="lineNum">     209 </span>            :         ///  from the dicom structure or can be set using
+<span class="lineNum">     210 </span>            :         ///  setSizeMm().
+<span class="lineNum">     211 </span>            :         ///
+<span class="lineNum">     212 </span>            :         /// @param pSizeX a pointer to the variable to fill with
+<span class="lineNum">     213 </span>            :         ///               the image's width (in millimeters).
+<span class="lineNum">     214 </span>            :         /// @param pSizeY a pointer to the variable to fill with
+<span class="lineNum">     215 </span>            :         ///               the image's height (in millimeters).
+<span class="lineNum">     216 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     217 </span>            :         void getSizeMm(double* pSizeX, double* pSizeY);
+<span class="lineNum">     218 </span>            : 
+<span class="lineNum">     219 </span>            :         /// \brief Set the image's size, in millimeters.
+<span class="lineNum">     220 </span>            :         ///
+<span class="lineNum">     221 </span>            :         /// @param sizeX the new image's width, in millimeters.
+<span class="lineNum">     222 </span>            :         /// @param sizeY the new image's height, in millimeters.
+<span class="lineNum">     223 </span>            :         ///
+<span class="lineNum">     224 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     225 </span>            :         void setSizeMm(const double sizeX, const double sizeY);
+<span class="lineNum">     226 </span>            : 
+<span class="lineNum">     227 </span>            :         /// \brief Get the image's size, in pixels.
+<span class="lineNum">     228 </span>            :         ///
+<span class="lineNum">     229 </span>            :         /// @param pSizeX a pointer to the variable to fill with
+<span class="lineNum">     230 </span>            :         ///               the image's width (in pixels).
+<span class="lineNum">     231 </span>            :         /// @param pSizeY a pointer to the variable to fill with
+<span class="lineNum">     232 </span>            :         ///               the image's height (in pixels).
+<span class="lineNum">     233 </span>            :         ///
+<span class="lineNum">     234 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     235 </span>            :         void getSize(std::uint32_t* pSizeX, std::uint32_t* pSizeY);
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            :         /// \brief Retrieve a data handler for managing the
+<span class="lineNum">     238 </span>            :         ///        image's buffer
+<span class="lineNum">     239 </span>            :         ///
+<span class="lineNum">     240 </span>            :         /// The retrieved data handler gives access to the image's
+<span class="lineNum">     241 </span>            :         ///  buffer.
+<span class="lineNum">     242 </span>            :         /// The image's buffer stores the data in the following
+<span class="lineNum">     243 </span>            :         ///  format:
+<span class="lineNum">     244 </span>            :         /// - when multiple channels are present, then the channels
+<span class="lineNum">     245 </span>            :         ///   are ALWAYS interleaved
+<span class="lineNum">     246 </span>            :         /// - the channels are NEVER subsampled or oversampled.
+<span class="lineNum">     247 </span>            :         ///   The subsampling/oversampling is done by the codecs
+<span class="lineNum">     248 </span>            :         ///   when the image is stored or loaded from the dicom
+<span class="lineNum">     249 </span>            :         ///   structure.
+<span class="lineNum">     250 </span>            :         /// - the first stored value represent the first channel of
+<span class="lineNum">     251 </span>            :         ///   the top/left pixel.
+<span class="lineNum">     252 </span>            :         /// - each row is stored countiguously, from the top to the
+<span class="lineNum">     253 </span>            :         ///   bottom.
+<span class="lineNum">     254 </span>            :         ///
+<span class="lineNum">     255 </span>            :         /// @param bWrite   true if the application wants to write
+<span class="lineNum">     256 </span>            :         ///                 into the buffer, false otherwise.
+<span class="lineNum">     257 </span>            :         /// @param pRowSize the function will fill the variable
+<span class="lineNum">     258 </span>            :         ///                 pointed by this parameter with
+<span class="lineNum">     259 </span>            :         ///                 the size of a single row, in bytes.
+<span class="lineNum">     260 </span>            :         /// @param pChannelPixelSize the function will fill the
+<span class="lineNum">     261 </span>            :         ///                 variable pointed by this parameter with
+<span class="lineNum">     262 </span>            :         ///                 the size of a single pixel,
+<span class="lineNum">     263 </span>            :         ///                 in bytes.
+<span class="lineNum">     264 </span>            :         /// @param pChannelsNumber  the function will fill the
+<span class="lineNum">     265 </span>            :         ///                 variable pointed by this parameter with
+<span class="lineNum">     266 </span>            :         ///                 the number of channels per pixel.
+<span class="lineNum">     267 </span>            :         /// @return a pointer to the data handler for the image's
+<span class="lineNum">     268 </span>            :         ///         buffer.
+<span class="lineNum">     269 </span>            :         ///
+<span class="lineNum">     270 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     271 </span>            :         ptr&lt;handlers::dataHandlerNumericBase&gt; getDataHandler(
+<span class="lineNum">     272 </span>            :                 const bool bWrite,
+<span class="lineNum">     273 </span>            :                 std::uint32_t* pRowSize,
+<span class="lineNum">     274 </span>            :                 std::uint32_t* pChannelPixelSize,
+<span class="lineNum">     275 </span>            :                 std::uint32_t* pChannelsNumber);
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :         /// \brief Get the image's color space (DICOM standard)
+<span class="lineNum">     278 </span>            :         ///
+<span class="lineNum">     279 </span>            :         /// @return a string with the image's color space
+<span class="lineNum">     280 </span>            :         ///
+<span class="lineNum">     281 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     282 </span>            :         std::wstring getColorSpace();
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            :         /// \brief Get the number of allocated channels.
+<span class="lineNum">     285 </span>            :         ///
+<span class="lineNum">     286 </span>            :         /// @return the number of color channels in the image
+<span class="lineNum">     287 </span>            :         ///
+<span class="lineNum">     288 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     289 </span>            :         std::uint32_t getChannelsNumber();
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span>            :         /// \brief Get the image's bit depth.
+<span class="lineNum">     292 </span>            :         ///
+<span class="lineNum">     293 </span>            :         /// The bit depth indicates the number of bits used to
+<span class="lineNum">     294 </span>            :         ///  store every single value.
+<span class="lineNum">     295 </span>            :         ///
+<span class="lineNum">     296 </span>            :         /// @return the bit depth.
+<span class="lineNum">     297 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     298 </span>            :         bitDepth getDepth();
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span>            :         /// \brief Get the high bit.
+<span class="lineNum">     301 </span>            :         ///
+<span class="lineNum">     302 </span>            :         /// @return the image's high bit
+<span class="lineNum">     303 </span>            :         ///
+<span class="lineNum">     304 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     305 </span>            :         std::uint32_t getHighBit();
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span>            :         ptr&lt;palette&gt; getPalette();
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            : protected:
+<span class="lineNum">     311 </span>            :         // Image's buffer
+<span class="lineNum">     312 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     313 </span>            :         ptr&lt;buffer&gt; m_buffer;
+<span class="lineNum">     314 </span>            : 
+<span class="lineNum">     315 </span>            :         // Lenght of a buffer's row (in bytes)
+<span class="lineNum">     316 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     317 </span>            :         std::uint32_t m_rowLength;
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            :         // Length of a pixel's component (in bytes)
+<span class="lineNum">     320 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     321 </span>            :         std::uint32_t m_channelPixelSize;
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :         // Number of channels
+<span class="lineNum">     324 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     325 </span>            :         std::uint32_t  m_channelsNumber;
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :         // Color space
+<span class="lineNum">     328 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     329 </span>            :         std::wstring m_colorSpace;
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            :         // Depth (enum)
+<span class="lineNum">     332 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     333 </span>            :         bitDepth  m_imageDepth;
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            :         // High bit (not valid in float mode)
+<span class="lineNum">     336 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     337 </span>            :         std::uint32_t m_highBit;
+<span class="lineNum">     338 </span>            : 
+<span class="lineNum">     339 </span>            :         // Image's size in pixels
+<span class="lineNum">     340 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     341 </span>            :         std::uint32_t m_sizeX;
+<span class="lineNum">     342 </span>            :         std::uint32_t m_sizeY;
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :         // Image's size in millimeters
+<span class="lineNum">     345 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     346 </span>            :         double m_sizeMmX;
+<span class="lineNum">     347 </span>            :         double m_sizeMmY;
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            :         // Image's lut (only if the colorspace is PALETTECOLOR
+<span class="lineNum">     350 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     351 </span>            :         ptr&lt;palette&gt; m_palette;
+<span class="lineNum">     352 </span>            : 
+<span class="lineNum">     353 </span>            : };
+<span class="lineNum">     354 </span>            : 
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     357 </span>            : /// \brief This is the base class for the exceptions thrown
+<span class="lineNum">     358 </span>            : ///         by the image class.
+<a name="359"><span class="lineNum">     359 </span>            : ///</a>
+<span class="lineNum">     360 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     361 </span><span class="lineNoCov">          0 : class imageException: public std::runtime_error</span>
+<span class="lineNum">     362 </span>            : {
+<span class="lineNum">     363 </span>            : public:
+<span class="lineNum">     364 </span>            :         /// \brief Build a codec exception
+<span class="lineNum">     365 </span>            :         ///
+<span class="lineNum">     366 </span>            :         /// @param message the message to store into the exception
+<a name="367"><span class="lineNum">     367 </span>            :         ///</a>
+<span class="lineNum">     368 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 :         imageException(const std::string&amp; message): std::runtime_error(message){}</span>
+<span class="lineNum">     370 </span>            : };
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     373 </span>            : /// \brief This exception is thrown when an unknown depth
+<span class="lineNum">     374 </span>            : ///         is specified as a parameter.
+<a name="375"><span class="lineNum">     375 </span>            : ///</a>
+<span class="lineNum">     376 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 : class imageExceptionUnknownDepth: public imageException</span>
+<a name="378"><span class="lineNum">     378 </span>            : {</a>
+<span class="lineNum">     379 </span>            : public:
+<span class="lineNum">     380 </span><span class="lineNoCov">          0 :         imageExceptionUnknownDepth(const std::string&amp; message): imageException(message){}</span>
+<span class="lineNum">     381 </span>            : };
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     384 </span>            : /// \brief This exception is thrown when an unknown color
+<span class="lineNum">     385 </span>            : ///         space is specified in the function create().
+<a name="386"><span class="lineNum">     386 </span>            : ///</a>
+<span class="lineNum">     387 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     388 </span><span class="lineNoCov">          0 : class imageExceptionUnknownColorSpace: public imageException</span>
+<a name="389"><span class="lineNum">     389 </span>            : {</a>
+<span class="lineNum">     390 </span>            : public:
+<span class="lineNum">     391 </span><span class="lineNoCov">          0 :         imageExceptionUnknownColorSpace(const std::string&amp; message): imageException(message){}</span>
+<span class="lineNum">     392 </span>            : };
+<span class="lineNum">     393 </span>            : 
+<span class="lineNum">     394 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     395 </span>            : /// \brief This exception is thrown when an invalid size
+<span class="lineNum">     396 </span>            : ///         in pixels is specified in the function
+<span class="lineNum">     397 </span>            : ///         create().
+<a name="398"><span class="lineNum">     398 </span>            : ///</a>
+<span class="lineNum">     399 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     400 </span><span class="lineNoCov">          0 : class imageExceptionInvalidSize: public imageException</span>
+<a name="401"><span class="lineNum">     401 </span>            : {</a>
+<span class="lineNum">     402 </span>            : public:
+<span class="lineNum">     403 </span><span class="lineNoCov">          0 :         imageExceptionInvalidSize(const std::string&amp; message): imageException(message){}</span>
+<span class="lineNum">     404 </span>            : };
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span>            : /// @}
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            : } // namespace imebra
+<span class="lineNum">     409 </span>            : 
+<span class="lineNum">     410 </span>            : } // namespace puntoexe
+<span class="lineNum">     411 </span>            : 
+<span class="lineNum">     412 </span>            : #endif // !defined(imebraImage_A807A3CA_FA04_44f4_85D2_C7AA2FE103C4__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

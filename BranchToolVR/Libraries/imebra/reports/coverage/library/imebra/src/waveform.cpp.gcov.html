@@ -1,0 +1,428 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/src/waveform.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/src</a> - waveform.cpp<span style="font-size: 80%;"> (source / <a href="waveform.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">68</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file waveform.cpp
+<span class="lineNum">      49 </span>            :     \brief Implementation of the class waveform.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : */
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : #include &quot;../include/waveform.h&quot;
+<span class="lineNum">      54 </span>            : #include &quot;../include/dataHandlerNumeric.h&quot;
+<span class="lineNum">      55 </span>            : #include &quot;../include/dataSet.h&quot;
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : namespace puntoexe
+<span class="lineNum">      58 </span>            : {
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : namespace imebra
+<span class="lineNum">      61 </span>            : {
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      64 </span>            : //
+<span class="lineNum">      65 </span>            : // Constructor
+<a name="66"><span class="lineNum">      66 </span>            : //</a>
+<span class="lineNum">      67 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      68 </span><span class="lineNoCov">          0 : waveform::waveform(ptr&lt;dataSet&gt; pDataSet):</span>
+<span class="lineNum">      69 </span><span class="lineNoCov">          0 :         m_pDataSet(pDataSet)</span>
+<span class="lineNum">      70 </span>            : {
+<span class="lineNum">      71 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      75 </span>            : //
+<span class="lineNum">      76 </span>            : // Returns the number of allocated bits
+<a name="77"><span class="lineNum">      77 </span>            : //</a>
+<span class="lineNum">      78 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 : std::uint32_t waveform::getBitsAllocated()</span>
+<span class="lineNum">      80 </span>            : {
+<span class="lineNum">      81 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getBitsAllocated&quot;);
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :         return m_pDataSet-&gt;getUnsignedLong(0x5400, 0, 0x1004, 0);</span>
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">      86 </span>            : }
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      90 </span>            : //
+<span class="lineNum">      91 </span>            : // Returns the number of bits stored
+<a name="92"><span class="lineNum">      92 </span>            : //</a>
+<span class="lineNum">      93 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 : std::uint32_t waveform::getBitsStored()</span>
+<span class="lineNum">      95 </span>            : {
+<span class="lineNum">      96 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getBitsStored&quot;);
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span><span class="lineNoCov">          0 :         return m_pDataSet-&gt;getUnsignedLong(0x003A, 0, 0x021A, 0);</span>
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     101 </span>            : }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     105 </span>            : //
+<span class="lineNum">     106 </span>            : // Returns the number of channels
+<a name="107"><span class="lineNum">     107 </span>            : //</a>
+<span class="lineNum">     108 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     109 </span><span class="lineNoCov">          0 : std::uint32_t waveform::getChannels()</span>
+<span class="lineNum">     110 </span>            : {
+<span class="lineNum">     111 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getChannels&quot;);
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :         return m_pDataSet-&gt;getUnsignedLong(0x003A, 0, 0x0005, 0);</span>
+<span class="lineNum">     114 </span>            : 
+<span class="lineNum">     115 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     116 </span>            : }
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     120 </span>            : //
+<span class="lineNum">     121 </span>            : // Returns the interpretation string
+<a name="122"><span class="lineNum">     122 </span>            : //</a>
+<span class="lineNum">     123 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     124 </span><span class="lineNoCov">          0 : std::string waveform::getInterpretation()</span>
+<span class="lineNum">     125 </span>            : {
+<span class="lineNum">     126 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getChannels&quot;);
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span><span class="lineNoCov">          0 :         return m_pDataSet-&gt;getString(0x5400, 0, 0x1006, 0);</span>
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     131 </span>            : }
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     135 </span>            : //
+<span class="lineNum">     136 </span>            : // Returns the number of samples
+<a name="137"><span class="lineNum">     137 </span>            : //</a>
+<span class="lineNum">     138 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     139 </span><span class="lineNoCov">          0 : std::uint32_t waveform::getSamples()</span>
+<span class="lineNum">     140 </span>            : {
+<span class="lineNum">     141 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getSamples&quot;);
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span><span class="lineNoCov">          0 :         return m_pDataSet-&gt;getUnsignedLong(0x003A, 0, 0x0010, 0);</span>
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     146 </span>            : }
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            : 
+<span class="lineNum">     149 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     150 </span>            : //
+<span class="lineNum">     151 </span>            : // Returns a data handler for the waveform
+<a name="152"><span class="lineNum">     152 </span>            : //</a>
+<span class="lineNum">     153 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 : ptr&lt;handlers::dataHandler&gt; waveform::getIntegerData(std::uint32_t channel, std::int32_t paddingValue)</span>
+<span class="lineNum">     155 </span>            : {
+<span class="lineNum">     156 </span>            :         PUNTOEXE_FUNCTION_START(L&quot;waveform::getIntegerData&quot;);
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span>            :         static std::int32_t uLawDecompressTable[256] =
+<span class="lineNum">     159 </span>            :         {
+<span class="lineNum">     160 </span>            :                 -32124,-31100,-30076,-29052,-28028,-27004,-25980,-24956,
+<span class="lineNum">     161 </span>            :                 -23932,-22908,-21884,-20860,-19836,-18812,-17788,-16764,
+<span class="lineNum">     162 </span>            :                 -15996,-15484,-14972,-14460,-13948,-13436,-12924,-12412,
+<span class="lineNum">     163 </span>            :                 -11900,-11388,-10876,-10364, -9852, -9340, -8828, -8316,
+<span class="lineNum">     164 </span>            :                 -7932, -7676, -7420, -7164, -6908, -6652, -6396, -6140,
+<span class="lineNum">     165 </span>            :                 -5884, -5628, -5372, -5116, -4860, -4604, -4348, -4092,
+<span class="lineNum">     166 </span>            :                 -3900, -3772, -3644, -3516, -3388, -3260, -3132, -3004,
+<span class="lineNum">     167 </span>            :                 -2876, -2748, -2620, -2492, -2364, -2236, -2108, -1980,
+<span class="lineNum">     168 </span>            :                 -1884, -1820, -1756, -1692, -1628, -1564, -1500, -1436,
+<span class="lineNum">     169 </span>            :                 -1372, -1308, -1244, -1180, -1116, -1052,  -988,  -924,
+<span class="lineNum">     170 </span>            :                 -876,  -844,  -812,  -780,  -748,  -716,  -684,  -652,
+<span class="lineNum">     171 </span>            :                 -620,  -588,  -556,  -524,  -492,  -460,  -428,  -396,
+<span class="lineNum">     172 </span>            :                 -372,  -356,  -340,  -324,  -308,  -292,  -276,  -260,
+<span class="lineNum">     173 </span>            :                 -244,  -228,  -212,  -196,  -180,  -164,  -148,  -132,
+<span class="lineNum">     174 </span>            :                 -120,  -112,  -104,   -96,   -88,   -80,   -72,   -64,
+<span class="lineNum">     175 </span>            :                 -56,   -48,   -40,   -32,   -24,   -16,    -8,     0,
+<span class="lineNum">     176 </span>            :                 32124, 31100, 30076, 29052, 28028, 27004, 25980, 24956,
+<span class="lineNum">     177 </span>            :                 23932, 22908, 21884, 20860, 19836, 18812, 17788, 16764,
+<span class="lineNum">     178 </span>            :                 15996, 15484, 14972, 14460, 13948, 13436, 12924, 12412,
+<span class="lineNum">     179 </span>            :                 11900, 11388, 10876, 10364,  9852,  9340,  8828,  8316,
+<span class="lineNum">     180 </span>            :                 7932,  7676,  7420,  7164,  6908,  6652,  6396,  6140,
+<span class="lineNum">     181 </span>            :                 5884,  5628,  5372,  5116,  4860,  4604,  4348,  4092,
+<span class="lineNum">     182 </span>            :                 3900,  3772,  3644,  3516,  3388,  3260,  3132,  3004,
+<span class="lineNum">     183 </span>            :                 2876,  2748,  2620,  2492,  2364,  2236,  2108,  1980,
+<span class="lineNum">     184 </span>            :                 1884,  1820,  1756,  1692,  1628,  1564,  1500,  1436,
+<span class="lineNum">     185 </span>            :                 1372,  1308,  1244,  1180,  1116,  1052,   988,   924,
+<span class="lineNum">     186 </span>            :                 876,   844,   812,   780,   748,   716,   684,   652,
+<span class="lineNum">     187 </span>            :                 620,   588,   556,   524,   492,   460,   428,   396,
+<span class="lineNum">     188 </span>            :                 372,   356,   340,   324,   308,   292,   276,   260,
+<span class="lineNum">     189 </span>            :                 244,   228,   212,   196,   180,   164,   148,   132,
+<span class="lineNum">     190 </span>            :                 120,   112,   104,    96,    88,    80,    72,    64,
+<span class="lineNum">     191 </span>            :                 56,    48,    40,    32,    24,    16,     8,     0
+<span class="lineNum">     192 </span>            :         };
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span>            :         static std::int32_t aLawDecompressTable[256] =
+<span class="lineNum">     195 </span>            :         {
+<span class="lineNum">     196 </span>            :                 -5504, -5248, -6016, -5760, -4480, -4224, -4992, -4736,
+<span class="lineNum">     197 </span>            :                 -7552, -7296, -8064, -7808, -6528, -6272, -7040, -6784,
+<span class="lineNum">     198 </span>            :                 -2752, -2624, -3008, -2880, -2240, -2112, -2496, -2368,
+<span class="lineNum">     199 </span>            :                 -3776, -3648, -4032, -3904, -3264, -3136, -3520, -3392,
+<span class="lineNum">     200 </span>            :                 -22016,-20992,-24064,-23040,-17920,-16896,-19968,-18944,
+<span class="lineNum">     201 </span>            :                 -30208,-29184,-32256,-31232,-26112,-25088,-28160,-27136,
+<span class="lineNum">     202 </span>            :                 -11008,-10496,-12032,-11520,-8960, -8448, -9984, -9472,
+<span class="lineNum">     203 </span>            :                 -15104,-14592,-16128,-15616,-13056,-12544,-14080,-13568,
+<span class="lineNum">     204 </span>            :                 -344,  -328,  -376,  -360,  -280,  -264,  -312,  -296,
+<span class="lineNum">     205 </span>            :                 -472,  -456,  -504,  -488,  -408,  -392,  -440,  -424,
+<span class="lineNum">     206 </span>            :                 -88,   -72,   -120,  -104,  -24,   -8,    -56,   -40,
+<span class="lineNum">     207 </span>            :                 -216,  -200,  -248,  -232,  -152,  -136,  -184,  -168,
+<span class="lineNum">     208 </span>            :                 -1376, -1312, -1504, -1440, -1120, -1056, -1248, -1184,
+<span class="lineNum">     209 </span>            :                 -1888, -1824, -2016, -1952, -1632, -1568, -1760, -1696,
+<span class="lineNum">     210 </span>            :                 -688,  -656,  -752,  -720,  -560,  -528,  -624,  -592,
+<span class="lineNum">     211 </span>            :                 -944,  -912,  -1008, -976,  -816,  -784,  -880,  -848,
+<span class="lineNum">     212 </span>            :                 5504,  5248,  6016,  5760,  4480,  4224,  4992,  4736,
+<span class="lineNum">     213 </span>            :                 7552,  7296,  8064,  7808,  6528,  6272,  7040,  6784,
+<span class="lineNum">     214 </span>            :                 2752,  2624,  3008,  2880,  2240,  2112,  2496,  2368,
+<span class="lineNum">     215 </span>            :                 3776,  3648,  4032,  3904,  3264,  3136,  3520,  3392,
+<span class="lineNum">     216 </span>            :                 22016, 20992, 24064, 23040, 17920, 16896, 19968, 18944,
+<span class="lineNum">     217 </span>            :                 30208, 29184, 32256, 31232, 26112, 25088, 28160, 27136,
+<span class="lineNum">     218 </span>            :                 11008, 10496, 12032, 11520, 8960,  8448,  9984,  9472,
+<span class="lineNum">     219 </span>            :                 15104, 14592, 16128, 15616, 13056, 12544, 14080, 13568,
+<span class="lineNum">     220 </span>            :                 344,   328,   376,   360,   280,   264,   312,   296,
+<span class="lineNum">     221 </span>            :                 472,   456,   504,   488,   408,   392,   440,   424,
+<span class="lineNum">     222 </span>            :                 88,    72,   120,   104,    24,     8,    56,    40,
+<span class="lineNum">     223 </span>            :                 216,   200,   248,   232,   152,   136,   184,   168,
+<span class="lineNum">     224 </span>            :                 1376,  1312,  1504,  1440,  1120,  1056,  1248,  1184,
+<span class="lineNum">     225 </span>            :                 1888,  1824,  2016,  1952,  1632,  1568,  1760,  1696,
+<span class="lineNum">     226 </span>            :                 688,   656,   752,   720,   560,   528,   624,   592,
+<span class="lineNum">     227 </span>            :                 944,   912,  1008,   976,   816,   784,   880,   848
+<span class="lineNum">     228 </span>            :         }; 
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :         // Lock the dataset during the interpretation of the 
+<span class="lineNum">     231 </span>            :         //  dataset
+<span class="lineNum">     232 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     233 </span><span class="lineNoCov">          0 :         lockObject lockDataSet(m_pDataSet);</span>
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            :         // Get the original data
+<span class="lineNum">     236 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 :         ptr&lt;handlers::dataHandler&gt; waveformData(m_pDataSet-&gt;getDataHandler(0x5400, 0x0, 0x1010, 0, false));</span>
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :         std::string sourceDataType(waveformData-&gt;getDataType());</span>
+<span class="lineNum">     239 </span>            :         
+<span class="lineNum">     240 </span>            :         // Get the interpretation, number of channels, number of
+<span class="lineNum">     241 </span>            :         //  samples
+<span class="lineNum">     242 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 :         std::string waveformInterpretation(getInterpretation());</span>
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :         std::uint32_t numChannels(getChannels());</span>
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :         std::uint32_t numSamples(getSamples());</span>
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :         std::uint32_t originalPaddingValue(0);</span>
+<span class="lineNum">     247 </span><span class="lineNoCov">          0 :         bool bPaddingValueExists(false);</span>
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :         ptr&lt;handlers::dataHandler&gt; paddingTagHandler(m_pDataSet-&gt;getDataHandler(0x5400, 0, 0x100A, 0, false));</span>
+<span class="lineNum">     249 </span><span class="lineNoCov">          0 :         if(paddingTagHandler != 0)</span>
+<span class="lineNum">     250 </span>            :         {
+<span class="lineNum">     251 </span><span class="lineNoCov">          0 :                 originalPaddingValue = paddingTagHandler-&gt;getUnsignedLong(0);</span>
+<span class="lineNum">     252 </span><span class="lineNoCov">          0 :                 bPaddingValueExists = true;</span>
+<span class="lineNum">     253 </span>            :         }
+<span class="lineNum">     254 </span>            : 
+<span class="lineNum">     255 </span>            :         
+<span class="lineNum">     256 </span>            :         // Allocate a buffer for the destination data
+<span class="lineNum">     257 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 :         ptr&lt;buffer&gt; waveformBuffer(new buffer(0, &quot;SL&quot;));</span>
+<span class="lineNum">     259 </span><span class="lineNoCov">          0 :         ptr&lt;handlers::dataHandler&gt; destinationHandler(waveformBuffer-&gt;getDataHandler(true, numSamples));</span>
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            :         // Copy the data to the destination for unsigned values
+<span class="lineNum">     262 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     263 </span><span class="lineNoCov">          0 :         std::uint32_t waveformPointer(channel);</span>
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 :         std::uint32_t destinationPointer(0);</span>
+<span class="lineNum">     265 </span><span class="lineNoCov">          0 :         if(sourceDataType == &quot;UB&quot; || sourceDataType == &quot;US&quot;)</span>
+<span class="lineNum">     266 </span>            :         {
+<span class="lineNum">     267 </span><span class="lineNoCov">          0 :                 for(std::uint32_t copySamples (numSamples); copySamples != 0; --copySamples)</span>
+<span class="lineNum">     268 </span>            :                 {
+<span class="lineNum">     269 </span><span class="lineNoCov">          0 :                         std::uint32_t unsignedData(waveformData-&gt;getUnsignedLong(waveformPointer));</span>
+<span class="lineNum">     270 </span><span class="lineNoCov">          0 :                         waveformPointer += numChannels;</span>
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :                         if(bPaddingValueExists &amp;&amp; unsignedData == originalPaddingValue)</span>
+<span class="lineNum">     272 </span>            :                         {
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :                                 destinationHandler-&gt;setSignedLong(destinationPointer++, paddingValue);</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :                                 continue;</span>
+<span class="lineNum">     275 </span>            :                         }
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 :                         destinationHandler-&gt;setUnsignedLong(destinationPointer++, unsignedData);</span>
+<span class="lineNum">     277 </span>            :                 }
+<span class="lineNum">     278 </span><span class="lineNoCov">          0 :                 return destinationHandler;</span>
+<span class="lineNum">     279 </span>            :         }
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span>            :         // Copy the data to the destination for signed values
+<span class="lineNum">     282 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     283 </span><span class="lineNoCov">          0 :         int highBit(getBitsAllocated() - 1);</span>
+<span class="lineNum">     284 </span><span class="lineNoCov">          0 :         std::uint32_t testBit = ((std::uint32_t)1) &lt;&lt; highBit;</span>
+<span class="lineNum">     285 </span><span class="lineNoCov">          0 :         std::uint32_t orBits = ((std::uint32_t)((std::int32_t)-1)) &lt;&lt; highBit;</span>
+<span class="lineNum">     286 </span><span class="lineNoCov">          0 :         for(std::uint32_t copySamples (numSamples); copySamples != 0; --copySamples)</span>
+<span class="lineNum">     287 </span>            :         {
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 :                 std::uint32_t unsignedData = waveformData-&gt;getUnsignedLong(waveformPointer);</span>
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :                 waveformPointer += numChannels;</span>
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 :                 if(bPaddingValueExists &amp;&amp; unsignedData == originalPaddingValue)</span>
+<span class="lineNum">     291 </span>            :                 {
+<span class="lineNum">     292 </span><span class="lineNoCov">          0 :                         destinationHandler-&gt;setSignedLong(destinationPointer++, paddingValue);;</span>
+<span class="lineNum">     293 </span><span class="lineNoCov">          0 :                         continue;</span>
+<span class="lineNum">     294 </span>            :                 }
+<span class="lineNum">     295 </span><span class="lineNoCov">          0 :                 if((unsignedData &amp; testBit) != 0)</span>
+<span class="lineNum">     296 </span>            :                 {
+<span class="lineNum">     297 </span><span class="lineNoCov">          0 :                         unsignedData |= orBits;</span>
+<span class="lineNum">     298 </span>            :                 }
+<span class="lineNum">     299 </span><span class="lineNoCov">          0 :                 destinationHandler-&gt;setSignedLong(destinationPointer++, (std::int32_t)unsignedData);</span>
+<span class="lineNum">     300 </span>            :         }
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span>            :         // Now decompress uLaw or aLaw
+<span class="lineNum">     303 </span><span class="lineNoCov">          0 :         if(waveformInterpretation == &quot;AB&quot;) // 8bits aLaw</span>
+<span class="lineNum">     304 </span>            :         {
+<span class="lineNum">     305 </span><span class="lineNoCov">          0 :                 for(std::uint32_t aLawSamples(0); aLawSamples != numSamples; ++aLawSamples)</span>
+<span class="lineNum">     306 </span>            :                 {
+<span class="lineNum">     307 </span><span class="lineNoCov">          0 :                         std::uint32_t compressed(destinationHandler-&gt;getUnsignedLong(aLawSamples));</span>
+<span class="lineNum">     308 </span><span class="lineNoCov">          0 :                         if(bPaddingValueExists &amp;&amp; compressed == originalPaddingValue)</span>
+<span class="lineNum">     309 </span>            :                         {
+<span class="lineNum">     310 </span><span class="lineNoCov">          0 :                                 continue;</span>
+<span class="lineNum">     311 </span>            :                         }
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 :                         std::int32_t decompressed(aLawDecompressTable[compressed]);</span>
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :                         destinationHandler-&gt;setSignedLong(aLawSamples, decompressed);</span>
+<span class="lineNum">     314 </span>            :                 }
+<span class="lineNum">     315 </span>            :         }
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span>            :         // Now decompress uLaw or aLaw
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :         if(waveformInterpretation == &quot;MB&quot;) // 8bits aLaw</span>
+<span class="lineNum">     319 </span>            :         {
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :                 for(std::uint32_t uLawSamples(0); uLawSamples != numSamples; ++uLawSamples)</span>
+<span class="lineNum">     321 </span>            :                 {
+<span class="lineNum">     322 </span><span class="lineNoCov">          0 :                         std::uint32_t compressed(destinationHandler-&gt;getUnsignedLong(uLawSamples));</span>
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :                         if(bPaddingValueExists &amp;&amp; compressed == originalPaddingValue)</span>
+<span class="lineNum">     324 </span>            :                         {
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :                                 continue;</span>
+<span class="lineNum">     326 </span>            :                         }
+<span class="lineNum">     327 </span><span class="lineNoCov">          0 :                         std::int32_t decompressed(uLawDecompressTable[compressed]);</span>
+<span class="lineNum">     328 </span><span class="lineNoCov">          0 :                         destinationHandler-&gt;setSignedLong(uLawSamples, decompressed);</span>
+<span class="lineNum">     329 </span>            :                 }
+<span class="lineNum">     330 </span>            :         }
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span><span class="lineNoCov">          0 :         return destinationHandler;</span>
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span>            :         PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     335 </span>            : }
+<span class="lineNum">     336 </span>            : 
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     339 </span>            : //
+<span class="lineNum">     340 </span>            : // Returns the sequence item
+<a name="341"><span class="lineNum">     341 </span>            : //</a>
+<span class="lineNum">     342 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     343 </span><span class="lineNoCov">          0 : ptr&lt;dataSet&gt; waveform::GetWaveformItem()</span>
+<span class="lineNum">     344 </span>            : {
+<span class="lineNum">     345 </span><span class="lineNoCov">          0 :         return m_pDataSet;</span>
+<span class="lineNum">     346 </span>            : }
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            : } // namespace imebra
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            : } // namespace puntoexe
+<span class="lineNum">     352 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

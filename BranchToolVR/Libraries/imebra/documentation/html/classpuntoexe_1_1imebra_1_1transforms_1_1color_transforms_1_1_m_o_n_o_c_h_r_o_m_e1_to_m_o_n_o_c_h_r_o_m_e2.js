@@ -1,0 +1,6 @@
+var classpuntoexe_1_1imebra_1_1transforms_1_1color_transforms_1_1_m_o_n_o_c_h_r_o_m_e1_to_m_o_n_o_c_h_r_o_m_e2 =
+[
+    [ "createColorTransform", "classpuntoexe_1_1imebra_1_1transforms_1_1color_transforms_1_1_m_o_n_o_c_h_r_o_m_e1_to_m_o_n_o_c_h_r_o_m_e2.html#a3294fd46835e5f4609da5af875134ce4", null ],
+    [ "getFinalColorSpace", "classpuntoexe_1_1imebra_1_1transforms_1_1color_transforms_1_1_m_o_n_o_c_h_r_o_m_e1_to_m_o_n_o_c_h_r_o_m_e2.html#acf5684061eb4591bc591333cb140365d", null ],
+    [ "getInitialColorSpace", "classpuntoexe_1_1imebra_1_1transforms_1_1color_transforms_1_1_m_o_n_o_c_h_r_o_m_e1_to_m_o_n_o_c_h_r_o_m_e2.html#aeb14cb1980321808a07dac2286e77818", null ]
+];

@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{0ca6fc94-4623-4d13-bf5e-60e23ca0ee32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imebra">
+      <UniqueIdentifier>{fbfcaf02-d96c-42ad-8075-a02f4bfdd50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="misc">
+      <UniqueIdentifier>{776a5492-83b4-4f0d-b71f-373ae5b9e64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{9b3556af-a718-40d8-9c67-c52a5926ac45}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomPointCloudObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarchingCubesVars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LineObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractBaseObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomObjectsContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoarseDicomViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\baseObject.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\baseStream.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\charsetConversionBase.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\charsetConversionIconv.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\charsetConversionICU.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\charsetConversionWindows.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\criticalSection.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\exception.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\huffmanTable.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\memory.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\memoryStream.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\stream.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\streamController.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\streamReader.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\base\src\streamWriter.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\MONOCHROME1ToMONOCHROME2.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\MONOCHROME1ToRGB.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\MONOCHROME2ToRGB.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\MONOCHROME2ToYBRFULL.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\PALETTECOLORToRGB.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\RGBToMONOCHROME2.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\RGBToYBRFULL.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\RGBToYBRPARTIAL.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\transaction.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\transform.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\transformHighBit.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\transformsChain.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\viewHelper.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\VOILUT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\waveform.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\YBRFULLToMONOCHROME2.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\YBRFULLToRGB.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\YBRPARTIALToRGB.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\applyLUT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\buffer.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\charsetsList.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\codec.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\codecFactory.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\colorTransform.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\colorTransformsFactory.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\data.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataGroup.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandler.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerDate.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerDateTime.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerDateTimeBase.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerString.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringAE.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringAS.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringCS.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringDS.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringIS.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringLO.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringLT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringPN.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringSH.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringST.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringUI.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringUnicode.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerStringUT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataHandlerTime.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dataSet.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dicomCodec.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dicomDict.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\dicomDir.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\drawBitmap.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\image.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\jpegCodec.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\LUT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imebra\library\imebra\src\modalityVOILUT.cpp">
+      <Filter>imebra</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\misc\lodepng.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\misc\pathtools.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_glfw_gl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomPointCloudObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LineObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractBaseObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MiscFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DicomObjectsContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoarseDicomViewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\misc\tiny_obj_loader.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\stb_rect_pack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\stb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\stb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_glfw_gl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\dicom_point_cloud.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\dicom_point_cloud.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\line.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\line.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\color.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\color.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\texture.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\texture.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\branch_point.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\branch_point.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\branch_line.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\branch_line.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\recieve_shadow_color.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\recieve_shadow_color.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\README.md" />
+  </ItemGroup>
+</Project>

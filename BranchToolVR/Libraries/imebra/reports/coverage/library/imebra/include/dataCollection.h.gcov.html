@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test.info - library/imebra/include/dataCollection.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">library/imebra/include</a> - dataCollection.h<span style="font-size: 80%;"> (source / <a href="dataCollection.h.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">65</td>
+            <td class="headerCovTableEntry">66</td>
+            <td class="headerCovTableEntryHi">98.5 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2016-01-19</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryHi">93.8 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : Imebra 2015 build 20160119-002
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : Imebra: a C++ Dicom library
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : Copyright (c) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+<span class="lineNum">       8 </span>            : by Paolo Brandoli/Binarno s.p.
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : All rights reserved.
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : This program is free software; you can redistribute it and/or modify
+<span class="lineNum">      13 </span>            :  it under the terms of the GNU General Public License version 2 as published by
+<span class="lineNum">      14 </span>            :  the Free Software Foundation.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : This program is distributed in the hope that it will be useful,
+<span class="lineNum">      17 </span>            :  but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      18 </span>            :  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      19 </span>            :  GNU General Public License for more details.
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : You should have received a copy of the GNU General Public License
+<span class="lineNum">      22 </span>            :  along with this program; if not, write to the Free Software
+<span class="lineNum">      23 </span>            :  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : -------------------
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : If you want to use Imebra commercially then you have to buy the commercial
+<span class="lineNum">      28 </span>            :  license available at http://imebra.com
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : After you buy the commercial license then you can use Imebra according
+<span class="lineNum">      31 </span>            :  to the terms described in the Imebra Commercial License Version 2.
+<span class="lineNum">      32 </span>            : A copy of the Imebra Commercial License Version 2 is available in the
+<span class="lineNum">      33 </span>            :  documentation pages.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : Imebra is available at http://imebra.com
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : The author can be contacted by email at info@binarno.com or by mail at
+<span class="lineNum">      38 </span>            :  the following address:
+<span class="lineNum">      39 </span>            :  Binarno s.p., Paolo Brandoli
+<span class="lineNum">      40 </span>            :  Rakuseva 14
+<span class="lineNum">      41 </span>            :  1000 Ljubljana
+<span class="lineNum">      42 </span>            :  Slovenia
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : */
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : /*! \file dataCollection.h
+<span class="lineNum">      49 </span>            :     \brief Declaration of the base class used by the dataSet and the dataGroup
+<span class="lineNum">      50 </span>            :                 classes.
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : */
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : #if !defined(imebraDataCollection_22668C4B_A480_4f6e_B5DC_ADAD585444DA__INCLUDED_)
+<span class="lineNum">      55 </span>            : #define imebraDataCollection_22668C4B_A480_4f6e_B5DC_ADAD585444DA__INCLUDED_
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : #include &quot;../../base/include/exception.h&quot;
+<span class="lineNum">      58 </span>            : #include &quot;data.h&quot;
+<span class="lineNum">      59 </span>            : #include &quot;charsetsList.h&quot;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : #include &lt;map&gt;
+<span class="lineNum">      63 </span>            : #include &lt;string&gt;
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      66 </span>            : //
+<span class="lineNum">      67 </span>            : // Everything is in the namespace puntoexe::imebra
+<span class="lineNum">      68 </span>            : //
+<span class="lineNum">      69 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      70 </span>            : namespace puntoexe
+<span class="lineNum">      71 </span>            : {
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : namespace imebra
+<span class="lineNum">      74 </span>            : {
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : // The following classes are used in the declaration
+<span class="lineNum">      77 </span>            : class data;
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            : /// \addtogroup group_dataset
+<span class="lineNum">      80 </span>            : ///
+<span class="lineNum">      81 </span>            : /// @{
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      84 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">      85 </span>            : /// \brief This class accesses to all the %data stored
+<span class="lineNum">      86 </span>            : ///         in a dataCollection derived class (dataGroup or
+<span class="lineNum">      87 </span>            : ///         dataSet).
+<span class="lineNum">      88 </span>            : ///
+<span class="lineNum">      89 </span>            : /// When retrieved from a dataSet this class accesses all
+<span class="lineNum">      90 </span>            : ///  the groups (class dataGroup) in the dataSet, while
+<span class="lineNum">      91 </span>            : ///  when retrieved from a dataGroup it accesses all the
+<span class="lineNum">      92 </span>            : ///  tags (class data) in the dataGroup.
+<span class="lineNum">      93 </span>            : ///
+<span class="lineNum">      94 </span>            : /// After the creation the iterator references the first
+<span class="lineNum">      95 </span>            : ///  data or dataGroup in the collection.
+<span class="lineNum">      96 </span>            : ///
+<span class="lineNum">      97 </span>            : ///////////////////////////////////////////////////////////
+<a name="98"><span class="lineNum">      98 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">      99 </span>            : template &lt;class collectionType&gt;
+<span class="lineNum">     100 </span><span class="lineCov">      11588 : class dataCollectionIterator: public baseObject</span>
+<a name="101"><span class="lineNum">     101 </span>            : {</a>
+<span class="lineNum">     102 </span>            : public:
+<span class="lineNum">     103 </span><span class="lineCov">       5794 :         dataCollectionIterator()</span>
+<span class="lineNum">     104 </span><span class="lineCov">       5794 :         {</span>
+<span class="lineNum">     105 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::dataCollectionIterator&quot;);
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">       5794 :                 m_iterator=m_collection.begin();</span>
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     110 </span><span class="lineCov">       5794 :         }</span>
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span>            :         /// \brief Increase the iterator so it references the next 
+<span class="lineNum">     113 </span>            :         ///         data or dataGroup in the collection.
+<span class="lineNum">     114 </span>            :         ///
+<span class="lineNum">     115 </span>            :         /// @return true if after the increment the iterator 
+<span class="lineNum">     116 </span>            :         ///          references a valid data or dataGroup, or false 
+<span class="lineNum">     117 </span>            :         ///          if after the increment the iterator references
+<span class="lineNum">     118 </span>            :         ///          the end of the collection (invalid data or
+<span class="lineNum">     119 </span>            :         ///          dataGroup)
+<a name="120"><span class="lineNum">     120 </span>            :         ///</a>
+<span class="lineNum">     121 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     122 </span><span class="lineCov">      17326 :         bool incIterator()</span>
+<span class="lineNum">     123 </span>            :         {
+<span class="lineNum">     124 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::incIterator&quot;);
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span><span class="lineCov">      17326 :                 if(isValid())</span>
+<span class="lineNum">     127 </span>            :                 {
+<span class="lineNum">     128 </span><span class="lineCov">      17326 :                         ++m_iterator;</span>
+<span class="lineNum">     129 </span>            :                 }
+<span class="lineNum">     130 </span><span class="lineCov">      17326 :                 return isValid();</span>
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     133 </span>            :         }
+<span class="lineNum">     134 </span>            :         
+<span class="lineNum">     135 </span>            : 
+<span class="lineNum">     136 </span>            :         /// \brief Reset the iterator so it referencesthe first
+<span class="lineNum">     137 </span>            :         ///         data or dataGroup in the collection.
+<span class="lineNum">     138 </span>            :         ///
+<span class="lineNum">     139 </span>            :         /// @return true if after the reset the iterator references
+<span class="lineNum">     140 </span>            :         ///          to a valid data or dataGroup, or false if
+<span class="lineNum">     141 </span>            :         ///          after the reset the iterator references
+<span class="lineNum">     142 </span>            :         ///          the end of the collection (it means that the
+<span class="lineNum">     143 </span>            :         ///          collection is empty)
+<a name="144"><span class="lineNum">     144 </span>            :         ///</a>
+<span class="lineNum">     145 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     146 </span><span class="lineCov">       5794 :         bool reset()</span>
+<span class="lineNum">     147 </span>            :         {
+<span class="lineNum">     148 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::reset&quot;);
+<span class="lineNum">     149 </span>            : 
+<span class="lineNum">     150 </span><span class="lineCov">       5794 :                 m_iterator=m_collection.begin();</span>
+<span class="lineNum">     151 </span><span class="lineCov">       5794 :                 return isValid();</span>
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     154 </span>            :         }
+<span class="lineNum">     155 </span>            :         
+<span class="lineNum">     156 </span>            :         /// \brief Returns true if the iterator references a valid
+<span class="lineNum">     157 </span>            :         ///         data or dataGroup in the collection.
+<span class="lineNum">     158 </span>            :         ///
+<span class="lineNum">     159 </span>            :         /// @return true if the iterator references a valid data or
+<span class="lineNum">     160 </span>            :         ///          dataGroup, or false if the iterator references
+<span class="lineNum">     161 </span>            :         ///          the end of the collection
+<a name="162"><span class="lineNum">     162 </span>            :         ///</a>
+<span class="lineNum">     163 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     164 </span><span class="lineCov">      80892 :         bool isValid()</span>
+<span class="lineNum">     165 </span>            :         {
+<span class="lineNum">     166 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::isValid&quot;);
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span><span class="lineCov">      80892 :                 return m_iterator!=m_collection.end();</span>
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     171 </span>            :         }
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            :         /// \brief Retrieve the data or dataGroup referenced by the
+<span class="lineNum">     174 </span>            :         ///         iterator.
+<span class="lineNum">     175 </span>            :         ///
+<span class="lineNum">     176 </span>            :         /// This function returns 0 if the iterator references an
+<span class="lineNum">     177 </span>            :         ///  invalid data or dataGroup (isValid() returns false).
+<span class="lineNum">     178 </span>            :         ///
+<span class="lineNum">     179 </span>            :         /// @return the data or dataGroup referenced by the
+<span class="lineNum">     180 </span>            :         ///          iterator
+<a name="181"><span class="lineNum">     181 </span>            :         ///</a>
+<span class="lineNum">     182 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     183 </span><span class="lineCov">      17326 :         ptr&lt;collectionType&gt; getData()</span>
+<span class="lineNum">     184 </span>            :         {
+<span class="lineNum">     185 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::getData&quot;);
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span><span class="lineCov">      17326 :                 ptr&lt;collectionType&gt; collection;</span>
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span><span class="lineCov">      17326 :                 if(isValid())</span>
+<span class="lineNum">     190 </span>            :                 {
+<span class="lineNum">     191 </span><span class="lineCov">      17326 :                         collection = m_iterator-&gt;second;</span>
+<span class="lineNum">     192 </span>            :                 }
+<span class="lineNum">     193 </span>            : 
+<span class="lineNum">     194 </span><span class="lineCov">      17326 :                 return collection;</span>
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     197 </span>            :         }
+<span class="lineNum">     198 </span>            :         
+<span class="lineNum">     199 </span>            :         /// \brief Return the id of the data or dataGroup
+<span class="lineNum">     200 </span>            :         ///         referenced by the iterator.
+<span class="lineNum">     201 </span>            :         ///
+<span class="lineNum">     202 </span>            :         /// If the iterator references an invalid data or dataGroup
+<span class="lineNum">     203 </span>            :         ///  (isValid() returns false) then the function returns 0.
+<span class="lineNum">     204 </span>            :         ///
+<span class="lineNum">     205 </span>            :         /// @return the id of the referenced data or dataGroup
+<a name="206"><span class="lineNum">     206 </span>            :         ///</a>
+<span class="lineNum">     207 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     208 </span><span class="lineCov">      17290 :         std::uint16_t getId()</span>
+<span class="lineNum">     209 </span>            :         {
+<span class="lineNum">     210 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::getId&quot;);
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span><span class="lineCov">      17290 :                 if(m_iterator==m_collection.end())</span>
+<span class="lineNum">     213 </span>            :                 {
+<span class="lineNum">     214 </span><span class="lineNoCov">          0 :                         return 0;</span>
+<span class="lineNum">     215 </span>            :                 }
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span><span class="lineCov">      17290 :                 return (std::uint16_t)((m_iterator-&gt;first)&gt;&gt;16);</span>
+<span class="lineNum">     218 </span>            : 
+<span class="lineNum">     219 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     220 </span>            :         }
+<span class="lineNum">     221 </span>            :         
+<span class="lineNum">     222 </span>            :         /// \brief Retrieve the order of the referenced data or
+<span class="lineNum">     223 </span>            :         ///         dataGroup.
+<span class="lineNum">     224 </span>            :         ///
+<span class="lineNum">     225 </span>            :         /// This function is used only while retrieving dataGroups
+<span class="lineNum">     226 </span>            :         ///  because there can be several groups with the same id;
+<span class="lineNum">     227 </span>            :         ///  in this case the function retrieve the order of
+<span class="lineNum">     228 </span>            :         ///  the dataGroup, that could be bigger than 0 when 
+<span class="lineNum">     229 </span>            :         ///  several %data groups with the same id are stored in
+<span class="lineNum">     230 </span>            :         ///  the collection.
+<span class="lineNum">     231 </span>            :         ///
+<span class="lineNum">     232 </span>            :         /// When used while retrieving the tags (class data) this
+<span class="lineNum">     233 </span>            :         ///  function always returns 0.
+<span class="lineNum">     234 </span>            :         ///
+<span class="lineNum">     235 </span>            :         /// The function returns 0 also when used while the 
+<span class="lineNum">     236 </span>            :         ///  iterator references an invalid dataGroup (isValid()
+<span class="lineNum">     237 </span>            :         ///  returns 0).
+<span class="lineNum">     238 </span>            :         ///
+<span class="lineNum">     239 </span>            :         /// @return the dataGroup's order
+<span class="lineNum">     240 </span>            :         ///
+<span class="lineNum">     241 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     242 </span>            :         std::uint16_t getOrder()
+<span class="lineNum">     243 </span>            :         {
+<span class="lineNum">     244 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollectionIterator::getOrder&quot;);
+<span class="lineNum">     245 </span>            : 
+<span class="lineNum">     246 </span>            :                 if(m_iterator==m_collection.end())
+<span class="lineNum">     247 </span>            :                 {
+<span class="lineNum">     248 </span>            :                         return 0;
+<span class="lineNum">     249 </span>            :                 }
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :                 return (std::uint16_t)((m_iterator-&gt;first) &amp; 0x0000ffff);
+<span class="lineNum">     252 </span>            : 
+<span class="lineNum">     253 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            : public:
+<span class="lineNum">     257 </span>            :         std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt; m_collection;
+<span class="lineNum">     258 </span>            :         typename std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt;::iterator m_iterator;
+<span class="lineNum">     259 </span>            : };
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     264 </span>            : ///////////////////////////////////////////////////////////
+<span class="lineNum">     265 </span>            : /// \brief This class stores a collection of Dicom tags or
+<span class="lineNum">     266 </span>            : ///         groups (classes \ref puntoexe::imebra::data or 
+<span class="lineNum">     267 </span>            : ///         \ref puntoexe::imebra::dataGroup).
+<span class="lineNum">     268 </span>            : ///        It is used as base class by dataGroup and
+<span class="lineNum">     269 </span>            : ///         dataSet.
+<span class="lineNum">     270 </span>            : ///
+<span class="lineNum">     271 </span>            : ///////////////////////////////////////////////////////////
+<a name="272"><span class="lineNum">     272 </span>            : ///////////////////////////////////////////////////////////</a>
+<span class="lineNum">     273 </span>            : template &lt;class collectionType&gt;
+<span class="lineNum">     274 </span><span class="lineCov">       6349 : class dataCollection : public baseObject</span>
+<a name="275"><span class="lineNum">     275 </span>            : {</a>
+<span class="lineNum">     276 </span>            : public:
+<span class="lineNum">     277 </span><span class="lineCov">       6349 :         dataCollection(ptr&lt;baseObject&gt; externalLock): baseObject(externalLock) {}</span>
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span>            :         /// \brief Set the charsets used in the collection
+<span class="lineNum">     280 </span>            :         ///
+<span class="lineNum">     281 </span>            :         /// The charsets contained in the list are copied in a
+<span class="lineNum">     282 </span>            :         ///  local list.
+<span class="lineNum">     283 </span>            :         ///
+<span class="lineNum">     284 </span>            :         /// @param pCharsetsList a pointer to the list of charsets
+<span class="lineNum">     285 </span>            :         ///                       used in the collection.
+<span class="lineNum">     286 </span>            :         ///                      The list's content is copied in
+<span class="lineNum">     287 </span>            :         ///                       a local list
+<a name="288"><span class="lineNum">     288 </span>            :         ///</a>
+<span class="lineNum">     289 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     290 </span><span class="lineCov">       8459 :         virtual void setCharsetsList(charsetsList::tCharsetsList* pCharsetsList)</span>
+<span class="lineNum">     291 </span>            :         {
+<span class="lineNum">     292 </span><span class="lineCov">       8459 :                 m_charsetsList.clear();</span>
+<span class="lineNum">     293 </span><span class="lineCov">       8459 :                 charsetsList::updateCharsets(pCharsetsList, &amp;m_charsetsList);</span>
+<span class="lineNum">     294 </span>            :                 
+<span class="lineNum">     295 </span><span class="lineCov">      63495 :                 for(</span>
+<span class="lineNum">     296 </span><span class="lineCov">       8459 :                         typename std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt;::iterator dataIterator=m_collection.begin(); </span>
+<span class="lineNum">     297 </span><span class="lineCov">      42330 :                         dataIterator!=m_collection.end(); </span>
+<span class="lineNum">     298 </span>            :                         ++dataIterator)
+<span class="lineNum">     299 </span>            :                 {
+<span class="lineNum">     300 </span><span class="lineCov">      12706 :                         dataIterator-&gt;second-&gt;setCharsetsList(pCharsetsList);</span>
+<span class="lineNum">     301 </span>            :                 }
+<span class="lineNum">     302 </span><span class="lineCov">       8459 :         }</span>
+<span class="lineNum">     303 </span>            :         
+<span class="lineNum">     304 </span>            :         /// \internal
+<span class="lineNum">     305 </span>            :         /// \brief Fill a list with the charsets used in the
+<span class="lineNum">     306 </span>            :         ///         collection.
+<span class="lineNum">     307 </span>            :         ///
+<span class="lineNum">     308 </span>            :         /// Queries all the children objects (dataGroup or data)
+<span class="lineNum">     309 </span>            :         ///  for their charsets, update the local charsets list
+<span class="lineNum">     310 </span>            :         ///  and the list specified as a parameter.
+<span class="lineNum">     311 </span>            :         ///
+<span class="lineNum">     312 </span>            :         /// @param pCharsetsList a pointer to the list that will
+<span class="lineNum">     313 </span>            :         ///                       be filled with the used charsets
+<a name="314"><span class="lineNum">     314 </span>            :         ///</a>
+<span class="lineNum">     315 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     316 </span><span class="lineCov">       2619 :         virtual void getCharsetsList(charsetsList::tCharsetsList* pCharsetsList)</span>
+<span class="lineNum">     317 </span>            :         {
+<span class="lineNum">     318 </span><span class="lineCov">       2619 :                 m_charsetsList.clear();</span>
+<span class="lineNum">     319 </span><span class="lineCov">      34467 :                 for(</span>
+<span class="lineNum">     320 </span><span class="lineCov">       2619 :                         typename std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt;::iterator dataIterator=m_collection.begin(); </span>
+<span class="lineNum">     321 </span><span class="lineCov">      22978 :                         dataIterator!=m_collection.end(); </span>
+<span class="lineNum">     322 </span>            :                         ++dataIterator)
+<span class="lineNum">     323 </span>            :                 {
+<span class="lineNum">     324 </span><span class="lineCov">       8870 :                         charsetsList::tCharsetsList charsets;</span>
+<span class="lineNum">     325 </span><span class="lineCov">       8870 :                         dataIterator-&gt;second-&gt;getCharsetsList(&amp;charsets);</span>
+<span class="lineNum">     326 </span><span class="lineCov">       8870 :                         charsetsList::updateCharsets(&amp;charsets, &amp;m_charsetsList);</span>
+<span class="lineNum">     327 </span>            :                 }
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span><span class="lineCov">       2619 :         pCharsetsList-&gt;insert(pCharsetsList-&gt;end(), m_charsetsList.begin(), m_charsetsList.end());</span>
+<span class="lineNum">     330 </span><span class="lineCov">       2619 :         }</span>
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span>            : 
+<span class="lineNum">     333 </span>            : protected:
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            :         //
+<span class="lineNum">     336 </span>            :         // In a dataGroup class returns the tag (ptr&lt;data&gt;with 
+<span class="lineNum">     337 </span>            :         //  the specified ID, while in a dataSet class returns
+<span class="lineNum">     338 </span>            :         //  the group (ptr&lt;dataGroup&gt;) with the specified ID.
+<a name="339"><span class="lineNum">     339 </span>            :         //</a>
+<span class="lineNum">     340 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     341 </span><span class="lineCov">     155664 :         ptr&lt;collectionType&gt; getData(std::uint16_t dataId, std::uint16_t order)</span>
+<span class="lineNum">     342 </span>            :         {
+<span class="lineNum">     343 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollection::getData&quot;);
+<span class="lineNum">     344 </span>            : 
+<span class="lineNum">     345 </span><span class="lineCov">     155664 :                 lockObject lockAccess(this);</span>
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span><span class="lineCov">     155664 :                 std::uint32_t dataUid = (((std::uint32_t)dataId)&lt;&lt;16) | (std::uint32_t)order;</span>
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span><span class="lineCov">     311328 :                 ptr&lt;collectionType&gt; returnCollection;</span>
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span><span class="lineCov">     155664 :                 typename std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt;::iterator findCollection = m_collection.find(dataUid);</span>
+<span class="lineNum">     352 </span><span class="lineCov">     155664 :                 if(findCollection != m_collection.end())</span>
+<span class="lineNum">     353 </span>            :                 {
+<span class="lineNum">     354 </span><span class="lineCov">     126163 :                         returnCollection = findCollection-&gt;second;</span>
+<span class="lineNum">     355 </span>            :                 }
+<span class="lineNum">     356 </span>            : 
+<span class="lineNum">     357 </span><span class="lineCov">     311328 :                 return returnCollection;</span>
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     360 </span>            :         }
+<span class="lineNum">     361 </span>            :         
+<a name="362"><span class="lineNum">     362 </span>            :         // Set the data (tag or group)</a>
+<span class="lineNum">     363 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     364 </span><span class="lineCov">      22702 :         void setData(std::uint16_t dataId, std::uint16_t order, const ptr&lt;collectionType&gt;&amp; pData)</span>
+<span class="lineNum">     365 </span>            :         {
+<span class="lineNum">     366 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollection::setData&quot;);
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span><span class="lineCov">      22702 :                 lockObject lockAccess(this);</span>
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span><span class="lineCov">      22702 :                 std::uint32_t dataUid = (((std::uint32_t)dataId)&lt;&lt;16) | (std::uint32_t)order;</span>
+<span class="lineNum">     371 </span><span class="lineCov">      22702 :                 m_collection[dataUid] = pData;</span>
+<span class="lineNum">     372 </span><span class="lineCov">      22702 :                 pData-&gt;setCharsetsList(&amp;m_charsetsList);</span>
+<span class="lineNum">     373 </span>            : 
+<span class="lineNum">     374 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     375 </span><span class="lineCov">      22702 :         }</span>
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            : public:
+<span class="lineNum">     378 </span>            :         /// \brief Return an iterator pointing to the first tag or
+<span class="lineNum">     379 </span>            :         ///         group (data or dataGroup) in the collection.
+<span class="lineNum">     380 </span>            :         ///
+<span class="lineNum">     381 </span>            :         /// You can use this function to scan all the tags (data)
+<span class="lineNum">     382 </span>            :         ///  in a dataGroup or all the groups (dataGroup) in a 
+<span class="lineNum">     383 </span>            :         ///  dataSet.
+<span class="lineNum">     384 </span>            :         ///
+<span class="lineNum">     385 </span>            :         /// See dataCollectionIterator for more information.
+<span class="lineNum">     386 </span>            :         ///
+<span class="lineNum">     387 </span>            :         /// @return an iterator that accesses all the %data in
+<span class="lineNum">     388 </span>            :         ///          the collection
+<a name="389"><span class="lineNum">     389 </span>            :         ///</a>
+<span class="lineNum">     390 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     391 </span><span class="lineCov">       5794 :         ptr&lt;dataCollectionIterator&lt;collectionType&gt; &gt; getDataIterator()</span>
+<span class="lineNum">     392 </span>            :         {
+<span class="lineNum">     393 </span>            :                 PUNTOEXE_FUNCTION_START(L&quot;dataCollection::getDataIterator&quot;);
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span><span class="lineCov">       5794 :                 lockObject lockAccess(this);</span>
+<span class="lineNum">     396 </span>            : 
+<span class="lineNum">     397 </span><span class="lineCov">      11588 :                 ptr&lt;dataCollectionIterator&lt;collectionType&gt; &gt; pIterator(new dataCollectionIterator&lt;collectionType&gt;);</span>
+<span class="lineNum">     398 </span>            : 
+<span class="lineNum">     399 </span>            :                 
+<span class="lineNum">     400 </span><span class="lineCov">      69360 :                 for(</span>
+<span class="lineNum">     401 </span><span class="lineCov">       5794 :                         typename std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt;::iterator dataIterator=m_collection.begin(); </span>
+<span class="lineNum">     402 </span><span class="lineCov">      46240 :                         dataIterator!=m_collection.end(); </span>
+<span class="lineNum">     403 </span>            :                         ++dataIterator)
+<span class="lineNum">     404 </span>            :                 {
+<span class="lineNum">     405 </span><span class="lineCov">      17326 :                         pIterator-&gt;m_collection[dataIterator-&gt;first]=dataIterator-&gt;second;</span>
+<span class="lineNum">     406 </span>            :                 }
+<span class="lineNum">     407 </span><span class="lineCov">       5794 :                 pIterator-&gt;reset();</span>
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span><span class="lineCov">      11588 :                 return pIterator;</span>
+<span class="lineNum">     410 </span>            : 
+<span class="lineNum">     411 </span>            :                 PUNTOEXE_FUNCTION_END();
+<span class="lineNum">     412 </span>            :         }
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span>            : protected:
+<span class="lineNum">     415 </span>            :         // Stored data (tags or groups)
+<span class="lineNum">     416 </span>            :         ///////////////////////////////////////////////////////////
+<span class="lineNum">     417 </span>            :         std::map&lt;std::uint32_t, ptr&lt;collectionType&gt; &gt; m_collection;
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span>            :         charsetsList::tCharsetsList m_charsetsList;
+<span class="lineNum">     420 </span>            : };
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            : /// @}
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            : } // namespace imebra
+<span class="lineNum">     425 </span>            : 
+<span class="lineNum">     426 </span>            : } // namespace puntoexe
+<span class="lineNum">     427 </span>            : 
+<span class="lineNum">     428 </span>            : 
+<span class="lineNum">     429 </span>            : #endif // !defined(imebraDataCollection_22668C4B_A480_4f6e_B5DC_ADAD585444DA__INCLUDED_)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
