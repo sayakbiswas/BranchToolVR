@@ -4,10 +4,10 @@ A tool designed to map vascular systems present in medical images in virtual rea
 
 ## TODO list:
 * continue work on vein tracing using controller position
-* transparent object depth sorting
-* auto detect sensible windowing values
+* transparent object depth sorting - ?
+* auto detect sensible windowing values - ?
 * data set testing
-* clamp point cloud selector box within bounds
+* clamp point cloud selector box within bounds - done
 * fix bounding sphere generation and collision testing
 * add isovalue coloring to static mesh
 * refactor shaders
@@ -17,10 +17,10 @@ A tool designed to map vascular systems present in medical images in virtual rea
 * declare const where possible in class functions
 * add object manager class
 * refactor code from other sources
-* re-enable shadows
+* re-enable shadows - not right now
 * refactor shaders to class objects
 * add virtual draw function to inherited class
-* point cloud culling
+* point cloud culling - not right now
 * refactor class/struct destructors
 	* delete opengl data in renderer destructor
 * refactor class privelages
@@ -34,9 +34,9 @@ A tool designed to map vascular systems present in medical images in virtual rea
 	* <sup>create libraries zip in download section</sup>
 	* <sup>uml documentation</sup>
 * triangulate vein structures
-* export triangulation
-*file dialog for DicomSet selection
-*separate classes to follow single responsibility rule
+* export triangulation (traced veins to blender)
+* file dialog for DicomSet selection
+* separate classes to follow single responsibility rule
 
 ## Libraries used:
 * OpenGL
