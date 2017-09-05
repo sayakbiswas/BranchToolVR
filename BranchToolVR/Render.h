@@ -90,8 +90,6 @@ class Render
 		void AddObjectToScene(DicomPointCloudObject * dpco);
 		void AddObjectToScene(LineObject * l);
 		void AddObjectToScene(TextureObject * t);
-		void AddObjectToScene(std::vector<IsovaluePointCloudSlider*> _ipcs);
-		void AddObjectToScene(IsovaluePointCloudSlider* _ipcs);
 		void SetOrthosliceTextureReference(Texture* _t);
 		const CursorData& GetCursorData() { return cursor_info; };
 		const VrData& GetVrData() { return vr_info; };

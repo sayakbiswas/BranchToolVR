@@ -182,13 +182,6 @@ void Render::AddObjectToScene(DicomPointCloudObject * _dpco)
 
 	all_objects.push_back(_dpco); 
 	dicom_point_cloud_objects.push_back(_dpco);
-	AddObjectToScene(_dpco->handle);
-	AddObjectToScene(_dpco->isovalue_point_cloud_sliders);
-
-	for (auto slider : _dpco->isovalue_point_cloud_sliders)
-	{
-		AddObjectToScene(slider);
-	}
 }
 
 void Render::AddObjectToScene(LineObject * _l) 
@@ -204,26 +197,6 @@ void Render::AddObjectToScene(TextureObject * _t)
 
 	texture_objects.push_back(_t);
 	all_objects.push_back(_t);
-}
-
-void Render::AddObjectToScene(std::vector<IsovaluePointCloudSlider*> _ipcs)
-{
-	for (auto i : _ipcs)
-		AddObjectToScene(i);
-}
-
-void Render::AddObjectToScene(IsovaluePointCloudSlider* _ipcs)
-{
-	if (_ipcs == NULL) return;
-
-	AddObjectToScene(_ipcs->knob);
-	AddObjectToScene(_ipcs->frame);
-	AddObjectToScene(_ipcs->value_label);
-	AddObjectToScene(_ipcs->x_button);
-	
-	AddObjectToScene(_ipcs->tag_frame);
-	AddObjectToScene(_ipcs->tag_label);
-	AddObjectToScene(_ipcs->tag_x_button);
 }
 
 void Render::SetOrthosliceTextureReference(Texture* _t)
@@ -327,7 +300,7 @@ void Render::UpdateCursor()
 void Render::RenderShadows() 
 {
 	// cull front faces
- 	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
 
