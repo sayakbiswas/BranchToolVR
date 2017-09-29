@@ -11,6 +11,8 @@
 #include "ColorObject.h"
 #include "TextureObject.h"
 #include "Constants.h"
+#include "LeastSquaresFit.h"
+#include "Curve.h"
 
 struct IsovaluePointCloudSlider;
 struct BranchPoint 

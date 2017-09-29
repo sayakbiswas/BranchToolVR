@@ -199,6 +199,15 @@ void Render::AddObjectToScene(TextureObject * _t)
 	all_objects.push_back(_t);
 }
 
+void Render::AddObjectToScene(Curve* _curve)
+{
+	if (_curve != NULL)
+		return;
+
+	curve_objects.push_back(_curve);
+	all_objects.push_back(_curve);
+}
+
 void Render::SetOrthosliceTextureReference(Texture* _t)
 {
 	// not the best solution...
@@ -530,6 +539,14 @@ void Render::LoadShaders()
 	shadow.uniforms[0] = glGetUniformLocation(shadow.id, "P");
 	shadow.uniforms[1] = glGetUniformLocation(shadow.id, "V");
 	shadow.uniforms[2] = glGetUniformLocation(shadow.id, "M");
+
+	curve.id = CompileGLShader("curve");
+	curve.num_uniforms = 4;
+	curve.uniforms = new GLuint[curve.num_uniforms];
+	curve.uniforms[0] = glGetUniformLocation(curve.id, "P");
+	curve.uniforms[1] = glGetUniformLocation(curve.id, "V");
+	curve.uniforms[2] = glGetUniformLocation(curve.id, "M");
+	curve.uniforms[3] = glGetUniformLocation(curve.id, "pos");
 }
 
 void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V) 
@@ -674,6 +691,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 			glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
 		}
 
+		//TODO: What does this do? May be redundant?
 		glUseProgram(branch_line.id);
 
 		glUniformMatrix4fv(branch_line.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
@@ -698,6 +716,17 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				}
 			}
 		}
+	}
+
+	//Render the branch curves
+	glUseProgram(curve.id);
+
+	glUniformMatrix4fv(curve.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
+	glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
+	glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+	for (Curve* & curve : curve_objects)
+	{
+		glDrawArrays(GL_LINE_STRIP, 0, curve->GetPositions().size());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1201,6 +1230,15 @@ GLuint Render::CompileGLShader(std::string programName)
 	if (programSuccess != GL_TRUE)
 	{
 		printf("%s - Error linking program %d!\n", programName.c_str(), unProgramID);
+		
+		GLint maxLength = 0;
+		glGetProgramiv(unProgramID, GL_INFO_LOG_LENGTH, &maxLength);
+
+		//The maxLength includes the NULL character
+		std::vector<GLchar> infoLog(maxLength);
+		glGetProgramInfoLog(unProgramID, maxLength, &maxLength, &infoLog[0]);
+		printf("%s\n", &infoLog[0]);
+
 		glDeleteProgram(unProgramID);
 		return 0;
 	}

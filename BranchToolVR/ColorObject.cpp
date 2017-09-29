@@ -50,7 +50,7 @@ int ColorObject::Type()
 void ColorObject::Load() 
 {
 	is_loaded = true;
-
+	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -73,6 +73,7 @@ void ColorObject::Load()
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
 }
 
 void ColorObject::GenerateGround() 

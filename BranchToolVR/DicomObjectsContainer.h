@@ -9,6 +9,7 @@
 #include "Ui.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
+#include "Curve.h"
 
 struct IsovaluePointCloudSlider
 {
@@ -71,6 +72,7 @@ class DicomObjectsContainer
 		DicomSet imaging_data;
 		DicomPointCloudObject * points;
 		CoarseDicomViewer * viewer;
+		Curve curve;
 		static void ShowHelpMarker(const char* desc)
 		{
 			ImGui::TextDisabled("(?)");

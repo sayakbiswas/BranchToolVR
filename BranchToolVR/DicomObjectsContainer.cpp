@@ -4,7 +4,7 @@ ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
-bool pushed, fslide, lslide, sliderHasChanged;
+bool pushed, fslide, lslide, sliderHasChanged, exportButtonPressed;
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -223,7 +223,7 @@ void DicomObjectsContainer::RenderUi()
 	fslide = ImGui::Button("First Focus Slice");
 	if (fslide) {
 		first = imaging_data.current_index;
-		std::cout << (first) << std::endl;
+		std::cout << "first " << (first) << std::endl;
 		points->lower_bounds.z = -0.5 + (first / imaging_data.data.size());
 	}
 	
@@ -240,8 +240,25 @@ void DicomObjectsContainer::RenderUi()
 	if (lslide) {
 		last = imaging_data.current_index;
 		points->upper_bounds.z = -0.5 + (last / imaging_data.data.size());
-		std::cout << (last) << std::endl;
+		std::cout << "last " << (last) << std::endl;
 	}
+	ImGui::PopStyleColor(3);
+	ImGui::PopID();
+
+	// Button to export
+	ImGui::PushID(3);
+	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 7.0f, 0.8f, 0.8f));
+	exportButtonPressed = ImGui::Button("Export");
+	if (exportButtonPressed) {
+		std::cout << "Exporting trace" << std::endl;
+		for (int i = 0; i < points->branch_points.size(); i++) {
+			std::cout << "branch point " << i << points->branch_points[i]->position.x << " "
+				<< points->branch_points[i]->position.y << " " << points->branch_points[i]->position.z << std::endl;
+		}
+	}
+
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
@@ -491,6 +508,32 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		}
 	}
 
+	if (points->branch_points.size() >= 4)
+	{
+		/*for (int i = 0; i < points->branch_points.size(); i++)
+		{
+			std::cout << i << " :: " << points->branch_points[i]->position.x << " "
+				<< points->branch_points[i]->position.y << " "
+				<< points->branch_points[i]->position.z << " "
+				<< std::endl;
+		}*/
+		std::cout << "branch points more than 4" << std::endl;
+		LeastSquaresFit leastSquaresFit(points->branch_points);
+		leastSquaresFit.Fit();
+		std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
+		/*for (int i = 0; i < curvePoints.size(); i++)
+		{
+			std::cout << i << " :: " << curvePoints[i].x << " "
+				<< curvePoints[i].y << " "
+				<< curvePoints[i].z << " "
+				<< std::endl;
+		}*/
+
+		curve.SetPositions(curvePoints);
+		curve.SetNormals(curvePoints);
+		curve.RenderCurve();
+	}
+
 	// Refactor
 	/*debug1->SetAppendPose(viewer->base_handle->GetAppendPose());
 	debug2->SetAppendPose(viewer->base_handle->GetAppendPose());*/
@@ -505,6 +548,8 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 
 	_r->AddObjectToScene(debug1);
 	_r->AddObjectToScene(debug2);
+
+	_r->AddObjectToScene(&curve);
 }
 
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)

@@ -132,12 +132,14 @@
   <ItemGroup>
     <ClCompile Include="AbstractBaseObject.cpp" />
     <ClCompile Include="CoarseDicomViewer.cpp" />
+    <ClCompile Include="Curve.cpp" />
     <ClCompile Include="DicomObjectsContainer.cpp" />
     <ClCompile Include="DicomPointCloudObject.cpp" />
     <ClCompile Include="DicomReader.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="InputHelpers.cpp" />
+    <ClCompile Include="LeastSquaresFit.cpp" />
     <ClCompile Include="Libraries\imebra\library\base\src\baseObject.cpp" />
     <ClCompile Include="Libraries\imebra\library\base\src\baseStream.cpp" />
     <ClCompile Include="Libraries\imebra\library\base\src\charsetConversionBase.cpp" />
@@ -227,12 +229,14 @@
     <ClInclude Include="AbstractBaseObject.h" />
     <ClInclude Include="CoarseDicomViewer.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Curve.h" />
     <ClInclude Include="DicomObjectsContainer.h" />
     <ClInclude Include="DicomPointCloudObject.h" />
     <ClInclude Include="DicomReader.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="ColorObject.h" />
     <ClInclude Include="imgui_impl_glfw_gl3.h" />
+    <ClInclude Include="LeastSquaresFit.h" />
     <ClInclude Include="Libraries\imgui\imconfig.h" />
     <ClInclude Include="Libraries\imgui\imgui.h" />
     <ClInclude Include="Libraries\imgui\imgui_internal.h" />
@@ -251,6 +255,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+    <None Include="curve.fs.glsl" />
+    <None Include="curve.vs.glsl" />
     <None Include="Shaders\branch_line.fs.glsl" />
     <None Include="Shaders\branch_line.vs.glsl" />
     <None Include="Shaders\branch_point.fs.glsl" />

@@ -303,6 +303,12 @@
     <ClCompile Include="imgui_impl_glfw_gl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LeastSquaresFit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Curve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
@@ -377,6 +383,12 @@
     <ClInclude Include="imgui_impl_glfw_gl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LeastSquaresFit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Curve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\dicom_point_cloud.fs.glsl">
@@ -428,5 +440,11 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\README.md" />
+    <None Include="curve.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="curve.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
