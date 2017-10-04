@@ -440,10 +440,10 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\README.md" />
-    <None Include="curve.fs.glsl">
+    <None Include="Shaders\curve.fs.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="curve.vs.glsl">
+    <None Include="Shaders\curve.vs.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

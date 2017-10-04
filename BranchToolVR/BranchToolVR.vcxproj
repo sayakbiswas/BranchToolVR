@@ -255,14 +255,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
-    <None Include="curve.fs.glsl" />
-    <None Include="curve.vs.glsl" />
     <None Include="Shaders\branch_line.fs.glsl" />
     <None Include="Shaders\branch_line.vs.glsl" />
     <None Include="Shaders\branch_point.fs.glsl" />
     <None Include="Shaders\branch_point.vs.glsl" />
     <None Include="Shaders\color.fs.glsl" />
     <None Include="Shaders\color.vs.glsl" />
+    <None Include="Shaders\curve.fs.glsl" />
+    <None Include="Shaders\curve.vs.glsl" />
     <None Include="Shaders\dicom_point_cloud.fs.glsl" />
     <None Include="Shaders\dicom_point_cloud.vs.glsl" />
     <None Include="Shaders\line.fs.glsl" />

@@ -91,7 +91,6 @@ class Render
 		void AddObjectToScene(DicomPointCloudObject * dpco);
 		void AddObjectToScene(LineObject * l);
 		void AddObjectToScene(TextureObject * t);
-		void AddObjectToScene(Curve* curve);
 		void SetOrthosliceTextureReference(Texture* _t);
 		const CursorData& GetCursorData() { return cursor_info; };
 		const VrData& GetVrData() { return vr_info; };
@@ -145,7 +144,6 @@ class Render
 		std::vector<TextureObject*> texture_objects;
 		std::vector<LineObject*> line_objects;
 		std::vector<DicomPointCloudObject*> dicom_point_cloud_objects;
-		std::vector<Curve*> curve_objects;
 
 		// VR variables
 		FramebufferDesc leftEyeDesc;

@@ -129,7 +129,12 @@ void DicomPointCloudObject::Load()
 	}
 }
 
-void DicomPointCloudObject::GenerateCube(glm::vec3 _scale,glm::vec3 _offset) 
+std::vector<glm::vec3> DicomPointCloudObject::GetInstancedPositions()
+{
+	return instanced_positions;
+}
+
+void DicomPointCloudObject::GenerateCube(glm::vec3 _scale,glm::vec3 _offset)
 {
 	glm::vec3 cube[8];
 	cube[0] = glm::vec3(0.0f, 0.0f, 0.0f);

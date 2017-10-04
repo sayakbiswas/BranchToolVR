@@ -199,15 +199,6 @@ void Render::AddObjectToScene(TextureObject * _t)
 	all_objects.push_back(_t);
 }
 
-void Render::AddObjectToScene(Curve* _curve)
-{
-	if (_curve != NULL)
-		return;
-
-	curve_objects.push_back(_curve);
-	all_objects.push_back(_curve);
-}
-
 void Render::SetOrthosliceTextureReference(Texture* _t)
 {
 	// not the best solution...
@@ -541,12 +532,14 @@ void Render::LoadShaders()
 	shadow.uniforms[2] = glGetUniformLocation(shadow.id, "M");
 
 	curve.id = CompileGLShader("curve");
-	curve.num_uniforms = 4;
+	curve.num_uniforms = 6;
 	curve.uniforms = new GLuint[curve.num_uniforms];
 	curve.uniforms[0] = glGetUniformLocation(curve.id, "P");
 	curve.uniforms[1] = glGetUniformLocation(curve.id, "V");
 	curve.uniforms[2] = glGetUniformLocation(curve.id, "M");
 	curve.uniforms[3] = glGetUniformLocation(curve.id, "pos");
+	curve.uniforms[4] = glGetUniformLocation(curve.id, "lower_bounds");
+	curve.uniforms[5] = glGetUniformLocation(curve.id, "instanced_position");
 }
 
 void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V) 
@@ -688,7 +681,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 		{
 			glUniform4fv(branch_point.uniforms[6], 1, glm::value_ptr(bp->getColor()));
 			glUniform3fv(branch_point.uniforms[3], 1, glm::value_ptr(bp->position));
-			glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
+			//glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
 		}
 
 		//TODO: What does this do? May be redundant?
@@ -716,17 +709,29 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				}
 			}
 		}
-	}
 
-	//Render the branch curves
-	glUseProgram(curve.id);
+		//Render the branch curves
+		glUseProgram(curve.id);
 
-	glUniformMatrix4fv(curve.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
-	glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
-	glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
-	for (Curve* & curve : curve_objects)
-	{
-		glDrawArrays(GL_LINE_STRIP, 0, curve->GetPositions().size());
+		glUniformMatrix4fv(curve.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
+		glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
+		glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+		glUniform3fv(curve.uniforms[4], 1, glm::value_ptr(dpco->lower_bounds));
+		if (!dpco->curves.empty())
+		{
+			Curve* curve_object = dpco->curves.back();
+			/*std::cout << "curve object positions" << std::endl;
+			for (int i = 0; i < curve_object->GetPositions().size(); i++)
+			{
+				std::cout << curve_object->GetPositions()[i].x << " " << curve_object->GetPositions()[i].y << " " << curve_object->GetPositions()[i].z << std::endl;
+			}*/
+			glBindVertexArray(curve_object->GetVao());
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+			//std::cout << "num of vertices " << curve_object->GetNumVertices() << std::endl;
+			glPointSize(20.f);
+			glDrawArrays(GL_POINTS, 0, curve_object->GetNumVertices());
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////

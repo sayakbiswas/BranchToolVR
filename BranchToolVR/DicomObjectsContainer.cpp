@@ -517,10 +517,18 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				<< points->branch_points[i]->position.z << " "
 				<< std::endl;
 		}*/
-		std::cout << "branch points more than 4" << std::endl;
+		//std::cout << "branch points more than 4" << std::endl;
 		LeastSquaresFit leastSquaresFit(points->branch_points);
 		leastSquaresFit.Fit();
 		std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
+		
+		//TODO: Remove this is just for trying out
+		curvePoints.clear();
+		for (int i = 0; i < points->branch_points.size(); i++)
+		{
+			curvePoints.push_back(glm::vec3(points->branch_points[i]->position.x, points->branch_points[i]->position.y, points->branch_points[i]->position.z));
+		}
+
 		/*for (int i = 0; i < curvePoints.size(); i++)
 		{
 			std::cout << i << " :: " << curvePoints[i].x << " "
@@ -531,6 +539,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 		curve.SetPositions(curvePoints);
 		curve.SetNormals(curvePoints);
+		points->curves.push_back(&curve);
 		curve.RenderCurve();
 	}
 
@@ -548,8 +557,6 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 
 	_r->AddObjectToScene(debug1);
 	_r->AddObjectToScene(debug2);
-
-	_r->AddObjectToScene(&curve);
 }
 
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)

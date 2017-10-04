@@ -70,7 +70,9 @@ class DicomPointCloudObject : public AbstractBaseObject
 		TextureObject* handle;		
 		ColorObject* branch_point_marker;
 		std::vector<BranchPoint*> branch_points;
-		int current_bp_selection;		
+		int current_bp_selection;	
+		std::vector<Curve*> curves;
+		std::vector<glm::vec3> GetInstancedPositions();
 
 	private:		
 		void GenerateCube(glm::vec3 _scale, glm::vec3 _offset);
