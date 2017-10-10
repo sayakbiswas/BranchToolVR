@@ -20,13 +20,14 @@ void LeastSquaresFit::CalculateParameters()
 	float totalLength = 0.f;
 
 	// TODO: Neighbors are present in the data structure, not sure if they are populated, need to check
-	if (branchPoints.size() > 0) 
+	if (branchPoints.size() > 1) 
 	{
 		for (int i = 1; i < branchPoints.size(); i++) 
 		{
 			glm::vec3 position1 = branchPoints[i - 1]->position;
 			glm::vec3 position2 = branchPoints[i]->position;
 
+			//TODO: Optimize - this does not need to be done for every point every time
 			float segmentLength = glm::length(position2 - position1);
 
 			segmentLengths.push_back(segmentLength);
@@ -34,9 +35,10 @@ void LeastSquaresFit::CalculateParameters()
 			totalLength += segmentLength;
 		}
 
+		params.push_back(0.f);
 		for (int i = 0; i < segmentLengths.size(); i++) 
 		{
-			params.push_back(segmentLengths[i] / totalLength);
+			params.push_back(params[i] + (segmentLengths[i] / totalLength));
 		}
 	}
 }
@@ -104,10 +106,11 @@ void LeastSquaresFit::FitCurve()
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[0], fittedCoefficientsY[0], fittedCoefficientsZ[0]));
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[1], fittedCoefficientsY[1], fittedCoefficientsZ[1]));
 
-	int size = params.size() + 2;
+	int size = params.size();
 	float b0, b1, b2, b3;
-	for (int i = 0; i < size; i++)
+	/*for (int i = 0; i < size; i++)
 	{
+		std::cout << "params[" << i << "] :: " << params[i] << std::endl;
 		b0 = (1 - params[i]) * (1 - params[i]) * (1 - params[i]);
 		b1 = 3 * (1 - params[i]) * (1 - params[i]) * params[i];
 		b2 = 3 * (1 - params[i]) * params[i] * params[i];
@@ -121,7 +124,7 @@ void LeastSquaresFit::FitCurve()
 		float curvePointsY = knownPointsY[0] * b0
 			+ fittedCoefficientsY[0] * b1
 			+ fittedCoefficientsY[1] * b2
-			+ knownPointsZ[1] * b3;
+			+ knownPointsY[1] * b3;
 
 		float curvePointsZ = knownPointsZ[0] * b0
 			+ fittedCoefficientsZ[0] * b1
@@ -129,10 +132,11 @@ void LeastSquaresFit::FitCurve()
 			+ knownPointsZ[1] * b3;
 
 		curvePoints.push_back(glm::vec3(curvePointsX, curvePointsY, curvePointsZ));
-	}
+	}*/
 
-	/*for (int t = 0; t < 1; t += 0.01f) 
+	for (float t = 0.f; t <= 1.f; t += 0.01f) 
 	{
+		std::cout << "params :: " << t << std::endl;
 		b0 = (1 - t) * (1 - t) * (1 - t);
 		b1 = 3 * (1 - t) * (1 - t) * t;
 		b2 = 3 * (1 - t) * t * t;
@@ -146,7 +150,7 @@ void LeastSquaresFit::FitCurve()
 		float curvePointsY = knownPointsY[0] * b0
 			+ fittedCoefficientsY[0] * b1
 			+ fittedCoefficientsY[1] * b2
-			+ knownPointsZ[1] * b3;
+			+ knownPointsY[1] * b3;
 
 		float curvePointsZ = knownPointsZ[0] * b0
 			+ fittedCoefficientsZ[0] * b1
@@ -154,7 +158,7 @@ void LeastSquaresFit::FitCurve()
 			+ knownPointsZ[1] * b3;
 
 		curvePoints.push_back(glm::vec3(curvePointsX, curvePointsY, curvePointsZ));
-	}*/
+	}
 }
 
 void LeastSquaresFit::Fit()

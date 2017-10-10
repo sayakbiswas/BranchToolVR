@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractBaseObject.h"
-#include "DicomPointCloudObject.h"
+
+class DicomPointCloudObject;
 
 class Curve :	public AbstractBaseObject
 {

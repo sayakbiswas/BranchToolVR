@@ -681,7 +681,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 		{
 			glUniform4fv(branch_point.uniforms[6], 1, glm::value_ptr(bp->getColor()));
 			glUniform3fv(branch_point.uniforms[3], 1, glm::value_ptr(bp->position));
-			//glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
+			glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
 		}
 
 		//TODO: What does this do? May be redundant?
@@ -729,8 +729,9 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 			glEnableVertexAttribArray(0);
 			glEnableVertexAttribArray(1);
 			//std::cout << "num of vertices " << curve_object->GetNumVertices() << std::endl;
-			glPointSize(20.f);
+			//glPointSize(20.f);
 			glDrawArrays(GL_POINTS, 0, curve_object->GetNumVertices());
+			//glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 		}
 	}
 

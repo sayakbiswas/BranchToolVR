@@ -507,40 +507,91 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			prev = newBP;
 		}
 	}
-
+	
 	if (points->branch_points.size() >= 4)
 	{
-		/*for (int i = 0; i < points->branch_points.size(); i++)
+		std::vector<BranchPoint*> pointsToFit;
+		BranchPoint* prevBranchPoint = points->branch_points[0];
+		//std::cout << "branch points to fit" << std::endl;
+		for (int i = 1; i < points->branch_points.size(); i++) //TODO: For each click, duplicate branch points keep getting added, probably a bug in SpoofInput?!
 		{
-			std::cout << i << " :: " << points->branch_points[i]->position.x << " "
-				<< points->branch_points[i]->position.y << " "
-				<< points->branch_points[i]->position.z << " "
-				<< std::endl;
-		}*/
-		//std::cout << "branch points more than 4" << std::endl;
-		LeastSquaresFit leastSquaresFit(points->branch_points);
-		leastSquaresFit.Fit();
-		std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
-		
-		//TODO: Remove this is just for trying out
-		curvePoints.clear();
-		for (int i = 0; i < points->branch_points.size(); i++)
-		{
-			curvePoints.push_back(glm::vec3(points->branch_points[i]->position.x, points->branch_points[i]->position.y, points->branch_points[i]->position.z));
+			if (glm::notEqual(points->branch_points[i]->position, prevBranchPoint->position).b)
+			{
+				/*std::cout << i << " :: " << points->branch_points[i]->position.x << " "
+					<< points->branch_points[i]->position.y << " "
+					<< points->branch_points[i]->position.z << " "
+					<< std::endl;*/
+				pointsToFit.push_back(points->branch_points[i]);
+				prevBranchPoint = points->branch_points[i];
+			}
 		}
-
-		/*for (int i = 0; i < curvePoints.size(); i++)
+		
+		int currPointsToFitCount = pointsToFit.size();
+		if (currPointsToFitCount != pointsToFitCount && (currPointsToFitCount == 4 
+			|| currPointsToFitCount > 4 && currPointsToFitCount - pointsAlreadyFitCount == 3))
 		{
-			std::cout << i << " :: " << curvePoints[i].x << " "
-				<< curvePoints[i].y << " "
-				<< curvePoints[i].z << " "
-				<< std::endl;
-		}*/
+			std::ofstream inputFile("input.dat", std::ios::out);
+			if (inputFile.is_open())
+			{
+				for (BranchPoint* inputPoint : pointsToFit)
+				{
+					inputFile << inputPoint->position.x << " " << inputPoint->position.y << " " << inputPoint->position.z << "\n";
+				}
+				inputFile.close();
+			}
+			else
+			{
+				std::cout << "Unable to open file input.dat" << std::endl;
+			}
 
-		curve.SetPositions(curvePoints);
-		curve.SetNormals(curvePoints);
-		points->curves.push_back(&curve);
-		curve.RenderCurve();
+			std::cout << "fitting points" << std::endl;
+			LeastSquaresFit leastSquaresFit(pointsToFit);
+			leastSquaresFit.Fit();
+			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
+
+			//TODO: Remove this is just for trying out
+			/*curvePoints.clear();
+			for (int i = 0; i < points->branch_points.size(); i++)
+			{
+			curvePoints.push_back(glm::vec3(points->branch_points[i]->position.x, points->branch_points[i]->position.y, points    ->branch_points[i]->position.z));
+			}*/
+
+			/*for (int i = 0; i < curvePoints.size(); i++)
+			{
+				std::cout << i << " :: " << curvePoints[i].x << " "
+					<< curvePoints[i].y << " "
+					<< curvePoints[i].z << " "
+					<< std::endl;
+			}*/
+
+			std::vector<glm::vec3> prevCurvePoints = curve.GetPositions();
+			for (glm::vec3 curvePoint : curvePoints)
+			{
+				prevCurvePoints.push_back(curvePoint);
+			}
+
+			//Check contents of output.dat? need to change how prevCurvePoints is populated
+			std::ofstream outputFile("output.dat", std::ios::out);
+			if (outputFile.is_open())
+			{
+				for (glm::vec3 outputPoint : prevCurvePoints)
+				{
+					outputFile << outputPoint.x << " " << outputPoint.y << " " << outputPoint.z << "\n";
+				}
+				outputFile.close();
+			}
+			else
+			{
+				std::cout << "Unable to open file output.dat" << std::endl;
+			}
+
+			curve.SetPositions(prevCurvePoints);
+			curve.SetNormals(prevCurvePoints);
+			points->curves.push_back(&curve);
+			curve.RenderCurve();
+			pointsToFitCount = currPointsToFitCount;
+			pointsAlreadyFitCount = currPointsToFitCount;
+		}
 	}
 
 	// Refactor
