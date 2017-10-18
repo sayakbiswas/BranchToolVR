@@ -75,6 +75,7 @@ void LeastSquaresFit::ComputeBasis()
 	knownBasisMatrix[1][0] = B31;
 	knownBasisMatrix[1][1] = B32;
 
+	std::cout << "b1 " << b1 << "b2 " << b2 << std::endl;
 	actualDataBasis.push_back(b1);
 	actualDataBasis.push_back(b2);
 }
@@ -94,7 +95,13 @@ void LeastSquaresFit::FitCurve()
 	glm::vec2 actualDataPointsY = glm::vec2(branchPoints[start + 1]->position.y, branchPoints[end - 1]->position.y);
 	glm::vec2 actualDataPointsZ = glm::vec2(branchPoints[start + 1]->position.z, branchPoints[end - 1]->position.z);
 
+	std::cout << "actualDataPointsX " << actualDataPointsX[0] << " " << actualDataPointsX[1] << std::endl;
+	std::cout << "actualDataPointsY " << actualDataPointsY[0] << " " << actualDataPointsY[1] << std::endl;
+	std::cout << "actualDataPointsZ " << actualDataPointsZ[0] << " " << actualDataPointsZ[1] << std::endl;
+
 	glm::vec2 actualDataBasisVec = glm::vec2(actualDataBasis[0], actualDataBasis[1]);
+
+	std::cout << "actualDataBasisVec " << actualDataBasisVec[0] << " " << actualDataBasisVec[1] << std::endl;
 
 	glm::vec2 fittedCoefficientsX = inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX
 		+ inverseUnknownBasisMatrix * actualDataPointsX * actualDataBasisVec;
