@@ -730,8 +730,8 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 			glEnableVertexAttribArray(1);
 			//std::cout << "num of vertices " << curve_object->GetNumVertices() << std::endl;
 			//glPointSize(20.f);
-			glDrawArrays(GL_POINTS, 0, curve_object->GetNumVertices());
-			//glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
+			//glDrawArrays(GL_POINTS, 0, curve_object->GetNumVertices());
+			glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 		}
 	}
 

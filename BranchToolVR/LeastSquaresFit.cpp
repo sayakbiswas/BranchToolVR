@@ -45,9 +45,12 @@ void LeastSquaresFit::CalculateParameters()
 
 void LeastSquaresFit::ComputeBasis()
 {
+	int end = branchPoints.size() - 1;
+	int start = end - 3;
 	int size = params.size();
 	float B01 = 0.f, B02 = 0.f, B11 = 0.f, B12 = 0.f, B21 = 0.f, B22 = 0.f, B31 = 0.f, B32 = 0.f;
 	float b0 = 0.f, b1 = 0.f, b2 = 0.f, b3 = 0.f;
+	float Yx1 = 0.f, Yx2 = 0.f, Yy1 = 0.f, Yy2 = 0.f, Yz1 = 0.f, Yz2 = 0.f;
 	for (int i = 0; i < size; i++)
 	{
 		b0 = (1 - params[i]) * (1 - params[i]) * (1 - params[i]);
@@ -63,6 +66,13 @@ void LeastSquaresFit::ComputeBasis()
 		B22 += b2 * b2;
 		B31 += b3 * b1;
 		B32 += b3 * b2;
+
+		Yx1 += branchPoints[start + 1]->position.x * b1;
+		Yx2 += branchPoints[end - 1]->position.x * b2;
+		Yy1 += branchPoints[start + 1]->position.y * b1;
+		Yy2 += branchPoints[end - 1]->position.y * b2;
+		Yz1 += branchPoints[start + 1]->position.z * b1;
+		Yz2 += branchPoints[end - 1]->position.z * b2;
 	}
 
 	unknownBasisMatrix[0][0] = B11;
@@ -78,6 +88,13 @@ void LeastSquaresFit::ComputeBasis()
 	std::cout << "b1 " << b1 << "b2 " << b2 << std::endl;
 	actualDataBasis.push_back(b1);
 	actualDataBasis.push_back(b2);
+
+	actualDataX[0] = Yx1;
+	actualDataX[1] = Yx2;
+	actualDataY[0] = Yy1;
+	actualDataY[1] = Yy2;
+	actualDataZ[0] = Yz1;
+	actualDataZ[1] = Yz2;
 }
 
 void LeastSquaresFit::FitCurve()
@@ -95,20 +112,20 @@ void LeastSquaresFit::FitCurve()
 	glm::vec2 actualDataPointsY = glm::vec2(branchPoints[start + 1]->position.y, branchPoints[end - 1]->position.y);
 	glm::vec2 actualDataPointsZ = glm::vec2(branchPoints[start + 1]->position.z, branchPoints[end - 1]->position.z);
 
-	std::cout << "actualDataPointsX " << actualDataPointsX[0] << " " << actualDataPointsX[1] << std::endl;
-	std::cout << "actualDataPointsY " << actualDataPointsY[0] << " " << actualDataPointsY[1] << std::endl;
-	std::cout << "actualDataPointsZ " << actualDataPointsZ[0] << " " << actualDataPointsZ[1] << std::endl;
+	//std::cout << "actualDataPointsX " << actualDataPointsX[0] << " " << actualDataPointsX[1] << std::endl;
+	//std::cout << "actualDataPointsY " << actualDataPointsY[0] << " " << actualDataPointsY[1] << std::endl;
+	//std::cout << "actualDataPointsZ " << actualDataPointsZ[0] << " " << actualDataPointsZ[1] << std::endl;
 
 	glm::vec2 actualDataBasisVec = glm::vec2(actualDataBasis[0], actualDataBasis[1]);
 
-	std::cout << "actualDataBasisVec " << actualDataBasisVec[0] << " " << actualDataBasisVec[1] << std::endl;
+	//std::cout << "actualDataBasisVec " << actualDataBasisVec[0] << " " << actualDataBasisVec[1] << std::endl;
 
-	glm::vec2 fittedCoefficientsX = inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX
-		+ inverseUnknownBasisMatrix * actualDataPointsX * actualDataBasisVec;
-	glm::vec2 fittedCoefficientsY = inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsY
-		+ inverseUnknownBasisMatrix * actualDataPointsY * actualDataBasisVec;
-	glm::vec2 fittedCoefficientsZ = inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsZ
-		+ inverseUnknownBasisMatrix * actualDataPointsZ * actualDataBasisVec;
+	glm::vec2 fittedCoefficientsX = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX)
+		+ inverseUnknownBasisMatrix * actualDataX;
+	glm::vec2 fittedCoefficientsY = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsY)
+		+ inverseUnknownBasisMatrix * actualDataY;
+	glm::vec2 fittedCoefficientsZ = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsZ)
+		+ inverseUnknownBasisMatrix * actualDataZ;
 
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[0], fittedCoefficientsY[0], fittedCoefficientsZ[0]));
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[1], fittedCoefficientsY[1], fittedCoefficientsZ[1]));
@@ -143,7 +160,7 @@ void LeastSquaresFit::FitCurve()
 
 	for (float t = 0.f; t <= 1.f; t += 0.01f) 
 	{
-		std::cout << "params :: " << t << std::endl;
+		//std::cout << "params :: " << t << std::endl;
 		b0 = (1 - t) * (1 - t) * (1 - t);
 		b1 = 3 * (1 - t) * (1 - t) * t;
 		b2 = 3 * (1 - t) * t * t;

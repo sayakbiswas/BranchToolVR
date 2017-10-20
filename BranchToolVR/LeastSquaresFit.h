@@ -27,6 +27,11 @@ private:
 	/** Final points for the curve */
 	std::vector<glm::vec3> curvePoints;
 
+	/** Actual data in the equation */
+	glm::vec2 actualDataX;
+	glm::vec2 actualDataY;
+	glm::vec2 actualDataZ;
+
 public:
 	LeastSquaresFit();
 	LeastSquaresFit(std::vector<BranchPoint*> branchPoints);

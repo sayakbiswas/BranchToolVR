@@ -92,7 +92,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)Libraries\openvr-master\lib\win64;$(ProjectDir)Libraries\glew-1.13.0\lib\Release\x64;$(ProjectDir)Libraries\openvr-master\bin\win64;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;D:\Workspace\BranchToolVR\BranchToolVR\Libraries\glew-2.1.0\lib\Release\x64\glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,7 +126,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)Libraries\openvr-master\lib\win64;$(ProjectDir)Libraries\glew-1.13.0\lib\Release\x64;$(ProjectDir)Libraries\openvr-master\bin\win64;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;D:\Workspace\BranchToolVR\BranchToolVR\Libraries\glew-2.1.0\lib\Release\x64\glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
