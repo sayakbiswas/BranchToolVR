@@ -544,7 +544,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				std::cout << "Unable to open file input.dat" << std::endl;
 			}
 
-			std::cout << "fitting points" << std::endl;
+			//std::cout << "fitting points" << std::endl;
 			LeastSquaresFit leastSquaresFit(pointsToFit);
 			leastSquaresFit.Fit();
 			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();

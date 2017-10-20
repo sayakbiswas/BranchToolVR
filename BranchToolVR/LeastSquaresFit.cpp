@@ -85,7 +85,7 @@ void LeastSquaresFit::ComputeBasis()
 	knownBasisMatrix[1][0] = B31;
 	knownBasisMatrix[1][1] = B32;
 
-	std::cout << "b1 " << b1 << "b2 " << b2 << std::endl;
+	//std::cout << "b1 " << b1 << "b2 " << b2 << std::endl;
 	actualDataBasis.push_back(b1);
 	actualDataBasis.push_back(b2);
 
