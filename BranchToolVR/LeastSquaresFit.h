@@ -7,8 +7,12 @@ struct BranchPoint;
 class LeastSquaresFit
 {
 private:
+	/** The branch points added by user */
 	std::vector<BranchPoint*> branchPoints;
-	
+
+	/** Number of bezier pieces to fit */
+	int numberOfPieces = 1;
+
 	/** Parameters for the basis functions (t)*/
 	std::vector<float>params;
 
@@ -18,23 +22,21 @@ private:
 	/** Basis matrix for the known points */
 	glm::mat2 knownBasisMatrix;
 
-	/** Basis values for the actual data points of the unknowns */
-	std::vector<float> actualDataBasis;
-
 	/** Coefficients for the two unknown data points */
 	std::vector<glm::vec3> fittedCoefficients;
 
 	/** Final points for the curve */
 	std::vector<glm::vec3> curvePoints;
 
-	/** Actual data in the equation */
-	glm::vec2 actualDataX;
-	glm::vec2 actualDataY;
-	glm::vec2 actualDataZ;
+	/** Sum of actual data points in the equation multiplied with the basis */
+	glm::vec2 actualDataBasisX;
+	glm::vec2 actualDataBasisY;
+	glm::vec2 actualDataBasisZ;
 
 public:
 	LeastSquaresFit();
 	LeastSquaresFit(std::vector<BranchPoint*> branchPoints);
+	LeastSquaresFit(std::vector<BranchPoint*> branchPoints, int numberOfPieces);
 	~LeastSquaresFit();
 
 	/** Calculate parameters for the basis functions as the branch points are added */

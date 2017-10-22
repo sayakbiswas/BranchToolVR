@@ -549,32 +549,11 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			leastSquaresFit.Fit();
 			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
 
-			//TODO: Remove this is just for trying out
-			/*curvePoints.clear();
-			for (int i = 0; i < points->branch_points.size(); i++)
-			{
-			curvePoints.push_back(glm::vec3(points->branch_points[i]->position.x, points->branch_points[i]->position.y, points    ->branch_points[i]->position.z));
-			}*/
-
-			/*for (int i = 0; i < curvePoints.size(); i++)
-			{
-				std::cout << i << " :: " << curvePoints[i].x << " "
-					<< curvePoints[i].y << " "
-					<< curvePoints[i].z << " "
-					<< std::endl;
-			}*/
-
-			std::vector<glm::vec3> prevCurvePoints = curve.GetPositions();
-			for (glm::vec3 curvePoint : curvePoints)
-			{
-				prevCurvePoints.push_back(curvePoint);
-			}
-
 			//Check contents of output.dat? need to change how prevCurvePoints is populated
 			std::ofstream outputFile("output.dat", std::ios::out);
 			if (outputFile.is_open())
 			{
-				for (glm::vec3 outputPoint : prevCurvePoints)
+				for (glm::vec3 outputPoint : curvePoints)
 				{
 					outputFile << outputPoint.x << " " << outputPoint.y << " " << outputPoint.z << "\n";
 				}
@@ -585,8 +564,8 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				std::cout << "Unable to open file output.dat" << std::endl;
 			}
 
-			curve.SetPositions(prevCurvePoints);
-			curve.SetNormals(prevCurvePoints);
+			curve.SetPositions(curvePoints);
+			curve.SetNormals(curvePoints);
 			points->curves.push_back(&curve);
 			curve.RenderCurve();
 			pointsToFitCount = currPointsToFitCount;

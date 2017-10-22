@@ -1,7 +1,7 @@
 % compute least square fit
 % cd D:\Sayak\BranchToolVR\BranchToolVR
 clear;
-load('D:\Sayak\BranchToolVR\BranchToolVR\input.dat')
+load input.dat
 pces = 1;
 %if pces ==1,
 	%input = [input(1:144,:);  input(144,:); input(144,:)];
@@ -23,8 +23,8 @@ end;
 	% get parameters
 	df = xy(2:nloc,:)-xy(1:nloc-1,:);
 	len = sqrt(sum(df.^2,2));  % length between points
-	avglen = sum(len/nloc);
-	outlieridx = len(len>2*avglen)
+	%avglen = sum(len/nloc);
+	%outlieridx = len(len>2*avglen)
 	tt = tril(ones(nloc-1))*len;  % increasing length along curve
 	tt = [0; tt/tt(nloc-1)];  % normalized to 0..1
 
@@ -62,3 +62,10 @@ clf;
 for pc=1:pces,
     plot(tt, err{pc}); hold on;
 end;
+
+% Plot results from GLM code
+figure(4)
+plot3(xy(:,1),xy(:,2 ),xy(:,3),'b'); 
+hold on;
+load output.dat
+plot3(output(:,1),output(:,2),output(:,3),'r');

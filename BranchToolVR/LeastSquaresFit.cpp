@@ -10,6 +10,12 @@ LeastSquaresFit::LeastSquaresFit(std::vector<BranchPoint*> branchPoints)
 	this->branchPoints = branchPoints;
 }
 
+LeastSquaresFit::LeastSquaresFit(std::vector<BranchPoint*> branchPoints, int numberOfPieces)
+{
+	this->branchPoints = branchPoints;
+	this->numberOfPieces = numberOfPieces;
+}
+
 LeastSquaresFit::~LeastSquaresFit()
 {
 }
@@ -45,8 +51,6 @@ void LeastSquaresFit::CalculateParameters()
 
 void LeastSquaresFit::ComputeBasis()
 {
-	int end = branchPoints.size() - 1;
-	int start = end - 3;
 	int size = params.size();
 	float B01 = 0.f, B02 = 0.f, B11 = 0.f, B12 = 0.f, B21 = 0.f, B22 = 0.f, B31 = 0.f, B32 = 0.f;
 	float b0 = 0.f, b1 = 0.f, b2 = 0.f, b3 = 0.f;
@@ -67,12 +71,12 @@ void LeastSquaresFit::ComputeBasis()
 		B31 += b3 * b1;
 		B32 += b3 * b2;
 
-		Yx1 += branchPoints[start + 1]->position.x * b1;
-		Yx2 += branchPoints[end - 1]->position.x * b2;
-		Yy1 += branchPoints[start + 1]->position.y * b1;
-		Yy2 += branchPoints[end - 1]->position.y * b2;
-		Yz1 += branchPoints[start + 1]->position.z * b1;
-		Yz2 += branchPoints[end - 1]->position.z * b2;
+		Yx1 += branchPoints[i]->position.x * b1;
+		Yx2 += branchPoints[i]->position.x * b2;
+		Yy1 += branchPoints[i]->position.y * b1;
+		Yy2 += branchPoints[i]->position.y * b2;
+		Yz1 += branchPoints[i]->position.z * b1;
+		Yz2 += branchPoints[i]->position.z * b2;
 	}
 
 	unknownBasisMatrix[0][0] = B11;
@@ -85,22 +89,18 @@ void LeastSquaresFit::ComputeBasis()
 	knownBasisMatrix[1][0] = B31;
 	knownBasisMatrix[1][1] = B32;
 
-	//std::cout << "b1 " << b1 << "b2 " << b2 << std::endl;
-	actualDataBasis.push_back(b1);
-	actualDataBasis.push_back(b2);
-
-	actualDataX[0] = Yx1;
-	actualDataX[1] = Yx2;
-	actualDataY[0] = Yy1;
-	actualDataY[1] = Yy2;
-	actualDataZ[0] = Yz1;
-	actualDataZ[1] = Yz2;
+	actualDataBasisX[0] = Yx1;
+	actualDataBasisX[1] = Yx2;
+	actualDataBasisY[0] = Yy1;
+	actualDataBasisY[1] = Yy2;
+	actualDataBasisZ[0] = Yz1;
+	actualDataBasisZ[1] = Yz2;
 }
 
 void LeastSquaresFit::FitCurve()
 {
+	int start = 0;
 	int end = branchPoints.size() - 1;
-	int start = end - 3;
 
 	glm::mat2 inverseUnknownBasisMatrix = glm::inverse(unknownBasisMatrix);
 	
@@ -108,59 +108,21 @@ void LeastSquaresFit::FitCurve()
 	glm::vec2 knownPointsY = glm::vec2(branchPoints[start]->position.y, branchPoints[end]->position.y);
 	glm::vec2 knownPointsZ = glm::vec2(branchPoints[start]->position.z, branchPoints[end]->position.z);
 
-	glm::vec2 actualDataPointsX = glm::vec2(branchPoints[start + 1]->position.x, branchPoints[end - 1]->position.x);
-	glm::vec2 actualDataPointsY = glm::vec2(branchPoints[start + 1]->position.y, branchPoints[end - 1]->position.y);
-	glm::vec2 actualDataPointsZ = glm::vec2(branchPoints[start + 1]->position.z, branchPoints[end - 1]->position.z);
-
-	//std::cout << "actualDataPointsX " << actualDataPointsX[0] << " " << actualDataPointsX[1] << std::endl;
-	//std::cout << "actualDataPointsY " << actualDataPointsY[0] << " " << actualDataPointsY[1] << std::endl;
-	//std::cout << "actualDataPointsZ " << actualDataPointsZ[0] << " " << actualDataPointsZ[1] << std::endl;
-
-	glm::vec2 actualDataBasisVec = glm::vec2(actualDataBasis[0], actualDataBasis[1]);
-
-	//std::cout << "actualDataBasisVec " << actualDataBasisVec[0] << " " << actualDataBasisVec[1] << std::endl;
-
 	glm::vec2 fittedCoefficientsX = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX)
-		+ inverseUnknownBasisMatrix * actualDataX;
+		+ inverseUnknownBasisMatrix * actualDataBasisX;
 	glm::vec2 fittedCoefficientsY = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsY)
-		+ inverseUnknownBasisMatrix * actualDataY;
+		+ inverseUnknownBasisMatrix * actualDataBasisY;
 	glm::vec2 fittedCoefficientsZ = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsZ)
-		+ inverseUnknownBasisMatrix * actualDataZ;
+		+ inverseUnknownBasisMatrix * actualDataBasisZ;
 
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[0], fittedCoefficientsY[0], fittedCoefficientsZ[0]));
 	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[1], fittedCoefficientsY[1], fittedCoefficientsZ[1]));
 
 	int size = params.size();
 	float b0, b1, b2, b3;
-	/*for (int i = 0; i < size; i++)
-	{
-		std::cout << "params[" << i << "] :: " << params[i] << std::endl;
-		b0 = (1 - params[i]) * (1 - params[i]) * (1 - params[i]);
-		b1 = 3 * (1 - params[i]) * (1 - params[i]) * params[i];
-		b2 = 3 * (1 - params[i]) * params[i] * params[i];
-		b3 = params[i] * params[i] * params[i];
-
-		float curvePointsX = knownPointsX[0] * b0
-			+ fittedCoefficientsX[0] * b1
-			+ fittedCoefficientsX[1] * b2
-			+ knownPointsX[1] * b3;
-
-		float curvePointsY = knownPointsY[0] * b0
-			+ fittedCoefficientsY[0] * b1
-			+ fittedCoefficientsY[1] * b2
-			+ knownPointsY[1] * b3;
-
-		float curvePointsZ = knownPointsZ[0] * b0
-			+ fittedCoefficientsZ[0] * b1
-			+ fittedCoefficientsZ[1] * b2
-			+ knownPointsZ[1] * b3;
-
-		curvePoints.push_back(glm::vec3(curvePointsX, curvePointsY, curvePointsZ));
-	}*/
 
 	for (float t = 0.f; t <= 1.f; t += 0.01f) 
 	{
-		//std::cout << "params :: " << t << std::endl;
 		b0 = (1 - t) * (1 - t) * (1 - t);
 		b1 = 3 * (1 - t) * (1 - t) * t;
 		b2 = 3 * (1 - t) * t * t;
