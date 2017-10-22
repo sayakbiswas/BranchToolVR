@@ -20,7 +20,7 @@ LeastSquaresFit::~LeastSquaresFit()
 {
 }
 
-void LeastSquaresFit::CalculateParameters()
+void LeastSquaresFit::CalculateParameters(int start, int end)
 {
 	std::vector<float> segmentLengths;
 	float totalLength = 0.f;
@@ -28,7 +28,7 @@ void LeastSquaresFit::CalculateParameters()
 	// TODO: Neighbors are present in the data structure, not sure if they are populated, need to check
 	if (branchPoints.size() > 1) 
 	{
-		for (int i = 1; i < branchPoints.size(); i++) 
+		for (int i = start + 1; i <= end; i++) 
 		{
 			glm::vec3 position1 = branchPoints[i - 1]->position;
 			glm::vec3 position2 = branchPoints[i]->position;
@@ -49,13 +49,13 @@ void LeastSquaresFit::CalculateParameters()
 	}
 }
 
-void LeastSquaresFit::ComputeBasis()
+void LeastSquaresFit::ComputeBasis(int start, int end)
 {
-	int size = params.size();
+	//int size = params.size();
 	float B01 = 0.f, B02 = 0.f, B11 = 0.f, B12 = 0.f, B21 = 0.f, B22 = 0.f, B31 = 0.f, B32 = 0.f;
 	float b0 = 0.f, b1 = 0.f, b2 = 0.f, b3 = 0.f;
 	float Yx1 = 0.f, Yx2 = 0.f, Yy1 = 0.f, Yy2 = 0.f, Yz1 = 0.f, Yz2 = 0.f;
-	for (int i = 0; i < size; i++)
+	for (int i = start; i <= end; i++)
 	{
 		b0 = (1 - params[i]) * (1 - params[i]) * (1 - params[i]);
 		b1 = 3 * (1 - params[i]) * (1 - params[i]) * params[i];
@@ -97,11 +97,8 @@ void LeastSquaresFit::ComputeBasis()
 	actualDataBasisZ[1] = Yz2;
 }
 
-void LeastSquaresFit::FitCurve()
+void LeastSquaresFit::FitCurve(int start, int end)
 {
-	int start = 0;
-	int end = branchPoints.size() - 1;
-
 	glm::mat2 inverseUnknownBasisMatrix = glm::inverse(unknownBasisMatrix);
 	
 	glm::vec2 knownPointsX = glm::vec2(branchPoints[start]->position.x, branchPoints[end]->position.x);
@@ -149,13 +146,24 @@ void LeastSquaresFit::FitCurve()
 
 void LeastSquaresFit::Fit()
 {
-	CalculateParameters();
-	ComputeBasis();
-	FitCurve();
+	int numberOfPoints = branchPoints.size();
+	int step = floor(numberOfPoints / numberOfPieces);
+	int start = 0;
+	for (int i = 0; i < numberOfPieces; i++)
+	{
+		int end = start + step;
+		if (end > numberOfPoints - 1 || step == 0)
+		{
+			end = numberOfPoints - 1;
+		}
+		CalculateParameters(start, end);
+		ComputeBasis(start, end);
+		FitCurve(start, end);
+		start = end;
+	}
 }
 
 std::vector<glm::vec3> LeastSquaresFit::GetCurvePoints()
 {
 	return curvePoints;
 }
-

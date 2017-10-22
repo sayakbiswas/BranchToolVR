@@ -530,6 +530,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		if (currPointsToFitCount != pointsToFitCount && (currPointsToFitCount == 4 
 			|| currPointsToFitCount > 4 && currPointsToFitCount - pointsAlreadyFitCount == 3))
 		{
+			//TODO: Put write to file in a DEBUG mode
 			std::ofstream inputFile("input.dat", std::ios::out);
 			if (inputFile.is_open())
 			{
@@ -545,11 +546,11 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			}
 
 			//std::cout << "fitting points" << std::endl;
-			LeastSquaresFit leastSquaresFit(pointsToFit);
+			LeastSquaresFit leastSquaresFit(pointsToFit, 4);
 			leastSquaresFit.Fit();
 			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
 
-			//Check contents of output.dat? need to change how prevCurvePoints is populated
+			//TODO: Put write to file in a DEBUG mode
 			std::ofstream outputFile("output.dat", std::ios::out);
 			if (outputFile.is_open())
 			{

@@ -40,13 +40,13 @@ public:
 	~LeastSquaresFit();
 
 	/** Calculate parameters for the basis functions as the branch points are added */
-	void CalculateParameters();
+	void CalculateParameters(int start, int end);
 
 	/** Compute the elements for the basis matrices */
-	void ComputeBasis();
+	void ComputeBasis(int start, int end);
 
 	/** Compute the fitted coefficients and the curve points */
-	void FitCurve();
+	void FitCurve(int start, int end);
 
 	/** Render the  fitted curve */
 	void Fit();
