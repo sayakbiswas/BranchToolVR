@@ -57,12 +57,6 @@ void Curve::Load()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), &normals[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &instanced_positions_buffer);
-	/*if (pointCloud->GetInstancedPositions().size() > 0)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * pointCloud->GetInstancedPositions().size(), 
-			&pointCloud->GetInstancedPositions()[0], GL_STATIC_DRAW);
-	}*/
 
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, positions_buffer);

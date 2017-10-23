@@ -715,23 +715,17 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 
 		glUniformMatrix4fv(curve.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
 		glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
-		glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+		glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(dpco->GetModelMatrix()));
 		glUniform3fv(curve.uniforms[4], 1, glm::value_ptr(dpco->lower_bounds));
 		if (!dpco->curves.empty())
 		{
-			Curve* curve_object = dpco->curves.back();
-			/*std::cout << "curve object positions" << std::endl;
-			for (int i = 0; i < curve_object->GetPositions().size(); i++)
+			for (Curve* curve_object : dpco->curves)
 			{
-				std::cout << curve_object->GetPositions()[i].x << " " << curve_object->GetPositions()[i].y << " " << curve_object->GetPositions()[i].z << std::endl;
-			}*/
-			glBindVertexArray(curve_object->GetVao());
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-			//std::cout << "num of vertices " << curve_object->GetNumVertices() << std::endl;
-			//glPointSize(20.f);
-			//glDrawArrays(GL_POINTS, 0, curve_object->GetNumVertices());
-			glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
+				glBindVertexArray(curve_object->GetVao());
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
+			}
 		}
 	}
 
@@ -1132,7 +1126,7 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed == 8589934592)
 			{
-				
+				//std::cout << "trigger pressed" << std::endl;
 				currController.trigger_first_press = !currController.trigger_is_pressed;
 				currController.trigger_is_pressed = true;
 			}
@@ -1145,7 +1139,7 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed == 4)
 			{
-
+				//std::cout << "alt pressed" << std::endl;
 				currController.alt_first_press = !currController.alt_is_pressed;
 				currController.alt_is_pressed = true;
 			}
@@ -1153,6 +1147,18 @@ void Render::UpdateHMDMatrixPose()
 			{
 				currController.alt_first_press = false;
 				currController.alt_is_pressed = false;
+			}
+
+			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_ApplicationMenu))
+			{
+				//std::cout << "app menu" << std::endl;
+				currController.appmenu_first_press = !currController.appmenu_is_pressed;
+				currController.appmenu_is_pressed = true;
+			}
+			else
+			{
+				currController.appmenu_first_press = false;
+				currController.appmenu_is_pressed = false;
 			}
 		}
 	}

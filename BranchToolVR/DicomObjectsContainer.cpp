@@ -447,6 +447,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, isovalue_point_cloud_sliders);
 
 	// drawing branches in VR
+	if (_vr.controller1.appmenu_is_pressed && !newCurve)
+	{
+		std::cout << "appmenu is pressed" << std::endl;
+		newCurve = true;
+		points->branch_points.clear();
+		curve = new Curve();
+	}
 	static BranchPoint* prev = NULL;
 	static const float dist_threshold_to_existing = 0.1f;
 
@@ -546,7 +553,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			}
 
 			//std::cout << "fitting points" << std::endl;
-			LeastSquaresFit leastSquaresFit(pointsToFit, 4);
+			LeastSquaresFit leastSquaresFit(pointsToFit, 1);
 			leastSquaresFit.Fit();
 			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
 
@@ -565,12 +572,27 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				std::cout << "Unable to open file output.dat" << std::endl;
 			}
 
-			curve.SetPositions(curvePoints);
-			curve.SetNormals(curvePoints);
-			points->curves.push_back(&curve);
-			curve.RenderCurve();
+			curve->SetPositions(curvePoints);
+			curve->SetNormals(curvePoints);
+			//std::cout << "newCurve " << newCurve << std::endl;
+			if (newCurve || points->curves.empty())
+			{
+				//std::cout << "Pushing new curve" << std::endl;
+				points->curves.push_back(curve);
+			}
+			else
+			{
+				//std::cout << "Updating old curve" << std::endl;
+				points->curves.back() = curve;
+			}
+			//std::cout << "curves :: " << points->curves.size() << std::endl;
+			for (Curve* curveInstance : points->curves)
+			{
+				curveInstance->RenderCurve();
+			}
 			pointsToFitCount = currPointsToFitCount;
 			pointsAlreadyFitCount = currPointsToFitCount;
+			newCurve = false;
 		}
 	}
 

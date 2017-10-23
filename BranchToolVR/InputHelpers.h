@@ -13,6 +13,8 @@ struct VrMotionController
 	bool trigger_first_press;
 	bool alt_is_pressed;
 	bool alt_first_press;
+	bool appmenu_is_pressed;
+	bool appmenu_first_press;
 	int id;
 
 	static int id_counter;
@@ -23,6 +25,8 @@ struct VrMotionController
 		trigger_first_press = false;
 		alt_is_pressed = false;
 		alt_first_press = false;
+		appmenu_is_pressed = false;
+		appmenu_first_press = false;
 		pose = glm::mat4(1.0f);
 		position = glm::vec3(0.0f);
 		orientation = glm::vec3(0.0f);

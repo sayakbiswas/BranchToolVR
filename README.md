@@ -37,6 +37,9 @@ A tool designed to map vascular systems present in medical images in virtual rea
 * export triangulation (traced veins to blender)
 * file dialog for DicomSet selection
 * separate classes to follow single responsibility rule
+* DICOM image in 2D window renders as black when HMD is connected
+* Change tracing from Grip buttons to trigger button toggles
+* Add spoof input key for the app menu button which initialized a new curve
 
 ## Libraries used:
 * OpenGL

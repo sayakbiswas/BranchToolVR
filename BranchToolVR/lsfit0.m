@@ -3,7 +3,6 @@
 load('D:\Sayak\BranchToolVR\BranchToolVR\input.dat')
 xy = input;
 
-for pc = 1:4
 [n,dim] = size(xy);
 
 % get parameters

@@ -74,7 +74,8 @@ class DicomObjectsContainer
 		DicomSet imaging_data;
 		DicomPointCloudObject * points;
 		CoarseDicomViewer * viewer;
-		Curve curve;
+		Curve* curve;
+		bool newCurve = false;
 		int pointsToFitCount = 0;
 		int pointsAlreadyFitCount = 0;
 		static void ShowHelpMarker(const char* desc)
