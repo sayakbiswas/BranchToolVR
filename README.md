@@ -40,6 +40,10 @@ A tool designed to map vascular systems present in medical images in virtual rea
 * DICOM image in 2D window renders as black when HMD is connected
 * Change tracing from Grip buttons to trigger button toggles
 * Add spoof input key for the app menu button which initialized a new curve
+* Zooming/Scaling the voxels
+* Remap the new curve button to the D-Pad
+* Remap the create sphere action to the trigger
+* Collision between voxels and the ray from controller to generate spheres
 
 ## Libraries used:
 * OpenGL
