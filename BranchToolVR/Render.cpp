@@ -798,8 +798,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 	AbstractBaseObject*& curr = _controller.id == 0 ? selected_element1 : selected_element2;
 	AbstractBaseObject*& oth = _controller.id != 0 ? selected_element1 : selected_element2;
 
-	// controller trigger is held down with previous selection
-	if (_controller.trigger_is_pressed && curr != NULL)
+	// controller alternate button is held down with previous selection
+	if (_controller.alt_is_pressed && curr != NULL)
 	{			
 		// other controller has just released previously shared object
 		if (curr->controllerSelectorId == -1)
@@ -861,8 +861,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 			curr->cache.controller_pose_updated = _controller.pose;
 		}
 	}
-	// controller trigger pressed for the first time without previous selection
-	else if (_controller.trigger_first_press && curr == NULL)
+	// controller alternate button pressed for the first time without previous selection
+	else if (_controller.alt_first_press && curr == NULL)
 	{
 		std::vector<foundCollision> found_collisions;
 
@@ -925,8 +925,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 			}
 		}
 	}
-	// trigger released with a selection
-	else if (!_controller.trigger_is_pressed && curr != NULL)
+	// alternate button released with a selection
+	else if (!_controller.alt_is_pressed && curr != NULL)
 	{
 		if (curr == oth)
 		{
@@ -1001,6 +1001,8 @@ void Render::SpoofInput(int controllerIndex)
 	
 	static bool trigger_once[] = { true, true };
 	static bool alt_once[] = { true, true };
+	static bool appmenu_once[] = { true, true };
+	static bool touchpad_once[] = { true, true };
 	
 	// trigger spoof LMB
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1))
@@ -1038,6 +1040,46 @@ void Render::SpoofInput(int controllerIndex)
 	else if (!glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2))
 	{
 		alt_once[controllerIndex] = true;
+	}
+
+	// appmenu button spoof MMB
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_3))
+	{
+		if (appmenu_once[controllerIndex])
+		{
+			currController.appmenu_first_press = !currController.appmenu_is_pressed;
+			currController.appmenu_is_pressed = !currController.appmenu_is_pressed;
+			appmenu_once[controllerIndex] = false;
+		}
+		else
+		{
+			currController.appmenu_first_press = false;
+			currController.appmenu_is_pressed = false;
+		}
+	}
+	else if (!glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_3))
+	{
+		appmenu_once[controllerIndex] = true;
+	}
+
+	//touchpad button spoof keyboard N
+	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_RELEASE)
+	{
+		if (touchpad_once[controllerIndex])
+		{
+			currController.touchpad_first_press = !currController.touchpad_is_pressed;
+			currController.touchpad_is_pressed = !currController.touchpad_is_pressed;
+			touchpad_once[controllerIndex] = false;
+		}
+		else
+		{
+			currController.touchpad_first_press = false;
+			currController.touchpad_is_pressed = false;
+		}
+	}
+	else if (!glfwGetKey(window, GLFW_KEY_N) == GLFW_RELEASE)
+	{
+		touchpad_once[controllerIndex] = true;
 	}
 
 	vr_info.head_pose_inv = glm::inverse(currController.pose);
@@ -1159,6 +1201,18 @@ void Render::UpdateHMDMatrixPose()
 			{
 				currController.appmenu_first_press = false;
 				currController.appmenu_is_pressed = false;
+			}
+
+			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_SteamVR_Touchpad))
+			{
+				//std::cout << "touchpad" << std::endl;
+				currController.touchpad_first_press = !currController.touchpad_is_pressed;
+				currController.touchpad_is_pressed = true;
+			}
+			else
+			{
+				currController.touchpad_first_press = false;
+				currController.touchpad_is_pressed = false;
 			}
 		}
 	}

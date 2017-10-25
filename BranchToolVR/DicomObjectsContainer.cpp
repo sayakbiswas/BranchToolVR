@@ -447,9 +447,9 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, isovalue_point_cloud_sliders);
 
 	// drawing branches in VR
-	if (_vr.controller1.appmenu_is_pressed && !newCurve)
+	if (_vr.controller1.touchpad_is_pressed && !newCurve)
 	{
-		std::cout << "appmenu is pressed" << std::endl;
+		std::cout << "dpad is pressed" << std::endl;
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
@@ -458,7 +458,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	static const float dist_threshold_to_existing = 0.1f;
 
 	// test if controller is close to old branch point
-	if (_vr.controller1.alt_first_press)
+	if (_vr.controller1.trigger_first_press)
 	{
 		// find  the closest branch point		
 		
@@ -489,7 +489,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			prev = NULL;
 		}
 	}
-	else if (_vr.controller1.alt_is_pressed)
+	else if (_vr.controller1.trigger_is_pressed)
 	{
 		if (prev != NULL)
 		{
