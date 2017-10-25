@@ -105,8 +105,8 @@ void DicomObjectsContainer::RenderUi()
 	// ========== Main File Menu Bar ===========
 	MainMenuBar();
 	// demo imgui window
-	bool b = true;
-	ImGui::ShowTestWindow(&b);
+	//bool b = true;
+	//ImGui::ShowTestWindow(&b);
 	// orthoslice 
 
 
@@ -118,7 +118,7 @@ void DicomObjectsContainer::RenderUi()
 	ImVec2 tex_screen_pos = ImGui::GetCursorScreenPos();
 	float tex_w = (float)viewer->orthoslice_texture->width;
 	float tex_h = (float)viewer->orthoslice_texture->height;
-	ImGui::ImageButton((void*)7, ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
+	ImGui::ImageButton((void*)viewer->orthoslice_texture->GetGlId(), ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
 	//ImTextureID tex_id = viewer->orthoslice_texture->id;
 	
 	// Refactor
@@ -183,7 +183,7 @@ void DicomObjectsContainer::RenderUi()
 			adding_selec = selec_prev = false;
 	}
 	if (ImGui::IsItemHovered()) {
-		std::cout << "hover" << std::endl;
+		//std::cout << "hover" << std::endl;
 		if (!adding_selec && ImGui::IsMouseClicked(1)) {
 			corners.push_back(local_pos);
 			bounds.push_back(bound_pos);

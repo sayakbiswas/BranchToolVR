@@ -390,33 +390,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), _ds.scale.z / ((float)_ds.data.size() + f));
 	branch_point_marker->GenerateSphere(10, voxel_scale.x*0.5f, false);
 	
-	//TODO: Move this to DicomObjectsContainer::Update()
-	/*if (branch_points.size() >= 4)
-	{
-		for (int i = 0; i < branch_points.size(); i++)
-		{
-			std::cout << i << " :: " << branch_points[i]->position.x << " "
-				<< branch_points[i]->position.y << " "
-				<< branch_points[i]->position.z << " "
-				<< std::endl;
-		}
-		std::cout << "branch points more than 4" << std::endl;
-		LeastSquaresFit leastSquaresFit(branch_points);
-		leastSquaresFit.Fit();
-		std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
-		for (int i = 0; i < curvePoints.size(); i++)
-		{
-			std::cout << i << " :: " << curvePoints[i].x << " "
-				<< curvePoints[i].y << " "
-				<< curvePoints[i].z << " "
-				<< std::endl;
-		}
-
-		Curve curve(curvePoints);
-		curve.SetNormals(curvePoints);
-		curve.RenderCurve();
-	}*/
-
 	if (!first_load)
 	{
 		GenerateCube(voxel_scale, glm::vec3(0.0f));
