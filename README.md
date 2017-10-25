@@ -45,7 +45,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [x] Remap the new curve button to the touchpad
 - [x] Remap the create sphere action to the trigger
 - [ ] Collision between voxels and the ray from controller to generate spheres
-- [ ] Make the branch point marking spheres smaller
+- [x] Make the branch point marking spheres smaller
 
 ## Libraries used:
 * OpenGL
