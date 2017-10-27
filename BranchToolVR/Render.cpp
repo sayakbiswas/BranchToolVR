@@ -871,6 +871,7 @@ void Render::DetectCollision(VrMotionController & _controller)
 			glm::vec3 collision_point;
 			if(!absObj->is_hidden && (absObj->is_selectable || absObj->is_clickable) && absObj->TestCollision(_controller.ray, _controller.position, collision_point))
 			{
+				std::cout << "collisions" << std::endl;
 				found_collisions.push_back(foundCollision(absObj, collision_point, glm::length(collision_point - _controller.position)));
 			}
 		}

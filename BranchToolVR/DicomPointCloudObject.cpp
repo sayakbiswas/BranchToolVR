@@ -310,7 +310,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	
 	int f = 0;
 	voxel_scale =  glm::vec3(_ds.scale.x / (float)(_ds.data[0].width+f), _ds.scale.y / (float)(_ds.data[0].height+f), _ds.scale.z / ((float)_ds.data.size()+f));
-	branch_point_marker->GenerateSphere(10, voxel_scale.x*2.0f, false);
+	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 	
 	if (!first_load)
 	{
@@ -388,7 +388,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	int f = 0;
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), _ds.scale.z / ((float)_ds.data.size() + f));
-	branch_point_marker->GenerateSphere(10, voxel_scale.x*0.5f, false);
+	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 	
 	if (!first_load)
 	{

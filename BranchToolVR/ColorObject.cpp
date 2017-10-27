@@ -113,8 +113,8 @@ void ColorObject::GenerateController()
 	float pointer_width = 0.005f;
 
 	AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
-	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -30.0f), glm::vec3(-pointer_width/2.0f, -pointer_width/2.0f, 0.0f));
-
+	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width/2.0f, -pointer_width/2.0f, 0.0f));
+	
 	Finalize();
 }
 
