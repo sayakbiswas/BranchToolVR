@@ -253,9 +253,23 @@ void DicomObjectsContainer::RenderUi()
 	exportButtonPressed = ImGui::Button("Export");
 	if (exportButtonPressed) {
 		std::cout << "Exporting trace" << std::endl;
-		for (int i = 0; i < points->branch_points.size(); i++) {
-			std::cout << "branch point " << i << points->branch_points[i]->position.x << " "
-				<< points->branch_points[i]->position.y << " " << points->branch_points[i]->position.z << std::endl;
+		std::ofstream curvesFile("curves.dat", std::ios::out);
+		if (curvesFile.is_open())
+		{
+			int curveCount = 0;
+			for (Curve* curve : points->curves)
+			{
+				curvesFile << "### Curve " << curveCount++ << " ###\n";
+				for (glm::vec3 curvePosition : curve->GetPositions())
+				{
+					curvesFile << curvePosition.x << " " << curvePosition.y << " " << curvePosition.z << "\n";
+				}
+			}
+			curvesFile.close();
+		}
+		else
+		{
+			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
 	}
 
@@ -497,8 +511,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 			if (glm::length(prev->position - _vr.controller1.position) >= new_bp_dist_threshold)
 			{
-				glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) 
-					* glm::vec4((_vr.controller1.position.x * 0.005f) - (0.005f / 2.0f), (_vr.controller1.position.y * 0.005f) - 0.005f / 2.0f, (_vr.controller1.position.z + 1.f) * -0.25f, 1.0f);
+				glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
 				glm::vec4 tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
 				BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
 				points->branch_points.push_back(newBP);
@@ -509,8 +522,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		// first point of disconnected branch
 		else
 		{
-			glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) 
-				* glm::vec4((_vr.controller1.position.x * 0.005f) - (0.005f / 2.0f), (_vr.controller1.position.y * 0.005f) - (0.005f / 2.0f), (_vr.controller1.position.z + 1.f) * -0.25f, 1.0f);
+			glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
 			BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
 			points->branch_points.push_back(newBP);
 			prev = newBP;

@@ -4,8 +4,8 @@
 #include <glm/glm.hpp>
 
 // single value default constants
-#define DEFAULT_WINDOW_SIZE_X 1000
-#define DEFAULT_WINDOW_SIZE_Y 1000
+#define DEFAULT_WINDOW_SIZE_X 600
+#define DEFAULT_WINDOW_SIZE_Y 600
 #define DEFAULT_NR_SAMPLES 0
 #define DEFAULT_ISOVALUE 1340
 #define DEFAULT_ISOVALUE_TOLERANCE 10
