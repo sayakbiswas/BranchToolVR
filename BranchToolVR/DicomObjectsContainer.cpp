@@ -588,6 +588,12 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 			curve->SetPositions(curvePoints);
 			curve->SetNormals(curvePoints);
+			std::vector<glm::vec3> coefficients;
+			coefficients.push_back(curvePoints.front());
+			coefficients.push_back(leastSquaresFit.GetFittedCoefficients()[0]);
+			coefficients.push_back(leastSquaresFit.GetFittedCoefficients()[1]);
+			coefficients.push_back(curvePoints.back());
+			curve->SetCoefficients(coefficients);
 			//std::cout << "newCurve " << newCurve << std::endl;
 			if (newCurve || points->curves.empty())
 			{

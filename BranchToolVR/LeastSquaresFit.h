@@ -53,5 +53,8 @@ public:
 
 	/** Retrieve the curve points */
 	std::vector<glm::vec3> GetCurvePoints();
+
+	/** Retrieve the fitted coefficients for the curve */
+	std::vector<glm::vec3> GetFittedCoefficients();
 };
 

@@ -167,3 +167,8 @@ std::vector<glm::vec3> LeastSquaresFit::GetCurvePoints()
 {
 	return curvePoints;
 }
+
+std::vector<glm::vec3> LeastSquaresFit::GetFittedCoefficients()
+{
+	return fittedCoefficients;
+}

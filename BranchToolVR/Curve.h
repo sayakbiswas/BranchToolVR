@@ -9,6 +9,7 @@ class Curve :	public AbstractBaseObject
 private:
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
+	std::vector<glm::vec3> coefficients;
 	GLuint normals_buffer;
 	GLuint instanced_positions_buffer;
 	DicomPointCloudObject* pointCloud;
@@ -25,5 +26,7 @@ public:
 	std::vector<glm::vec3> GetNormals();
 	void RenderCurve();
 	void SetDicomPointCloudObject(DicomPointCloudObject* pointCloud);
+	void SetCoefficients(std::vector<glm::vec3> coefficients);
+	std::vector<glm::vec3> GetCoefficients();
 };
 
