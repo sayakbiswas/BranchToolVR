@@ -91,12 +91,12 @@ void Curve::SetDicomPointCloudObject(DicomPointCloudObject* pointCloud)
 	this->pointCloud = pointCloud;
 }
 
-void Curve::SetCoefficients(std::vector<glm::vec3> coefficients)
+void Curve::SetControlPoints(std::vector<glm::vec3> controlPoints)
 {
-	this->coefficients = coefficients;
+	this->controlPoints = controlPoints;
 }
 
-std::vector<glm::vec3> Curve::GetCoefficients()
+std::vector<glm::vec3> Curve::GetControlPoints()
 {
-	return coefficients;
+	return controlPoints;
 }

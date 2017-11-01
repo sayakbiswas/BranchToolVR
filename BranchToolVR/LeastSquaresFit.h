@@ -22,8 +22,8 @@ private:
 	/** Basis matrix for the known points */
 	glm::mat2 knownBasisMatrix;
 
-	/** Coefficients for the two unknown data points */
-	std::vector<glm::vec3> fittedCoefficients;
+	/** Approximations for the two unknown data points */
+	std::vector<glm::vec3> fittedControlPoints;
 
 	/** Final points for the curve */
 	std::vector<glm::vec3> curvePoints;
@@ -55,6 +55,6 @@ public:
 	std::vector<glm::vec3> GetCurvePoints();
 
 	/** Retrieve the fitted coefficients for the curve */
-	std::vector<glm::vec3> GetFittedCoefficients();
+	std::vector<glm::vec3> GetFittedControlPoints();
 };
 

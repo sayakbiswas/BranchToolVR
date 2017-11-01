@@ -105,15 +105,15 @@ void LeastSquaresFit::FitCurve(int start, int end)
 	glm::vec2 knownPointsY = glm::vec2(branchPoints[start]->position.y, branchPoints[end]->position.y);
 	glm::vec2 knownPointsZ = glm::vec2(branchPoints[start]->position.z, branchPoints[end]->position.z);
 
-	glm::vec2 fittedCoefficientsX = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX)
+	glm::vec2 fittedControlPointsX = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsX)
 		+ inverseUnknownBasisMatrix * actualDataBasisX;
-	glm::vec2 fittedCoefficientsY = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsY)
+	glm::vec2 fittedControlPointsY = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsY)
 		+ inverseUnknownBasisMatrix * actualDataBasisY;
-	glm::vec2 fittedCoefficientsZ = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsZ)
+	glm::vec2 fittedControlPointsZ = -(inverseUnknownBasisMatrix * knownBasisMatrix * knownPointsZ)
 		+ inverseUnknownBasisMatrix * actualDataBasisZ;
 
-	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[0], fittedCoefficientsY[0], fittedCoefficientsZ[0]));
-	fittedCoefficients.push_back(glm::vec3(fittedCoefficientsX[1], fittedCoefficientsY[1], fittedCoefficientsZ[1]));
+	fittedControlPoints.push_back(glm::vec3(fittedControlPointsX[0], fittedControlPointsY[0], fittedControlPointsZ[0]));
+	fittedControlPoints.push_back(glm::vec3(fittedControlPointsX[1], fittedControlPointsY[1], fittedControlPointsZ[1]));
 
 	int size = params.size();
 	float b0, b1, b2, b3;
@@ -126,18 +126,18 @@ void LeastSquaresFit::FitCurve(int start, int end)
 		b3 = t * t * t;
 
 		float curvePointsX = knownPointsX[0] * b0
-			+ fittedCoefficientsX[0] * b1
-			+ fittedCoefficientsX[1] * b2
+			+ fittedControlPointsX[0] * b1
+			+ fittedControlPointsX[1] * b2
 			+ knownPointsX[1] * b3;
 
 		float curvePointsY = knownPointsY[0] * b0
-			+ fittedCoefficientsY[0] * b1
-			+ fittedCoefficientsY[1] * b2
+			+ fittedControlPointsY[0] * b1
+			+ fittedControlPointsY[1] * b2
 			+ knownPointsY[1] * b3;
 
 		float curvePointsZ = knownPointsZ[0] * b0
-			+ fittedCoefficientsZ[0] * b1
-			+ fittedCoefficientsZ[1] * b2
+			+ fittedControlPointsZ[0] * b1
+			+ fittedControlPointsZ[1] * b2
 			+ knownPointsZ[1] * b3;
 
 		curvePoints.push_back(glm::vec3(curvePointsX, curvePointsY, curvePointsZ));
@@ -168,7 +168,7 @@ std::vector<glm::vec3> LeastSquaresFit::GetCurvePoints()
 	return curvePoints;
 }
 
-std::vector<glm::vec3> LeastSquaresFit::GetFittedCoefficients()
+std::vector<glm::vec3> LeastSquaresFit::GetFittedControlPoints()
 {
-	return fittedCoefficients;
+	return fittedControlPoints;
 }

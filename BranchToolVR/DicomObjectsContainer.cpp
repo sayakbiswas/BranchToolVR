@@ -260,9 +260,9 @@ void DicomObjectsContainer::RenderUi()
 			for (Curve* curve : points->curves)
 			{
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
-				for (glm::vec3 curvePosition : curve->GetPositions())
+				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
-					curvesFile << curvePosition.x << " " << curvePosition.y << " " << curvePosition.z << "\n";
+					curvesFile << controlPoint.x << " " << controlPoint.y << " " << controlPoint.z << "\n";
 				}
 			}
 			curvesFile.close();
@@ -588,12 +588,12 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 			curve->SetPositions(curvePoints);
 			curve->SetNormals(curvePoints);
-			std::vector<glm::vec3> coefficients;
-			coefficients.push_back(curvePoints.front());
-			coefficients.push_back(leastSquaresFit.GetFittedCoefficients()[0]);
-			coefficients.push_back(leastSquaresFit.GetFittedCoefficients()[1]);
-			coefficients.push_back(curvePoints.back());
-			curve->SetCoefficients(coefficients);
+			std::vector<glm::vec3> controlPoints;
+			controlPoints.push_back(curvePoints.front());
+			controlPoints.push_back(leastSquaresFit.GetFittedControlPoints()[0]);
+			controlPoints.push_back(leastSquaresFit.GetFittedControlPoints()[1]);
+			controlPoints.push_back(curvePoints.back());
+			curve->SetControlPoints(controlPoints);
 			//std::cout << "newCurve " << newCurve << std::endl;
 			if (newCurve || points->curves.empty())
 			{
