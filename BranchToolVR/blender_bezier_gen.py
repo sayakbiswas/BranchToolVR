@@ -33,15 +33,7 @@ for index, curve in enumerate(curves):
 
 	# map coords to bezier
 	polyline = curveData.splines.new('BEZIER')
-	#polyline.bezier_points.add(len(curve) - 1)
 	polyline.bezier_points.add(1)
-	'''
-	for i, coord in enumerate(curve):
-		print(coord)
-		print()
-		x,z,y = coord
-		polyline.bezier_points[i].co = (x, y, z)
-	'''
 
 	# Cubic bezier in blender, P0 and P3 are control points, P1 and P2 are handles
 	x,z,y = curve[0]

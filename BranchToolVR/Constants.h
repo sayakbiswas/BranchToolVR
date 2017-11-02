@@ -24,7 +24,7 @@
 #define TMP_MAX_WW 2000
 
 // enablers
-#define ENABLE_BACKFACE_CULLING 0
+#define ENABLE_BACKFACE_CULLING 1
 #define ENABLE_STATIC_MESH 0
 
 // math constants

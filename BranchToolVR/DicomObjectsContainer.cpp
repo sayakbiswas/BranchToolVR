@@ -271,6 +271,21 @@ void DicomObjectsContainer::RenderUi()
 		{
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
+
+		std::cout << "Exporting point cloud" << std::endl;
+		std::ofstream pointCloudFile("tumor.xyz", std::ios::out);
+		if (pointCloudFile.is_open())
+		{
+			for (glm::vec3 instanced_position : points->GetInstancedPositions())
+			{
+				pointCloudFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
+			}
+			pointCloudFile.close();
+		}
+		else
+		{
+			std::cout << "Unable to open file tumor.xyz" << std::endl;
+		}
 	}
 
 	ImGui::PopStyleColor(3);
@@ -463,7 +478,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
 	{
-		std::cout << "dpad is pressed" << std::endl;
+		std::cout << "touchpad is pressed" << std::endl;
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
@@ -511,8 +526,10 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 			if (glm::length(prev->position - _vr.controller1.position) >= new_bp_dist_threshold)
 			{
-				glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
-				glm::vec4 tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
+				glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) 
+					* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
+				glm::vec4 tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix()) 
+					* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
 				BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
 				points->branch_points.push_back(newBP);
 				prev->neighbors.push_back(newBP->id);
@@ -522,7 +539,8 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		// first point of disconnected branch
 		else
 		{
-			glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(_vr.controller1.position, 1.0f);
+			glm::vec4 controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) 
+				* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
 			BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
 			points->branch_points.push_back(newBP);
 			prev = newBP;
@@ -552,7 +570,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			|| currPointsToFitCount > 4 && currPointsToFitCount - pointsAlreadyFitCount == 3))
 		{
 			//TODO: Put write to file in a DEBUG mode
-			std::ofstream inputFile("input.dat", std::ios::out);
+			/*std::ofstream inputFile("input.dat", std::ios::out);
 			if (inputFile.is_open())
 			{
 				for (BranchPoint* inputPoint : pointsToFit)
@@ -564,7 +582,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			else
 			{
 				std::cout << "Unable to open file input.dat" << std::endl;
-			}
+			}*/
 
 			//std::cout << "fitting points" << std::endl;
 			LeastSquaresFit leastSquaresFit(pointsToFit, 1);
@@ -572,7 +590,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			std::vector<glm::vec3> curvePoints = leastSquaresFit.GetCurvePoints();
 
 			//TODO: Put write to file in a DEBUG mode
-			std::ofstream outputFile("output.dat", std::ios::out);
+			/*std::ofstream outputFile("output.dat", std::ios::out);
 			if (outputFile.is_open())
 			{
 				for (glm::vec3 outputPoint : curvePoints)
@@ -584,7 +602,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 			else
 			{
 				std::cout << "Unable to open file output.dat" << std::endl;
-			}
+			}*/
 
 			curve->SetPositions(curvePoints);
 			curve->SetNormals(curvePoints);

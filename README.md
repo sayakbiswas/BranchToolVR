@@ -47,7 +47,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Collision between voxels and the ray from controller to generate spheres
 	- [ ] Instead make the controller pointer shorter and use the tip to generate spheres, no collision detection necessary
 - [x] Make the branch point marking spheres smaller
-- [ ] Export curve coefficients and points
+- [x] Export curve coefficients and points
 - [ ] Generate isosurface of tumor from the point cloud and export
 
 ## Libraries used:
