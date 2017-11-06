@@ -50,7 +50,7 @@ int ColorObject::Type()
 void ColorObject::Load() 
 {
 	is_loaded = true;
-
+	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -73,42 +73,7 @@ void ColorObject::Load()
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
-}
 
-void ColorObject::GenerateIsovaluePointSliderFrame(const glm::vec2 _frame_scale)
-{
-	glm::vec3 pos[4] = 
-	{
-		glm::vec3(0),
-		glm::vec3(_frame_scale.x, 0, 0),
-		glm::vec3(0, _frame_scale.y, 0),
-		glm::vec3(_frame_scale.x, _frame_scale.y, 0)
-	};
-	
-	glm::vec3 tmp = glm::vec3(0.0f, 0.0f, 0);
-	positions.push_back(pos[0]+ tmp);
-	positions.push_back(pos[1]+ tmp);
-	positions.push_back(pos[3]+ tmp);
-	positions.push_back(pos[0]+ tmp);
-	positions.push_back(pos[3]+ tmp);
-	positions.push_back(pos[2]+ tmp);
-	
-	for(int i = 0; i < 6; ++i)
-		normals.push_back(glm::vec3(0,0,1));
-
-	Finalize();
-}
-
-void ColorObject::GenerateIsovaluePointSliderKnob(const glm::vec2 _frame_scale)
-{
-	AddRectangularPrism(glm::vec3(_frame_scale.x, _frame_scale.y, _frame_scale.y*0.5f), glm::vec3(0));
-	Finalize();
-}
-
-void ColorObject::GenerateIsovaluePointSliderButton(const glm::vec2 _button_scale, glm::vec3 _offset)
-{
-	AddRectangularPrism(glm::vec3(_button_scale.y, _button_scale.y, _button_scale.y*0.5f), _offset);
-	Finalize();
 }
 
 void ColorObject::GenerateGround() 
@@ -148,8 +113,8 @@ void ColorObject::GenerateController()
 	float pointer_width = 0.005f;
 
 	AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
-	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -30.0f), glm::vec3(-pointer_width/2.0f, -pointer_width/2.0f, 0.0f));
-
+	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width/2.0f, -pointer_width/2.0f, 0.0f));
+	
 	Finalize();
 }
 

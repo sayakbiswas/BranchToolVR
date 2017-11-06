@@ -25,6 +25,7 @@ class Texture
 		int height;
 		int id;
 		int level;
+		int GetGlId();
 	
 	private:
 		void Delete();

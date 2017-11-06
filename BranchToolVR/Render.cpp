@@ -182,13 +182,6 @@ void Render::AddObjectToScene(DicomPointCloudObject * _dpco)
 
 	all_objects.push_back(_dpco); 
 	dicom_point_cloud_objects.push_back(_dpco);
-	AddObjectToScene(_dpco->handle);
-	AddObjectToScene(_dpco->isovalue_point_cloud_sliders);
-
-	for (auto slider : _dpco->isovalue_point_cloud_sliders)
-	{
-		AddObjectToScene(slider);
-	}
 }
 
 void Render::AddObjectToScene(LineObject * _l) 
@@ -204,26 +197,6 @@ void Render::AddObjectToScene(TextureObject * _t)
 
 	texture_objects.push_back(_t);
 	all_objects.push_back(_t);
-}
-
-void Render::AddObjectToScene(std::vector<IsovaluePointCloudSlider*> _ipcs)
-{
-	for (auto i : _ipcs)
-		AddObjectToScene(i);
-}
-
-void Render::AddObjectToScene(IsovaluePointCloudSlider* _ipcs)
-{
-	if (_ipcs == NULL) return;
-
-	AddObjectToScene(_ipcs->knob);
-	AddObjectToScene(_ipcs->frame);
-	AddObjectToScene(_ipcs->value_label);
-	AddObjectToScene(_ipcs->x_button);
-	
-	AddObjectToScene(_ipcs->tag_frame);
-	AddObjectToScene(_ipcs->tag_label);
-	AddObjectToScene(_ipcs->tag_x_button);
 }
 
 void Render::SetOrthosliceTextureReference(Texture* _t)
@@ -327,7 +300,7 @@ void Render::UpdateCursor()
 void Render::RenderShadows() 
 {
 	// cull front faces
- 	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
 
@@ -557,6 +530,16 @@ void Render::LoadShaders()
 	shadow.uniforms[0] = glGetUniformLocation(shadow.id, "P");
 	shadow.uniforms[1] = glGetUniformLocation(shadow.id, "V");
 	shadow.uniforms[2] = glGetUniformLocation(shadow.id, "M");
+
+	curve.id = CompileGLShader("curve");
+	curve.num_uniforms = 6;
+	curve.uniforms = new GLuint[curve.num_uniforms];
+	curve.uniforms[0] = glGetUniformLocation(curve.id, "P");
+	curve.uniforms[1] = glGetUniformLocation(curve.id, "V");
+	curve.uniforms[2] = glGetUniformLocation(curve.id, "M");
+	curve.uniforms[3] = glGetUniformLocation(curve.id, "pos");
+	curve.uniforms[4] = glGetUniformLocation(curve.id, "lower_bounds");
+	curve.uniforms[5] = glGetUniformLocation(curve.id, "instanced_position");
 }
 
 void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V) 
@@ -701,6 +684,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 			glDrawArrays(GL_TRIANGLES, 0, dpco->branch_point_marker->GetNumVertices());
 		}
 
+		//TODO: What does this do? May be redundant?
 		glUseProgram(branch_line.id);
 
 		glUniformMatrix4fv(branch_line.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
@@ -723,6 +707,24 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 						glDrawArrays(GL_LINES, 0, 2);
 					}
 				}
+			}
+		}
+
+		//Render the branch curves
+		glUseProgram(curve.id);
+
+		glUniformMatrix4fv(curve.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
+		glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
+		glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(dpco->GetModelMatrix()));
+		glUniform3fv(curve.uniforms[4], 1, glm::value_ptr(dpco->lower_bounds));
+		if (!dpco->curves.empty())
+		{
+			for (Curve* curve_object : dpco->curves)
+			{
+				glBindVertexArray(curve_object->GetVao());
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 			}
 		}
 	}
@@ -796,8 +798,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 	AbstractBaseObject*& curr = _controller.id == 0 ? selected_element1 : selected_element2;
 	AbstractBaseObject*& oth = _controller.id != 0 ? selected_element1 : selected_element2;
 
-	// controller trigger is held down with previous selection
-	if (_controller.trigger_is_pressed && curr != NULL)
+	// controller alternate button is held down with previous selection
+	if (_controller.alt_is_pressed && curr != NULL)
 	{			
 		// other controller has just released previously shared object
 		if (curr->controllerSelectorId == -1)
@@ -859,8 +861,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 			curr->cache.controller_pose_updated = _controller.pose;
 		}
 	}
-	// controller trigger pressed for the first time without previous selection
-	else if (_controller.trigger_first_press && curr == NULL)
+	// controller alternate button pressed for the first time without previous selection
+	else if (_controller.alt_first_press && curr == NULL)
 	{
 		std::vector<foundCollision> found_collisions;
 
@@ -869,6 +871,7 @@ void Render::DetectCollision(VrMotionController & _controller)
 			glm::vec3 collision_point;
 			if(!absObj->is_hidden && (absObj->is_selectable || absObj->is_clickable) && absObj->TestCollision(_controller.ray, _controller.position, collision_point))
 			{
+				std::cout << "collisions" << std::endl;
 				found_collisions.push_back(foundCollision(absObj, collision_point, glm::length(collision_point - _controller.position)));
 			}
 		}
@@ -923,8 +926,8 @@ void Render::DetectCollision(VrMotionController & _controller)
 			}
 		}
 	}
-	// trigger released with a selection
-	else if (!_controller.trigger_is_pressed && curr != NULL)
+	// alternate button released with a selection
+	else if (!_controller.alt_is_pressed && curr != NULL)
 	{
 		if (curr == oth)
 		{
@@ -999,6 +1002,8 @@ void Render::SpoofInput(int controllerIndex)
 	
 	static bool trigger_once[] = { true, true };
 	static bool alt_once[] = { true, true };
+	static bool appmenu_once[] = { true, true };
+	static bool touchpad_once[] = { true, true };
 	
 	// trigger spoof LMB
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1))
@@ -1036,6 +1041,46 @@ void Render::SpoofInput(int controllerIndex)
 	else if (!glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2))
 	{
 		alt_once[controllerIndex] = true;
+	}
+
+	// appmenu button spoof MMB
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_3))
+	{
+		if (appmenu_once[controllerIndex])
+		{
+			currController.appmenu_first_press = !currController.appmenu_is_pressed;
+			currController.appmenu_is_pressed = !currController.appmenu_is_pressed;
+			appmenu_once[controllerIndex] = false;
+		}
+		else
+		{
+			currController.appmenu_first_press = false;
+			currController.appmenu_is_pressed = false;
+		}
+	}
+	else if (!glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_3))
+	{
+		appmenu_once[controllerIndex] = true;
+	}
+
+	//touchpad button spoof keyboard N
+	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_RELEASE)
+	{
+		if (touchpad_once[controllerIndex])
+		{
+			currController.touchpad_first_press = !currController.touchpad_is_pressed;
+			currController.touchpad_is_pressed = !currController.touchpad_is_pressed;
+			touchpad_once[controllerIndex] = false;
+		}
+		else
+		{
+			currController.touchpad_first_press = false;
+			currController.touchpad_is_pressed = false;
+		}
+	}
+	else if (!glfwGetKey(window, GLFW_KEY_N) == GLFW_RELEASE)
+	{
+		touchpad_once[controllerIndex] = true;
 	}
 
 	vr_info.head_pose_inv = glm::inverse(currController.pose);
@@ -1124,7 +1169,7 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed == 8589934592)
 			{
-				
+				//std::cout << "trigger pressed" << std::endl;
 				currController.trigger_first_press = !currController.trigger_is_pressed;
 				currController.trigger_is_pressed = true;
 			}
@@ -1137,7 +1182,7 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed == 4)
 			{
-
+				//std::cout << "alt pressed" << std::endl;
 				currController.alt_first_press = !currController.alt_is_pressed;
 				currController.alt_is_pressed = true;
 			}
@@ -1145,6 +1190,30 @@ void Render::UpdateHMDMatrixPose()
 			{
 				currController.alt_first_press = false;
 				currController.alt_is_pressed = false;
+			}
+
+			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_ApplicationMenu))
+			{
+				//std::cout << "app menu" << std::endl;
+				currController.appmenu_first_press = !currController.appmenu_is_pressed;
+				currController.appmenu_is_pressed = true;
+			}
+			else
+			{
+				currController.appmenu_first_press = false;
+				currController.appmenu_is_pressed = false;
+			}
+
+			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_SteamVR_Touchpad))
+			{
+				//std::cout << "touchpad" << std::endl;
+				currController.touchpad_first_press = !currController.touchpad_is_pressed;
+				currController.touchpad_is_pressed = true;
+			}
+			else
+			{
+				currController.touchpad_first_press = false;
+				currController.touchpad_is_pressed = false;
 			}
 		}
 	}
@@ -1228,6 +1297,15 @@ GLuint Render::CompileGLShader(std::string programName)
 	if (programSuccess != GL_TRUE)
 	{
 		printf("%s - Error linking program %d!\n", programName.c_str(), unProgramID);
+		
+		GLint maxLength = 0;
+		glGetProgramiv(unProgramID, GL_INFO_LOG_LENGTH, &maxLength);
+
+		//The maxLength includes the NULL character
+		std::vector<GLchar> infoLog(maxLength);
+		glGetProgramInfoLog(unProgramID, maxLength, &maxLength, &infoLog[0]);
+		printf("%s\n", &infoLog[0]);
+
 		glDeleteProgram(unProgramID);
 		return 0;
 	}

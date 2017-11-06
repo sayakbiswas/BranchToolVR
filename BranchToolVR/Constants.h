@@ -4,8 +4,8 @@
 #include <glm/glm.hpp>
 
 // single value default constants
-#define DEFAULT_WINDOW_SIZE_X 1000
-#define DEFAULT_WINDOW_SIZE_Y 1000
+#define DEFAULT_WINDOW_SIZE_X 900
+#define DEFAULT_WINDOW_SIZE_Y 900
 #define DEFAULT_NR_SAMPLES 0
 #define DEFAULT_ISOVALUE 1340
 #define DEFAULT_ISOVALUE_TOLERANCE 10
@@ -24,7 +24,7 @@
 #define TMP_MAX_WW 2000
 
 // enablers
-#define ENABLE_BACKFACE_CULLING 0
+#define ENABLE_BACKFACE_CULLING 1
 #define ENABLE_STATIC_MESH 0
 
 // math constants

@@ -25,6 +25,7 @@
 #include "InputHelpers.h"
 #include "Constants.h"
 #include "Ui.h"
+#include "Curve.h"
 
 struct Light 
 {
@@ -90,8 +91,6 @@ class Render
 		void AddObjectToScene(DicomPointCloudObject * dpco);
 		void AddObjectToScene(LineObject * l);
 		void AddObjectToScene(TextureObject * t);
-		void AddObjectToScene(std::vector<IsovaluePointCloudSlider*> _ipcs);
-		void AddObjectToScene(IsovaluePointCloudSlider* _ipcs);
 		void SetOrthosliceTextureReference(Texture* _t);
 		const CursorData& GetCursorData() { return cursor_info; };
 		const VrData& GetVrData() { return vr_info; };
@@ -137,6 +136,7 @@ class Render
 		ShaderProgram branch_line;
 		ShaderProgram shadow;
 		ShaderProgram recieve_shadow_color;
+		ShaderProgram curve;
 		
 		// object containers
 		std::vector<AbstractBaseObject*> all_objects;

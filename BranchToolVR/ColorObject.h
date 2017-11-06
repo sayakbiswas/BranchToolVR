@@ -28,9 +28,6 @@ class ColorObject : public AbstractBaseObject
 		void GenerateGround();
 		void SetDisplayColor(const glm::vec4 & _inColor);
 		void SetSelected(bool _isSelected);
-		void GenerateIsovaluePointSliderFrame(const glm::vec2 _frame_scale);
-		void GenerateIsovaluePointSliderKnob(const glm::vec2 _frame_scale);
-		void GenerateIsovaluePointSliderButton(const glm::vec2 _button_scale, glm::vec3 _offset);
 		glm::vec4 GetDisplayColor();		
 		int Type();
 
