@@ -12,6 +12,7 @@
 #include "Curve.h"
 #include "iostream"
 #include "fstream"
+#include "set"
 
 struct IsovaluePointCloudSlider
 {

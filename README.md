@@ -33,8 +33,8 @@ A tool designed to map vascular systems present in medical images in virtual rea
 	- [ ] <sup>add compile instructions</sup>
 	- [ ] <sup>create libraries zip in download section</sup>
 	- [ ] <sup>uml documentation</sup>
-- [ ] triangulate vein structures
-- [ ] export triangulation (traced veins to blender)
+- [ ] triangulate vein structures - Not needed, blender2sofa takes care of this
+- [ ] export triangulation (traced veins to blender) - Not needed, export curve control points
 - [ ] file dialog for DicomSet selection
 - [ ] separate classes to follow single responsibility rule
 - [x] DICOM image in 2D window renders as black when HMD is connected
@@ -45,10 +45,12 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [x] Remap the new curve button to the touchpad
 - [x] Remap the create sphere action to the trigger
 - [ ] Collision between voxels and the ray from controller to generate spheres
-	- [ ] Instead make the controller pointer shorter and use the tip to generate spheres, no collision detection necessary
+	- [x] Instead make the controller pointer shorter and use the tip to generate spheres, no collision detection necessary
 - [x] Make the branch point marking spheres smaller
-- [x] Export curve coefficients and points
+- [x] Export curve control points
+- [x] Import script for the traced curves using blender python
 - [ ] Generate isosurface of tumor from the point cloud and export
+- [x] Export volumetric hex mesh for carvable organ
 
 ## Libraries used:
 * OpenGL
