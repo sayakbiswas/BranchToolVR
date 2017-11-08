@@ -35,7 +35,7 @@ for index, curve in enumerate(curves):
 	polyline = curveData.splines.new('BEZIER')
 	polyline.bezier_points.add(1)
 
-	# Cubic bezier in blender, P0 and P3 are control points, P1 and P2 are handles
+	# cubic bezier in blender, P0 and P3 are control points, P1 and P2 are handles
 	x,z,y = curve[0]
 	polyline.bezier_points[0].handle_left = (x, -1 * y, z) #P0 - TODO: scale in direction
 	polyline.bezier_points[0].co = (x, -1 * y, z) #P0
@@ -57,3 +57,6 @@ for index, curve in enumerate(curves):
 	scn.objects.link(curveObject)
 	scn.objects.active = curveObject
 	curveObject.select = True
+
+def hello():
+	print('hello')
