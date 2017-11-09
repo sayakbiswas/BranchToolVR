@@ -41,6 +41,7 @@ def decodeTriFacet(f):
 
 def encodeQuadFacet(a, b, c, d):
   # rearrange the vertices so that: the first is the smallest, orientation is preserved
+  '''
   vt = [a,b,c,d]
   vf = map(float,[a,b,c,d])
   mv = min(vf)
@@ -58,15 +59,21 @@ def encodeQuadFacet(a, b, c, d):
     i,j,k,l = d,a,b,c
   # assert(max(vf) < 32768) # max index < 2^15
   return i << 45 | j << 30 | k << 15 | l
+  '''
+  return str(a) + " " + str(b) + " " + str(c) + " " + str(d)
 
 def decodeQuadFacet(f):
+  '''
   a = f >> 45 & ( (1 << 15) - 1 )
   b = f >> 30 & ( (1 << 15) - 1 )
   c = f >> 15 & ( (1 << 15) - 1 )
   d = f       & ( (1 << 15) - 1 )
   return [int(a),int(b),int(c),int(d)]
+  '''
+  strarr = f.split()
+  return [int(strarr[0]), int(strarr[1]), int(strarr[2]), int(strarr[3])]
 
-hex_faces = [ [0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[3,2,6,7],[0,3,7,4] ]
+hex_faces = [ [0,1,5,4],[2,6,7,3],[0,2,3,1],[1,3,7,5],[4,5,7,6],[0,4,6,2] ]
 tet_faces = [ [1,3,2], [0,2,3], [0,3,1], [0,1,2] ]
 def recalc_outer_surface(M):
   print('recalculating outer surface')
@@ -111,12 +118,19 @@ def recalc_outer_surface(M):
     bm.faces.new([bm.verts[a],bm.verts[b],bm.verts[c]])
 
   # Add all the quad faces
+  count = 0
   for f in quadFaceSet:
     # for some reason we have to reverse the faces
     # All the logic here is sound but without inverting
     # the order the surfaces look inside out
     c, b, a, d = decodeQuadFacet(f)
+    print(bm.verts[a])
+    print(bm.verts[b])
+    print(bm.verts[c])
+    print(bm.verts[d])
     bm.faces.new([bm.verts[a],bm.verts[b],bm.verts[c],bm.verts[d]])
+    print('created new face %d' % count)
+    count += 1
 
   # Update the data structures
   bm.faces.index_update()
@@ -124,7 +138,6 @@ def recalc_outer_surface(M):
   bm.free()
   M.update(calc_edges=True)
   M.calc_normals()
-
 
 class MeshTetrahedron(bpy.types.PropertyGroup):
     """Represent a tetrahedron in a mesh"""

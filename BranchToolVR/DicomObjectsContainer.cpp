@@ -339,6 +339,9 @@ void DicomObjectsContainer::RenderUi()
 				hexMeshFile << "v " << hex_vert_7.x << " " << hex_vert_7.y << " " << -1.0 * hex_vert_7.z << "\n";
 				
 				indices++;
+
+				if (indices == 1)
+					break;
 			}
 
 			hexMeshFile << "# Polygonal face element\n";

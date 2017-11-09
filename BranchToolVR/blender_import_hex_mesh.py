@@ -1,7 +1,7 @@
 import bpy
 import numpy as np
 import os
-from io_msh import recalc_outer_surface
+from .io_msh import recalc_outer_surface
 from blender_bezier_gen import hello
 
 os.system('cls')
@@ -47,10 +47,9 @@ for index, hex_vertices in enumerate(mesh_vertices):
 	for hex_index, hex_vertex in enumerate(hex_vertices):
 		x,z,y = hex_vertex
 		hexmesh.vertices[8 * index + hex_index].co = (x, -1 * y, z)
-		hexahedron.vertices[hex_index] = 8 # TODO: Don't know yet!!
+		hexahedron.vertices[hex_index] = 8 * index + hex_index # absolute index of the vertex
 
 # finish up mesh and compute outer surface
-hello()
 hexmesh.update()
 recalc_outer_surface(hexmesh)
 hexmesh.update()

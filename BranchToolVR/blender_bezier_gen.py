@@ -57,6 +57,3 @@ for index, curve in enumerate(curves):
 	scn.objects.link(curveObject)
 	scn.objects.active = curveObject
 	curveObject.select = True
-
-def hello():
-	print('hello')
