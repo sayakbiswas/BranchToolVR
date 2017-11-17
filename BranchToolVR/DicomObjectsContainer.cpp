@@ -321,12 +321,12 @@ void DicomObjectsContainer::RenderUi()
 			{
 				glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
 				glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+				glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
 
 				// Blender OBJ import defaults to -Z forward
 				hexMeshFile << "v " << hex_vert_0.x << " " << hex_vert_0.y << " " << -1.0 * hex_vert_0.z << "\n";
@@ -340,7 +340,7 @@ void DicomObjectsContainer::RenderUi()
 				
 				indices++;
 
-				if (indices == 1)
+				if (indices == 10000)
 					break;
 			}
 
@@ -360,28 +360,28 @@ void DicomObjectsContainer::RenderUi()
 				int ind_7 = 8 * index + 8;
 
 				// Front
-				hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_5 << "\n";
-				hexMeshFile << "f " << ind_0 << " " << ind_5 << " " << ind_4 << "\n";
+				hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_2 << "\n";
+				hexMeshFile << "f " << ind_0 << " " << ind_2 << " " << ind_3 << "\n";
 				
 				// Back
+				hexMeshFile << "f " << ind_5 << " " << ind_4 << " " << ind_7 << "\n";
+				hexMeshFile << "f " << ind_5 << " " << ind_7 << " " << ind_6 << "\n";
+
+				// Left
+				hexMeshFile << "f " << ind_4 << " " << ind_0 << " " << ind_3 << "\n";
+				hexMeshFile << "f " << ind_4 << " " << ind_3 << " " << ind_7 << "\n";
+
+				// Right
+				hexMeshFile << "f " << ind_1 << " " << ind_5 << " " << ind_6 << "\n";
+				hexMeshFile << "f " << ind_1 << " " << ind_6 << " " << ind_2 << "\n";
+
+				// Top
 				hexMeshFile << "f " << ind_3 << " " << ind_2 << " " << ind_6 << "\n";
 				hexMeshFile << "f " << ind_3 << " " << ind_6 << " " << ind_7 << "\n";
 
-				// Left
-				hexMeshFile << "f " << ind_2 << " " << ind_0 << " " << ind_4 << "\n";
-				hexMeshFile << "f " << ind_2 << " " << ind_4 << " " << ind_6 << "\n";
-
-				// Right
-				hexMeshFile << "f " << ind_1 << " " << ind_3 << " " << ind_7 << "\n";
-				hexMeshFile << "f " << ind_1 << " " << ind_7 << " " << ind_5 << "\n";
-
-				// Top
-				hexMeshFile << "f " << ind_4 << " " << ind_5 << " " << ind_7 << "\n";
-				hexMeshFile << "f " << ind_4 << " " << ind_7 << " " << ind_6 << "\n";
-
 				// Bottom
-				hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_2 << "\n";
-				hexMeshFile << "f " << ind_1 << " " << ind_2 << " " << ind_3 << "\n";
+				hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
+				hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
 
 				index++;
 			}

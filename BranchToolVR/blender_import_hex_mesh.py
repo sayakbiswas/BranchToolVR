@@ -2,7 +2,6 @@ import bpy
 import numpy as np
 import os
 from .io_msh import recalc_outer_surface
-from blender_bezier_gen import hello
 
 os.system('cls')
 
@@ -34,10 +33,14 @@ with open(filepath, 'r') as f:
 			hex_vertices.append(strarr.astype(np.float))
 			count += 1
 		elif line.startswith('f'):
+			print('line starts with f')
+			if(len(hex_vertices) != 0 and count % 8 == 0):
+				mesh_vertices.append(hex_vertices)
 			break
 
 #print(mesh_vertices)
 print(len(mesh_vertices))
+print(count)
 
 # create new mesh and add vertices
 hexmesh = bpy.data.meshes.new(name='hexmesh')
@@ -46,7 +49,7 @@ for index, hex_vertices in enumerate(mesh_vertices):
 	hexahedron = hexmesh.hexahedra.add()
 	for hex_index, hex_vertex in enumerate(hex_vertices):
 		x,z,y = hex_vertex
-		hexmesh.vertices[8 * index + hex_index].co = (x, -1 * y, z)
+		hexmesh.vertices[8 * index + hex_index].co = (x * 500, -1 * y * 500, z * 500)
 		hexahedron.vertices[hex_index] = 8 * index + hex_index # absolute index of the vertex
 
 # finish up mesh and compute outer surface

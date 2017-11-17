@@ -73,7 +73,8 @@ def decodeQuadFacet(f):
   strarr = f.split()
   return [int(strarr[0]), int(strarr[1]), int(strarr[2]), int(strarr[3])]
 
-hex_faces = [ [0,1,5,4],[2,6,7,3],[0,2,3,1],[1,3,7,5],[4,5,7,6],[0,4,6,2] ]
+hex_faces = [ [0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[3,2,6,7],[0,3,7,4] ]
+#hex_faces = [ [0,1,5,4],[2,6,7,3],[0,2,3,1],[1,3,7,5],[4,5,7,6],[0,4,6,2] ]
 tet_faces = [ [1,3,2], [0,2,3], [0,3,1], [0,1,2] ]
 def recalc_outer_surface(M):
   print('recalculating outer surface')
@@ -124,12 +125,13 @@ def recalc_outer_surface(M):
     # All the logic here is sound but without inverting
     # the order the surfaces look inside out
     c, b, a, d = decodeQuadFacet(f)
-    print(bm.verts[a])
-    print(bm.verts[b])
-    print(bm.verts[c])
-    print(bm.verts[d])
+    #a, b, c, d = decodeQuadFacet(f)
+    #print(bm.verts[a])
+    #print(bm.verts[b])
+    #print(bm.verts[c])
+    #print(bm.verts[d])
     bm.faces.new([bm.verts[a],bm.verts[b],bm.verts[c],bm.verts[d]])
-    print('created new face %d' % count)
+    #print('created new face %d' % count)
     count += 1
 
   # Update the data structures
