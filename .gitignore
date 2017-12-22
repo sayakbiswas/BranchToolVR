@@ -1,7 +1,7 @@
-#BranchToolVR/Libraries
-#BranchToolVR/Resources/DICOM
-#BranchToolVR/Resources/CT_H_50
-#BranchToolVR/Resources/CT_H_Avg
+!BranchToolVR/Libraries
+!BranchToolVR/Resources/DICOM
+!BranchToolVR/Resources/CT_H_50
+!BranchToolVR/Resources/CT_H_Avg
 
 
 ## Ignore Visual Studio temporary files, build results, and
