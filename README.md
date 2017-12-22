@@ -5,6 +5,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 ## TODO list:
 - [ ] File dialog for DicomSet selection
 - [ ] Coarsify the volumetric hex mesh for SOFA
+- [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
 - [ ] Data set testing
 - [ ] Zooming/Scaling the voxels
