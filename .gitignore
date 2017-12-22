@@ -2,6 +2,7 @@
 !BranchToolVR/Resources/DICOM
 !BranchToolVR/Resources/CT_H_50
 !BranchToolVR/Resources/CT_H_Avg
+!BranchToolVR/Libraries/glew-2.1.0/lib
 
 
 ## Ignore Visual Studio temporary files, build results, and
