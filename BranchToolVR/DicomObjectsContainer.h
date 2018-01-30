@@ -46,6 +46,10 @@ struct IsovaluePointCloudSlider
 		color = _color;
 	}
 
+	void SetValue(int _isovalue) {
+		curr_isovalue = _isovalue;
+	}
+
 	void SetInUse(bool _in_use)
 	{
 		in_use = _in_use;
