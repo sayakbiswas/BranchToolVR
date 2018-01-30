@@ -50,15 +50,19 @@ static void FileMenu() {
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
 		// dialog file selection
+		char filename[30];
+		OPENFILENAME ofn;
+		ZeroMemory(&filename, sizeof(filename));
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = filename;
+		ofn.nMaxFile = 30;
+		ofn.lpstrTitle = "Select a File";
+		ofn.Flags = OFN_FILEMUSTEXIST;
 
-	}
-	if (ImGui::BeginMenu("Open Recent")) {
-		// ---- populate 3 recent files ----
-		ImGui::Separator();
-		if (ImGui::MenuItem("More...", NULL)) {
-			// dialog file selection, call open file method
-		}
-		ImGui::EndMenu();
+		if (GetOpenFileNameA(&ofn))
+			std::cout << filename << std::endl;
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
@@ -70,7 +74,9 @@ static void FileMenu() {
 
 	}
 }
+
 static void MainMenuBar() {
+	//bool begin = true;
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
 			FileMenu();
@@ -78,14 +84,11 @@ static void MainMenuBar() {
 		}
 		if (ImGui::BeginMenu("Edit")) {
 			if (ImGui::MenuItem("Undo Draw", "CTRL+Z")) {}
-			if (ImGui::MenuItem("Redo Draw", "CTRL+Y")) {}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Clean Slate", "CTRL+E")) {}
-			if (ImGui::MenuItem("Clear First Slide", NULL)){}
-			if (ImGui::MenuItem("Clear Last Slide", NULL)){}
+			if (ImGui::MenuItem("Clear all Curves", "CTRL+E")) {}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Delete Values", "CTRL+D")) {}
-			if (ImGui::MenuItem("Wipe Field", "CTRL+W")) {}
+			if (ImGui::MenuItem("Clear Isovalues", NULL)) {}
+			if (ImGui::MenuItem("Clear all Fields", "CTRL+D")) {}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Window")) {
@@ -97,18 +100,19 @@ static void MainMenuBar() {
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
-	}	
+	}
 }
 
 void DicomObjectsContainer::RenderUi()
 {
 	// ========== Main File Menu Bar ===========
-	MainMenuBar();
 	// demo imgui window
-	//bool b = true;
-	//ImGui::ShowTestWindow(&b);
+	bool b = true;
+	ImGui::ShowTestWindow(&b);
 	// orthoslice 
 
+	ImGui::Begin("Dicom Set", &b);
+	MainMenuBar();
 
 	ImGui::Columns(2, "mixed");
 	ImGui::Separator();
@@ -463,6 +467,7 @@ void DicomObjectsContainer::RenderUi()
 	}
 	ImGui::EndChild();
 	ImGui::PopStyleVar();
+	ImGui::End();
 	// add custom rendering app to draw "magnification square" over area of interest
 }
 
