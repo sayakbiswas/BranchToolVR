@@ -91,6 +91,6 @@ class DicomObjectsContainer
 				ImGui::EndTooltip();
 			}
 		}
-		static void MainMenuBar() {};
-		static void FileMenu() {};
+		//static void MainMenuBar() {};
+		//static void FileMenu() {};
 };
