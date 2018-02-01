@@ -108,7 +108,7 @@ void DicomObjectsContainer::RenderUi()
 	// ========== Main File Menu Bar ===========
 	// demo imgui window
 	bool b = true;
-	ImGui::ShowTestWindow(&b);
+	//ImGui::ShowTestWindow(&b);
 	// orthoslice 
 
 	ImGui::Begin("Dicom Set", &b);
@@ -125,7 +125,7 @@ void DicomObjectsContainer::RenderUi()
 	ImGui::ImageButton((void*)viewer->orthoslice_texture->GetGlId(), ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
 	//ImTextureID tex_id = viewer->orthoslice_texture->id;
 	
-	// Refactor
+	// Isovalue Magnifier
 	/*if (ImGui::IsItemHovered())
 	{
 		//enlarged view for isovalue selection
@@ -792,6 +792,7 @@ void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 			if (!isovalue_point_cloud_sliders[i]->in_use)
 			{
 				isovalue_point_cloud_sliders[i]->SetInUse(true);
+				isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
 
 				unused_slider_slot_found = true;
 				break;
