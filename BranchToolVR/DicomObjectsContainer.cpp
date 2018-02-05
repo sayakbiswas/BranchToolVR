@@ -46,7 +46,8 @@ DicomObjectsContainer::~DicomObjectsContainer()
 
 static void FileMenu() {
 	if (ImGui::MenuItem("New", "CTRL+N")) {
-		// dialog file selection
+		// call clear all
+		// open file dialog
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
 		// dialog file selection
@@ -63,6 +64,8 @@ static void FileMenu() {
 
 		if (GetOpenFileNameA(&ofn))
 			std::cout << filename << std::endl;
+		DicomSet imaging_data = DicomReader::ReadSet(ofn.lpstrFile);
+		
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {

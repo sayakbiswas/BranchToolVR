@@ -7,6 +7,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
+	- [ ] Set sensible viewport for initial scene
 - [ ] Data set testing
 - [ ] Zooming/Scaling the voxels
 - [x] Generate isosurface of tumor from the point cloud and export - Surface generated using blender python script
