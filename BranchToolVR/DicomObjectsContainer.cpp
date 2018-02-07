@@ -5,6 +5,7 @@ ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
 bool pushed, fslide, lslide, sliderHasChanged, exportButtonPressed;
+std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -44,25 +45,72 @@ DicomObjectsContainer::~DicomObjectsContainer()
 	delete viewer;
 }
 
-static void FileMenu() {
+// IMPORTANT: Changed from static function outside of .h file
+// to member function
+void DicomObjectsContainer::FileMenu() {
 	if (ImGui::MenuItem("New", "CTRL+N")) {
 		// dialog file selection
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
-		// dialog file selection
-		char filename[30];
+		//dialog folder selection
+		char filename[MAX_PATH];
 		OPENFILENAME ofn;
 		ZeroMemory(&filename, sizeof(filename));
 		ZeroMemory(&ofn, sizeof(ofn));
 		ofn.lStructSize = sizeof(ofn);
 		ofn.hwndOwner = NULL;
 		ofn.lpstrFile = filename;
-		ofn.nMaxFile = 30;
-		ofn.lpstrTitle = "Select a File";
-		ofn.Flags = OFN_FILEMUSTEXIST;
+		ofn.nMaxFile = MAX_PATH;
+		ofn.lpstrTitle = "Select Staring Scan File:";
+		ofn.Flags = OFN_FILEMUSTEXIST ;
 
-		if (GetOpenFileNameA(&ofn))
-			std::cout << filename << std::endl;
+		if (GetOpenFileNameA(&ofn)) {
+
+			// Cutting filename to leave directory structure
+			unsigned int j = sizeof(filename);
+			while (filename[j] != '\\') {
+				//std::cout << filename[j] << std::endl;
+				j--;
+			}
+			// Copying file directory structure to a string
+			for (unsigned int i = 0; i < j; i++) {
+				folder += filename[i];
+			}
+			std::cout << "You selected: " << folder << std::endl;
+			
+			// IMPORTANT: This line throws a read access exception when trying to
+			// display the contents in the viewer. Theoretically, I am trying to
+			// re-load the Dicom set starting from the newly selected folder in
+			// order to avoid handling the hard-coded Constant set
+			
+			this->Load(folder);
+
+		}
+
+		else
+		{
+			// Useful Sample Errors for Debugging
+			switch (CommDlgExtendedError())
+			{
+			case CDERR_DIALOGFAILURE: std::cout << "CDERR_DIALOGFAILURE\n";   break;
+			case CDERR_FINDRESFAILURE: std::cout << "CDERR_FINDRESFAILURE\n";  break;
+			case CDERR_INITIALIZATION: std::cout << "CDERR_INITIALIZATION\n";  break;
+			case CDERR_LOADRESFAILURE: std::cout << "CDERR_LOADRESFAILURE\n";  break;
+			case CDERR_LOADSTRFAILURE: std::cout << "CDERR_LOADSTRFAILURE\n";  break;
+			case CDERR_LOCKRESFAILURE: std::cout << "CDERR_LOCKRESFAILURE\n";  break;
+			case CDERR_MEMALLOCFAILURE: std::cout << "CDERR_MEMALLOCFAILURE\n"; break;
+			case CDERR_MEMLOCKFAILURE: std::cout << "CDERR_MEMLOCKFAILURE\n";  break;
+			case CDERR_NOHINSTANCE: std::cout << "CDERR_NOHINSTANCE\n";     break;
+			case CDERR_NOHOOK: std::cout << "CDERR_NOHOOK\n";          break;
+			case CDERR_NOTEMPLATE: std::cout << "CDERR_NOTEMPLATE\n";      break;
+			case CDERR_STRUCTSIZE: std::cout << "CDERR_STRUCTSIZE\n";      break;
+			case FNERR_BUFFERTOOSMALL: std::cout << "FNERR_BUFFERTOOSMALL\n";  break;
+			case FNERR_INVALIDFILENAME: std::cout << "FNERR_INVALIDFILENAME\n"; break;
+			case FNERR_SUBCLASSFAILURE: std::cout << "FNERR_SUBCLASSFAILURE\n"; break;
+			default: std::cout << "You cancelled.\n";
+			}
+		}
+
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
@@ -75,11 +123,13 @@ static void FileMenu() {
 	}
 }
 
-static void MainMenuBar() {
+// IMPORTANT: Changed from static function outside of .h file
+// to member function
+void DicomObjectsContainer::MainMenuBar() {
 	//bool begin = true;
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			FileMenu();
+			this->FileMenu();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
@@ -800,9 +850,11 @@ void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 		}
 }
 
+// Changed parameters to accomodate for user folder selection
 void DicomObjectsContainer::Load(std::string _dicomDir)
 {
-	imaging_data = DicomReader::ReadSet(_dicomDir);
+	std::cout << _dicomDir << std::endl;
+	imaging_data = DicomReader::ReadSet(_dicomDir, folder);
 	viewer->Load(imaging_data);
 	UpdateDicomPointCloud(DEFAULT_ISOVALUE);
 }

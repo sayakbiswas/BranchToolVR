@@ -8,9 +8,13 @@ struct less_than_key
 	}
 };
 
-DicomSet DicomReader::ReadSet(std::string _dicomFolder)
+// Changed parameters to accomodate for user folder selection
+DicomSet DicomReader::ReadSet(std::string _dicomFolder, std::string folder)
 {
-	_dicomFolder = MiscFunctions::relativeToAbsolutePath(DirectoryInfo::RELATIVE_DICOM_DIR + _dicomFolder);
+	if (folder != "")
+		_dicomFolder = folder;
+	else
+		_dicomFolder = MiscFunctions::relativeToAbsolutePath(DirectoryInfo::RELATIVE_DICOM_DIR + _dicomFolder);
 	DicomSet _dSet;
 
 	tinydir_dir dir;
