@@ -77,12 +77,7 @@ void DicomObjectsContainer::FileMenu() {
 				folder += filename[i];
 			}
 			std::cout << "You selected: " << folder << std::endl;
-			
-			// IMPORTANT: This line throws a read access exception when trying to
-			// display the contents in the viewer. Theoretically, I am trying to
-			// re-load the Dicom set starting from the newly selected folder in
-			// order to avoid handling the hard-coded Constant set
-			
+						
 			this->Load(folder);
 
 		}
@@ -854,7 +849,7 @@ void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 void DicomObjectsContainer::Load(std::string _dicomDir)
 {
 	std::cout << _dicomDir << std::endl;
-	imaging_data = DicomReader::ReadSet(_dicomDir, folder);
+	imaging_data = DicomReader::ReadSet(_dicomDir);
 	viewer->Load(imaging_data);
 	UpdateDicomPointCloud(DEFAULT_ISOVALUE);
 }

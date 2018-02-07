@@ -1,5 +1,7 @@
 #include "DicomReader.h"
 
+bool startup = true;
+
 struct less_than_key
 {
 	inline bool operator() (const DicomSingle& struct1, const DicomSingle& struct2)
@@ -9,12 +11,12 @@ struct less_than_key
 };
 
 // Changed parameters to accomodate for user folder selection
-DicomSet DicomReader::ReadSet(std::string _dicomFolder, std::string folder)
+DicomSet DicomReader::ReadSet(std::string _dicomFolder)
 {
-	if (folder != "")
-		_dicomFolder = folder;
-	else
+	if (startup) {
 		_dicomFolder = MiscFunctions::relativeToAbsolutePath(DirectoryInfo::RELATIVE_DICOM_DIR + _dicomFolder);
+		startup = false;
+	}
 	DicomSet _dSet;
 
 	tinydir_dir dir;
