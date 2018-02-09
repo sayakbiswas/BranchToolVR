@@ -129,6 +129,11 @@ void DicomPointCloudObject::Load()
 	}
 }
 
+std::vector<glm::vec3> DicomPointCloudObject::GetInstancedColor()
+{
+	return instanced_colors;
+}
+
 std::vector<glm::vec3> DicomPointCloudObject::GetInstancedPositions()
 {
 	return instanced_positions;
@@ -405,7 +410,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
 
-	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer ===========================
+	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer =========================== (Complete??)
 	std::cout << "last " << last << std::endl;
 	for (int i = first; i <= last; i++)
 	{

@@ -5,10 +5,12 @@ A tool designed to map vascular systems present in medical images in virtual rea
 ## TODO list:
 - [ ] Full file menu functionality
 	- [x] File dialog for DicomSet selection
+- [ ] differentiate isovalue surfaces by color when exporting
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
 - [ ] Data set testing
+- [ ] Slider for adjusting isovalue tolerance 
 - [ ] Zooming/Scaling the voxels
 - [x] Generate isosurface of tumor from the point cloud and export - Surface generated using blender python script
 - [x] triangulate vein structures - Not needed, blender2sofa takes care of this

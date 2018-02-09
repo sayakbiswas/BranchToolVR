@@ -321,6 +321,15 @@ void DicomObjectsContainer::RenderUi()
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
 
+
+		// --- separate points by color into different files
+		for (int i = 0; i < sliderCount; ++i) {
+			for (glm::vec3 instanced_position : points->GetInstancedPositions())
+			{
+				//TODO: find a way to pull the instanced color from the instanced position without having to loop through a separate huge vector list
+				// **DicomPointCloudObject.cpp line 440 ( 2nd definition for Generate()) 
+			}
+		}
 		std::cout << "Exporting point cloud - XYZ" << std::endl;
 		std::ofstream pointCloudXYZFile("tumor.xyz", std::ios::out);
 		if (pointCloudXYZFile.is_open())
@@ -336,6 +345,20 @@ void DicomObjectsContainer::RenderUi()
 			std::cout << "Unable to open file tumor.xyz" << std::endl;
 		}
 
+		std::cout << "Exporting point cloud - colors" << std::endl;
+		std::ofstream pointCloudcolorFile("color_vals.txt", std::ios::out);
+		if (pointCloudcolorFile.is_open())
+		{
+			for (glm::vec3 instanced_color : points->GetInstancedColor())
+			{
+				pointCloudcolorFile << instanced_color.x << " " << instanced_color.y << " " << instanced_color.z << "\n";
+			}
+			pointCloudcolorFile.close();
+		}
+		else
+		{
+			std::cout << "Unable to open file color_vals.txt" << std::endl;
+		}
 		std::cout << "Exporting point cloud - PLY" << std::endl;
 		std::ofstream pointCloudPLYFile("tumor.ply", std::ios::out);
 		if (pointCloudPLYFile.is_open())
@@ -831,18 +854,21 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 {
 		bool unused_slider_slot_found = false;
-
-		for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i)
-		{
-			if (!isovalue_point_cloud_sliders[i]->in_use)
-			{
-				isovalue_point_cloud_sliders[i]->SetInUse(true);
-				isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
-
-				unused_slider_slot_found = true;
-				break;
-			}
-		}
+		isovalue_point_cloud_sliders[sliderCount]->SetInUse(true);
+		isovalue_point_cloud_sliders[sliderCount]->SetValue(_isovalue);
+		sliderCount++;
+		unused_slider_slot_found = true;
+		//for (int i = sliderCount; i < isovalue_point_cloud_sliders.size(); ++i)
+		//{
+		//	if (!isovalue_point_cloud_sliders[i]->in_use)
+		//	{
+		//		isovalue_point_cloud_sliders[i]->SetInUse(true);
+		//		isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
+		//		sliderCount = i;
+		//		unused_slider_slot_found = true;
+		//		break;
+		//	}
+		//}
 }
 
 // Changed parameters to accomodate for user folder selection
