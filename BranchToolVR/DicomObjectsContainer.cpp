@@ -324,33 +324,36 @@ void DicomObjectsContainer::RenderUi()
 
 		// --- separate points by color into different files
 		std::vector<glm::vec3> colors = points->GetInstancedColor();
-		for (int i = 0; i < sliderCount; ++i) {
+		int j = 0;
+		for (int slider_i = 0; slider_i < sliderCount; ++slider_i) {
+
 			int index = 0;
 			int indices = 0;
-			int j = 0;
-			std::ostringstream p;
-			p << "tumor" << i << ".ply";
-			//std::cout << "Exporting point cloud - PLY" << std::endl;
-			std::ofstream pointCloudPLYFile(std::string(p.str()), std::ios::out);
+			std::ostringstream ply;
+			ply << "tumor" << slider_i << ".ply";
+			std::ofstream pointCloudPLYFile(std::string(ply.str()), std::ios::out);
 
-			std::ostringstream str;
-			str << "tumor" << i << ".xyz";
-			std::ofstream pointCloudXYZFile(std::string(str.str()), std::ios::out);
+			std::ostringstream xyz;
+			xyz << "tumor" << slider_i << ".xyz";
+			std::ofstream pointCloudXYZFile(std::string(xyz.str()), std::ios::out);
 
-			for (glm::vec3 instanced_position : points->GetInstancedPositions())
-			{
+			//for (glm::vec3 instanced_position : points->GetInstancedPositions())
+			//{
 				
 
-				if (colors.at(j) == isovalue_point_cloud_sliders[i]->color) {
+				if (colors.at(slider_i) == isovalue_point_cloud_sliders[slider_i]->color) {
 
 					//std::cout << "Exporting point cloud - XYZ" << std::endl;
 					
 					if (pointCloudXYZFile.is_open())
 					{
-						//for (glm::vec3 instanced_position : points->GetInstancedPositions())
-						//{
+						unsigned int i_count = 0;
+						for (glm::vec3 instanced_position : points->GetInstancedPositions())
+						{
+							if (i_count >= 10000) break;
 							pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-						//}
+							i_count++;
+						}
 						pointCloudXYZFile.close();
 					}
 					else
@@ -358,7 +361,7 @@ void DicomObjectsContainer::RenderUi()
 						pointCloudXYZFile.is_open();
 					//for (glm::vec3 instanced_position : points->GetInstancedPositions())
 					//{
-						pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
+						//pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
 					//}
 						pointCloudXYZFile.close();
 						//std::cout << "Unable to open file tumor.xyz" << std::endl;
@@ -393,64 +396,68 @@ void DicomObjectsContainer::RenderUi()
 							pointCloudPLYFile << "property float z\n";
 							pointCloudPLYFile << "end_header\n";
 						}
-						//for (glm::vec3 instanced_position : points->GetInstancedPositions())
-						//{
+						unsigned int i_count = 0;
+						for (glm::vec3 instanced_position : points->GetInstancedPositions())
+						{
+							if (i_count >= 10000) break;
 							pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-						//}
+							i_count++;
+						}
 						pointCloudPLYFile.close();
 					}
 					else
 					{
 						pointCloudPLYFile.is_open();
-						pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
+						//pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
 						pointCloudPLYFile.close();
 						//std::cout << "Unable to open file tumor.ply" << std::endl;
 					}
 
+				}
 					std::ostringstream h;
-					h << "hexmesh" << i << ".obj";
+					h << "hexmesh" << slider_i << ".obj";
 					//std::cout << "Exporting hex mesh - OBJ" << std::endl;
 					std::ofstream hexMeshFile(h.str(), std::ios::out);
+
 					if (hexMeshFile.is_open())
 					{
-						
-						if (j == 0) {
-							hexMeshFile << std::fixed << std::setprecision(8);
-							hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
-							hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
-							indices = 0;
+						hexMeshFile << std::fixed << std::setprecision(8);
+						hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
+						hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
+
+						if (indices < 10000) {
+							for (glm::vec3 instanced_position : points->GetInstancedPositions())
+							{
+								glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+								glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+
+								// Blender OBJ import defaults to -Z forward
+								hexMeshFile << "v " << hex_vert_0.x << " " << hex_vert_0.y << " " << -1.0 * hex_vert_0.z << "\n";
+								hexMeshFile << "v " << hex_vert_1.x << " " << hex_vert_1.y << " " << -1.0 * hex_vert_1.z << "\n";
+								hexMeshFile << "v " << hex_vert_2.x << " " << hex_vert_2.y << " " << -1.0 * hex_vert_2.z << "\n";
+								hexMeshFile << "v " << hex_vert_3.x << " " << hex_vert_3.y << " " << -1.0 * hex_vert_3.z << "\n";
+								hexMeshFile << "v " << hex_vert_4.x << " " << hex_vert_4.y << " " << -1.0 * hex_vert_4.z << "\n";
+								hexMeshFile << "v " << hex_vert_5.x << " " << hex_vert_5.y << " " << -1.0 * hex_vert_5.z << "\n";
+								hexMeshFile << "v " << hex_vert_6.x << " " << hex_vert_6.y << " " << -1.0 * hex_vert_6.z << "\n";
+								hexMeshFile << "v " << hex_vert_7.x << " " << hex_vert_7.y << " " << -1.0 * hex_vert_7.z << "\n";
+
+								//std::cout << indices << std::endl;
+								indices++;
+
+								if (indices >= 10000) break;
+							}
 						}
-						//for (glm::vec3 instanced_position : points->GetInstancedPositions())
-						//{
-							glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-							glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-
-							// Blender OBJ import defaults to -Z forward
-							hexMeshFile << "v " << hex_vert_0.x << " " << hex_vert_0.y << " " << -1.0 * hex_vert_0.z << "\n";
-							hexMeshFile << "v " << hex_vert_1.x << " " << hex_vert_1.y << " " << -1.0 * hex_vert_1.z << "\n";
-							hexMeshFile << "v " << hex_vert_2.x << " " << hex_vert_2.y << " " << -1.0 * hex_vert_2.z << "\n";
-							hexMeshFile << "v " << hex_vert_3.x << " " << hex_vert_3.y << " " << -1.0 * hex_vert_3.z << "\n";
-							hexMeshFile << "v " << hex_vert_4.x << " " << hex_vert_4.y << " " << -1.0 * hex_vert_4.z << "\n";
-							hexMeshFile << "v " << hex_vert_5.x << " " << hex_vert_5.y << " " << -1.0 * hex_vert_5.z << "\n";
-							hexMeshFile << "v " << hex_vert_6.x << " " << hex_vert_6.y << " " << -1.0 * hex_vert_6.z << "\n";
-							hexMeshFile << "v " << hex_vert_7.x << " " << hex_vert_7.y << " " << -1.0 * hex_vert_7.z << "\n";
-
-							indices++;
-
-							if (indices == 10000)
-								break;
-						//}
 						hexMeshFile << "# Polygonal face element\n";
-
-						//int index = 0;
+						//index = 0;
 						while (index < indices)
 						{
+							//std::cout << "index: " << index << std::endl;
 							// Wavefront OBJ indices start from 1
 							int ind_0 = 8 * index + 1;
 							int ind_1 = 8 * index + 2;
@@ -485,6 +492,7 @@ void DicomObjectsContainer::RenderUi()
 							hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
 							hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
 
+							//std::cout << index << "\n" << indices << std::endl;
 							index++;
 						}
 
@@ -494,10 +502,9 @@ void DicomObjectsContainer::RenderUi()
 					{
 						std::cout << "Unable to open file hexmesh.obj" << std::endl;
 					}
-				}
-				j++;
-			}
+				//}
 
+			j++;
 			//TODO: find a way to pull the instanced color from the instanced position without having to loop through a separate huge vector list
 			// **DicomPointCloudObject.cpp line 440 ( 2nd definition for Generate()) 
 			std::cout << "end of slider loop cycle" << std::endl;
