@@ -9,9 +9,10 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
-- [ ] Data set testing
+- [x] Data set testing
 	- [x] Same data set works in different memory locations
-	- [?] Determine what additional DICOM data exists in our set
+	- [x] Additional sample set via MATLAB works
+	- Note: only uncompressed DICOM files work (testing with anonymized samples threw odd exceptions)
 - [ ] Slider for adjusting isovalue tolerance 
 - [ ] Zooming/Scaling the voxels
 - [x] Generate isosurface of tumor from the point cloud and export - Surface generated using blender python script
