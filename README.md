@@ -10,6 +10,8 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
 - [ ] Data set testing
+	- [x] Same data set works in different memory locations
+	- [?] Determine what additional DICOM data exists in our set
 - [ ] Slider for adjusting isovalue tolerance 
 - [ ] Zooming/Scaling the voxels
 - [x] Generate isosurface of tumor from the point cloud and export - Surface generated using blender python script

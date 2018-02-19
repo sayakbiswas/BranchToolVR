@@ -105,7 +105,7 @@ void DicomObjectsContainer::FileMenu() {
 			default: std::cout << "You cancelled.\n";
 			}
 		}
-
+		folder = "";
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
