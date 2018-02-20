@@ -73,6 +73,10 @@ class DicomObjectsContainer
 		void AddObjects(Render * _r);
 		void AddIsovaluePointCloudSlider(const int _isovalue);
 		std::vector<IsovaluePointCloudSlider*> isovalue_point_cloud_sliders;
+		// IMPORTANT: Changed from static function outside of .h file
+		// to member functions
+		void FileMenu();
+		void MainMenuBar();
 
 	private:
 		void UpdateDicomPointCloud(int _isovalue);
@@ -81,6 +85,7 @@ class DicomObjectsContainer
 		CoarseDicomViewer * viewer;
 		Curve* curve;
 		bool newCurve = false;
+		// int sliderCount = 0;
 		int pointsToFitCount = 0;
 		int pointsAlreadyFitCount = 0;
 		static void ShowHelpMarker(const char* desc)
