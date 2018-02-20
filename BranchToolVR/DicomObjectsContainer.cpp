@@ -324,48 +324,12 @@ void DicomObjectsContainer::RenderUi()
 
 		// --- separate points by color into different files
 		std::vector<glm::vec3> colors = points->GetInstancedColor();
-		int j = 0;
 		for (int slider_i = 0; slider_i < sliderCount; ++slider_i) {
-
 			int index = 0;
 			int indices = 0;
 			std::ostringstream ply;
 			ply << "tumor" << slider_i << ".ply";
 			std::ofstream pointCloudPLYFile(std::string(ply.str()), std::ios::out);
-
-			std::ostringstream xyz;
-			xyz << "tumor" << slider_i << ".xyz";
-			std::ofstream pointCloudXYZFile(std::string(xyz.str()), std::ios::out);
-
-			//for (glm::vec3 instanced_position : points->GetInstancedPositions())
-			//{
-				
-
-				if (colors.at(j) == isovalue_point_cloud_sliders[slider_i]->color) {
-
-				//	//std::cout << "Exporting point cloud - XYZ" << std::endl;
-				//	
-				//	if (pointCloudXYZFile.is_open())
-				//	{
-				//		unsigned int i_count = 0;
-				//		for (glm::vec3 instanced_position : points->GetInstancedPositions())
-				//		{
-				//			if (i_count >= 10000) break;
-				//			pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-				//			i_count++;
-				//		}
-				//		pointCloudXYZFile.close();
-				//	}
-				//	else
-				//	{
-				//		pointCloudXYZFile.is_open();
-				//	//for (glm::vec3 instanced_position : points->GetInstancedPositions())
-				//	//{
-				//		//pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-				//	//}
-				//		pointCloudXYZFile.close();
-				//		//std::cout << "Unable to open file tumor.xyz" << std::endl;
-				//	}
 
 					//std::cout << "Exporting point cloud - colors" << std::endl;
 					//std::string col = "colors";
@@ -384,49 +348,70 @@ void DicomObjectsContainer::RenderUi()
 					//{
 					//	std::cout << "Unable to open file color_vals.txt" << std::endl;
 					//}
-
-					if (pointCloudPLYFile.is_open())
-					{
-						if (j == 0) {
-							pointCloudPLYFile << "ply\n";
-							pointCloudPLYFile << "format ascii 1.0\n";
-							pointCloudPLYFile << "element vertex " << points->GetInstancedPositions().size() << "\n";
-							pointCloudPLYFile << "property float x\n";
-							pointCloudPLYFile << "property float y\n";
-							pointCloudPLYFile << "property float z\n";
-							pointCloudPLYFile << "end_header\n";
-						}
-						unsigned int i_count = 0;
-						for (glm::vec3 instanced_position : points->GetInstancedPositions())
-						{
-							if (i_count >= 10000) break;
-							pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-							pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-							i_count++;
-						}
-						pointCloudPLYFile.close();
+			
+			if (pointCloudPLYFile.is_open())
+			{
+				unsigned int i_count = 0;
+				
+				for (glm::vec3 instanced_position : points->GetInstancedPositions())
+				{
+					if (i_count == 0) {
+						pointCloudPLYFile << "ply\n";
+						pointCloudPLYFile << "format ascii 1.0\n";
+						pointCloudPLYFile << "element vertex " << isovalue_point_cloud_sliders[slider_i]->point_size << "\n";
+						pointCloudPLYFile << "property float x\n";
+						pointCloudPLYFile << "property float y\n";
+						pointCloudPLYFile << "property float z\n";
+						pointCloudPLYFile << "end_header\n";
 					}
-					else
-					{
-						pointCloudPLYFile.is_open();
-						//pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-						pointCloudPLYFile.close();
-						//std::cout << "Unable to open file tumor.ply" << std::endl;
+					if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+						pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";						
 					}
-
+					i_count++;
+				}				
+					pointCloudPLYFile.close();
+					std::cout << "end ply for loop" << std::endl;
+			}
+			else
+			{
+				std::cout << "Unable to open file tumor.ply" << std::endl;
+			}
+			std::ostringstream xyz;
+			xyz << "tumor" << slider_i << ".xyz";
+			std::ofstream pointCloudXYZFile(std::string(xyz.str()), std::ios::out);
+			if (pointCloudXYZFile.is_open())
+			{
+				unsigned int i_count = 0;
+				for (glm::vec3 instanced_position : points->GetInstancedPositions())
+				{
+					if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+						pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";	
+					}
+					i_count++;
 				}
-				std::ostringstream h;
-				h << "hexmesh" << slider_i << ".obj";
-				//std::cout << "Exporting hex mesh - OBJ" << std::endl;
-				std::ofstream hexMeshFile(h.str(), std::ios::out);
+				pointCloudXYZFile.close();
+				std::cout << "end xyz for loop" << std::endl;
+			}
+			else
+			{
+				std::cout << "Unable to open file tumor.xyz" << std::endl;
+			}
 
-				if (hexMeshFile.is_open()) {
-					hexMeshFile << std::fixed << std::setprecision(8);
-					hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
-					hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
-
+			std::ostringstream h;
+			h << "hexmesh" << slider_i << ".obj";
+			//std::cout << "Exporting hex mesh - OBJ" << std::endl;
+			std::ofstream hexMeshFile(h.str(), std::ios::out);
+			
+			if (hexMeshFile.is_open()) {
+				unsigned int i_count = 0;
+				hexMeshFile << std::fixed << std::setprecision(8);
+				hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
+				hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
+				
 					if (indices < 10000) {
 						for (glm::vec3 instanced_position : points->GetInstancedPositions()) {
+							if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+								
 							glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
 							glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
 							glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
@@ -451,58 +436,57 @@ void DicomObjectsContainer::RenderUi()
 
 							if (indices >= 10000) break;
 						}
-					}
-					hexMeshFile << "# Polygonal face element\n";
-					//index = 0;
-					while (index < indices) {
-						//std::cout << "index: " << index << std::endl;
-							// Wavefront OBJ indices start from 1
-						int ind_0 = 8 * index + 1;
-						int ind_1 = 8 * index + 2;
-						int ind_2 = 8 * index + 3;
-						int ind_3 = 8 * index + 4;
-						int ind_4 = 8 * index + 5;
-						int ind_5 = 8 * index + 6;
-						int ind_6 = 8 * index + 7;
-						int ind_7 = 8 * index + 8;
-
-						// Front
-						hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_2 << "\n";
-						hexMeshFile << "f " << ind_0 << " " << ind_2 << " " << ind_3 << "\n";
-
-						// Back
-						hexMeshFile << "f " << ind_5 << " " << ind_4 << " " << ind_7 << "\n";
-						hexMeshFile << "f " << ind_5 << " " << ind_7 << " " << ind_6 << "\n";
-
-						// Left
-						hexMeshFile << "f " << ind_4 << " " << ind_0 << " " << ind_3 << "\n";
-						hexMeshFile << "f " << ind_4 << " " << ind_3 << " " << ind_7 << "\n";
-
-						// Right
-						hexMeshFile << "f " << ind_1 << " " << ind_5 << " " << ind_6 << "\n";
-						hexMeshFile << "f " << ind_1 << " " << ind_6 << " " << ind_2 << "\n";
-
-						// Top
-						hexMeshFile << "f " << ind_3 << " " << ind_2 << " " << ind_6 << "\n";
-						hexMeshFile << "f " << ind_3 << " " << ind_6 << " " << ind_7 << "\n";
-
-						// Bottom
-						hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
-						hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
-
-						//std::cout << index << "\n" << indices << std::endl;
-						index++;
-					}
-
-					hexMeshFile.close();
+							i_count++;
+						}
 				}
-				else{
-					std::cout << "Unable to open file hexmesh.obj" << std::endl;
+				hexMeshFile << "# Polygonal face element\n";
+				//index = 0;
+				while (index < indices) {
+					//std::cout << "index: " << index << std::endl;
+						// Wavefront OBJ indices start from 1
+					int ind_0 = 8 * index + 1;
+					int ind_1 = 8 * index + 2;
+					int ind_2 = 8 * index + 3;
+					int ind_3 = 8 * index + 4;
+					int ind_4 = 8 * index + 5;
+					int ind_5 = 8 * index + 6;
+					int ind_6 = 8 * index + 7;
+					int ind_7 = 8 * index + 8;
+
+					// Front
+					hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_2 << "\n";
+					hexMeshFile << "f " << ind_0 << " " << ind_2 << " " << ind_3 << "\n";
+
+					// Back
+					hexMeshFile << "f " << ind_5 << " " << ind_4 << " " << ind_7 << "\n";
+					hexMeshFile << "f " << ind_5 << " " << ind_7 << " " << ind_6 << "\n";
+
+					// Left
+					hexMeshFile << "f " << ind_4 << " " << ind_0 << " " << ind_3 << "\n";
+					hexMeshFile << "f " << ind_4 << " " << ind_3 << " " << ind_7 << "\n";
+
+					// Right
+					hexMeshFile << "f " << ind_1 << " " << ind_5 << " " << ind_6 << "\n";
+					hexMeshFile << "f " << ind_1 << " " << ind_6 << " " << ind_2 << "\n";
+
+					// Top
+					hexMeshFile << "f " << ind_3 << " " << ind_2 << " " << ind_6 << "\n";
+					hexMeshFile << "f " << ind_3 << " " << ind_6 << " " << ind_7 << "\n";
+
+					// Bottom
+					hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
+					hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
+
+					//std::cout << index << "\n" << indices << std::endl;
+					index++;
 				}
-			//}
-			j++;
-			//TODO: find a way to pull the instanced color from the instanced position without having to loop through a separate huge vector list
-			// **DicomPointCloudObject.cpp line 440 ( 2nd definition for Generate()) 
+				
+				hexMeshFile.close();
+				std::cout << "end obj for loop" << std::endl;
+			}
+			else {
+				std::cout << "Unable to open file hexmesh.obj" << std::endl;
+			} 
 			std::cout << "end of slider loop cycle" << std::endl;
 		}
 		std::cout << "finished Exporting" << std::endl;

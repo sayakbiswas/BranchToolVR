@@ -419,14 +419,16 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			glm::vec3 col = glm::vec3(1.0f, 0.0f, 1.0f);
 			short iso_abs_check;
 			bool found = false;
-
-			for (int k = 0; k < isovalue_point_cloud_sliders.size(); ++k)
+			int slider_count = 0;
+			int k;
+			for (k = 0; k < isovalue_point_cloud_sliders.size(); ++k)
 			{
 				if (!isovalue_point_cloud_sliders[k]->in_use) continue;
 
 				iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
 				if (iso_abs_check <= max_tolerance)
 				{
+					slider_count = k;
 					col = isovalue_point_cloud_sliders[k]->color;
 					found = true;
 					break;
@@ -440,6 +442,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 				if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
 					&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
 				{
+					isovalue_point_cloud_sliders[slider_count]->point_size++;
 					instanced_positions.push_back(instanced_position - lower_bounds);
 					instanced_isovalue_differences.push_back(iso_abs_check);
 					instanced_colors.push_back(col);
