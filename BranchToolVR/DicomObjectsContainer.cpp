@@ -199,7 +199,7 @@ void DicomObjectsContainer::RenderUi()
 
 		AddIsovaluePointCloudSlider(imaging_data.isovalue);
 		points->MarkForRegeneration();
-		points->Generate(imaging_data, imaging_data.isovalue, 10, first, last, isovalue_point_cloud_sliders);
+		points->Generate(imaging_data, imaging_data.isovalue, 30, first, last, isovalue_point_cloud_sliders);
 		//std::cout << (imaging_data.isovalue) << std::endl;
 		//std::cout << " You clicked the thing pt1! ";
 	}
@@ -880,21 +880,21 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 {
 	bool unused_slider_slot_found = false;
-	isovalue_point_cloud_sliders[sliderCount]->SetInUse(true);
+	/*isovalue_point_cloud_sliders[sliderCount]->SetInUse(true);
 	isovalue_point_cloud_sliders[sliderCount]->SetValue(_isovalue);
 	sliderCount++;
-	unused_slider_slot_found = true;
-	//for (int i = sliderCount; i < isovalue_point_cloud_sliders.size(); ++i)
-	//{
-	//	if (!isovalue_point_cloud_sliders[i]->in_use)
-	//	{
-	//		isovalue_point_cloud_sliders[i]->SetInUse(true);
-	//		isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
-	//		sliderCount = i;
-	//		unused_slider_slot_found = true;
-	//		break;
-	//	}
-	//}
+	unused_slider_slot_found = true;*/
+	for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i)
+	{
+		if (!isovalue_point_cloud_sliders[i]->in_use)
+		{
+			isovalue_point_cloud_sliders[i]->SetInUse(true);
+			isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
+			sliderCount++;
+			unused_slider_slot_found = true;
+			break;
+		}
+	}
 }
 
 // Changed parameters to accomodate for user folder selection

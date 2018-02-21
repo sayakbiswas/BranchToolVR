@@ -20,7 +20,7 @@ struct IsovaluePointCloudSlider
 	bool in_use;
 	const int id;
 	static int id_counter;
-	int point_size;
+	int point_size = 0;
 	static float min_isovalue;
 	static float max_isovalue;
 	glm::vec3 color;
