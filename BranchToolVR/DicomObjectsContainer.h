@@ -20,6 +20,7 @@ struct IsovaluePointCloudSlider
 	bool in_use;
 	const int id;
 	static int id_counter;
+	int point_size = 0;
 	static float min_isovalue;
 	static float max_isovalue;
 	glm::vec3 color;
@@ -37,7 +38,7 @@ struct IsovaluePointCloudSlider
 	void Init()
 	{
 		this->SetInUse(false);
-
+		point_size = 0;
 		SetColor(glm::vec3(RAND_0_TO_1, RAND_0_TO_1, RAND_0_TO_1));
 	}
 
@@ -73,6 +74,10 @@ class DicomObjectsContainer
 		void AddObjects(Render * _r);
 		void AddIsovaluePointCloudSlider(const int _isovalue);
 		std::vector<IsovaluePointCloudSlider*> isovalue_point_cloud_sliders;
+		// IMPORTANT: Changed from static function outside of .h file
+		// to member functions
+		void FileMenu();
+		void MainMenuBar();
 
 	private:
 		void UpdateDicomPointCloud(int _isovalue);
@@ -81,6 +86,7 @@ class DicomObjectsContainer
 		CoarseDicomViewer * viewer;
 		Curve* curve;
 		bool newCurve = false;
+		int sliderCount = 0;
 		int pointsToFitCount = 0;
 		int pointsAlreadyFitCount = 0;
 		static void ShowHelpMarker(const char* desc)

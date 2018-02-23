@@ -129,6 +129,11 @@ void DicomPointCloudObject::Load()
 	}
 }
 
+std::vector<glm::vec3> DicomPointCloudObject::GetInstancedColor()
+{
+	return instanced_colors;
+}
+
 std::vector<glm::vec3> DicomPointCloudObject::GetInstancedPositions()
 {
 	return instanced_positions;
@@ -372,6 +377,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 //overloaded 2D Generated
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
+	
 	if (!has_changed) {
 		return;
 	}
@@ -405,8 +411,12 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
 
-	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer ===========================
+	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer =========================== (Complete??)
 	std::cout << "last " << last << std::endl;
+	for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
+	{
+		isovalue_point_cloud_sliders[k]->point_size = 0;
+	}
 	for (int i = first; i <= last; i++)
 	{
 		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
@@ -414,34 +424,55 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			glm::vec3 col = glm::vec3(1.0f, 0.0f, 1.0f);
 			short iso_abs_check;
 			bool found = false;
-
-			for (int k = 0; k < isovalue_point_cloud_sliders.size(); ++k)
+			//int k;
+			for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 			{
-				if (!isovalue_point_cloud_sliders[k]->in_use) continue;
+				int slider_count = 0;
+				if (isovalue_point_cloud_sliders[k]->in_use) {
+					/*continue;
+				}
+				else{*/
 
-				iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-				if (iso_abs_check <= max_tolerance)
-				{
-					col = isovalue_point_cloud_sliders[k]->color;
-					found = true;
-					break;
+					iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+					if (iso_abs_check <= max_tolerance)
+					{
+						if (slider_count < k) slider_count = k;
+						col = isovalue_point_cloud_sliders[k]->color;
+
+						glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
+						//test if in magnification area
+						if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
+							&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
+						{
+							isovalue_point_cloud_sliders[slider_count]->point_size++;
+							instanced_positions.push_back(instanced_position - lower_bounds);
+							instanced_isovalue_differences.push_back(iso_abs_check);
+							instanced_colors.push_back(col);
+							break;
+						}
+					}
 				}
 			}
 
-			if (found)
-			{
-				glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
-				//test if in magnification area
-				if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
-					&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
-				{
-					instanced_positions.push_back(instanced_position - lower_bounds);
-					instanced_isovalue_differences.push_back(iso_abs_check);
-					instanced_colors.push_back(col);
-				}
-			}
+			//if (found)
+			//{
+			//	glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
+			//	//test if in magnification area
+			//	if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
+			//		&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
+			//	{
+			//		isovalue_point_cloud_sliders[slider_count]->point_size++;
+			//		instanced_positions.push_back(instanced_position - lower_bounds);
+			//		instanced_isovalue_differences.push_back(iso_abs_check);
+			//		instanced_colors.push_back(col);
+			//	}
+			//}
 		}
 	}
+
+	// Workaround (doesn't work)
+	//for (int count = 0; count < isovalue_point_cloud_sliders.size(); ++count)
+	//	isovalue_point_cloud_sliders[count]->point_size = (isovalue_point_cloud_sliders[count]->point_size)/(isovalue_point_cloud_sliders.size() - count);
 
 	Load();
 	first_load = true;

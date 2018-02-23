@@ -72,6 +72,7 @@ class DicomPointCloudObject : public AbstractBaseObject
 		std::vector<BranchPoint*> branch_points;
 		int current_bp_selection;	
 		std::vector<Curve*> curves;
+		std::vector<glm::vec3> GetInstancedColor();
 		std::vector<glm::vec3> GetInstancedPositions();
 
 	private:		

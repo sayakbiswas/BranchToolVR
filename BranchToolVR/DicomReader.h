@@ -56,6 +56,7 @@ struct DicomSet
 class DicomReader
 {
 	public:
+		// Changed parameters to accomodate for user folder selection
 		static DicomSet ReadSet(std::string _dicomFolder);
 		static DicomSingle ReadSingle(std::string _filePath);
 };
