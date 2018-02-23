@@ -129,10 +129,10 @@ void DicomPointCloudObject::Load()
 	}
 }
 
-//std::vector<glm::vec3> DicomPointCloudObject::GetInstancedColor()
-//{
-//	return instanced_colors;
-//}
+std::vector<glm::vec3> DicomPointCloudObject::GetInstancedColor()
+{
+	return instanced_colors;
+}
 
 std::vector<glm::vec3> DicomPointCloudObject::GetInstancedPositions()
 {

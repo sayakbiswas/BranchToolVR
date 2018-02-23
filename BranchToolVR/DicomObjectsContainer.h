@@ -86,7 +86,7 @@ class DicomObjectsContainer
 		CoarseDicomViewer * viewer;
 		Curve* curve;
 		bool newCurve = false;
-		// int sliderCount = 0;
+		int sliderCount = 0;
 		int pointsToFitCount = 0;
 		int pointsAlreadyFitCount = 0;
 		static void ShowHelpMarker(const char* desc)
