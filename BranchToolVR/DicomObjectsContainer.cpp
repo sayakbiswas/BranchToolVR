@@ -5,6 +5,7 @@ ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
 bool pushed, fslide, lslide, sliderHasChanged, exportButtonPressed;
+std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -15,14 +16,14 @@ DicomObjectsContainer::DicomObjectsContainer()
 {
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
-	
+
 	// set starting locations
 	float initial_scale = 0.5f;
 	glm::vec3 initial_position = glm::vec3(0.5f, 0.25f, 0.5f);
 	glm::mat4 tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
 	//viewer->SetMasterAppendPose(tmp_initial_model_matrix);
 	//SetCoarseViewerAppendPose(tmp_initial_model_matrix);
-	
+
 	initial_scale = 0.5f;
 	initial_position = glm::vec3(-0.5f, 0.25f, 0.5f);
 	tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
@@ -44,28 +45,68 @@ DicomObjectsContainer::~DicomObjectsContainer()
 	delete viewer;
 }
 
-static void FileMenu() {
+// IMPORTANT: Changed from static function outside of .h file
+// to member function
+void DicomObjectsContainer::FileMenu() {
 	if (ImGui::MenuItem("New", "CTRL+N")) {
 		// call clear all
 		// open file dialog
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
-		// dialog file selection
-		char filename[30];
+		//dialog folder selection
+		char filename[MAX_PATH];
 		OPENFILENAME ofn;
 		ZeroMemory(&filename, sizeof(filename));
 		ZeroMemory(&ofn, sizeof(ofn));
 		ofn.lStructSize = sizeof(ofn);
 		ofn.hwndOwner = NULL;
 		ofn.lpstrFile = filename;
-		ofn.nMaxFile = 30;
-		ofn.lpstrTitle = "Select a File";
+		ofn.nMaxFile = MAX_PATH;
+		ofn.lpstrTitle = "Select Staring Scan File:";
 		ofn.Flags = OFN_FILEMUSTEXIST;
 
-		if (GetOpenFileNameA(&ofn))
-			std::cout << filename << std::endl;
-		DicomSet imaging_data = DicomReader::ReadSet(ofn.lpstrFile);
-		
+		if (GetOpenFileNameA(&ofn)) {
+
+			// Cutting filename to leave directory structure
+			unsigned int j = sizeof(filename);
+			while (filename[j] != '\\') {
+				//std::cout << filename[j] << std::endl;
+				j--;
+			}
+			// Copying file directory structure to a string
+			for (unsigned int i = 0; i < j; i++) {
+				folder += filename[i];
+			}
+			std::cout << "You selected: " << folder << std::endl;
+
+			this->Load(folder);
+
+		}
+
+		else
+		{
+			// Useful Sample Errors for Debugging
+			switch (CommDlgExtendedError())
+			{
+			case CDERR_DIALOGFAILURE: std::cout << "CDERR_DIALOGFAILURE\n";   break;
+			case CDERR_FINDRESFAILURE: std::cout << "CDERR_FINDRESFAILURE\n";  break;
+			case CDERR_INITIALIZATION: std::cout << "CDERR_INITIALIZATION\n";  break;
+			case CDERR_LOADRESFAILURE: std::cout << "CDERR_LOADRESFAILURE\n";  break;
+			case CDERR_LOADSTRFAILURE: std::cout << "CDERR_LOADSTRFAILURE\n";  break;
+			case CDERR_LOCKRESFAILURE: std::cout << "CDERR_LOCKRESFAILURE\n";  break;
+			case CDERR_MEMALLOCFAILURE: std::cout << "CDERR_MEMALLOCFAILURE\n"; break;
+			case CDERR_MEMLOCKFAILURE: std::cout << "CDERR_MEMLOCKFAILURE\n";  break;
+			case CDERR_NOHINSTANCE: std::cout << "CDERR_NOHINSTANCE\n";     break;
+			case CDERR_NOHOOK: std::cout << "CDERR_NOHOOK\n";          break;
+			case CDERR_NOTEMPLATE: std::cout << "CDERR_NOTEMPLATE\n";      break;
+			case CDERR_STRUCTSIZE: std::cout << "CDERR_STRUCTSIZE\n";      break;
+			case FNERR_BUFFERTOOSMALL: std::cout << "FNERR_BUFFERTOOSMALL\n";  break;
+			case FNERR_INVALIDFILENAME: std::cout << "FNERR_INVALIDFILENAME\n"; break;
+			case FNERR_SUBCLASSFAILURE: std::cout << "FNERR_SUBCLASSFAILURE\n"; break;
+			default: std::cout << "You cancelled.\n";
+			}
+		}
+
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
@@ -78,11 +119,13 @@ static void FileMenu() {
 	}
 }
 
-static void MainMenuBar() {
+// IMPORTANT: Changed from static function outside of .h file
+// to member function
+void DicomObjectsContainer::MainMenuBar() {
 	//bool begin = true;
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			FileMenu();
+			this->FileMenu();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
@@ -127,7 +170,7 @@ void DicomObjectsContainer::RenderUi()
 	float tex_h = (float)viewer->orthoslice_texture->height;
 	ImGui::ImageButton((void*)viewer->orthoslice_texture->GetGlId(), ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
 	//ImTextureID tex_id = viewer->orthoslice_texture->id;
-	
+
 	// Isovalue Magnifier
 	/*if (ImGui::IsItemHovered())
 	{
@@ -157,7 +200,7 @@ void DicomObjectsContainer::RenderUi()
 
 		AddIsovaluePointCloudSlider(imaging_data.isovalue);
 		points->MarkForRegeneration();
-		points->Generate(imaging_data, imaging_data.isovalue, 10, first, last, isovalue_point_cloud_sliders);
+		points->Generate(imaging_data, imaging_data.isovalue, 30, first, last, isovalue_point_cloud_sliders);
 		//std::cout << (imaging_data.isovalue) << std::endl;
 		//std::cout << " You clicked the thing pt1! ";
 	}
@@ -233,12 +276,12 @@ void DicomObjectsContainer::RenderUi()
 		std::cout << "first " << (first) << std::endl;
 		points->lower_bounds.z = -0.5 + (first / imaging_data.data.size());
 	}
-	
+
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
 	ImGui::SameLine(0, 150);
-	
+
 	ImGui::PushID(2);
 	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
@@ -279,138 +322,187 @@ void DicomObjectsContainer::RenderUi()
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
 
-		std::cout << "Exporting point cloud - XYZ" << std::endl;
-		std::ofstream pointCloudXYZFile("tumor.xyz", std::ios::out);
-		if (pointCloudXYZFile.is_open())
-		{
-			for (glm::vec3 instanced_position : points->GetInstancedPositions())
-			{
-				pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-			}
-			pointCloudXYZFile.close();
-		}
-		else
-		{
-			std::cout << "Unable to open file tumor.xyz" << std::endl;
-		}
 
-		std::cout << "Exporting point cloud - PLY" << std::endl;
-		std::ofstream pointCloudPLYFile("tumor.ply", std::ios::out);
-		if (pointCloudPLYFile.is_open())
-		{
-			pointCloudPLYFile << "ply\n";
-			pointCloudPLYFile << "format ascii 1.0\n";
-			pointCloudPLYFile << "element vertex " << points->GetInstancedPositions().size() << "\n";
-			pointCloudPLYFile << "property float x\n";
-			pointCloudPLYFile << "property float y\n";
-			pointCloudPLYFile << "property float z\n";
-			pointCloudPLYFile << "end_header\n";
-			for (glm::vec3 instanced_position : points->GetInstancedPositions())
-			{
-				pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";
-			}
-			pointCloudPLYFile.close();
-		}
-		else
-		{
-			std::cout << "Unable to open file tumor.ply" << std::endl;
-		}
-
-		std::cout << "Exporting hex mesh - OBJ" << std::endl;
-		std::ofstream hexMeshFile("hexmesh.obj", std::ios::out);
-		if (hexMeshFile.is_open())
-		{
-			hexMeshFile << std::fixed << std::setprecision(8);
-			hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
-			hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
-			int indices = 0; //TODO: OBJ file has duplicates. Optimize later.
-			for (glm::vec3 instanced_position : points->GetInstancedPositions())
-			{
-				glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-				glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
-
-				// Blender OBJ import defaults to -Z forward
-				hexMeshFile << "v " << hex_vert_0.x << " " << hex_vert_0.y << " " << -1.0 * hex_vert_0.z << "\n";
-				hexMeshFile << "v " << hex_vert_1.x << " " << hex_vert_1.y << " " << -1.0 * hex_vert_1.z << "\n";
-				hexMeshFile << "v " << hex_vert_2.x << " " << hex_vert_2.y << " " << -1.0 * hex_vert_2.z << "\n";
-				hexMeshFile << "v " << hex_vert_3.x << " " << hex_vert_3.y << " " << -1.0 * hex_vert_3.z << "\n";
-				hexMeshFile << "v " << hex_vert_4.x << " " << hex_vert_4.y << " " << -1.0 * hex_vert_4.z << "\n";
-				hexMeshFile << "v " << hex_vert_5.x << " " << hex_vert_5.y << " " << -1.0 * hex_vert_5.z << "\n";
-				hexMeshFile << "v " << hex_vert_6.x << " " << hex_vert_6.y << " " << -1.0 * hex_vert_6.z << "\n";
-				hexMeshFile << "v " << hex_vert_7.x << " " << hex_vert_7.y << " " << -1.0 * hex_vert_7.z << "\n";
-				
-				indices++;
-
-				if (indices == 10000)
-					break;
-			}
-
-			hexMeshFile << "# Polygonal face element\n";
-
+		// --- separate points by color into different files
+		std::vector<glm::vec3> colors = points->GetInstancedColor();
+		for (int slider_i = 0; slider_i < sliderCount; ++slider_i) {
 			int index = 0;
-			while (index < indices)
+			int indices = 0;
+			std::ostringstream ply;
+			ply << "tumor" << slider_i << ".ply";
+			std::ofstream pointCloudPLYFile(std::string(ply.str()), std::ios::out);
+
+					//std::cout << "Exporting point cloud - colors" << std::endl;
+					//std::string col = "colors";
+					//col += i;
+					//col += ".txt";
+					//std::ofstream pointCloudcolorFile(std::string(col), std::ios::out);
+					//if (pointCloudcolorFile.is_open())
+					//{
+						//for (glm::vec3 instanced_color : points->GetInstancedColor())
+						//{
+							//pointCloudcolorFile << instanced_color.x << " " << instanced_color.y << " " << instanced_color.z << "\n";
+						//}
+						//pointCloudcolorFile.close();
+					//}
+					//else
+					//{
+					//	std::cout << "Unable to open file color_vals.txt" << std::endl;
+					//}
+			
+			if (pointCloudPLYFile.is_open())
 			{
-				// Wavefront OBJ indices start from 1
-				int ind_0 = 8 * index + 1;
-				int ind_1 = 8 * index + 2;
-				int ind_2 = 8 * index + 3;
-				int ind_3 = 8 * index + 4;
-				int ind_4 = 8 * index + 5;
-				int ind_5 = 8 * index + 6;
-				int ind_6 = 8 * index + 7;
-				int ind_7 = 8 * index + 8;
-
-				// Front
-				hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_2 << "\n";
-				hexMeshFile << "f " << ind_0 << " " << ind_2 << " " << ind_3 << "\n";
+				unsigned int i_count = 0;
 				
-				// Back
-				hexMeshFile << "f " << ind_5 << " " << ind_4 << " " << ind_7 << "\n";
-				hexMeshFile << "f " << ind_5 << " " << ind_7 << " " << ind_6 << "\n";
-
-				// Left
-				hexMeshFile << "f " << ind_4 << " " << ind_0 << " " << ind_3 << "\n";
-				hexMeshFile << "f " << ind_4 << " " << ind_3 << " " << ind_7 << "\n";
-
-				// Right
-				hexMeshFile << "f " << ind_1 << " " << ind_5 << " " << ind_6 << "\n";
-				hexMeshFile << "f " << ind_1 << " " << ind_6 << " " << ind_2 << "\n";
-
-				// Top
-				hexMeshFile << "f " << ind_3 << " " << ind_2 << " " << ind_6 << "\n";
-				hexMeshFile << "f " << ind_3 << " " << ind_6 << " " << ind_7 << "\n";
-
-				// Bottom
-				hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
-				hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
-
-				index++;
+				for (glm::vec3 instanced_position : points->GetInstancedPositions())
+				{
+					if (i_count == 0) {
+						pointCloudPLYFile << "ply\n";
+						pointCloudPLYFile << "format ascii 1.0\n";
+						pointCloudPLYFile << "element vertex " << isovalue_point_cloud_sliders[slider_i]->point_size << "\n";
+						pointCloudPLYFile << "property float x\n";
+						pointCloudPLYFile << "property float y\n";
+						pointCloudPLYFile << "property float z\n";
+						pointCloudPLYFile << "end_header\n";
+					}
+					if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+						pointCloudPLYFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";						
+					}
+					i_count++;
+				}				
+					pointCloudPLYFile.close();
+					std::cout << "end ply for loop" << std::endl;
+			}
+			else
+			{
+				std::cout << "Unable to open file tumor.ply" << std::endl;
+			}
+			std::ostringstream xyz;
+			xyz << "tumor" << slider_i << ".xyz";
+			std::ofstream pointCloudXYZFile(std::string(xyz.str()), std::ios::out);
+			if (pointCloudXYZFile.is_open())
+			{
+				unsigned int i_count = 0;
+				for (glm::vec3 instanced_position : points->GetInstancedPositions())
+				{
+					if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+						pointCloudXYZFile << instanced_position.x << " " << instanced_position.y << " " << instanced_position.z << "\n";	
+					}
+					i_count++;
+				}
+				pointCloudXYZFile.close();
+				std::cout << "end xyz for loop" << std::endl;
+			}
+			else
+			{
+				std::cout << "Unable to open file tumor.xyz" << std::endl;
 			}
 
-			hexMeshFile.close();
+			std::ostringstream h;
+			h << "hexmesh" << slider_i << ".obj";
+			//std::cout << "Exporting hex mesh - OBJ" << std::endl;
+			std::ofstream hexMeshFile(h.str(), std::ios::out);
+			
+			if (hexMeshFile.is_open()) {
+				unsigned int i_count = 0;
+				hexMeshFile << std::fixed << std::setprecision(8);
+				hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
+				hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
+				
+					if (indices < 10000) {
+						for (glm::vec3 instanced_position : points->GetInstancedPositions()) {
+							if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
+								
+							glm::vec3 hex_vert_0 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_1 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_2 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_3 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z + 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_4 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_5 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y - 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_6 = glm::vec3(instanced_position.x + 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+							glm::vec3 hex_vert_7 = glm::vec3(instanced_position.x - 0.5f * points->voxel_scale.x, instanced_position.y + 0.5f * points->voxel_scale.y, instanced_position.z - 0.5f * points->voxel_scale.z);
+
+							// Blender OBJ import defaults to -Z forward
+							hexMeshFile << "v " << hex_vert_0.x << " " << hex_vert_0.y << " " << -1.0 * hex_vert_0.z << "\n";
+							hexMeshFile << "v " << hex_vert_1.x << " " << hex_vert_1.y << " " << -1.0 * hex_vert_1.z << "\n";
+							hexMeshFile << "v " << hex_vert_2.x << " " << hex_vert_2.y << " " << -1.0 * hex_vert_2.z << "\n";
+							hexMeshFile << "v " << hex_vert_3.x << " " << hex_vert_3.y << " " << -1.0 * hex_vert_3.z << "\n";
+							hexMeshFile << "v " << hex_vert_4.x << " " << hex_vert_4.y << " " << -1.0 * hex_vert_4.z << "\n";
+							hexMeshFile << "v " << hex_vert_5.x << " " << hex_vert_5.y << " " << -1.0 * hex_vert_5.z << "\n";
+							hexMeshFile << "v " << hex_vert_6.x << " " << hex_vert_6.y << " " << -1.0 * hex_vert_6.z << "\n";
+							hexMeshFile << "v " << hex_vert_7.x << " " << hex_vert_7.y << " " << -1.0 * hex_vert_7.z << "\n";
+
+							//std::cout << indices << std::endl;
+							indices++;
+
+							if (indices >= 10000) break;
+						}
+							i_count++;
+						}
+				}
+				hexMeshFile << "# Polygonal face element\n";
+				//index = 0;
+				while (index < indices) {
+					//std::cout << "index: " << index << std::endl;
+						// Wavefront OBJ indices start from 1
+					int ind_0 = 8 * index + 1;
+					int ind_1 = 8 * index + 2;
+					int ind_2 = 8 * index + 3;
+					int ind_3 = 8 * index + 4;
+					int ind_4 = 8 * index + 5;
+					int ind_5 = 8 * index + 6;
+					int ind_6 = 8 * index + 7;
+					int ind_7 = 8 * index + 8;
+
+					// Front
+					hexMeshFile << "f " << ind_0 << " " << ind_1 << " " << ind_2 << "\n";
+					hexMeshFile << "f " << ind_0 << " " << ind_2 << " " << ind_3 << "\n";
+
+					// Back
+					hexMeshFile << "f " << ind_5 << " " << ind_4 << " " << ind_7 << "\n";
+					hexMeshFile << "f " << ind_5 << " " << ind_7 << " " << ind_6 << "\n";
+
+					// Left
+					hexMeshFile << "f " << ind_4 << " " << ind_0 << " " << ind_3 << "\n";
+					hexMeshFile << "f " << ind_4 << " " << ind_3 << " " << ind_7 << "\n";
+
+					// Right
+					hexMeshFile << "f " << ind_1 << " " << ind_5 << " " << ind_6 << "\n";
+					hexMeshFile << "f " << ind_1 << " " << ind_6 << " " << ind_2 << "\n";
+
+					// Top
+					hexMeshFile << "f " << ind_3 << " " << ind_2 << " " << ind_6 << "\n";
+					hexMeshFile << "f " << ind_3 << " " << ind_6 << " " << ind_7 << "\n";
+
+					// Bottom
+					hexMeshFile << "f " << ind_1 << " " << ind_0 << " " << ind_4 << "\n";
+					hexMeshFile << "f " << ind_1 << " " << ind_4 << " " << ind_5 << "\n";
+
+					//std::cout << index << "\n" << indices << std::endl;
+					index++;
+				}
+				
+				hexMeshFile.close();
+				std::cout << "end obj for loop" << std::endl;
+			}
+			else {
+				std::cout << "Unable to open file hexmesh.obj" << std::endl;
+			} 
+			std::cout << "end of slider loop cycle" << std::endl;
 		}
-		else
-		{
-			std::cout << "Unable to open file hexmesh.obj" << std::endl;
-		}
+		std::cout << "finished Exporting" << std::endl;
 	}
 
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
 	// ======================== NEED TO SWITCH MOUSE BUTTONS TO VR BUTTONS ==================================
-	
+
 	ImGui::NextColumn();
 	bool wc_changed = ImGui::SliderInt("Window Center", &imaging_data.window_center, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE);
-	bool ww_changed = ImGui::SliderInt("Window Width", &imaging_data.window_width, TMP_MIN_WW, TMP_MAX_WW);	
+	bool ww_changed = ImGui::SliderInt("Window Width", &imaging_data.window_width, TMP_MIN_WW, TMP_MAX_WW);
 	bool less = ImGui::Button("<"); ImGui::SameLine(); bool more = ImGui::Button(">"); ImGui::SameLine();
-	bool slice_index_changed = ImGui::SliderInt("Slice Index", &imaging_data.current_index, 0, imaging_data.data.size()-1);
+	bool slice_index_changed = ImGui::SliderInt("Slice Index", &imaging_data.current_index, 0, imaging_data.data.size() - 1);
 	ImGui::SameLine(); ShowHelpMarker("CTRL + click to input value.");
 	if (less) {
 		slice_index_changed = true;
@@ -424,8 +516,8 @@ void DicomObjectsContainer::RenderUi()
 	//ALTERNATIVE: make isovalue and slide interaction all 2D ui that can be called up or confirmed to minimize
 	float sliceZPos = imaging_data.current_index / (imaging_data.data.size() - 1);
 	//viewer->orthoslice_handle->SetModelPositionZ(sliceZPos);
-	
-	if(wc_changed || ww_changed || slice_index_changed) 
+
+	if (wc_changed || ww_changed || slice_index_changed)
 		viewer->orthoslice_texture->Load(imaging_data.data[imaging_data.current_index], imaging_data.window_width, imaging_data.window_center);
 
 	// isovalue point cloud sliders
@@ -458,14 +550,14 @@ void DicomObjectsContainer::RenderUi()
 		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue);
 		ImGui::SameLine();
 		//ImGui::PopStyleColor(1);
-		
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0,0,0,1));
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0, 0, 0, 1));
 		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(50, 20));
 		if (pushed) {
 			isovalue_point_cloud_sliders[i]->SetInUse(false);
 		}
-		
+
 		ImGui::PopStyleColor(1);
 	}
 	ImGui::EndChild();
@@ -485,7 +577,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	{
 		//viewer->SetMasterAppendPose(viewer->base_handle->GetDoubleSelectionTransform());
 		//SetCoarseViewerAppendPose(viewer->base_handle->GetDoubleSelectionScaleDifference());
-	}	
+	}
 	else if(viewer->base_handle->is_selected)
 	{
 		curr_pose = viewer->base_handle->cache.controller_pose_updated * viewer->base_handle->cache.to_controller_space_initial;
@@ -512,7 +604,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		}
 		else
 		{
-			glm::vec3 pointer_model_space = glm::vec3(glm::inverse(viewer->base_handle->GetModelMatrix()) 
+			glm::vec3 pointer_model_space = glm::vec3(glm::inverse(viewer->base_handle->GetModelMatrix())
 			* glm::vec4(viewer->point_cloud_selector->cache.primary_collision_point_world_current, 1.0f));
 
 			if (once)
@@ -562,7 +654,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		curr_pose = points->handle->GetDoubleSelectionTransform();
 		points->SetMasterAppendPose(curr_pose);
 	}
-	else if (points->handle->is_selected) 
+	else if (points->handle->is_selected)
 	{
 		curr_pose = points->handle->cache.controller_pose_updated * points->handle->cache.to_controller_space_initial;
 		points->SetMasterAppendPose(curr_pose);
@@ -584,7 +676,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		AddIsovaluePointCloudSlider(imaging_data.isovalue);
 		points->MarkForRegeneration();
 	}*/
-	
+
 
 	// only does work if needed
 	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, isovalue_point_cloud_sliders);
@@ -604,7 +696,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	if (_vr.controller1.trigger_first_press)
 	{
 		// find  the closest branch point		
-		
+
 		int closest_index = -1;
 		float curr_min = -1.0f;
 		bool found = false;
@@ -676,13 +768,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				controller_pos_in_point_space = glm::inverse(points->GetModelMatrix())
 					* glm::vec4(_vr.controller1.position, 1.0f);
 			}
-			
+
 			BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
 			points->branch_points.push_back(newBP);
 			prev = newBP;
 		}
 	}
-	
+
 	if (points->branch_points.size() >= 4)
 	{
 		std::vector<BranchPoint*> pointsToFit;
@@ -700,9 +792,9 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				prevBranchPoint = points->branch_points[i];
 			}
 		}
-		
+
 		int currPointsToFitCount = pointsToFit.size();
-		if (currPointsToFitCount != pointsToFitCount && (currPointsToFitCount == 4 
+		if (currPointsToFitCount != pointsToFitCount && (currPointsToFitCount == 4
 			|| currPointsToFitCount > 4 && currPointsToFitCount - pointsAlreadyFitCount == 3))
 		{
 			//TODO: Put write to file in a DEBUG mode
@@ -777,7 +869,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	//debug2->SetWorldPosition(points->upper_bounds);
 }
 
-void DicomObjectsContainer::AddObjects(Render* _r) 
+void DicomObjectsContainer::AddObjects(Render* _r)
 {
 	_r->AddObjectToScene(points);
 	viewer->AddObjects(_r);
@@ -788,23 +880,28 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)
 {
-		bool unused_slider_slot_found = false;
-
-		for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i)
+	bool unused_slider_slot_found = false;
+	/*isovalue_point_cloud_sliders[sliderCount]->SetInUse(true);
+	isovalue_point_cloud_sliders[sliderCount]->SetValue(_isovalue);
+	sliderCount++;
+	unused_slider_slot_found = true;*/
+	for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i)
+	{
+		if (!isovalue_point_cloud_sliders[i]->in_use)
 		{
-			if (!isovalue_point_cloud_sliders[i]->in_use)
-			{
-				isovalue_point_cloud_sliders[i]->SetInUse(true);
-				isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
-
-				unused_slider_slot_found = true;
-				break;
-			}
+			isovalue_point_cloud_sliders[i]->SetInUse(true);
+			isovalue_point_cloud_sliders[i]->SetValue(_isovalue);
+			sliderCount++;
+			unused_slider_slot_found = true;
+			break;
 		}
+	}
 }
 
+// Changed parameters to accomodate for user folder selection
 void DicomObjectsContainer::Load(std::string _dicomDir)
 {
+	std::cout << _dicomDir << std::endl;
 	imaging_data = DicomReader::ReadSet(_dicomDir);
 	viewer->Load(imaging_data);
 	UpdateDicomPointCloud(DEFAULT_ISOVALUE);
