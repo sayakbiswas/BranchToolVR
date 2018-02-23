@@ -9,6 +9,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
+	- [ ] Set sensible viewport for initial scene
 - [ ] Data set testing
 - [ ] Slider for adjusting isovalue tolerance 
 - [ ] Zooming/Scaling the voxels

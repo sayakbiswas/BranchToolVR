@@ -87,13 +87,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Michael\Documents\Programming\BranchToolVR\BranchToolVR\Libraries\imgui\examples\opengl3_example;$(ProjectDir)Libraries\imgui;$(ProjectDir)Libraries\misc;$(ProjectDir)Libraries\openvr-master\headers;$(ProjectDir)Libraries\tinydir;$(ProjectDir)Libraries\imebra\library\imebra\include;$(ProjectDir)Libraries\imebra\library\base\include;$(ProjectDir)Libraries\glm;$(ProjectDir)Libraries\glew-1.13.0\include;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Libraries\imgui\examples\opengl3_example;$(ProjectDir)Libraries\glew-2.1.0\include;$(ProjectDir)Libraries\imgui;$(ProjectDir)Libraries\misc;$(ProjectDir)Libraries\openvr-master\headers;$(ProjectDir)Libraries\tinydir;$(ProjectDir)Libraries\imebra\library\imebra\include;$(ProjectDir)Libraries\imebra\library\base\include;$(ProjectDir)Libraries\glm;$(ProjectDir)Libraries\glew-1.13.0\include;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)Libraries\openvr-master\lib\win64;$(ProjectDir)Libraries\glew-1.13.0\lib\Release\x64;$(ProjectDir)Libraries\openvr-master\bin\win64;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;$(ProjectDir)Libraries\glew-2.1.0\lib\Release\x64\glew32.lib;D:\Workspace\BranchToolVR\BranchToolVR\Libraries\glew-2.1.0\lib\Release\x64\glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Libraries\glew-2.1.0\lib\Release\x64;$(ProjectDir)Libraries\openvr-master\lib\win64;$(ProjectDir)Libraries\glew-1.13.0\lib\Release\x64;$(ProjectDir)Libraries\openvr-master\bin\win64;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

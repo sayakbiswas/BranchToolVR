@@ -49,7 +49,8 @@ DicomObjectsContainer::~DicomObjectsContainer()
 // to member function
 void DicomObjectsContainer::FileMenu() {
 	if (ImGui::MenuItem("New", "CTRL+N")) {
-		// dialog file selection
+		// call clear all
+		// open file dialog
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
 		//dialog folder selection
