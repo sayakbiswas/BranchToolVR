@@ -36,4 +36,5 @@ class Engine
 		GLFWwindow * window;		
 		Render * renderer; // must be allocated after window is initialized		
 		DicomObjectsContainer * doc;
+
 };

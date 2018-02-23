@@ -3,15 +3,20 @@
 A tool designed to map vascular systems present in medical images in virtual reality. The previous non-vr iteration of the tool can be found here: https://github.com/microdr/Branch-Tool
 
 ## TODO list:
-- [ ] Full file menu functionality
-	- [x] File dialog for DicomSet selection
-- [ ] differentiate isovalue surfaces by color when exporting
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
 - [ ] Auto detect sensible windowing values
-- [ ] Data set testing
+	- [ ] Set sensible viewport for initial scene
 - [ ] Slider for adjusting isovalue tolerance 
 - [ ] Zooming/Scaling the voxels
+- [ ] Full file menu functionality
+	- [x] File dialog for DicomSet selection
+- [x] differentiate isovalue surfaces by color when exporting
+- [x] Data set testing
+	- [x] Same data set works in different memory locations
+	- [x] Additional sample set via MATLAB works
+	- [x] Additional sets via Kurenov work
+	- Note: only uncompressed DICOM files work (testing with anonymized samples threw odd exceptions)
 - [x] Generate isosurface of tumor from the point cloud and export - Surface generated using blender python script
 - [x] triangulate vein structures - Not needed, blender2sofa takes care of this
 - [x] export triangulation (traced veins to blender) - Not needed, export curve control points
