@@ -49,8 +49,7 @@ DicomObjectsContainer::~DicomObjectsContainer()
 // to member function
 void DicomObjectsContainer::FileMenu() {
 	if (ImGui::MenuItem("New", "CTRL+N")) {
-		// call clear all
-		// open file dialog
+		// dialog file selection
 	}
 	if (ImGui::MenuItem("Open", "CTRL+O")) {
 		//dialog folder selection
@@ -63,7 +62,7 @@ void DicomObjectsContainer::FileMenu() {
 		ofn.lpstrFile = filename;
 		ofn.nMaxFile = MAX_PATH;
 		ofn.lpstrTitle = "Select Staring Scan File:";
-		ofn.Flags = OFN_FILEMUSTEXIST;
+		ofn.Flags = OFN_FILEMUSTEXIST ;
 
 		if (GetOpenFileNameA(&ofn)) {
 
@@ -78,7 +77,7 @@ void DicomObjectsContainer::FileMenu() {
 				folder += filename[i];
 			}
 			std::cout << "You selected: " << folder << std::endl;
-
+						
 			this->Load(folder);
 
 		}
@@ -106,7 +105,7 @@ void DicomObjectsContainer::FileMenu() {
 			default: std::cout << "You cancelled.\n";
 			}
 		}
-
+		folder = "";
 	}
 	ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
