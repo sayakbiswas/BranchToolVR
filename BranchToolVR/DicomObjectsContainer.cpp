@@ -735,10 +735,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 				glm::vec4 tmp;
 				if (_vr.hmd_connected)
 				{
-					controller_pos_in_point_space = glm::inverse(points->GetModelMatrix())
-						* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
-					tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix())
-						* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
+					glm::vec3 arg1 = _vr.controller1.position + _vr.controller1.ray * 0.25f;
+					tmp = glm::vec4(arg1, 1.0f);
+					// Throwing Read Access Violation that Traces to <vector>. My guess is it doesn't like the inverse part
+					controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(arg1, 1.0f);
+
+					// This old version of tmp is effectively multiplying 1 times glm::vec4(arg1, 1.0f): A * A^-1 = I; I*B = B
+					// tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix()) * glm::vec4(arg1, 1.0f);
 				}
 				else
 				{
