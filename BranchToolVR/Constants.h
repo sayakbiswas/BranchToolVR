@@ -2,10 +2,11 @@
 
 #include <string>
 #include <glm/glm.hpp>
+#include <Windows.h>
 
 // single value default constants
-#define DEFAULT_WINDOW_SIZE_X 700
-#define DEFAULT_WINDOW_SIZE_Y 700
+#define DEFAULT_WINDOW_SIZE_X GetSystemMetrics(SM_CXSCREEN)/2
+#define DEFAULT_WINDOW_SIZE_Y GetSystemMetrics(SM_CYSCREEN)/2
 #define DEFAULT_NR_SAMPLES 0
 #define DEFAULT_ISOVALUE 1340
 #define DEFAULT_ISOVALUE_TOLERANCE 10

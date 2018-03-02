@@ -408,7 +408,7 @@ void DicomObjectsContainer::RenderUi()
 				hexMeshFile << "# OBJ file describing the hex mesh of the organ to be carved\n";
 				hexMeshFile << "# List of geometric vertices, w defaults to 1.0\n";
 				
-					if (indices < 10000) {
+					//if (indices < 10000) {
 						for (glm::vec3 instanced_position : points->GetInstancedPositions()) {
 							if (colors.at(i_count) == isovalue_point_cloud_sliders[slider_i]->color) {
 								
@@ -434,11 +434,11 @@ void DicomObjectsContainer::RenderUi()
 							//std::cout << indices << std::endl;
 							indices++;
 
-							if (indices >= 10000) break;
-						}
+							//if (indices >= 10000) break;
+							}
 							i_count++;
 						}
-				}
+				//}
 				hexMeshFile << "# Polygonal face element\n";
 				//index = 0;
 				while (index < indices) {

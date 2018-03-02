@@ -40,3 +40,11 @@ A tool designed to map vascular systems present in medical images in virtual rea
 * GLM
 * imebra
 * tinyobjloader
+
+## Running Solution:
+- Download/Clone Repository
+- Open "BranchToolVR.sln"
+- Go to Project->BranchToolVR Properties->Linker->Input and add $(ProjectDir)Libraries\glew-2.1.0\lib\Release\x64\glew32.lib
+- Go to Tools->Options->Debugging->Symbols and check Microsoft Symbol Servers
+- Change project type to Release
+- If you get errors saying "application could not be loaded", you need to copy BranchToolVR\Libraries\glew-2.1.0\bin\Release\x64\glew32.dll and BranchToolVR\Libraries\openvr-master\bin\win64\openvr_api.dll to BranchToolVR-master\x64\Release
