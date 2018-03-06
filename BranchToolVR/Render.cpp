@@ -33,7 +33,7 @@ Render::Render(GLFWwindow *_window)
 		glCullFace(GL_BACK);
 	#endif
 
-	// initialize controllers
+	// initialize controller objects
 	controller_pointer1 = new ColorObject;
 	controller_pointer1->GenerateController();
 	AddObjectToScene(controller_pointer1);

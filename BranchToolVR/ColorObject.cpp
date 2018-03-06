@@ -112,14 +112,17 @@ void ColorObject::GenerateController()
 	float len = 0.05f;
 	float pointer_width = 0.005f;
 
+	// Changes to pointer length are not always displayed properly for some reason; behaving on previous values
 	AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
-	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width/2.0f, -pointer_width/2.0f, 0.0f));
+	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
+	AddRectangularPrism(glm::vec3(pointer_width / 4.0f, pointer_width / 4.0f, -10.0f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	
 	Finalize();
 }
 
 void ColorObject::AddRectangularPrism(glm::vec3 _scale, glm::vec3 _offset) 
 {
+	// Idea: clear out positions rather than skipping through it?
 	int prev_num_positions = positions.size();
 
 	glm::vec3 cube[8];
