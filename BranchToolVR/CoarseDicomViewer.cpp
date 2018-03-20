@@ -9,14 +9,14 @@ CoarseDicomViewer::CoarseDicomViewer()
 		static_mesh->is_hidden = true;
 	#endif
 	
-	/*float base_handle_scale = 1.6f;
-	base_handle = new TextureObject;
-	base_handle->readObjFromFile(DirectoryInfo::POINT_CLOUD_HANDLE_MODEL, base_handle_scale, glm::vec3(base_handle_scale * 0.3f, -0.05f, base_handle_scale * 0.3f));
-	base_handle->is_selectable = true;
-	base_handle->is_double_selectable = true;
-	base_handle->texture_level = POINT_CLOUD_FRAME_TEXTURE;
+	float base_handle_scale = 0.5f;
+	selector = new TextureObject;
+	selector->readObjFromFile(DirectoryInfo::POINT_CLOUD_SELECTOR_MODEL, base_handle_scale, glm::vec3(0.0f, 0.0f,0.0f));
+	selector->is_selectable = true;
+	selector->is_double_selectable = true;
+	selector->texture_level = POINT_CLOUD_SELECTOR_TEXTURE;
 
-	orthoslice_handle = new TextureObject;
+	/*orthoslice_handle = new TextureObject;
 	orthoslice_handle->readObjFromFile(DirectoryInfo::COARSE_VIEWER_SLICE_HANDLE_MODEL,1.0f, glm::vec3(0.5f, 0.5f, 0.0f));
 	orthoslice_handle->is_selectable = true;
 	orthoslice_handle->texture_level = COARSE_VIEWER_SLICE_HANDLE_TEXTURE;*/
@@ -41,8 +41,8 @@ CoarseDicomViewer::CoarseDicomViewer()
 CoarseDicomViewer::~CoarseDicomViewer()
 {
 	delete static_mesh;
-	/*delete base_handle;
-	delete orthoslice_handle;*/
+	delete selector;
+	//delete orthoslice_handle;
 	delete orthoslice;
 	//delete point_cloud_selector;
 }
@@ -50,9 +50,9 @@ CoarseDicomViewer::~CoarseDicomViewer()
 void CoarseDicomViewer::AddObjects(Render * _r) 
 {
 	_r->AddObjectToScene(static_mesh);
-	/*_r->AddObjectToScene(base_handle);
-	_r->AddObjectToScene(orthoslice_handle);
-	_r->AddObjectToScene(point_cloud_selector);	*/
+	_r->AddObjectToScene(selector);
+	//_r->AddObjectToScene(orthoslice_handle);
+	//_r->AddObjectToScene(point_cloud_selector);
 	//_r->AddObjectToScene(orthoslice);
 	//_r->SetOrthosliceTextureReference(orthoslice_texture);
 }
@@ -84,14 +84,14 @@ void CoarseDicomViewer::Load(DicomSet & _dSet)
 
 void CoarseDicomViewer::SetMasterAppendPose(glm::mat4 _append)
 {
-	//base_handle->SetAppendPose(_append);
+	selector->SetAppendPose(_append);
 	static_mesh->SetAppendPose(_append);
 	//orthoslice_handle->SetAppendPose(_append);
-	orthoslice->SetAppendPose(_append);
+	//orthoslice->SetAppendPose(_append);
 	//point_cloud_selector->SetAppendPose(_append);
 }
 
-//void CoarseDicomViewer::SetMasterAppendScale(float _scale)
-//{
-//	SetMasterAppendPose(glm::scale(glm::mat4(1.0f), glm::vec3(_scale))* base_handle->GetAppendPose());
-//}
+void CoarseDicomViewer::SetMasterAppendScale(float _scale)
+{
+	SetMasterAppendPose(glm::scale(glm::mat4(1.0f), glm::vec3(_scale))* selector->GetAppendPose());
+}

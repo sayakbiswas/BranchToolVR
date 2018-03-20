@@ -20,7 +20,7 @@ class CoarseDicomViewer
 
 		ColorObject* static_mesh;		
 		TextureObject* point_cloud_selector;
-		TextureObject* base_handle;
+		TextureObject* selector;
 		TextureObject* orthoslice_handle;
 		TextureObject* orthoslice;
 

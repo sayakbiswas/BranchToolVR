@@ -398,7 +398,8 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	
 	if (!first_load)
 	{
-		GenerateCube(voxel_scale, glm::vec3(0.0f));
+		//std::cout << _ds.data.size() / 2 << std::endl;
+		GenerateCube(voxel_scale, glm::vec3((last-first), 0.0f, (_ds.data.size() / 2) - ((last-first) / 2)));
 		// old generate sphere for picking points
 		//GenerateSphere(voxel_scale.x);
 	}

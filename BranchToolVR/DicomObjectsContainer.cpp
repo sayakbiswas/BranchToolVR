@@ -17,17 +17,11 @@ DicomObjectsContainer::DicomObjectsContainer()
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
 
-	// set starting locations
 	float initial_scale = 0.5f;
-	glm::vec3 initial_position = glm::vec3(0.5f, 0.25f, 0.5f);
+	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::mat4 tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
-	//viewer->SetMasterAppendPose(tmp_initial_model_matrix);
-	//SetCoarseViewerAppendPose(tmp_initial_model_matrix);
-
-	initial_scale = 0.5f;
-	initial_position = glm::vec3(-0.5f, 0.25f, 0.5f);
-	tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
 	points->SetMasterAppendPose(tmp_initial_model_matrix);
+	viewer->SetMasterAppendPose(tmp_initial_model_matrix);
 
 	debug1->GenerateSphere(10, 0.05f, false);
 	debug2->GenerateSphere(10, 0.05f, false);
@@ -572,17 +566,19 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	glm::mat4 curr_pose;
 
 	// Refactor
-	/*if (viewer->base_handle->is_double_selected)
+	if (viewer->selector->is_double_selected)
 	{
-		//viewer->SetMasterAppendPose(viewer->base_handle->GetDoubleSelectionTransform());
+		viewer->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
+		points->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
 		//SetCoarseViewerAppendPose(viewer->base_handle->GetDoubleSelectionScaleDifference());
 	}
-	else if(viewer->base_handle->is_selected)
+	else if(viewer->selector->is_selected)
 	{
-		curr_pose = viewer->base_handle->cache.controller_pose_updated * viewer->base_handle->cache.to_controller_space_initial;
-		//viewer->SetMasterAppendPose(curr_pose);
+		curr_pose = viewer->selector->cache.controller_pose_updated * viewer->selector->cache.to_controller_space_initial;
+		viewer->SetMasterAppendPose(curr_pose);
+		points->SetMasterAppendPose(curr_pose);
 		//SetCoarseViewerAppendPose(curr_pose);
-	}*/
+	}
 
 	static bool once = true;
 	static glm::vec3 offset;
@@ -648,7 +644,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 		//std::cout << std::endl << "modelZ: " << (colp_to_model_space.z) << "  , imageScaleZ: " << (imaging_data.scale.z) << "  , index: " << (imaging_data.current_index) << std::endl;
 	}*/
 
-	if (points->handle->is_double_selected)
+	/*if (points->handle->is_double_selected)
 	{
 		curr_pose = points->handle->GetDoubleSelectionTransform();
 		points->SetMasterAppendPose(curr_pose);
@@ -657,7 +653,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 	{
 		curr_pose = points->handle->cache.controller_pose_updated * points->handle->cache.to_controller_space_initial;
 		points->SetMasterAppendPose(curr_pose);
-	}
+	}*/
 
 	// Refactor
 	/*if (viewer->orthoslice->WasClicked())

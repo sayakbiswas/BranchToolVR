@@ -4,13 +4,14 @@ A tool designed to map vascular systems present in medical images in virtual rea
 
 ## TODO list:
 - [ ] Coarsify the volumetric hex mesh for SOFA
+- [ ] Adjust center/start position for Point Cloud Object
 - [ ] Convert the bezier curves in blender python to thick curves
-- [ ] Auto detect sensible windowing values
-	- [ ] Set sensible viewport for initial scene
 - [ ] Slider for adjusting isovalue tolerance 
-- [ ] Zooming/Scaling the voxels
 - [ ] Full file menu functionality
 	- [x] File dialog for DicomSet selection
+- [x] Auto detect sensible windowing values
+	- [ ] Set sensible viewport for initial scene
+- [x] Zooming/Scaling the voxels
 - [x] differentiate isovalue surfaces by color when exporting
 - [x] Data set testing
 	- [x] Same data set works in different memory locations
@@ -26,7 +27,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [x] Add spoof input key for the touchpad which initializes a new curve
 - [x] Remap the new curve button to the touchpad
 - [x] Remap the create sphere action to the trigger
-- [ ] Collision between voxels and the ray from controller to generate spheres
+- [x] Collision between voxels and the ray from controller to generate spheres
 	- [x] Instead make the controller pointer shorter and use the tip to generate spheres, no collision detection necessary
 - [x] Make the branch point marking spheres smaller
 - [x] Export curve control points

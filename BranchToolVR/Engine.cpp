@@ -121,7 +121,7 @@ void Engine::Loop()
 
 		if ((curr_time - last_frame_time) >= set_elapsed_time)
 		{
-			std::cout << (double)frame_counter / set_elapsed_time << std::endl;
+			//std::cout << (double)frame_counter / set_elapsed_time << std::endl;
 			last_frame_time = curr_time;
 			frame_counter = 0;
 		}
