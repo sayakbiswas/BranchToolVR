@@ -19,9 +19,9 @@ class CoarseDicomViewer
 		void SetMasterAppendTranslate(glm::vec3 & _inWorldPos);		
 
 		ColorObject* static_mesh;		
-		TextureObject* point_cloud_selector;
+		//TextureObject* point_cloud_selector;
 		TextureObject* selector;
-		TextureObject* orthoslice_handle;
+		//TextureObject* orthoslice_handle;
 		TextureObject* orthoslice;
 
 		Texture* orthoslice_texture;

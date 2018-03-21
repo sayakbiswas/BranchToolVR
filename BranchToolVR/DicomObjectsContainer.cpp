@@ -21,7 +21,7 @@ DicomObjectsContainer::DicomObjectsContainer()
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::mat4 tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
 	points->SetMasterAppendPose(tmp_initial_model_matrix);
-	viewer->SetMasterAppendPose(tmp_initial_model_matrix);
+	//viewer->SetMasterAppendPose(tmp_initial_model_matrix);
 
 	debug1->GenerateSphere(10, 0.05f, false);
 	debug2->GenerateSphere(10, 0.05f, false);
@@ -250,6 +250,18 @@ void DicomObjectsContainer::RenderUi()
 		points->lower_bounds.y = (bounds[i].y) / imaging_data.data[0].height;
 		points->upper_bounds.x = (bounds[i + 1].x) / imaging_data.data[0].width;
 		points->upper_bounds.y = (bounds[i + 1].y) / imaging_data.data[0].height;
+
+		if (points->lower_bounds.x > points->upper_bounds.x) {
+			float temp_x = points->lower_bounds.x;
+			points->lower_bounds.x = points->upper_bounds.x;
+			points->upper_bounds.x = temp_x;
+		}
+
+		if (points->lower_bounds.y > points->upper_bounds.y) {
+			float temp_y = points->lower_bounds.y;
+			points->lower_bounds.y = points->upper_bounds.y;
+			points->upper_bounds.y = temp_y;
+		}
 		//std::cout << (points->upper_bounds.x) << " , " << (points->upper_bounds.y) << "   :   " << (points->lower_bounds.x) << " , " << (points->lower_bounds.y) << "  :  " << (first) << " , " << (last) << std::endl;
 	}
 	if (selec_prev) {

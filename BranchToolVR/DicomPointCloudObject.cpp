@@ -45,6 +45,14 @@ void DicomPointCloudObject::Load()
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
 
+	// Orients point cloud according to that of the CT scan representation
+	for (int i = 0; i < instanced_positions.size(); i++) {
+		instanced_positions.at(i).y = -instanced_positions.at(i).y;
+		instanced_positions.at(i).y += (upper_bounds.y - lower_bounds.y);
+		instanced_positions.at(i).x = -instanced_positions.at(i).x;
+		instanced_positions.at(i).x += (upper_bounds.x - lower_bounds.x);
+	}
+
 	if (!first_load)
 	{
 		glGenVertexArrays(1, &vao);
@@ -388,6 +396,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	{
 		return;
 	}
+
 	//sets diagonal 3d world space
 	float box_diag_len = glm::length(upper_bounds - lower_bounds);
 	SetScale(SQRT3 / box_diag_len);
@@ -398,8 +407,9 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	
 	if (!first_load)
 	{
+		// Adjust offset values so Cloud is within Selector object
 		//std::cout << _ds.data.size() / 2 << std::endl;
-		GenerateCube(voxel_scale, glm::vec3((last-first), 0.0f, (_ds.data.size() / 2) - ((last-first) / 2)));
+		GenerateCube(voxel_scale, glm::vec3(0.0f));
 		// old generate sphere for picking points
 		//GenerateSphere(voxel_scale.x);
 	}
@@ -412,7 +422,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
 
-	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer ===========================
 	std::cout << "last " << last << std::endl;
 	for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 	{
@@ -430,9 +439,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			{
 				int slider_count = 0;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
-					/*continue;
-				}
-				else{*/
 
 					iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
 					if (iso_abs_check <= max_tolerance)
@@ -441,6 +447,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 						col = isovalue_point_cloud_sliders[k]->color;
 
 						glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
+
 						//test if in magnification area
 						if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
 							&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
