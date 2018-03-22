@@ -45,12 +45,15 @@ void DicomPointCloudObject::Load()
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
 
+	// Finds center z value for current cloud to align with global z axis
+	float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1)/2).z) : (instanced_positions.at((num_instances) / 2).z);
 	// Orients point cloud according to that of the CT scan representation
-	for (int i = 0; i < instanced_positions.size(); i++) {
+	for (int i = 0; i < num_instances; i++) {
 		instanced_positions.at(i).y = -instanced_positions.at(i).y;
-		instanced_positions.at(i).y += (upper_bounds.y - lower_bounds.y);
+		instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y)/2);
 		instanced_positions.at(i).x = -instanced_positions.at(i).x;
-		instanced_positions.at(i).x += (upper_bounds.x - lower_bounds.x);
+		instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x)/2);
+		instanced_positions.at(i).z -= center_z;
 	}
 
 	if (!first_load)
@@ -323,6 +326,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	
 	int f = 0;
 	voxel_scale =  glm::vec3(_ds.scale.x / (float)(_ds.data[0].width+f), _ds.scale.y / (float)(_ds.data[0].height+f), _ds.scale.z / ((float)_ds.data.size()+f));
+	//std::cout << voxel_scale.z << std::endl;
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 	
 	if (!first_load)
@@ -402,7 +406,12 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	SetScale(SQRT3 / box_diag_len);
 
 	int f = 0;
-	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), _ds.scale.z / ((float)_ds.data.size() + f));
+
+	// Voxel z scale for base set: 0.00246914
+	// This changes if loading sets with different distance between slices
+
+	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
+	//std::cout << voxel_scale.z << std::endl; 
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 	
 	if (!first_load)
@@ -477,10 +486,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			//}
 		}
 	}
-
-	// Workaround (doesn't work)
-	//for (int count = 0; count < isovalue_point_cloud_sliders.size(); ++count)
-	//	isovalue_point_cloud_sliders[count]->point_size = (isovalue_point_cloud_sliders[count]->point_size)/(isovalue_point_cloud_sliders.size() - count);
 
 	Load();
 	first_load = true;
