@@ -408,7 +408,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	int f = 0;
 
 	// Voxel z scale for base set: 0.00246914
-	// This changes if loading sets with different distance between slices
+	// This changes if loading sets with different distance between slices, causing voxels to elongate
 
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
 	//std::cout << voxel_scale.z << std::endl; 
