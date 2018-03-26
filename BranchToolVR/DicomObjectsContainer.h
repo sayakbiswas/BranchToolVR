@@ -21,6 +21,7 @@ struct IsovaluePointCloudSlider
 	const int id;
 	static int id_counter;
 	int point_size = 0;
+	int iso_tolerance = DEFAULT_ISOVALUE_TOLERANCE;
 	static float min_isovalue;
 	static float max_isovalue;
 	glm::vec3 color;
@@ -81,6 +82,7 @@ class DicomObjectsContainer
 
 	private:
 		void UpdateDicomPointCloud(int _isovalue);
+		void UpdateDicomPointCloud(int _isovalue, int _tolerance);
 		DicomSet imaging_data;
 		DicomPointCloudObject * points;
 		CoarseDicomViewer * viewer;
@@ -89,6 +91,7 @@ class DicomObjectsContainer
 		int sliderCount = 0;
 		int pointsToFitCount = 0;
 		int pointsAlreadyFitCount = 0;
+		int curr_iso_tolerance = DEFAULT_ISOVALUE_TOLERANCE;
 		static void ShowHelpMarker(const char* desc)
 		{
 			ImGui::TextDisabled("(?)");

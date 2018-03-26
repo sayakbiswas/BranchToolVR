@@ -4,7 +4,7 @@ ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
-bool pushed, fslide, lslide, sliderHasChanged, exportButtonPressed;
+bool pushed, fslide, lslide, sliderHasChanged, toleranceHasChanged, exportButtonPressed;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -549,10 +549,11 @@ void DicomObjectsContainer::RenderUi()
 		ImGui::SameLine();
 		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE);
 		ImGui::SameLine(); ShowHelpMarker("right-click color square to change");
-		if (sliderHasChanged) {
+		toleranceHasChanged = ImGui::SliderInt(("Tolerance for : " + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->iso_tolerance, 0, 30);
+		if (sliderHasChanged || toleranceHasChanged) {
 			points->MarkForRegeneration();
 		}
-		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue);
+		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue, isovalue_point_cloud_sliders[i]->iso_tolerance);
 		ImGui::SameLine();
 		//ImGui::PopStyleColor(1);
 
@@ -927,3 +928,8 @@ void DicomObjectsContainer::UpdateDicomPointCloud(int _isovalue)
 	points->Generate(imaging_data, _isovalue, MAX_ISOVALUE_TOLERANCE, first, last, isovalue_point_cloud_sliders);
 }
 
+void DicomObjectsContainer::UpdateDicomPointCloud(int _isovalue, int _tolerance)
+{
+	imaging_data.isovalue = _isovalue;
+	points->Generate(imaging_data, _isovalue, _tolerance, first, last, isovalue_point_cloud_sliders);
+}
