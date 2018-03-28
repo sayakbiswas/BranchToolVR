@@ -4,7 +4,7 @@ ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
-bool pushed, fslide, lslide, sliderHasChanged, exportButtonPressed;
+bool pushed, fslide, lslide, ready, sliderHasChanged, exportButtonPressed;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -142,7 +142,7 @@ void DicomObjectsContainer::MainMenuBar() {
 	}
 }
 
-void DicomObjectsContainer::RenderUi()
+void DicomObjectsContainer::RenderUi(Render* _r)
 {
 	// ========== Main File Menu Bar ===========
 	// demo imgui window
@@ -327,7 +327,6 @@ void DicomObjectsContainer::RenderUi()
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
 
-
 		// --- separate points by color into different files
 		std::vector<glm::vec3> colors = points->GetInstancedColor();
 		for (int slider_i = 0; slider_i < sliderCount; ++slider_i) {
@@ -498,6 +497,18 @@ void DicomObjectsContainer::RenderUi()
 		std::cout << "finished Exporting" << std::endl;
 	}
 
+
+	ImGui::PopStyleColor(3);
+	ImGui::PopID();
+	ImGui::SameLine(0, 150);
+	// Button to ready headset
+	ImGui::PushID(4);
+	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 7.0f, 0.8f, 0.8f));
+	if(ImGui::Button("Headset Ready"))
+		_r->hmd_ready = true;
+
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
@@ -571,9 +582,9 @@ void DicomObjectsContainer::RenderUi()
 	// add custom rendering app to draw "magnification square" over area of interest
 }
 
-void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
+void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, Render* _r)
 {
-	RenderUi();
+	RenderUi(_r);
 
 	glm::mat4 curr_pose;
 

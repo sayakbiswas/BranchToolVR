@@ -205,9 +205,9 @@ void Render::SetOrthosliceTextureReference(Texture* _t)
 	textures[CURR_ORTHOSLICE_TEXTURE] = _t;
 }
 
-void Render::RenderToHMD() 
+void Render::RenderToHMD()
 {
-	if (!m_pHMD)
+	if (!m_pHMD || !hmd_ready)
 		return;
 
 	// left eye
@@ -1094,7 +1094,7 @@ void Render::SpoofInput(int controllerIndex)
 
 void Render::UpdateHMDMatrixPose()
 {
-	if (!m_pHMD) 
+	if (!m_pHMD || !hmd_ready) 
 	{
 		// without the HMD connected, default to keyboard control over spoofed motion controllers		
 		
