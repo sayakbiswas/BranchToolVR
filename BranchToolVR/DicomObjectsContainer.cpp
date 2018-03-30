@@ -506,8 +506,10 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 7.0f, 0.8f, 0.8f));
-	if(ImGui::Button("Headset Ready"))
+	if (ImGui::Button("Headset Ready")) {
+		ready = true;
 		_r->hmd_ready = true;
+	}
 
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
@@ -752,7 +754,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			{
 				glm::vec4 controller_pos_in_point_space;
 				glm::vec4 tmp;
-				if (_vr.hmd_connected)
+				if (_vr.hmd_connected && ready)
 				{
 					// NOTE: Must press touch pad before beginning to draw or throws below error
 					glm::vec3 arg1 = _vr.controller1.position + _vr.controller1.ray * 0.25f;
@@ -783,7 +785,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		else
 		{
 			glm::vec4 controller_pos_in_point_space;
-			if (_vr.hmd_connected)
+			if (_vr.hmd_connected && ready)
 			{
 				controller_pos_in_point_space = glm::inverse(points->GetModelMatrix())
 					* glm::vec4(_vr.controller1.position + _vr.controller1.ray * 0.25f, 1.0f);
