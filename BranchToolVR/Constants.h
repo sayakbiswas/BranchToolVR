@@ -60,7 +60,7 @@ namespace Constants
 	static const glm::vec4 STATIC_DICOM_MESH_COLOR = glm::vec4(0.89f, 0.3f, 0.89f, 1.0f);
 	static const glm::vec4 BASE_BRANCH_POINT_COLOR = glm::vec4(1.0f, 0.2f, 0.4f, 1.0f);
 	static const glm::vec4 SELECTED_BRANCH_POINT_COLOR = glm::vec4(0.9f, 0.3f, 0.9f, 1.0f);
-	static const glm::vec4  HOVER_BRANCH_POINT_COLOR = glm::vec4(0.9f, 0.9f, 0.3f, 1.0f);
+	static const glm::vec4 HOVER_BRANCH_POINT_COLOR = glm::vec4(0.9f, 0.9f, 0.3f, 1.0f);
 	static const glm::vec4 CLEAR_COLOR = glm::vec4(0.5f, 0.5f, 1.0f, 1.0f);
 	static const glm::vec3 AMBIENT_LIGHT = glm::vec3(0.1f, 0.1f, 0.1f);
 	static const glm::vec3 X_AXIS = glm::vec3(1.0f,0.0f,0.0f);
