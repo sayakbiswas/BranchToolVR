@@ -74,7 +74,7 @@ bool Engine::InitGLEW()
 
 void Engine::Update() 
 {
-	doc->Update(renderer->GetVrData(), renderer->GetCursorData());
+	doc->Update(renderer->GetVrData(), renderer->GetCursorData(), renderer);
 	renderer->SceneLoop();
 }
 

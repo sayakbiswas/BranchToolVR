@@ -5,11 +5,10 @@ A tool designed to map vascular systems present in medical images in virtual rea
 ## TODO list:
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
-- [ ] Slider for adjusting isovalue tolerance 
-- [ ] Full file menu functionality
-	- [x] File dialog for DicomSet selection
+- [ ] Slider for adjusting isovalue tolerance
+- [x] File dialog for DicomSet selection
 - [x] Auto detect sensible windowing values
-	- [ ] Set sensible viewport for initial scene
+	- [x] Allow swapping from 2D to 3D interface (no need to determine initial viewport)
 - [x] Adjust center/start position for Point Cloud Object
 - [x] Zooming/Scaling the voxels
 - [x] differentiate isovalue surfaces by color when exporting

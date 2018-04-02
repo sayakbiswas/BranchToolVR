@@ -84,6 +84,7 @@ class Render
 	public:
 		Render(GLFWwindow* _window);
 		~Render();
+		bool hmd_ready;
 		void SceneLoop();		
 		void AddObjectToScene(std::vector<AbstractBaseObject*> bsos);
 		void AddObjectToScene(AbstractBaseObject* abso);
