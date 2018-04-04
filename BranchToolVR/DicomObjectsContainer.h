@@ -69,8 +69,8 @@ class DicomObjectsContainer
 	public:
 		DicomObjectsContainer();
 		~DicomObjectsContainer();
-		void RenderUi();
-		void Update(const VrData& _vr, const CursorData& _crsr);
+		void RenderUi(Render* _r);
+		void Update(const VrData& _vr, const CursorData& _crsr, Render* _r);
 		void Load(std::string _dicomDir);		
 		void AddObjects(Render * _r);
 		void AddIsovaluePointCloudSlider(const int _isovalue);

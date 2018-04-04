@@ -205,9 +205,9 @@ void Render::SetOrthosliceTextureReference(Texture* _t)
 	textures[CURR_ORTHOSLICE_TEXTURE] = _t;
 }
 
-void Render::RenderToHMD() 
+void Render::RenderToHMD()
 {
-	if (!m_pHMD)
+	if (!m_pHMD || !hmd_ready)
 		return;
 
 	// left eye
@@ -952,16 +952,8 @@ void Render::Interact()
 
 void Render::SpoofInput(int controllerIndex) 
 {
-	float mov_rate = 0.05f;
-	float rot_rate = 1.0f;
-	float slo_rate = 0.25f;
-
-	// slow down the movement rate if shift is being held down
-	if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT))
-	{
-		mov_rate *= slo_rate;
-		rot_rate *= slo_rate;
-	}
+	float mov_rate = 0.0125f;
+	float rot_rate = 0.5f;
 
 	VrMotionController& currController = controllerIndex == 0 ? vr_info.controller1 : vr_info.controller2;	
 	glm::vec3 strafe = glm::normalize(glm::cross(Constants::Y_AXIS, currController.ray));
@@ -987,7 +979,7 @@ void Render::SpoofInput(int controllerIndex)
 	}
 
 	// the position of the cursor is the distance moved since last reset to center of the screen (0,0)
-
+	
 	currController.SetOrientationSpoof(currController.orientation + 
 		glm::vec3
 			(
@@ -999,7 +991,7 @@ void Render::SpoofInput(int controllerIndex)
 
 	// set to center of the screen
 	glfwSetCursorPos(window, half_window_size_x, half_window_size_y);
-	
+	/*
 	static bool trigger_once[] = { true, true };
 	static bool alt_once[] = { true, true };
 	static bool appmenu_once[] = { true, true };
@@ -1082,19 +1074,21 @@ void Render::SpoofInput(int controllerIndex)
 	{
 		touchpad_once[controllerIndex] = true;
 	}
-
+	*/
 	vr_info.head_pose_inv = glm::inverse(currController.pose);
 
+	
 	controller_pointer1->SetModelMatrixOverride(vr_info.controller1.pose);
 	controller_pointer2->SetModelMatrixOverride(vr_info.controller2.pose);
 
 	controller_pointer1->SetSelected(vr_info.controller1.trigger_is_pressed);
 	controller_pointer2->SetSelected(vr_info.controller2.trigger_is_pressed);
+	
 }
 
 void Render::UpdateHMDMatrixPose()
 {
-	if (!m_pHMD) 
+	if (!m_pHMD || !hmd_ready) 
 	{
 		// without the HMD connected, default to keyboard control over spoofed motion controllers		
 		
@@ -1123,8 +1117,10 @@ void Render::UpdateHMDMatrixPose()
 			}
 		//	else if (glfwGetWindowAttrib())
 		}
+		
 		return;
 	}
+	vr_info.hmd_connected = true;
 
 	controller_pointer1->is_hidden = false;
 	controller_pointer2->is_hidden = false;
