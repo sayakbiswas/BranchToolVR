@@ -1215,6 +1215,19 @@ void Render::UpdateHMDMatrixPose()
 				currController.touchpad_first_press = false;
 				currController.touchpad_is_pressed = false;
 			}
+			if (state.ulButtonTouched & vr::ButtonMaskFromId(vr::k_EButton_SteamVR_Touchpad))
+			{
+				std::cout << "touchpad" << std::endl;
+				vr::VREvent_TouchPadMove_t tracking = vr::VREvent_TouchPadMove_t();
+				if (tracking.bFingerDown && tracking.flSecondsFingerDown > 0.5f) {
+					currController.touchpad_is_touched = true;
+					currController.touch_rotate = glm::vec3(tracking.fValueXRaw - tracking.fValueXFirst, tracking.fValueYRaw - tracking.fValueYFirst, 0.0f);
+				}
+				else
+					currController.touchpad_is_touched = false; 
+			}
+			else
+				currController.touchpad_is_touched = false;
 		}
 	}
 

@@ -687,7 +687,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr)
 
 
 	// only does work if needed
-	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, isovalue_point_cloud_sliders);
+	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, 1, 50, isovalue_point_cloud_sliders);
+
+	//rotate cloud with touchpad
+	if (_vr.controller2.touchpad_is_touched)
+	{
+		//viewer->SetMasterAppendPose(_vr.controller2.touch_rotate);
+	}
 
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)

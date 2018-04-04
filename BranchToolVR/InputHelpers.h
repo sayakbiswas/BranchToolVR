@@ -9,6 +9,7 @@ struct VrMotionController
 	glm::vec3 position;
 	glm::vec3 orientation;
 	glm::vec3 ray;
+	glm::vec3 touch_rotate;
 	bool trigger_is_pressed;
 	bool trigger_first_press;
 	bool alt_is_pressed;
@@ -17,6 +18,7 @@ struct VrMotionController
 	bool appmenu_first_press;
 	bool touchpad_is_pressed;
 	bool touchpad_first_press;
+	bool touchpad_is_touched;
 	int id;
 
 	static int id_counter;
@@ -31,9 +33,11 @@ struct VrMotionController
 		appmenu_first_press = false;
 		touchpad_is_pressed = false;
 		touchpad_first_press = false;
+		touchpad_is_touched = false;
 		pose = glm::mat4(1.0f);
 		position = glm::vec3(0.0f);
 		orientation = glm::vec3(0.0f);
+		touch_rotate = glm::vec3(0.0f);
 		ray = glm::vec3(0.0f, 0.0f, -1.0f);
 		id = id_counter++;
 	}
