@@ -35,7 +35,7 @@ struct Light
 
 	Light()
 	{
-		marker.GenerateSphere(11, 0.2f, true);
+		marker.GenerateSphere(11, 0.05f, true);
 	}
 
 	Light(float _radius) 
