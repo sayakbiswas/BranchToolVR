@@ -69,6 +69,7 @@ class DicomObjectsContainer
 	public:
 		DicomObjectsContainer();
 		~DicomObjectsContainer();
+		bool toleranceHasChanged;
 		void RenderUi(Render* _r);
 		void Update(const VrData& _vr, const CursorData& _crsr, Render* _r);
 		void Load(std::string _dicomDir);		
