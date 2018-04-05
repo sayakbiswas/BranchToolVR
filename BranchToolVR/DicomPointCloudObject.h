@@ -52,7 +52,7 @@ class DicomPointCloudObject : public AbstractBaseObject
 	public:
 		DicomPointCloudObject();
 		~DicomPointCloudObject();
-		void Generate(DicomSet & _ds, int isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
+		//void Generate(DicomSet & _ds, int isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
 		void Generate(DicomSet & _ds, int isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
 		void SetMasterAppendPose(glm::mat4 _in);
 		void Clear();

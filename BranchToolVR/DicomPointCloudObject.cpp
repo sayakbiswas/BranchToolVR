@@ -308,85 +308,7 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 	Load();
 }
 
-void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
-{
-	if (!has_changed) {
-		return;
-	}
-
-	has_changed = false;
-
-	if (&_ds == NULL || _ds.data.size() < 1)
-	{
-		return;
-	}
-	//sets diagonal 3d world space
-	float box_diag_len = glm::length(upper_bounds - lower_bounds);
-	SetScale(SQRT3 / box_diag_len);
-	
-	int f = 0;
-	voxel_scale =  glm::vec3(_ds.scale.x / (float)(_ds.data[0].width+f), _ds.scale.y / (float)(_ds.data[0].height+f), _ds.scale.z / ((float)_ds.data.size()+f));
-	//std::cout << voxel_scale.z << std::endl;
-	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
-	
-	if (!first_load)
-	{
-		GenerateCube(voxel_scale, glm::vec3(0.0f));
-		// old generate sphere for picking points
-		//GenerateSphere(voxel_scale.x);
-	}
-	else
-	{
-		instanced_positions.clear();
-		instanced_isovalue_differences.clear();
-		instanced_colors.clear();
-	}
-	
-	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
-
-	// ================= NEEDS TO COMMUNICATE WITH THE VECTOR OF SLIDERS IN DicomObjectsContainer ===========================
-	// pass the "isovalue_point_cloud_sliders" to this function ?
-
-	for (int i = 0; i < _ds.data.size(); ++i) 
-	{
-		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j) 
-		{
-			glm::vec3 col = glm::vec3(1.0f,0.0f,1.0f);
-			short iso_abs_check;
-			bool found = false;
-
-			for (int k = 0; k < isovalue_point_cloud_sliders.size(); ++k)
-			{
-				if (!isovalue_point_cloud_sliders[k]->in_use) continue;
-
-				iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-				if (iso_abs_check <= max_tolerance)
-				{
-					col = isovalue_point_cloud_sliders[k]->color;
-					found = true;
-					break;
-				}
-			}
-
-			if (found)
-			{
-				glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
-				//test if in magnification area
-				if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y && instanced_position.z > lower_bounds.z
-				&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y && instanced_position.z < upper_bounds.z) 
-				{
-					instanced_positions.push_back(instanced_position - lower_bounds);
-					instanced_isovalue_differences.push_back(iso_abs_check);
-					instanced_colors.push_back(col);
-				}
-			}
-		}
-	}
-
-	Load();	
-	first_load = true;
-}
-//overloaded 2D Generated
+//TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
 	
@@ -450,7 +372,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 				if (isovalue_point_cloud_sliders[k]->in_use) {
 
 					iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-					if (iso_abs_check <= max_tolerance)
+					if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
 					{
 						if (slider_count < k) slider_count = k;
 						col = isovalue_point_cloud_sliders[k]->color;
