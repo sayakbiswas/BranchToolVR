@@ -3,9 +3,11 @@
 A tool designed to map vascular systems present in medical images in virtual reality. The previous non-vr iteration of the tool can be found here: https://github.com/microdr/Branch-Tool
 
 ## TODO list:
+- [ ] Optimization
+- [ ] Control adjustments for improved UX
 - [ ] Coarsify the volumetric hex mesh for SOFA
 - [ ] Convert the bezier curves in blender python to thick curves
-- [ ] Slider for adjusting isovalue tolerance
+- [x] Slider for adjusting isovalue tolerance
 - [x] File dialog for DicomSet selection
 - [x] Auto detect sensible windowing values
 	- [x] Allow swapping from 2D to 3D interface (no need to determine initial viewport)
