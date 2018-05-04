@@ -3,7 +3,7 @@
 
 int BranchPoint::id_counter = 0;
 
-DicomPointCloudObject::DicomPointCloudObject() 
+DicomPointCloudObject::DicomPointCloudObject()
 {
 	// default values
 	is_selectable = true;
@@ -30,12 +30,12 @@ DicomPointCloudObject::~DicomPointCloudObject()
 	delete branch_point_marker;
 }
 
-void DicomPointCloudObject::Clear() 
+void DicomPointCloudObject::Clear()
 {
 	num_instances = 0;
 }
 
-int DicomPointCloudObject::Type() 
+int DicomPointCloudObject::Type()
 {
 	return AbstractBaseObject::get_type_id<DicomPointCloudObject>();
 }
@@ -46,13 +46,13 @@ void DicomPointCloudObject::Load()
 	num_instances = instanced_positions.size();
 
 	// Finds center z value for current cloud to align with global z axis
-	float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1)/2).z) : (instanced_positions.at((num_instances) / 2).z);
+	float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
 	// Orients point cloud according to that of the CT scan representation
 	for (int i = 0; i < num_instances; i++) {
 		instanced_positions.at(i).y = -instanced_positions.at(i).y;
-		instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y)/2);
+		instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
 		instanced_positions.at(i).x = -instanced_positions.at(i).x;
-		instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x)/2);
+		instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
 		instanced_positions.at(i).z -= center_z;
 	}
 
@@ -150,7 +150,7 @@ std::vector<glm::vec3> DicomPointCloudObject::GetInstancedPositions()
 	return instanced_positions;
 }
 
-void DicomPointCloudObject::GenerateCube(glm::vec3 _scale,glm::vec3 _offset)
+void DicomPointCloudObject::GenerateCube(glm::vec3 _scale, glm::vec3 _offset)
 {
 	glm::vec3 cube[8];
 	cube[0] = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -252,7 +252,7 @@ void DicomPointCloudObject::GenerateCube(glm::vec3 _scale,glm::vec3 _offset)
 	normals.push_back(glm::vec3(0.0f, -1.0f, 0.0f));
 	normals.push_back(glm::vec3(0.0f, -1.0f, 0.0f));
 
-	for (unsigned int i = 0; i < positions.size(); ++i) 
+	for (unsigned int i = 0; i < positions.size(); ++i)
 	{
 		positions[i].z += 1.0f;
 		positions[i] += _offset;
@@ -260,7 +260,7 @@ void DicomPointCloudObject::GenerateCube(glm::vec3 _scale,glm::vec3 _offset)
 	}
 }
 
-void DicomPointCloudObject::GenerateSphere(float _scale) 
+void DicomPointCloudObject::GenerateSphere(float _scale)
 {
 	int resolution = 5;
 	int num_vertices = resolution * resolution;
@@ -268,32 +268,32 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 	float t_inc2 = 6.28 / (float)(resolution);
 	glm::vec3* vertices = new glm::vec3[num_vertices];
 
-	for (int i = 0; i < num_vertices; ++i) 
+	for (int i = 0; i < num_vertices; ++i)
 	{
 		float layer = i / resolution;
 		float curr_radius = sin(t_inc1*layer);
-		float t = t_inc2*(float)((resolution - 1) - (i % resolution));
-		vertices[i] = _scale*glm::vec3(curr_radius*cos(t), -1.0f*cos(t_inc1*layer), curr_radius*sin(t));
+		float t = t_inc2 * (float)((resolution - 1) - (i % resolution));
+		vertices[i] = _scale * glm::vec3(curr_radius*cos(t), -1.0f*cos(t_inc1*layer), curr_radius*sin(t));
 	}
 
 	int num_patches = resolution * (resolution - 1);
-	for (int i = 0; i < num_patches; ++i) 
+	for (int i = 0; i < num_patches; ++i)
 	{
 		int x = i % resolution;
 		int y = i / resolution;
 
-		if (y != 0) 
+		if (y != 0)
 		{
 			positions.push_back(vertices[i]);
-			positions.push_back(vertices[(x + 1) % resolution + y*resolution]);
+			positions.push_back(vertices[(x + 1) % resolution + y * resolution]);
 			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution]);
 
 			normals.push_back(vertices[i]);
-			normals.push_back(vertices[(x + 1) % resolution + y*resolution]);
+			normals.push_back(vertices[(x + 1) % resolution + y * resolution]);
 			normals.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution]);
 		}
-		
-		if (y != resolution - 1) 
+
+		if (y != resolution - 1)
 		{
 			positions.push_back(vertices[i]);
 			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution]);
@@ -311,7 +311,7 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 //TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
-	
+
 	if (!has_changed) {
 		return;
 	}
@@ -335,7 +335,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
 	//std::cout << voxel_scale.z << std::endl; 
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
-	
+
 	if (!first_load)
 	{
 		// Adjust offset values so Cloud is within Selector object
@@ -422,9 +422,9 @@ void DicomPointCloudObject::SetMasterAppendPose(glm::mat4 _in)
 
 BranchPoint* DicomPointCloudObject::GetBranchPointByID(int _id)  // TODO: switch to id to pointer map
 {
-	for (int i = 0; i < branch_points.size(); ++i) 
+	for (int i = 0; i < branch_points.size(); ++i)
 	{
-		if (branch_points[i]->id == _id) 
+		if (branch_points[i]->id == _id)
 		{
 			return branch_points[i];
 		}

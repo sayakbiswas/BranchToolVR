@@ -15,7 +15,7 @@
 #include "Curve.h"
 
 struct IsovaluePointCloudSlider;
-struct BranchPoint 
+struct BranchPoint
 {
 	glm::vec3 position;
 	int id;
@@ -37,9 +37,9 @@ struct BranchPoint
 		is_selected = false;
 	}
 
-	glm::vec4 getColor() 
+	glm::vec4 getColor()
 	{
-		if (is_selected) 
+		if (is_selected)
 		{
 			return Constants::SELECTED_BRANCH_POINT_COLOR;
 		}
@@ -49,47 +49,47 @@ struct BranchPoint
 
 class DicomPointCloudObject : public AbstractBaseObject
 {
-	public:
-		DicomPointCloudObject();
-		~DicomPointCloudObject();
-		//void Generate(DicomSet & _ds, int isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
-		void Generate(DicomSet & _ds, int isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
-		void SetMasterAppendPose(glm::mat4 _in);
-		void Clear();
-		int Type();	
-		const GLuint GetNumInstances() { return num_instances; }
-		BranchPoint* GetBranchPointByID(int id);	
-		void MarkForRegeneration();
-		bool first_load;	
+public:
+	DicomPointCloudObject();
+	~DicomPointCloudObject();
+	//void Generate(DicomSet & _ds, int isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
+	void Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
+	void SetMasterAppendPose(glm::mat4 _in);
+	void Clear();
+	int Type();
+	const GLuint GetNumInstances() { return num_instances; }
+	BranchPoint* GetBranchPointByID(int id);
+	void MarkForRegeneration();
+	bool first_load;
 
-		int curr_tolerance;
-		glm::vec3 lower_bounds;
-		glm::vec3 upper_bounds;
-		glm::vec3 voxel_scale;		
-		
-		TextureObject* handle;		
-		ColorObject* branch_point_marker;
-		std::vector<BranchPoint*> branch_points;
-		int current_bp_selection;	
-		std::vector<Curve*> curves;
-		std::vector<glm::vec3> GetInstancedColor();
-		std::vector<glm::vec3> GetInstancedPositions();
+	int curr_tolerance;
+	glm::vec3 lower_bounds;
+	glm::vec3 upper_bounds;
+	glm::vec3 voxel_scale;
 
-	private:		
-		void GenerateCube(glm::vec3 _scale, glm::vec3 _offset);
-		void GenerateSphere(float _scale);	
-		void Load();		
-		bool has_changed; // used to flag if the sliders have changed after each change for regeneration
+	TextureObject* handle;
+	ColorObject* branch_point_marker;
+	std::vector<BranchPoint*> branch_points;
+	int current_bp_selection;
+	std::vector<Curve*> curves;
+	std::vector<glm::vec3> GetInstancedColor();
+	std::vector<glm::vec3> GetInstancedPositions();
 
-		unsigned int num_instances;
-		std::vector<glm::vec3> normals;
-		std::vector<glm::vec3> instanced_positions;
-		std::vector<glm::vec3> instanced_colors;
-		std::vector<GLfloat> instanced_isovalue_differences;
+private:
+	void GenerateCube(glm::vec3 _scale, glm::vec3 _offset);
+	void GenerateSphere(float _scale);
+	void Load();
+	bool has_changed; // used to flag if the sliders have changed after each change for regeneration
 
-		GLuint normals_buffer;
-		GLuint texture_coords_buffer;
-		GLuint instanced_positions_buffer;
-		GLuint instanced_colors_buffer;
-		GLuint instanced_isovalue_differences_buffer;
+	unsigned int num_instances;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec3> instanced_positions;
+	std::vector<glm::vec3> instanced_colors;
+	std::vector<GLfloat> instanced_isovalue_differences;
+
+	GLuint normals_buffer;
+	GLuint texture_coords_buffer;
+	GLuint instanced_positions_buffer;
+	GLuint instanced_colors_buffer;
+	GLuint instanced_isovalue_differences_buffer;
 };
