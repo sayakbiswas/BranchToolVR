@@ -9,7 +9,7 @@ CoarseDicomViewer::CoarseDicomViewer()
 		static_mesh->is_hidden = true;
 	#endif
 	
-	float base_handle_scale = 0.6f;
+	float base_handle_scale = 0.5f;
 	selector = new TextureObject;
 	selector->readObjFromFile(DirectoryInfo::POINT_CLOUD_SELECTOR_MODEL, base_handle_scale, glm::vec3(0.0f));
 	selector->is_selectable = true;

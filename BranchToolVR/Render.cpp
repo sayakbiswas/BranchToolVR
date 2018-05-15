@@ -431,7 +431,7 @@ void Render::LoadTextures()
 	textures[FONT_TEXTURE]->Load("fontGlyph4096");
 	textures[COARSE_VIEWER_SLICE_HANDLE_TEXTURE]->Load("coarseViewerTexture");
 	textures[POINT_CLOUD_FRAME_TEXTURE]->Load("pointCloudFrame");
-	textures[POINT_CLOUD_SELECTOR_TEXTURE]->Load("pointCloudSelector");
+	textures[POINT_CLOUD_SELECTOR_TEXTURE]->Load("pointCloudSelectorCube");
 }
 
 void Render::LoadShaders()
@@ -632,7 +632,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 	glUniform3fv(dicom_point_cloud.uniforms[4], 1, glm::value_ptr(lights[0].position));
 	glUniform3fv(dicom_point_cloud.uniforms[5], 1, glm::value_ptr(lights[1].position));
 	glUniform3fv(dicom_point_cloud.uniforms[6], 1, glm::value_ptr(lights[2].position));
-	//glUniform3fv(dicom_point_cloud.uniforms[12], 1, glm::value_ptr(vr_info.head_position));
+	glUniform3fv(dicom_point_cloud.uniforms[12], 1, glm::value_ptr(vr_info.head_position));
 	glUniform3fv(dicom_point_cloud.uniforms[13], 1, glm::value_ptr(Constants::AMBIENT_LIGHT));
 
 	for (DicomPointCloudObject* & dpco : dicom_point_cloud_objects) 
