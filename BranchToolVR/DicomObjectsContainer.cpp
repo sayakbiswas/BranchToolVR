@@ -4,7 +4,7 @@ ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
 int first = 0;
 int last = 50;
-bool pushed, fslide, lslide, ready, sliderHasChanged, exportButtonPressed;
+bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -561,22 +561,32 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(col.x, col.y, col.z, 1));
 		ImGui::SameLine();
 		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE);
-		ImGui::SameLine(); ShowHelpMarker("right-click color square to change");
-		toleranceHasChanged = ImGui::SliderInt(("Tolerance for : " + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->iso_tolerance, 0, 30);
+
+		ImGui::SameLine(); 
+		ShowHelpMarker("right-click color square to change");
+
+		toleranceHasChanged = ImGui::SliderInt(("Slider " + std::to_string(i) + " tolerance").c_str(), &isovalue_point_cloud_sliders[i]->iso_tolerance, 0, 30);
 		if (sliderHasChanged || toleranceHasChanged) {
 			points->MarkForRegeneration();
 		}
 		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue, isovalue_point_cloud_sliders[i]->iso_tolerance);
+
 		ImGui::SameLine();
 		//ImGui::PopStyleColor(1);
-
-
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0, 0, 0, 1));
-		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(50, 20));
+		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(20, 20));
 		if (pushed) {
 			isovalue_point_cloud_sliders[i]->SetInUse(false);
 		}
+		ImGui::PopStyleColor(1);
 
+		ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
+		decimate = ImGui::Button(("Decimate"));
+		if (decimate) {
+			isovalue_point_cloud_sliders[i]->dec = !isovalue_point_cloud_sliders[i]->dec;
+		}
+		ImGui::SameLine();
+		ShowHelpMarker("Removes excess elements from generated mesh");
 		ImGui::PopStyleColor(1);
 	}
 	ImGui::EndChild();
@@ -588,7 +598,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, Render* _r)
 {
 	RenderUi(_r);
-
 	glm::mat4 curr_pose;
 
 	// Refactor

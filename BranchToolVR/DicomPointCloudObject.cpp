@@ -311,6 +311,7 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 //TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
+	bool decimate = false;
 
 	if (!has_changed) {
 		return;
@@ -354,41 +355,50 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
 
 	std::cout << "last " << last << std::endl;
-	for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
+	/*for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 	{
 		isovalue_point_cloud_sliders[k]->point_size = 0;
-	}
+	}*/
+	glm::vec3 col;
+	short iso_abs_check;
 	for (int i = first; i <= last; i++)
 	{
 		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
 		{
-			glm::vec3 col = glm::vec3(1.0f, 0.0f, 1.0f);
-			short iso_abs_check;
+			col = glm::vec3(1.0f, 0.0f, 1.0f);
 			bool found = false;
 			//int k;
 			for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 			{
+				isovalue_point_cloud_sliders[k]->point_size = 0;
 				int slider_count = 0;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
+					if (isovalue_point_cloud_sliders[k]->dec) decimate = true;
+					glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
 
-					iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-					if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
+					//test if in magnification area
+					if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
+						&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
 					{
-						if (slider_count < k) slider_count = k;
-						col = isovalue_point_cloud_sliders[k]->color;
+							iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+							if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
+							{
+								if (slider_count < k) slider_count = k;
+								col = isovalue_point_cloud_sliders[slider_count]->color;
 
-						glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
-
-						//test if in magnification area
-						if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
-							&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
-						{
-							isovalue_point_cloud_sliders[slider_count]->point_size++;
-							instanced_positions.push_back(instanced_position - lower_bounds);
-							instanced_isovalue_differences.push_back(iso_abs_check);
-							instanced_colors.push_back(col);
-							break;
-						}
+								// extra condition to check if cloud is to be "decimated"
+								// only has effect on slider 0 content and button for some reason
+								//if (!isovalue_point_cloud_sliders[slider_count]->dec) {
+									isovalue_point_cloud_sliders[slider_count]->point_size++;
+									instanced_positions.push_back(instanced_position - lower_bounds);
+									instanced_isovalue_differences.push_back(iso_abs_check);
+									instanced_colors.push_back(col);
+									break;
+								//}
+								/*else {
+									break;
+								}*/
+							}
 					}
 				}
 			}
@@ -409,6 +419,36 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		}
 	}
 
+	if (decimate) {
+		std::vector<glm::vec3> gen = instanced_positions;
+		instanced_positions.clear();
+		instanced_colors.clear();
+		instanced_isovalue_differences.clear();
+		int num_neighbors;
+		for (int i = 0; i < gen.size(); i++) {
+			num_neighbors = 0;
+			float x1 = gen[i].x;
+			float y1 = gen[i].y;
+			float z1 = gen[i].z;
+
+			for (int j = 0; j < gen.size(); j++) {
+				float x2 = gen[j].x;
+				float y2 = gen[j].y;
+				float z2 = gen[j].z;
+				float d = sqrt(pow(x1 + x2, 2) + pow(y1 + y2, 2) + pow(z1 + z2, 2));
+				float h = sqrt( 2*pow(0.00246914, 2) );
+				if (d <= h) num_neighbors++;
+			}
+
+			if (num_neighbors > 9) {
+				instanced_positions.push_back(gen[i]);
+				instanced_colors.push_back(col);
+				instanced_isovalue_differences.push_back(iso_abs_check);
+			}
+		}
+	}
+	//isolated vector out of range error to above if block
+	//std::cout << "test" << std::endl;
 	Load();
 	first_load = true;
 }

@@ -88,7 +88,7 @@ void Render::InitLighting()
 	for (int i = 0; i < num_lights; ++i)
 	{
 		lights[i].marker.is_selectable = true;
-		lights[i].marker.SetDisplayColor(glm::vec4(1.0f, 0.8f, 0.3f, 1.0f));
+		lights[i].marker.SetDisplayColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		AddObjectToScene(&lights[i].marker);
 	}
 

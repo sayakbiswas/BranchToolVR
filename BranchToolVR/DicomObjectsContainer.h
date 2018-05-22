@@ -24,6 +24,7 @@ struct IsovaluePointCloudSlider
 	int iso_tolerance = DEFAULT_ISOVALUE_TOLERANCE;
 	static float min_isovalue;
 	static float max_isovalue;
+	bool dec = false;
 	glm::vec3 color;
 
 	IsovaluePointCloudSlider(int _isovalue) : curr_isovalue(_isovalue), id(id_counter++)
