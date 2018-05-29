@@ -44,10 +44,11 @@ void DicomPointCloudObject::Load()
 {
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
-
+	//std::cout << instanced_positions.size() << "\t" << num_instances << std::endl;
 	// Finds center z value for current cloud to align with global z axis
 	float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
 	// Orients point cloud according to that of the CT scan representation
+	//std::cout << "test load 1" << std::endl;
 	for (int i = 0; i < num_instances; i++) {
 		instanced_positions.at(i).y = -instanced_positions.at(i).y;
 		instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
@@ -55,7 +56,7 @@ void DicomPointCloudObject::Load()
 		instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
 		instanced_positions.at(i).z -= center_z;
 	}
-
+	//std::cout << "test load 2" << std::endl;
 	if (!first_load)
 	{
 		glGenVertexArrays(1, &vao);
@@ -332,15 +333,12 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// Voxel z scale for base set: 0.00246914
 	// This changes if loading sets with different distance between slices, causing voxels to elongate
-
-	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
-	//std::cout << voxel_scale.z << std::endl; 
+	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914); 
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 
 	if (!first_load)
 	{
 		// Adjust offset values so Cloud is within Selector object
-		//std::cout << _ds.data.size() / 2 << std::endl;
 		GenerateCube(voxel_scale, glm::vec3(0.0f));
 		// old generate sphere for picking points
 		//GenerateSphere(voxel_scale.x);
@@ -365,7 +363,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	{
 		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
 		{
-			col = glm::vec3(1.0f, 0.0f, 1.0f);
+			col = glm::vec3(0.19f, 0.56f, 0.0f);
 			bool found = false;
 			//int k;
 			for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
@@ -373,7 +371,9 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 				isovalue_point_cloud_sliders[k]->point_size = 0;
 				int slider_count = 0;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
-					if (isovalue_point_cloud_sliders[k]->dec) decimate = true;
+					if (isovalue_point_cloud_sliders[k]->dec) {
+						decimate = true;
+					}
 					glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
 
 					//test if in magnification area
@@ -402,20 +402,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 					}
 				}
 			}
-
-			//if (found)
-			//{
-			//	glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
-			//	//test if in magnification area
-			//	if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
-			//		&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
-			//	{
-			//		isovalue_point_cloud_sliders[slider_count]->point_size++;
-			//		instanced_positions.push_back(instanced_position - lower_bounds);
-			//		instanced_isovalue_differences.push_back(iso_abs_check);
-			//		instanced_colors.push_back(col);
-			//	}
-			//}
 		}
 	}
 
@@ -425,30 +411,40 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		instanced_colors.clear();
 		instanced_isovalue_differences.clear();
 		int num_neighbors;
+		double d;
+		double s = 2 * 0.00246914;
+		//double max = 0, min = 1;
+		//std::cout << "test start" << std::endl;
 		for (int i = 0; i < gen.size(); i++) {
 			num_neighbors = 0;
-			float x1 = gen[i].x;
-			float y1 = gen[i].y;
-			float z1 = gen[i].z;
-
+			float x1, x2, y1, y2, z1, z2;
 			for (int j = 0; j < gen.size(); j++) {
-				float x2 = gen[j].x;
-				float y2 = gen[j].y;
-				float z2 = gen[j].z;
-				float d = sqrt(pow(x1 + x2, 2) + pow(y1 + y2, 2) + pow(z1 + z2, 2));
-				float h = sqrt( 2*pow(0.00246914, 2) );
-				if (d <= h) num_neighbors++;
+				if (i == j) continue;
+				/*int k = (i > 0) ? (i - 1) : 0;
+				for (k; k < i + 1; k++) {*/
+					x1 = gen[i].x;
+					y1 = gen[i].y;
+					z1 = gen[i].z;
+					x2 = gen[j].x;
+					y2 = gen[j].y;
+					z2 = gen[j].z;
+					if (abs(x1 - x2) > 0.00246914 || abs(y1 - y2) > 0.00246914) continue;
+					if (z2 - z1 > 0.00246914) break;
+					d = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2) + pow(z1 - z2, 2));
+					/*if (d > max) max = d;
+					if (d < min) min = d;*/
+				//}
+				if (d < s) num_neighbors++;
 			}
-
-			if (num_neighbors > 9) {
+			if (num_neighbors > 12) {
 				instanced_positions.push_back(gen[i]);
 				instanced_colors.push_back(col);
 				instanced_isovalue_differences.push_back(iso_abs_check);
 			}
 		}
+		//std::cout << min << "\t" << max << std::endl;
 	}
-	//isolated vector out of range error to above if block
-	//std::cout << "test" << std::endl;
+	//std::cout << "test end" << std::endl;
 	Load();
 	first_load = true;
 }
