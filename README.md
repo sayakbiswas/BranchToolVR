@@ -6,6 +6,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Optimization
 - [ ] Control adjustments for improved UX
 - [ ] Coarsify the volumetric hex mesh for SOFA
+	- Notes and basis starting on line 408 in DicomPointCloudObject.cpp
 - [ ] Convert the bezier curves in blender python to thick curves
 - [x] Slider for adjusting isovalue tolerance
 - [x] File dialog for DicomSet selection

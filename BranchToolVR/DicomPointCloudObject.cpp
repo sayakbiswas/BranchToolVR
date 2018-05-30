@@ -350,101 +350,77 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		instanced_colors.clear();
 	}
 
-	// loop through dicom data and add points that are within the current isovalue tolerance, needs optimization
+	// loop through dicom data and add points that are within the current isovalue tolerance, could benefit from optimization
+
+	/*------TODO:-----*/ 
+	// Look back over decimate button to only effect its slider (use X and tolerance slider interfacing as basis)
+	//	- Check method of separation used in export code block (309 in DOC.cpp)
+	// Figure out generation of horizontal strips (may not be a problem per se)
 
 	std::cout << "last " << last << std::endl;
-	/*for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
-	{
-		isovalue_point_cloud_sliders[k]->point_size = 0;
-	}*/
-	glm::vec3 col;
-	short iso_abs_check;
+	glm::vec3 col(0.0f);
 	for (int i = first; i <= last; i++)
 	{
 		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
 		{
-			col = glm::vec3(0.19f, 0.56f, 0.0f);
 			bool found = false;
-			//int k;
 			for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 			{
 				isovalue_point_cloud_sliders[k]->point_size = 0;
 				int slider_count = 0;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
-					if (isovalue_point_cloud_sliders[k]->dec) {
-						decimate = true;
-					}
 					glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
 
 					//test if in magnification area
 					if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
 						&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
 					{
-							iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-							if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
-							{
-								if (slider_count < k) slider_count = k;
-								col = isovalue_point_cloud_sliders[slider_count]->color;
+						if (slider_count < k) slider_count = k;
+						col = isovalue_point_cloud_sliders[slider_count]->color;
+						decimate = isovalue_point_cloud_sliders[k]->dec;
+						short iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+						int tolerance = isovalue_point_cloud_sliders[k]->iso_tolerance;
 
-								// extra condition to check if cloud is to be "decimated"
-								// only has effect on slider 0 content and button for some reason
-								//if (!isovalue_point_cloud_sliders[slider_count]->dec) {
-									isovalue_point_cloud_sliders[slider_count]->point_size++;
-									instanced_positions.push_back(instanced_position - lower_bounds);
-									instanced_isovalue_differences.push_back(iso_abs_check);
-									instanced_colors.push_back(col);
-									break;
-								//}
-								/*else {
-									break;
-								}*/
+						if (decimate) {
+							int num_neighbors = 0;
+							int slice = (i > 0) ? (i - 1) : 0;
+							int slice_bound = (i < last) ? (i + 1) : last;
+							int val = (j > 0) ? (j - tolerance) : 0;
+							int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance+1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
+							double dist;
+							double dist_bound = 2 * 0.00246914;
+							for (slice; slice < slice_bound; slice++) {
+								for (val; val < val_bound; val++) {
+									iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+									if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance) num_neighbors++;
+								}
 							}
+							if (num_neighbors > 9) {
+								isovalue_point_cloud_sliders[slider_count]->point_size++;
+								instanced_positions.push_back(instanced_position - lower_bounds);
+								instanced_isovalue_differences.push_back(iso_abs_check);
+								instanced_colors.push_back(col);
+							}
+							break;
+						}
+
+						else if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
+						{
+							//decimate = isovalue_point_cloud_sliders[slider_count]->dec;
+							// idea: if (decimate) check tolerance against points around in addition to (instead of? if so, above iso check block) current
+								
+							isovalue_point_cloud_sliders[slider_count]->point_size++;
+							instanced_positions.push_back(instanced_position - lower_bounds);
+							instanced_isovalue_differences.push_back(iso_abs_check);
+							instanced_colors.push_back(col);
+							break;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	if (decimate) {
-		std::vector<glm::vec3> gen = instanced_positions;
-		instanced_positions.clear();
-		instanced_colors.clear();
-		instanced_isovalue_differences.clear();
-		int num_neighbors;
-		double d;
-		double s = 2 * 0.00246914;
-		//double max = 0, min = 1;
-		//std::cout << "test start" << std::endl;
-		for (int i = 0; i < gen.size(); i++) {
-			num_neighbors = 0;
-			float x1, x2, y1, y2, z1, z2;
-			for (int j = 0; j < gen.size(); j++) {
-				if (i == j) continue;
-				/*int k = (i > 0) ? (i - 1) : 0;
-				for (k; k < i + 1; k++) {*/
-					x1 = gen[i].x;
-					y1 = gen[i].y;
-					z1 = gen[i].z;
-					x2 = gen[j].x;
-					y2 = gen[j].y;
-					z2 = gen[j].z;
-					if (abs(x1 - x2) > 0.00246914 || abs(y1 - y2) > 0.00246914) continue;
-					if (z2 - z1 > 0.00246914) break;
-					d = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2) + pow(z1 - z2, 2));
-					/*if (d > max) max = d;
-					if (d < min) min = d;*/
-				//}
-				if (d < s) num_neighbors++;
-			}
-			if (num_neighbors > 12) {
-				instanced_positions.push_back(gen[i]);
-				instanced_colors.push_back(col);
-				instanced_isovalue_differences.push_back(iso_abs_check);
-			}
-		}
-		//std::cout << min << "\t" << max << std::endl;
-	}
-	//std::cout << "test end" << std::endl;
 	Load();
 	first_load = true;
 }
