@@ -354,8 +354,8 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	/*------TODO:-----*/ 
 	// Look back over decimate button to only effect its slider (use X and tolerance slider interfacing as basis)
-	//	- Check method of separation used in export code block (309 in DOC.cpp)
-	// Figure out generation of horizontal strips (may not be a problem per se)
+	//	- Check method of separation used in export code block (309 in DOC.cpp) for separation by color?
+	// Figure out cause for generation of horizontal strips of points when decimated (may not be a problem per se)
 
 	std::cout << "last " << last << std::endl;
 	glm::vec3 col(0.0f);
@@ -405,10 +405,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 						}
 
 						else if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
-						{
-							//decimate = isovalue_point_cloud_sliders[slider_count]->dec;
-							// idea: if (decimate) check tolerance against points around in addition to (instead of? if so, above iso check block) current
-								
+						{								
 							isovalue_point_cloud_sliders[slider_count]->point_size++;
 							instanced_positions.push_back(instanced_position - lower_bounds);
 							instanced_isovalue_differences.push_back(iso_abs_check);
