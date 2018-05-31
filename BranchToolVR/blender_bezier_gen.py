@@ -13,7 +13,7 @@ curves = []
 countCurve = 0
 
 # read data from file
-with open('D:\Sayak\BranchToolVR\BranchToolVR\curves.dat', 'r') as f:
+with open('C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/curves.dat', 'r') as f:
 	coords = []
 	for line in f:
 		if line.startswith('###'):

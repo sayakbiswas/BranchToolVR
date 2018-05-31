@@ -553,8 +553,10 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		{
 			ImGui::Text("Edit color");
 			ImGui::ColorEdit3("##edit" + i, (float*)&color);
-			if (ImGui::Button("Close"))
+			if (ImGui::Button("Close")) {
 				ImGui::CloseCurrentPopup();
+				points->MarkForRegeneration();
+			}
 			ImGui::EndPopup();
 			isovalue_point_cloud_sliders[i]->SetColor(glm::vec3(color.x, color.y, color.z));
 		}
@@ -577,6 +579,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(20, 20));
 		if (pushed) {
 			isovalue_point_cloud_sliders[i]->SetInUse(false);
+			points->MarkForRegeneration();
 		}
 		ImGui::PopStyleColor(1);
 
@@ -584,6 +587,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		decimate = ImGui::Button(("Decimate##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str());
 		if (decimate) {
 			isovalue_point_cloud_sliders[i]->ToggleDec();
+			points->MarkForRegeneration();
 		}
 		ImGui::SameLine();
 		ShowHelpMarker("Removes excess elements from generated mesh");

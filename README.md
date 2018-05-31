@@ -4,10 +4,11 @@ A tool designed to map vascular systems present in medical images in virtual rea
 
 ## TODO list:
 - [ ] Optimization
+- [ ] Testing
 - [ ] Control adjustments for improved UX
+- [ ] Convert the bezier curves in blender python to thick curves
 - [x] Coarsify the volumetric hex mesh for SOFA
 	- Working but somewhat odd behavior, look into horizontal strip effect
-- [ ] Convert the bezier curves in blender python to thick curves
 - [x] Slider for adjusting isovalue tolerance
 - [x] File dialog for DicomSet selection
 - [x] Auto detect sensible windowing values
