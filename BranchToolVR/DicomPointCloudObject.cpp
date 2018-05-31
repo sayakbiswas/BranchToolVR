@@ -44,99 +44,100 @@ void DicomPointCloudObject::Load()
 {
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
-	//std::cout << instanced_positions.size() << "\t" << num_instances << std::endl;
-	// Finds center z value for current cloud to align with global z axis
-	float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
-	// Orients point cloud according to that of the CT scan representation
-	//std::cout << "test load 1" << std::endl;
-	for (int i = 0; i < num_instances; i++) {
-		instanced_positions.at(i).y = -instanced_positions.at(i).y;
-		instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
-		instanced_positions.at(i).x = -instanced_positions.at(i).x;
-		instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
-		instanced_positions.at(i).z -= center_z;
-	}
-	//std::cout << "test load 2" << std::endl;
-	if (!first_load)
-	{
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-
-		glGenBuffers(1, &positions_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, positions_buffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*positions.size(), &positions[0], GL_STATIC_DRAW);
-
-		glGenBuffers(1, &normals_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*normals.size(), &normals[0], GL_STATIC_DRAW);
-
-		glGenBuffers(1, &instanced_positions_buffer);
-		glGenBuffers(1, &instanced_colors_buffer);
-		glGenBuffers(1, &instanced_isovalue_differences_buffer);
-
-		if (instanced_positions.size() > 0)
+	// Added statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
+	if (num_instances != 0) {
+		// Finds center z value for current cloud to align with global z axis
+		float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
+		// Orients point cloud according to that of the CT scan representation
+		for (int i = 0; i < num_instances; i++) {
+			instanced_positions.at(i).y = -instanced_positions.at(i).y;
+			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
+			instanced_positions.at(i).x = -instanced_positions.at(i).x;
+			instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
+			instanced_positions.at(i).z -= center_z;
+		}
+		//std::cout << "test load 2" << std::endl;
+		if (!first_load)
 		{
+			glGenVertexArrays(1, &vao);
+			glBindVertexArray(vao);
+
+			glGenBuffers(1, &positions_buffer);
+			glBindBuffer(GL_ARRAY_BUFFER, positions_buffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*positions.size(), &positions[0], GL_STATIC_DRAW);
+
+			glGenBuffers(1, &normals_buffer);
+			glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*normals.size(), &normals[0], GL_STATIC_DRAW);
+
+			glGenBuffers(1, &instanced_positions_buffer);
+			glGenBuffers(1, &instanced_colors_buffer);
+			glGenBuffers(1, &instanced_isovalue_differences_buffer);
+
+			if (instanced_positions.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_positions.size(), &instanced_positions[0], GL_STATIC_DRAW);
+			}
+
+			if (instanced_colors.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
+			}
+
+			if (instanced_isovalue_differences.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*instanced_isovalue_differences.size(), &instanced_isovalue_differences[0], GL_STATIC_DRAW);
+			}
+
+			glEnableVertexAttribArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, positions_buffer);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+			glEnableVertexAttribArray(1);
+			glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+			glEnableVertexAttribArray(2);
 			glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_positions.size(), &instanced_positions[0], GL_STATIC_DRAW);
-		}
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		if (instanced_colors.size() > 0)
-		{
+			glEnableVertexAttribArray(3);
 			glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
-		}
+			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		if (instanced_isovalue_differences.size() > 0)
-		{
+			glEnableVertexAttribArray(4);
 			glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*instanced_isovalue_differences.size(), &instanced_isovalue_differences[0], GL_STATIC_DRAW);
+			glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+			glBindVertexArray(0);
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+			glDisableVertexAttribArray(2);
+			glDisableVertexAttribArray(3);
+			glDisableVertexAttribArray(4);
 		}
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, positions_buffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(3);
-		glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(4);
-		glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
-		glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glBindVertexArray(0);
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-		glDisableVertexAttribArray(3);
-		glDisableVertexAttribArray(4);
-	}
-	else
-	{
-		if (instanced_positions.size() > 0)
+		else
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_positions.size(), &instanced_positions[0], GL_STATIC_DRAW);
-		}
+			if (instanced_positions.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_positions_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_positions.size(), &instanced_positions[0], GL_STATIC_DRAW);
+			}
 
-		if (instanced_colors.size() > 0)
-		{
-			glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
-		}
+			if (instanced_colors.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
+			}
 
-		if (instanced_isovalue_differences.size() > 0)
-		{
-			glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*instanced_isovalue_differences.size(), &instanced_isovalue_differences[0], GL_STATIC_DRAW);
+			if (instanced_isovalue_differences.size() > 0)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*instanced_isovalue_differences.size(), &instanced_isovalue_differences[0], GL_STATIC_DRAW);
+			}
 		}
 	}
 }
@@ -312,8 +313,6 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 //TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
-	bool decimate = false;
-
 	if (!has_changed) {
 		return;
 	}
@@ -358,7 +357,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	// Figure out cause for generation of horizontal strips of points when decimated (may not be a problem per se)
 
 	std::cout << "last " << last << std::endl;
-	glm::vec3 col(0.0f);
+	glm::vec3 col(1.0f);
 	for (int i = first; i <= last; i++)
 	{
 		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
@@ -368,8 +367,10 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			{
 				isovalue_point_cloud_sliders[k]->point_size = 0;
 				int slider_count = 0;
+				//bool decimate = false;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
 					glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
+					//decimate = isovalue_point_cloud_sliders[k]->dec;
 
 					//test if in magnification area
 					if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
@@ -377,22 +378,19 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 					{
 						if (slider_count < k) slider_count = k;
 						col = isovalue_point_cloud_sliders[slider_count]->color;
-						decimate = isovalue_point_cloud_sliders[k]->dec;
 						short iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
 						int tolerance = isovalue_point_cloud_sliders[k]->iso_tolerance;
 
-						if (decimate) {
+						if (isovalue_point_cloud_sliders[slider_count]->dec) {
 							int num_neighbors = 0;
 							int slice = (i > 0) ? (i - 1) : 0;
 							int slice_bound = (i < last) ? (i + 1) : last;
 							int val = (j > 0) ? (j - tolerance) : 0;
 							int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance+1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
-							double dist;
-							double dist_bound = 2 * 0.00246914;
 							for (slice; slice < slice_bound; slice++) {
 								for (val; val < val_bound; val++) {
 									iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-									if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance) num_neighbors++;
+									if (iso_abs_check <= tolerance) num_neighbors++;
 								}
 							}
 							if (num_neighbors > 9) {
@@ -401,16 +399,17 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
 							}
-							break;
+							//break;
 						}
 
-						else if (iso_abs_check <= isovalue_point_cloud_sliders[k]->iso_tolerance)
-						{								
+						// iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+						else if (iso_abs_check <= tolerance)
+						{
 							isovalue_point_cloud_sliders[slider_count]->point_size++;
 							instanced_positions.push_back(instanced_position - lower_bounds);
 							instanced_isovalue_differences.push_back(iso_abs_check);
 							instanced_colors.push_back(col);
-							break;
+							//break;
 						}
 					}
 				}

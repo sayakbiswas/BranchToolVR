@@ -5,8 +5,8 @@ A tool designed to map vascular systems present in medical images in virtual rea
 ## TODO list:
 - [ ] Optimization
 - [ ] Control adjustments for improved UX
-- [ ] Coarsify the volumetric hex mesh for SOFA
-	- Working but somewhat odd behavior, look into per-slider basis and horizontal strip effect
+- [x] Coarsify the volumetric hex mesh for SOFA
+	- Working but somewhat odd behavior, look into horizontal strip effect
 - [ ] Convert the bezier curves in blender python to thick curves
 - [x] Slider for adjusting isovalue tolerance
 - [x] File dialog for DicomSet selection

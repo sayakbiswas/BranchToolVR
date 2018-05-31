@@ -581,9 +581,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		ImGui::PopStyleColor(1);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
-		decimate = ImGui::Button(("Decimate"));
+		decimate = ImGui::Button(("Decimate##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str());
 		if (decimate) {
-			isovalue_point_cloud_sliders[i]->dec = !isovalue_point_cloud_sliders[i]->dec;
+			isovalue_point_cloud_sliders[i]->ToggleDec();
 		}
 		ImGui::SameLine();
 		ShowHelpMarker("Removes excess elements from generated mesh");

@@ -37,6 +37,10 @@ struct IsovaluePointCloudSlider
 		Init();
 	}
 
+	void ToggleDec() {
+		dec = !dec;
+	}
+
 	void Init()
 	{
 		this->SetInUse(false);
