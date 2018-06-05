@@ -85,6 +85,8 @@ class DicomObjectsContainer
 		// to member functions
 		void FileMenu();
 		void MainMenuBar();
+		int first = 0;
+		int last = 50;
 
 	private:
 		void UpdateDicomPointCloud(int _isovalue);

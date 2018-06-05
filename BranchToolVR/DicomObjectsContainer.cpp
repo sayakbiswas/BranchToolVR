@@ -2,8 +2,6 @@
 
 ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
-int first = 0;
-int last = 50;
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 std::string folder = "";
 
@@ -165,20 +163,20 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	//ImTextureID tex_id = viewer->orthoslice_texture->id;
 
 	// Isovalue Magnifier
-	/*if (ImGui::IsItemHovered())
-	{
-		//enlarged view for isovalue selection
-		ImGui::BeginTooltip();
-		float focus_sz = 32.0f;
-		float focus_x = ImGui::GetMousePos().x - tex_screen_pos.x - focus_sz * 0.5f; if (focus_x < 0.0f) focus_x = 0.0f; else if (focus_x > tex_w - focus_sz) focus_x = tex_w - focus_sz;
-		float focus_y = ImGui::GetMousePos().y - tex_screen_pos.y - focus_sz * 0.5f; if (focus_y < 0.0f) focus_y = 0.0f; else if (focus_y > tex_h - focus_sz) focus_y = tex_h - focus_sz;
-		//ImGui::Text("Min: (%.2f, %.2f)", focus_x, focus_y);
-		//ImGui::Text("Max: (%.2f, %.2f)", focus_x + focus_sz, focus_y + focus_sz);
-		ImVec2 uv0 = ImVec2((focus_x) / tex_w, (focus_y) / tex_h);
-		ImVec2 uv1 = ImVec2((focus_x + focus_sz) / tex_w, (focus_y + focus_sz) / tex_h);
-		ImGui::Image((void*)7, ImVec2(128, 128), uv0, uv1);
-		ImGui::EndTooltip();
-	}*/
+	//if (ImGui::IsItemHovered())
+	//{
+	//	//enlarged view for isovalue selection
+	//	ImGui::BeginTooltip();
+	//	float focus_sz = 32.0f;
+	//	float focus_x = ImGui::GetMousePos().x - tex_screen_pos.x - focus_sz * 0.5f; if (focus_x < 0.0f) focus_x = 0.0f; else if (focus_x > tex_w - focus_sz) focus_x = tex_w - focus_sz;
+	//	float focus_y = ImGui::GetMousePos().y - tex_screen_pos.y - focus_sz * 0.5f; if (focus_y < 0.0f) focus_y = 0.0f; else if (focus_y > tex_h - focus_sz) focus_y = tex_h - focus_sz;
+	//	//ImGui::Text("Min: (%.2f, %.2f)", focus_x, focus_y);
+	//	//ImGui::Text("Max: (%.2f, %.2f)", focus_x + focus_sz, focus_y + focus_sz);
+	//	ImVec2 uv0 = ImVec2((focus_x) / tex_w, (focus_y) / tex_h);
+	//	ImVec2 uv1 = ImVec2((focus_x + focus_sz) / tex_w, (focus_y + focus_sz) / tex_h);
+	//	ImGui::Image((void*)7, ImVec2(128, 128), uv0, uv1);
+	//	ImGui::EndTooltip();
+	//}
 	if (ImGui::IsItemClicked(0)) { //select isovalue
 		ImVec2 mousePos = ImGui::GetMousePos();
 		ImVec2 imageCorner = ImGui::GetItemRectMin();
@@ -196,6 +194,8 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		points->Generate(imaging_data, imaging_data.isovalue, 30, first, last, isovalue_point_cloud_sliders);
 		//std::cout << (imaging_data.isovalue) << std::endl;
 		//std::cout << " You clicked the thing pt1! ";
+		IsovaluePointCloudSlider::min_isovalue = imaging_data.isovalue - 300;
+		IsovaluePointCloudSlider::max_isovalue = imaging_data.isovalue + 300;
 	}
 
 
@@ -226,6 +226,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			adding_selec = selec_prev = false;
 	}
 	if (ImGui::IsItemHovered()) {
+		float x = mousePos.x - imageCorner.x;
+		float y = mousePos.y - imageCorner.y;
+		ImGui::Text("Value: (%i)", imaging_data.data[imaging_data.current_index].isovalues.at(imaging_data.data[imaging_data.current_index].width * y + x));
 		//std::cout << "hover" << std::endl;
 		if (!adding_selec && ImGui::IsMouseClicked(1)) {
 			corners.push_back(local_pos);
@@ -562,7 +565,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		}
 		//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(col.x, col.y, col.z, 1));
 		ImGui::SameLine();
-		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE);
+		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, IsovaluePointCloudSlider::min_isovalue, IsovaluePointCloudSlider::max_isovalue);
 
 		ImGui::SameLine(); 
 		ShowHelpMarker("right-click color square to change");
@@ -622,96 +625,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	static bool once = true;
 	static glm::vec3 offset;
 
-	// Refactor
-	/*if (viewer->point_cloud_selector->is_selected)
-	{
-		if (viewer->point_cloud_selector->is_double_selected)
-		{
-			// TODO: fix position jump when secondary controller becomes primary
-			float start_interesection_ray_len = glm::length(viewer->point_cloud_selector->cache.primary_to_secondary_collision_point_initial);
-			float curr_intersection_ray_len = glm::length(viewer->point_cloud_selector->cache.primary_to_secondary_collision_point_current);
-			float intersection_ray_ratio = last / first;// curr_intersection_ray_len / start_interesection_ray_len;
-
-			viewer->point_cloud_selector->SetScale(intersection_ray_ratio * viewer->point_cloud_selector->cache.initial_scale);
-			viewer->point_cloud_selector_scale = viewer->point_cloud_selector->GetScale();
-			once = true;
-		}
-		else
-		{
-			glm::vec3 pointer_model_space = glm::vec3(glm::inverse(viewer->base_handle->GetModelMatrix())
-			* glm::vec4(viewer->point_cloud_selector->cache.primary_collision_point_world_current, 1.0f));
-
-			if (once)
-			{
-				offset = viewer->point_cloud_selector->GetModelPosition() - pointer_model_space;
-				once = false;
-			}
-
-			viewer->point_cloud_selector->SetModelPosition(pointer_model_space + offset);
-		}
-	}
-	else
-	{
-		if (!once)
-		{
-			// point cloud selector was moved and released
-			//viewer->selector_lower_bounds = viewer->point_cloud_selector->GetModelPosition() - glm::vec3(0.5f*viewer->point_cloud_selector_scale);
-			//viewer->selector_upper_bounds = viewer->point_cloud_selector->GetModelPosition() + glm::vec3(0.5f*viewer->point_cloud_selector_scale);
-			//viewer->selector_lower_bounds = glm::vec3(first);
-			//viewer->selector_upper_bounds = glm::vec3(last);
-			//points->lower_bounds = viewer->selector_lower_bounds;
-			//points->upper_bounds = viewer->selector_upper_bounds;
-			points->curr_tolerance = 10;
-			points->Generate(imaging_data, imaging_data.isovalue, 10, first, last, isovalue_point_cloud_sliders);
-		}
-
-		once = true;
-	}*/
-
-	// TODO: round down model position to nearest slice
-	// Refactor
-	/*if (viewer->orthoslice_handle->is_selected)
-	{
-		glm::vec4 colp_to_model_space = glm::inverse(viewer->base_handle->GetModelMatrix()) * glm::vec4(viewer->orthoslice_handle->cache.primary_collision_point_world_current, 1.0f);
-		colp_to_model_space.z = glm::clamp(colp_to_model_space.z, 0.0f, imaging_data.scale.z);
-
-		imaging_data.current_index = (float)(imaging_data.data.size() - 1) * (colp_to_model_space.z / imaging_data.scale.z);
-		viewer->orthoslice_texture->Load(imaging_data.data[imaging_data.current_index], imaging_data.window_width, imaging_data.window_center);
-
-		viewer->orthoslice_handle->SetModelPositionZ(colp_to_model_space.z);
-		viewer->orthoslice->SetModelPositionZ(colp_to_model_space.z);
-		//std::cout << std::endl << "modelZ: " << (colp_to_model_space.z) << "  , imageScaleZ: " << (imaging_data.scale.z) << "  , index: " << (imaging_data.current_index) << std::endl;
-	}*/
-
-	/*if (points->handle->is_double_selected)
-	{
-		curr_pose = points->handle->GetDoubleSelectionTransform();
-		points->SetMasterAppendPose(curr_pose);
-	}
-	else if (points->handle->is_selected)
-	{
-		curr_pose = points->handle->cache.controller_pose_updated * points->handle->cache.to_controller_space_initial;
-		points->SetMasterAppendPose(curr_pose);
-	}*/
-
-	// Refactor
-	/*if (viewer->orthoslice->WasClicked())
-	{
-		glm::vec4 colp_to_model_space = glm::inverse(viewer->base_handle->GetModelMatrix()) * glm::vec4(viewer->orthoslice->cache.primary_collision_point_world_current, 1.0f);
-
-		// should be 1by1 in model space
-		colp_to_model_space.x = glm::clamp(colp_to_model_space.x, 0.0f, imaging_data.scale.x);
-		colp_to_model_space.y = glm::clamp(colp_to_model_space.y, 0.0f, imaging_data.scale.y);
-
-		int index_x = (float)imaging_data.data[imaging_data.current_index].width * colp_to_model_space.x;
-		int index_y = (float)imaging_data.data[imaging_data.current_index].height * colp_to_model_space.y;
-		imaging_data.isovalue = imaging_data.data[imaging_data.current_index].isovalues.at(imaging_data.data[imaging_data.current_index].width * index_y + index_x);
-
-		AddIsovaluePointCloudSlider(imaging_data.isovalue);
-		points->MarkForRegeneration();
-	}*/
-
-
 	// only does work if needed
 	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, 1, 50, isovalue_point_cloud_sliders);
 
@@ -735,8 +648,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// test if controller is close to old branch point
 	if (_vr.controller1.trigger_first_press)
 	{
-		// find  the closest branch point		
-
+		// find  the closest branch point
 		int closest_index = -1;
 		float curr_min = -1.0f;
 		bool found = false;
@@ -781,12 +693,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 					tmp = glm::vec4(arg1, 1.0f);
 					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
 					controller_pos_in_point_space = modelPoints * tmp;
-
-					// Throwing Read Access Violation that Traces to <vector>. My guess is it doesn't like the inverse part
-					//controller_pos_in_point_space = glm::inverse(points->GetModelMatrix()) * glm::vec4(arg1, 1.0f);
-
-					// This old version of tmp is effectively multiplying 1 times glm::vec4(arg1, 1.0f): A * A^-1 = I; I*B = B
-					// tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix()) * glm::vec4(arg1, 1.0f);
 				}
 				else
 				{
@@ -826,7 +732,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	{
 		std::vector<BranchPoint*> pointsToFit;
 		BranchPoint* prevBranchPoint = points->branch_points[0];
-		//std::cout << "branch points to fit" << std::endl;
 		for (int i = 1; i < points->branch_points.size(); i++) //TODO: For each click, duplicate branch points keep getting added, probably a bug in SpoofInput?!
 		{
 			if (glm::notEqual(points->branch_points[i]->position, prevBranchPoint->position).b)
