@@ -1,11 +1,11 @@
 import bpy
 import numpy as np
 import os
-from .io_msh import recalc_outer_surface
+
 
 os.system('cls')
 
-filepath = "D:\Sayak\BranchToolVR\BranchToolVR\hexmesh.obj"
+filepath = "C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/hexmesh0.obj"
 
 '''
 # import OBJ file
@@ -18,6 +18,18 @@ scn.objects.active = hexmesh_object
 hexmesh_object.select = True
 '''
 
+def recalc_outer_surface(M):
+  print('recalculating outer surface')
+  triFaceSet = set()
+  for t in M.tetrahedra:
+    for l in tet_faces:
+      f = encodeTriFacet(t.vertices[l[0]],t.vertices[l[1]],t.vertices[l[2]])
+      rf = encodeTriFacet(t.vertices[l[0]],t.vertices[l[2]],t.vertices[l[1]])
+      if rf in triFaceSet:
+        triFaceSet.remove(rf)
+      else:
+        triFaceSet.add(f)
+        
 # read data from file
 mesh_vertices = []
 with open(filepath, 'r') as f:

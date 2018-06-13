@@ -351,26 +351,26 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// loop through dicom data and add points that are within the current isovalue tolerance, could benefit from optimization
 
-	/*------TODO:-----*/ 
-	// Look back over decimate button to only effect its slider (use X and tolerance slider interfacing as basis)
-	//	- Check method of separation used in export code block (309 in DOC.cpp) for separation by color?
+	/*------TODO:-----*/
+	// Look into cause for changing values when decimate is toggled after importing DICOM set 
+	// - Apparently alters/resets first and last values; maybe isovalues
+	// - Workaround is to shift variables in interface until cloud comes back
 	// Figure out cause for generation of horizontal strips of points when decimated (may not be a problem per se)
 
 	std::cout << "last " << last << std::endl;
 	glm::vec3 col(1.0f);
-	for (int i = first; i <= last; i++)
+
+	// Moved this stuff around for ply output correction and speed
+	for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
 	{
-		for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
+		isovalue_point_cloud_sliders[k]->point_size = 0;
+		for (int i = first; i <= last; i++)
 		{
-			bool found = false;
-			for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)
+			for (int j = 0; j < _ds.data[i].isovalues.size(); ++j)
 			{
-				isovalue_point_cloud_sliders[k]->point_size = 0;
 				int slider_count = 0;
-				//bool decimate = false;
 				if (isovalue_point_cloud_sliders[k]->in_use) {
 					glm::vec3 instanced_position = glm::vec3((float)(j % _ds.data[0].width), float(j / _ds.data[0].width), (float)i) * voxel_scale;
-					//decimate = isovalue_point_cloud_sliders[k]->dec;
 
 					//test if in magnification area
 					if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
@@ -399,17 +399,13 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
 							}
-							//break;
-						}
-
-						// iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+						} 
 						else if (iso_abs_check <= tolerance)
 						{
 							isovalue_point_cloud_sliders[slider_count]->point_size++;
 							instanced_positions.push_back(instanced_position - lower_bounds);
 							instanced_isovalue_differences.push_back(iso_abs_check);
 							instanced_colors.push_back(col);
-							//break;
 						}
 					}
 				}

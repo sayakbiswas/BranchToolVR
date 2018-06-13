@@ -199,7 +199,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	}
 
 
-	// ========== draw magnification square =============
+	// ========== draw bounding rectangle =============
 	ImDrawList* list = ImGui::GetWindowDrawList();
 	ImVec2 mousePos = ImGui::GetMousePos();
 	ImVec2 imageCorner = ImGui::GetItemRectMin();
@@ -226,9 +226,11 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			adding_selec = selec_prev = false;
 	}
 	if (ImGui::IsItemHovered()) {
-		float x = mousePos.x - imageCorner.x;
-		float y = mousePos.y - imageCorner.y;
-		ImGui::Text("Value: (%i)", imaging_data.data[imaging_data.current_index].isovalues.at(imaging_data.data[imaging_data.current_index].width * y + x));
+		// Print exact isovalue at mouse location below set display 
+		float x = (mousePos.x - imageCorner.x);
+		float y = (mousePos.y - imageCorner.y);
+		if (imaging_data.data[imaging_data.current_index].width * y + x < imaging_data.data[imaging_data.current_index].isovalues.size())
+			ImGui::Text("Value: (%i)", imaging_data.data[imaging_data.current_index].isovalues.at(imaging_data.data[imaging_data.current_index].width * y + x));
 		//std::cout << "hover" << std::endl;
 		if (!adding_selec && ImGui::IsMouseClicked(1)) {
 			corners.push_back(local_pos);
