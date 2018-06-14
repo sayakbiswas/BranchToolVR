@@ -6,7 +6,6 @@
 #include "CoarseDicomViewer.h"
 #include "DicomPointCloudObject.h"
 #include "Render.h"
-#include "Ui.h"
 #include "imgui.h"
 #include "imgui_impl_glfw_gl3.h"
 #include "Curve.h"
@@ -81,8 +80,7 @@ class DicomObjectsContainer
 		void AddObjects(Render * _r);
 		void AddIsovaluePointCloudSlider(const int _isovalue);
 		std::vector<IsovaluePointCloudSlider*> isovalue_point_cloud_sliders;
-		// IMPORTANT: Changed from static function outside of .h file
-		// to member functions
+		// IMPORTANT: Changed from static function outside of .h file to member functions
 		void FileMenu();
 		void MainMenuBar();
 		int first = 0;
@@ -112,6 +110,4 @@ class DicomObjectsContainer
 				ImGui::EndTooltip();
 			}
 		}
-		//static void MainMenuBar() {};
-		//static void FileMenu() {};
 };

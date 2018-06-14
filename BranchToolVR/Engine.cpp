@@ -28,7 +28,7 @@ void Engine::InitObjects()
 	ground->GenerateGround();
 	renderer->AddObjectToScene(ground);	
 	
-	// init dicom objects with the startup set, TODO: add in VR folder selection
+	// init dicom objects with the startup set
 	doc = new DicomObjectsContainer;
 	doc->Load(DirectoryInfo::STARTUP_DICOM_SET);
 	doc->AddObjects(renderer);
@@ -121,7 +121,6 @@ void Engine::Loop()
 
 		if ((curr_time - last_frame_time) >= set_elapsed_time)
 		{
-			//std::cout << (double)frame_counter / set_elapsed_time << std::endl;
 			last_frame_time = curr_time;
 			frame_counter = 0;
 		}

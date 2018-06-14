@@ -8,17 +8,10 @@ DicomPointCloudObject::DicomPointCloudObject()
 	// default values
 	is_selectable = true;
 	curr_tolerance = DEFAULT_ISOVALUE_TOLERANCE;
-	first_load = false;
+	has_generated = false;
 	current_bp_selection = -1;
 	lower_bounds = glm::vec3(0.5f, 0.5f, 0.5f);
 	upper_bounds = lower_bounds + glm::vec3(DEFAULT_SELECTOR_SCALE);
-
-	// init objects
-	handle = new TextureObject;
-	handle->is_selectable = true;
-	handle->is_double_selectable = true;
-	handle->readObjFromFile(DirectoryInfo::POINT_CLOUD_HANDLE_MODEL, DEFAULT_POINT_CLOUD_SCALE, 0.5f*glm::vec3(DEFAULT_POINT_CLOUD_SCALE, 0.0f, DEFAULT_POINT_CLOUD_SCALE));
-	handle->texture_level = 3; //TODO: temp set POINT_CLOUD_FRAME_TEXTURE
 
 	branch_point_marker = new ColorObject;
 	branch_point_marker->SetDisplayColor(glm::vec4(1.0f, 0.1f, 0.2f, 1.0f));
@@ -26,7 +19,6 @@ DicomPointCloudObject::DicomPointCloudObject()
 
 DicomPointCloudObject::~DicomPointCloudObject()
 {
-	delete handle;
 	delete branch_point_marker;
 }
 
@@ -44,11 +36,10 @@ void DicomPointCloudObject::Load()
 {
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
-	// Added statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
+	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
-		// Finds center z value for current cloud to align with global z axis
-		float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
 		// Orients point cloud according to that of the CT scan representation
+		float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
 		for (int i = 0; i < num_instances; i++) {
 			instanced_positions.at(i).y = -instanced_positions.at(i).y;
 			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
@@ -56,8 +47,7 @@ void DicomPointCloudObject::Load()
 			instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
 			instanced_positions.at(i).z -= center_z;
 		}
-		//std::cout << "test load 2" << std::endl;
-		if (!first_load)
+		if (!has_generated)
 		{
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);
@@ -310,7 +300,7 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 	Load();
 }
 
-//TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
+// TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
 	if (!has_changed) {
@@ -335,12 +325,10 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914); 
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 
-	if (!first_load)
+	if (!has_generated)
 	{
 		// Adjust offset values so Cloud is within Selector object
 		GenerateCube(voxel_scale, glm::vec3(0.0f));
-		// old generate sphere for picking points
-		//GenerateSphere(voxel_scale.x);
 	}
 	else
 	{
@@ -348,8 +336,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		instanced_isovalue_differences.clear();
 		instanced_colors.clear();
 	}
-
-	// loop through dicom data and add points that are within the current isovalue tolerance, could benefit from optimization
 
 	/*------TODO:-----*/
 	// Look into cause for changing values when decimate is toggled after importing DICOM set 
@@ -414,12 +400,11 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	}
 
 	Load();
-	first_load = true;
+	has_generated = true;
 }
 void DicomPointCloudObject::SetMasterAppendPose(glm::mat4 _in)
 {
 	SetAppendPose(_in);
-	handle->SetAppendPose(_in);
 	branch_point_marker->SetAppendPose(_in);
 
 }

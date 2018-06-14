@@ -68,7 +68,6 @@ bool Texture::Load(DicomSingle & _ds, int window_width, int window_center)
 	height = _ds.height;
 
 	glGenTextures(1, &gl_id);
-	//std::cout << "gl_id " << gl_id << std::endl;
 	glBindTexture(GL_TEXTURE_2D, gl_id);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &tmp[0]);
 

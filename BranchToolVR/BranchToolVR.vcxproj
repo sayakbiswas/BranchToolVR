@@ -226,7 +226,6 @@
     <ClCompile Include="RenderModel.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureObject.cpp" />
-    <ClCompile Include="Ui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractBaseObject.h" />
@@ -254,7 +253,6 @@
     <ClInclude Include="RenderModel.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureObject.h" />
-    <ClInclude Include="Ui.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

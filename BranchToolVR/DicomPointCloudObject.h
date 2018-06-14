@@ -52,7 +52,6 @@ class DicomPointCloudObject : public AbstractBaseObject
 public:
 	DicomPointCloudObject();
 	~DicomPointCloudObject();
-	//void Generate(DicomSet & _ds, int isovalue, int max_tolerance, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
 	void Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders);
 	void SetMasterAppendPose(glm::mat4 _in);
 	void Clear();
@@ -60,7 +59,7 @@ public:
 	const GLuint GetNumInstances() { return num_instances; }
 	BranchPoint* GetBranchPointByID(int id);
 	void MarkForRegeneration();
-	bool first_load;
+	bool has_generated;
 
 	int curr_tolerance;
 	glm::vec3 lower_bounds;
@@ -79,7 +78,7 @@ private:
 	void GenerateCube(glm::vec3 _scale, glm::vec3 _offset);
 	void GenerateSphere(float _scale);
 	void Load();
-	bool has_changed; // used to flag if the sliders have changed after each change for regeneration
+	bool has_changed;
 
 	unsigned int num_instances;
 	std::vector<glm::vec3> normals;

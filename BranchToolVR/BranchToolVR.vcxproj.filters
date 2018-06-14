@@ -288,9 +288,6 @@
     <ClCompile Include="InputHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Libraries\imgui\imgui_demo.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -357,9 +354,6 @@
       <Filter>misc</Filter>
     </ClInclude>
     <ClInclude Include="InputHelpers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\imgui\imgui.h">

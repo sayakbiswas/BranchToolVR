@@ -24,7 +24,6 @@
 #include "MiscFunctions.h"
 #include "InputHelpers.h"
 #include "Constants.h"
-#include "Ui.h"
 #include "Curve.h"
 
 struct Light 
@@ -116,19 +115,15 @@ class Render
 		// glfw reference (must be initialized before constructor)
 		GLFWwindow* window;
 
-		// Textures
 		Texture** textures;
 
-		// Lights
 		static const int num_lights;
 		Light * lights;
 		void UpdateLights();
 
-		// shadows
 		ShadowMap sm;
 		void RenderShadows();
 
-		// shader programs
 		ShaderProgram color;
 		ShaderProgram texture;
 		ShaderProgram line;
@@ -139,7 +134,6 @@ class Render
 		ShaderProgram recieve_shadow_color;
 		ShaderProgram curve;
 		
-		// object containers
 		std::vector<AbstractBaseObject*> all_objects;
 		std::vector<ColorObject*> color_objects;
 		std::vector<TextureObject*> texture_objects;

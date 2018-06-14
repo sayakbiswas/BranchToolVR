@@ -58,8 +58,6 @@ struct VrMotionController
 		//position = glm::vec3(pose[0][3], pose[1][3], pose[2][3]);
 	}
 
-	//  spoof functions used to fake controller input for testing without active HMD:
-
 	void SetPositionSpoof(glm::vec3 _pos) 
 	{
 		position = _pos;

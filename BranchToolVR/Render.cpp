@@ -357,7 +357,7 @@ void Render::RenderShadows()
 
 	for (DicomPointCloudObject*& dpco : dicom_point_cloud_objects) 
 	{
-		if (!dpco->first_load) continue;
+		if (!dpco->has_generated) continue;
 
 		glUniformMatrix4fv(dicom_point_cloud.uniforms[2], 1, GL_FALSE, glm::value_ptr(dpco->GetModelMatrix()));
 		glUniform1i(dicom_point_cloud.uniforms[3], dpco->curr_tolerance);
@@ -637,7 +637,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 
 	for (DicomPointCloudObject* & dpco : dicom_point_cloud_objects) 
 	{
-		if (!dpco->first_load)
+		if (!dpco->has_generated)
 			continue;
 
 		glUniformMatrix4fv(dicom_point_cloud.uniforms[2], 1, GL_FALSE, glm::value_ptr(dpco->GetModelMatrix()));
@@ -1115,7 +1115,6 @@ void Render::UpdateHMDMatrixPose()
 			{
 				SpoofInput(curr_controller_index);
 			}
-		//	else if (glfwGetWindowAttrib())
 		}
 		
 		return;
@@ -1161,11 +1160,9 @@ void Render::UpdateHMDMatrixPose()
 
 		if (m_pHMD->GetControllerState(unTrackedDevice, &state))
 		{
-
-
+			// trigger press
 			if (state.ulButtonPressed == 8589934592)
 			{
-				//std::cout << "trigger pressed" << std::endl;
 				currController.trigger_first_press = !currController.trigger_is_pressed;
 				currController.trigger_is_pressed = true;
 			}
@@ -1175,10 +1172,9 @@ void Render::UpdateHMDMatrixPose()
 				currController.trigger_is_pressed = false;
 			}
 
-
+			// alt press
 			if (state.ulButtonPressed == 4)
 			{
-				//std::cout << "alt pressed" << std::endl;
 				currController.alt_first_press = !currController.alt_is_pressed;
 				currController.alt_is_pressed = true;
 			}
@@ -1190,7 +1186,6 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_ApplicationMenu))
 			{
-				//std::cout << "app menu" << std::endl;
 				currController.appmenu_first_press = !currController.appmenu_is_pressed;
 				currController.appmenu_is_pressed = true;
 			}
@@ -1202,7 +1197,6 @@ void Render::UpdateHMDMatrixPose()
 
 			if (state.ulButtonPressed & vr::ButtonMaskFromId(vr::k_EButton_SteamVR_Touchpad))
 			{
-				//std::cout << "touchpad" << std::endl;
 				currController.touchpad_first_press = !currController.touchpad_is_pressed;
 				currController.touchpad_is_pressed = true;
 			}

@@ -2,7 +2,7 @@
 
 ColorObject::ColorObject()
 {
-	display_color = glm::vec4(0.2f, 0.8f, 0.2f,1.0f);
+	display_color = glm::vec4(0.2f, 0.8f, 0.2f, 1.0f);
 	selected_color_additive = glm::vec4(1.0f);
 	display_color_modifier = 0.0f;
 	selection_modifier = 0.5f;
@@ -81,29 +81,23 @@ void ColorObject::GenerateGround()
 	glm::vec3 scale(10.0f, 0.0f, 10.0f);
 	glm::vec3 _offset = glm::vec3(-5.0f, -0.1f, -5.0f);
 	
-	positions.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
-	positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-	positions.push_back(glm::vec3(0.0f, 0.0f, 1.0f));
+	positions.push_back(glm::vec3(5.0f, -0.1f, -5.0f));
+	positions.push_back(glm::vec3(-5.0f, -0.1f, -5.0f));
+	positions.push_back(glm::vec3(-5.0f, -0.1f, 5.0f));
 	
-	positions.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
-	positions.push_back(glm::vec3(0.0f, 0.0f, 1.0f));
-	positions.push_back(glm::vec3(1.0f, 0.0f, 1.0f));
-	
-	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
-	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
-	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+	positions.push_back(glm::vec3(5.0f, -0.1f, -5.0f));
+	positions.push_back(glm::vec3(-5.0f, -0.1f, 5.0f));
+	positions.push_back(glm::vec3(5.0f, -0.1f, 5.0f));
 	
 	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
 	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
 	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
 	
-	for (unsigned int i = 0; i < positions.size(); ++i) 
-	{
-		positions[i] *= scale;
-		positions[i] += _offset;
-	}
+	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+	normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
 
-	display_color = glm::vec4(0.2f, 0.2f, 0.3f,1.0f);
+	display_color = glm::vec4(0.2f, 0.2f, 0.3f, 0.5f);
 	Finalize();
 }
 
