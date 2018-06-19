@@ -139,7 +139,7 @@ void DicomObjectsContainer::MainMenuBar() {
 
 void DicomObjectsContainer::RenderUi(Render* _r)
 {
-	// ========== Main File Menu Bar ===========
+	// ========== Main Menu Bar ===========
 
 	bool b = true;
 
@@ -155,7 +155,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	float tex_w = (float)viewer->orthoslice_texture->width;
 	float tex_h = (float)viewer->orthoslice_texture->height;
 	ImGui::ImageButton((void*)viewer->orthoslice_texture->GetGlId(), ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
-
+	
 	// Isovalue Magnifier
 	//if (ImGui::IsItemHovered())
 	//{

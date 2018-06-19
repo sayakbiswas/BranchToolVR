@@ -2,6 +2,7 @@
 #include "DicomObjectsContainer.h"
 
 int BranchPoint::id_counter = 0;
+std::vector <float> distinct_z;
 
 DicomPointCloudObject::DicomPointCloudObject()
 {
@@ -38,14 +39,16 @@ void DicomPointCloudObject::Load()
 	num_instances = instanced_positions.size();
 	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
-		// Orients point cloud according to that of the CT scan representation
-		float center_z = (num_instances % 2) ? (instanced_positions.at((num_instances + 1) / 2).z) : (instanced_positions.at((num_instances) / 2).z);
+		// Orients point cloud according to the CT scan representation and z position of center slice
+		float off_z = distinct_z.at(distinct_z.size() / 2);
+		float range_z = abs(distinct_z.at(distinct_z.size() - 1) - distinct_z.at(0));
 		for (int i = 0; i < num_instances; i++) {
-			instanced_positions.at(i).y = -instanced_positions.at(i).y;
-			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
 			instanced_positions.at(i).x = -instanced_positions.at(i).x;
 			instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
-			instanced_positions.at(i).z -= center_z;
+			instanced_positions.at(i).y = -instanced_positions.at(i).y;
+			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
+			instanced_positions.at(i).z -= off_z;
+			//instanced_positions.at(i) *= (1 / range_z);
 		}
 		if (!has_generated)
 		{
@@ -300,7 +303,7 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 	Load();
 }
 
-// TODO: Needs serious overhaul, currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed (...potentially looks like just making independent point clouds per slider...)
+// Currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
 	if (!has_changed) {
@@ -322,7 +325,8 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 
 	// Voxel z scale for base set: 0.00246914
 	// This changes if loading sets with different distance between slices, causing voxels to elongate
-	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914); 
+	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
+	//voxel_scale *= (1 / (0.00246914*(last - first)));
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 
 	if (!has_generated)
@@ -332,9 +336,12 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	}
 	else
 	{
+		// resetti spaghetti
 		instanced_positions.clear();
 		instanced_isovalue_differences.clear();
 		instanced_colors.clear();
+		// Note: needs minor rework since instanced_positions accounts for all values for each slider, one after another, so distinct_z's checking method is not fully distinct
+		distinct_z.clear();
 	}
 
 	/*------TODO:-----*/
@@ -381,6 +388,10 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 							}
 							if (num_neighbors > 9) {
 								isovalue_point_cloud_sliders[slider_count]->point_size++;
+								if (instanced_positions.size() == 0)
+									distinct_z.push_back((instanced_position - lower_bounds).z);
+								else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001)
+									distinct_z.push_back((instanced_position - lower_bounds).z);
 								instanced_positions.push_back(instanced_position - lower_bounds);
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
@@ -389,6 +400,10 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 						else if (iso_abs_check <= tolerance)
 						{
 							isovalue_point_cloud_sliders[slider_count]->point_size++;
+							if (instanced_positions.size() == 0)
+								distinct_z.push_back((instanced_position - lower_bounds).z);
+							else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001)
+								distinct_z.push_back((instanced_position - lower_bounds).z);
 							instanced_positions.push_back(instanced_position - lower_bounds);
 							instanced_isovalue_differences.push_back(iso_abs_check);
 							instanced_colors.push_back(col);
