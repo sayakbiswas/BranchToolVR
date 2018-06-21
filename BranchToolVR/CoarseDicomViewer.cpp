@@ -40,6 +40,7 @@ void CoarseDicomViewer::AddObjects(Render * _r)
 
 void CoarseDicomViewer::Load(DicomSet & _dSet) 
 {
+	std::cout << _dSet.data[0].width << std::endl;
 	static_mesh->GenerateIsosurfaceFromDicomSet(_dSet, _dSet.isovalue);
 	orthoslice_texture->Load(_dSet.data[0], _dSet.window_width, _dSet.window_center);
 	orthoslice->texture_level = CURR_ORTHOSLICE_TEXTURE;

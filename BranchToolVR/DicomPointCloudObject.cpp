@@ -48,7 +48,6 @@ void DicomPointCloudObject::Load()
 			instanced_positions.at(i).y = -instanced_positions.at(i).y;
 			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
 			instanced_positions.at(i).z -= off_z;
-			//instanced_positions.at(i) *= (1 / range_z);
 		}
 		if (!has_generated)
 		{
@@ -303,6 +302,12 @@ void DicomPointCloudObject::GenerateSphere(float _scale)
 	Load();
 }
 
+float distance(glm::vec3 a, glm::vec3 b){
+	float d = sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.z - b.z, 2));
+	//std::cout << d << std::endl;
+	return d;
+}
+
 // Currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
@@ -340,7 +345,6 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		instanced_positions.clear();
 		instanced_isovalue_differences.clear();
 		instanced_colors.clear();
-		// Note: needs minor rework since instanced_positions accounts for all values for each slider, one after another, so distinct_z's checking method is not fully distinct
 		distinct_z.clear();
 	}
 
@@ -369,44 +373,58 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 					if (instanced_position.x > lower_bounds.x && instanced_position.y > lower_bounds.y
 						&& instanced_position.x < upper_bounds.x && instanced_position.y < upper_bounds.y)
 					{
-						if (slider_count < k) slider_count = k;
-						col = isovalue_point_cloud_sliders[slider_count]->color;
-						short iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-						int tolerance = isovalue_point_cloud_sliders[k]->iso_tolerance;
+						if (_ds.data[i].isovalues[j] <= 3000) {
+							if (slider_count < k) slider_count = k;
+							col = isovalue_point_cloud_sliders[slider_count]->color;
+							short iso_abs_check = abs(_ds.data[i].isovalues[j] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+							int tolerance = isovalue_point_cloud_sliders[k]->iso_tolerance;
 
-						if (isovalue_point_cloud_sliders[slider_count]->dec) {
-							int num_neighbors = 0;
-							int slice = (i > 0) ? (i - 1) : 0;
-							int slice_bound = (i < last) ? (i + 1) : last;
-							int val = (j > 0) ? (j - tolerance) : 0;
-							int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance+1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
-							for (slice; slice < slice_bound; slice++) {
-								for (val; val < val_bound; val++) {
-									iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-									if (iso_abs_check <= tolerance) num_neighbors++;
+							if (isovalue_point_cloud_sliders[slider_count]->dec) {
+								int num_neighbors = 0;
+								int slice = (i > 0) ? (i - 1) : 0;
+								int slice_bound = (i < last) ? (i + 1) : last;
+								glm::vec3 neighbor;
+								//std::cout << ((j % _ds.data[0].width) * voxel_scale.x) << "\t" << ((j / _ds.data[0].width) * voxel_scale.y) << std::endl;
+								//int val = (j > 0) ? (j - tolerance) : 0;
+								//int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance + 1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
+								for (slice; slice < slice_bound; slice++) {
+									for (float v1 = ((j % _ds.data[0].width) - 1) * voxel_scale.x; v1 < (float(j % _ds.data[0].width) + 1) * voxel_scale.x; v1 += voxel_scale.x) {
+										for (float v2 = ((j / _ds.data[0].width) - 1) * voxel_scale.y; v2 < (float(j / _ds.data[0].width) + 1) * voxel_scale.y; v2 += voxel_scale.y) {
+											neighbor = glm::vec3(v1, v2, (float)slice * voxel_scale.z);
+											if (distance(instanced_position, neighbor) < 2 * voxel_scale.z) num_neighbors++;
+											//iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+											//if (iso_abs_check <= tolerance) num_neighbors++;
+										}
+									}
+								}
+								if (num_neighbors > 9) {
+									isovalue_point_cloud_sliders[slider_count]->point_size++;
+
+									// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider
+									if (instanced_positions.size() == 0 && k == 0)
+										distinct_z.push_back((instanced_position - lower_bounds).z);
+									else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
+										distinct_z.push_back((instanced_position - lower_bounds).z);
+
+									instanced_positions.push_back(instanced_position - lower_bounds);
+									instanced_isovalue_differences.push_back(iso_abs_check);
+									instanced_colors.push_back(col);
 								}
 							}
-							if (num_neighbors > 9) {
+							else if (iso_abs_check <= tolerance)
+							{
 								isovalue_point_cloud_sliders[slider_count]->point_size++;
-								if (instanced_positions.size() == 0)
+
+								// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider
+								if (instanced_positions.size() == 0 && k == 0)
 									distinct_z.push_back((instanced_position - lower_bounds).z);
-								else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001)
+								else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
 									distinct_z.push_back((instanced_position - lower_bounds).z);
+
 								instanced_positions.push_back(instanced_position - lower_bounds);
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
 							}
-						} 
-						else if (iso_abs_check <= tolerance)
-						{
-							isovalue_point_cloud_sliders[slider_count]->point_size++;
-							if (instanced_positions.size() == 0)
-								distinct_z.push_back((instanced_position - lower_bounds).z);
-							else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001)
-								distinct_z.push_back((instanced_position - lower_bounds).z);
-							instanced_positions.push_back(instanced_position - lower_bounds);
-							instanced_isovalue_differences.push_back(iso_abs_check);
-							instanced_colors.push_back(col);
 						}
 					}
 				}
