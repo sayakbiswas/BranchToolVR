@@ -385,19 +385,23 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								int slice_bound = (i < last) ? (i + 1) : last;
 								glm::vec3 neighbor;
 								//std::cout << ((j % _ds.data[0].width) * voxel_scale.x) << "\t" << ((j / _ds.data[0].width) * voxel_scale.y) << std::endl;
-								//int val = (j > 0) ? (j - tolerance) : 0;
-								//int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance + 1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
-								for (slice; slice < slice_bound; slice++) {
-									for (float v1 = ((j % _ds.data[0].width) - 1) * voxel_scale.x; v1 < (float(j % _ds.data[0].width) + 1) * voxel_scale.x; v1 += voxel_scale.x) {
-										for (float v2 = ((j / _ds.data[0].width) - 1) * voxel_scale.y; v2 < (float(j / _ds.data[0].width) + 1) * voxel_scale.y; v2 += voxel_scale.y) {
-											neighbor = glm::vec3(v1, v2, (float)slice * voxel_scale.z);
-											if (distance(instanced_position, neighbor) < 2 * voxel_scale.z) num_neighbors++;
-											//iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-											//if (iso_abs_check <= tolerance) num_neighbors++;
-										}
+								int val = (j > 0) ? (j - tolerance) : 0;
+								int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance + 1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
+								for (slice; slice <= slice_bound; slice++) {
+									for (val; val <= val_bound; val++) {
+										//for (float v1 = ((j % _ds.data[0].width) - 1) * voxel_scale.x; v1 <= (float(j % _ds.data[0].width) + 1) * voxel_scale.x; v1 += voxel_scale.x) {
+											//for (float v2 = ((j / _ds.data[0].width) - 1) * voxel_scale.y; v2 <= (float(j / _ds.data[0].width) + 1) * voxel_scale.y; v2 += voxel_scale.y) {
+												neighbor = glm::vec3(instanced_position.x, instanced_position.y, (float)slice * voxel_scale.z);
+												//std::cout << distance(instanced_position, neighbor) << std::endl;
+												//if (distance(instanced_position, neighbor) - (2 * voxel_scale.z) <= 0.0f) num_neighbors++;
+												iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+												if (iso_abs_check <= tolerance && distance(instanced_position, neighbor) - (2 * voxel_scale.z) < 0.0f) num_neighbors++;
+											//}
+										//}
 									}
 								}
-								if (num_neighbors > 9) {
+								//std::cout << num_neighbors << std::endl;
+								if (num_neighbors > 5) {
 									isovalue_point_cloud_sliders[slider_count]->point_size++;
 
 									// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider
