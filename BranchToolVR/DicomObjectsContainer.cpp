@@ -283,7 +283,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	if (lslide) {
 		last = imaging_data.current_index;
 		points->upper_bounds.z = -0.5 + (last / imaging_data.data.size());
-		std::cout << "last " << (last) << std::endl;
+		//std::cout << "last " << (last) << std::endl;
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
@@ -305,6 +305,12 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
 				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
+					// Need to figure out curve positioning to smooth out blender importing process
+					// Blender edits: Mirror along y, rotate 180 about z, recenter
+					//controlPoint.x = -controlPoint.x;
+					//controlPoint.x += ((points->upper_bounds.x - points->lower_bounds.x) / 2);
+					//controlPoint.y = -controlPoint.y;
+					//controlPoint.y += ((points->upper_bounds.y - points->lower_bounds.y) / 2);
 					curvesFile << controlPoint.x << " " << controlPoint.y << " " << controlPoint.z << "\n";
 				}
 			}
@@ -456,7 +462,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		std::cout << "finished Exporting" << std::endl;
 	}
 
-
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 	ImGui::SameLine();
@@ -524,6 +529,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		toleranceHasChanged = ImGui::SliderInt(("Slider " + std::to_string(i) + " tolerance").c_str(), &isovalue_point_cloud_sliders[i]->iso_tolerance, 0, 30);
 		if (sliderHasChanged || toleranceHasChanged) {
 			points->MarkForRegeneration();
+			//std::cout << points->GetNumInstances() << std::endl;
 		}
 		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue, isovalue_point_cloud_sliders[i]->iso_tolerance);
 
@@ -556,7 +562,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 {
 	RenderUi(_r);
 	glm::mat4 curr_pose;
-
 	// Refactor
 	if (viewer->selector->is_double_selected)
 	{
