@@ -117,12 +117,29 @@ void DicomObjectsContainer::MainMenuBar() {
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("Undo Draw", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Undo Draw", "CTRL+Z")) {
+				points->curves.pop_back();
+			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Clear all Curves", "CTRL+E")) {}
+			if (ImGui::MenuItem("Clear all Curves", "CTRL+E")) {
+				points->curves.clear();
+			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Clear Isovalues", NULL)) {}
-			if (ImGui::MenuItem("Clear all Fields", "CTRL+D")) {}
+			if (ImGui::MenuItem("Clear Isovalues", NULL)) {
+				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
+					isovalue_point_cloud_sliders[i]->SetInUse(false);
+				}
+				points->MarkForRegeneration();
+			}
+			if (ImGui::MenuItem("Clear all Fields", "CTRL+D")) {
+				points->curves.clear();
+				first = 0;
+				last = 100;
+				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
+					isovalue_point_cloud_sliders[i]->SetInUse(false);
+				}
+				points->MarkForRegeneration();
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Window")) {
@@ -283,7 +300,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	if (lslide) {
 		last = imaging_data.current_index;
 		points->upper_bounds.z = -0.5 + (last / imaging_data.data.size());
-		//std::cout << "last " << (last) << std::endl;
+		std::cout << "last " << (last) << std::endl;
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
@@ -529,7 +546,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		toleranceHasChanged = ImGui::SliderInt(("Slider " + std::to_string(i) + " tolerance").c_str(), &isovalue_point_cloud_sliders[i]->iso_tolerance, 0, 30);
 		if (sliderHasChanged || toleranceHasChanged) {
 			points->MarkForRegeneration();
-			//std::cout << points->GetNumInstances() << std::endl;
 		}
 		UpdateDicomPointCloud(isovalue_point_cloud_sliders[i]->curr_isovalue, isovalue_point_cloud_sliders[i]->iso_tolerance);
 

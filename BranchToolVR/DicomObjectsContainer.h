@@ -84,7 +84,7 @@ class DicomObjectsContainer
 		void FileMenu();
 		void MainMenuBar();
 		int first = 0;
-		int last = 50;
+		int last = 100;
 
 	private:
 		void UpdateDicomPointCloud(int _isovalue);

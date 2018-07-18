@@ -37,7 +37,7 @@ void DicomPointCloudObject::Load()
 {
 	num_vertices = positions.size();
 	num_instances = instanced_positions.size();
-	std::cout << num_instances << std::endl;
+	// std::cout << num_instances << std::endl;
 	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
 		// Orients point cloud according to the CT scan representation and z position of center slice
@@ -385,22 +385,13 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								int slice = (i > 0) ? (i - 1) : 0;
 								int slice_bound = (i < last) ? (i + 1) : last;
 								glm::vec3 neighbor;
-								//int val = (j > 0) ? (j - 1) : 0;
-								//int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance + 1))) ? (j + tolerance) : (_ds.data[i].isovalues.size() - 1);
-								//std::cout << ((j % _ds.data[0].width) * voxel_scale.x) << "\t" << ((j / _ds.data[0].width) * voxel_scale.y) << std::endl;
 								int val = (j - (tolerance/2 + 1) > 0) ? (j - tolerance/2) : 0;
 								int val_bound = (j < (_ds.data[i].isovalues.size() - (tolerance/2 + 1))) ? (j + tolerance/2) : (_ds.data[i].isovalues.size() - 1);
 								for (slice; slice <= slice_bound; slice++) {
 									for (val; val <= val_bound; val++) {
-										//for (float v1 = ((j % _ds.data[0].width) - 1) * voxel_scale.x; v1 <= (float(j % _ds.data[0].width) + 1) * voxel_scale.x; v1 += voxel_scale.x) {
-											//for (float v2 = ((j / _ds.data[0].width) - 1) * voxel_scale.y; v2 <= (float(j / _ds.data[0].width) + 1) * voxel_scale.y; v2 += voxel_scale.y) {
-												neighbor = glm::vec3(instanced_position.x, instanced_position.y, (float)slice * voxel_scale.z);
-												//std::cout << distance(instanced_position, neighbor) << std::endl;
-												//if (distance(instanced_position, neighbor) - (2 * voxel_scale.z) <= 0.0f) num_neighbors++;
-												iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
-												if (iso_abs_check <= tolerance && distance(instanced_position, neighbor) - (2 * voxel_scale.z) < 0.0f) num_neighbors++;
-											//}
-										//}
+										neighbor = glm::vec3(instanced_position.x, instanced_position.y, (float)slice * voxel_scale.z);
+										iso_abs_check = abs(_ds.data[slice].isovalues[val] - (short)isovalue_point_cloud_sliders[k]->curr_isovalue);
+										if (iso_abs_check <= tolerance && distance(instanced_position, neighbor) - (2 * voxel_scale.z) < 0.0f) num_neighbors++;
 									}
 								}
 								int low_limit = tolerance / 2;

@@ -6,6 +6,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Optimization
 - [ ] Testing
 - [ ] Control adjustments for improved UX
+- [ ] Make navigating controls and interface easier (how-to's, button naming, etc)
 - [ ] Convert the bezier curves in blender python to thick curves
 - [x] Coarsify the volumetric hex mesh for SOFA
 	- Working but somewhat odd behavior, look into horizontal strip effect
