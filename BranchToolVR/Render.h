@@ -51,7 +51,7 @@ struct ShadowMap
 	glm::mat4 V;
 };
 
-enum TexturesEnum 
+enum TexturesEnum
 {
 	WOOD_TEXTURE,
 	FONT_TEXTURE,
@@ -59,6 +59,7 @@ enum TexturesEnum
 	POINT_CLOUD_FRAME_TEXTURE,
 	COARSE_VIEWER_SLICE_HANDLE_TEXTURE,
 	POINT_CLOUD_SELECTOR_TEXTURE,
+	//CONTROLLER,
 	CURR_NR_TEXTURES, // keep as last element of enum
 };
 

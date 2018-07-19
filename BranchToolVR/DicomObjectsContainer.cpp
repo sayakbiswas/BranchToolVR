@@ -3,6 +3,7 @@
 ColorObject* debug1 = new ColorObject;
 ColorObject* debug2 = new ColorObject;
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
+bool b = false;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -108,6 +109,33 @@ void DicomObjectsContainer::FileMenu() {
 	}
 }
 
+void ShowUserGuide(bool _b) {
+	ImGui::Begin("Interface Guide", &_b);
+	ImGui::BulletText("Double-click on title bar to collapse window");
+	ImGui::BulletText("Click and drag on lower right corner to resize window");
+	ImGui::BulletText("Click and drag on any empty space to move window");
+	ImGui::BulletText("Mouse Wheel to scroll");
+	if (ImGui::GetIO().FontAllowUserScaling)
+		ImGui::BulletText("CTRL+Mouse Wheel to zoom window contents");
+	ImGui::BulletText("CTRL+Click on a slider or drag box to input value directly");
+	ImGui::BulletText("Window Center and Width adjust display for the data set");
+	ImGui::BulletText(
+		"Slice Index navigates through 'slices' in data set\n"
+		"- First Focus Slice selects the starting boundary slice\n"
+		"- Last Focus Slice selects the ending boundary slice\n");
+	ImGui::BulletText("Click and drag with Right Mouse Button in data set display to select region");
+	ImGui::BulletText("Click Middle Mouse Button to undo region drawing");
+	ImGui::BulletText("Click a point in the set to select an isovalue for 3D point cloud");
+	ImGui::BulletText("Adjust value and tolerance as necessary");
+	ImGui::BulletText("'Decimate' is a toggle option that cuts down the number of points in the cloud, sacrificing detail for speed");
+	ImGui::BulletText(
+		"Controls for viewing cloud without VR:\n"
+		"- WASD: Move forward, left, back, right\n"
+		"- Move mouse to look around");
+	ImGui::BulletText("When ready, click Headset Ready to enter VR interface");
+	ImGui::End();
+}
+
 // IMPORTANT: Changed from static function outside of .h file
 // to member function
 void DicomObjectsContainer::MainMenuBar() {
@@ -150,6 +178,28 @@ void DicomObjectsContainer::MainMenuBar() {
 					show mini 3D CT setup */
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Help")) {
+			if (ImGui::MenuItem("Interface Guide")) {
+				b = true;
+			}
+			if (ImGui::MenuItem("VR Guide")) {
+				if (ImGui::BeginPopupContextItem(""))
+				{
+					// Add labeled controller diagram
+					GLuint controller;
+					glGenTextures(1, &controller);
+					// [...] load image, render to texture, etc.
+					ImGui::Image((void*)(intptr_t)controller, ImVec2(390, 390));
+					// ImGui::Image(textures[CONTROLLER], ImVec2(390, 390));
+				}
+			}
+			ImGui::EndMenu();
+		}
+
+		if (b) {
+			ShowUserGuide(b);
+		}
+
 		ImGui::EndMainMenuBar();
 	}
 }
