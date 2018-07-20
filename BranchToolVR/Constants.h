@@ -49,7 +49,7 @@ namespace DirectoryInfo
 	static const std::string POINT_CLOUD_HANDLE_MODEL = "pointCloudFrame2";
 	static const std::string COARSE_VIEWER_SLICE_HANDLE_MODEL = "coarseViewerHandle2";
 	static const std::string POINT_CLOUD_SELECTOR_MODEL = "pointCloudSelectorCube";
-	//static const std::string CONTROLLER = "Controller";
+	static const std::string CONTROLLER = "Controller";
 	static const std::string IMGUI_FRAME_MODEL = "imguiFrame";
 	static const std::string MODEL_EXT = ".wobj"; // rename from obj to avoid conflicts with obj files in gitignore
 }

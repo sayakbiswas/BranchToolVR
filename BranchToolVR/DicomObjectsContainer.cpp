@@ -1,9 +1,10 @@
 #include "DicomObjectsContainer.h"
 
-ColorObject* debug1 = new ColorObject;
-ColorObject* debug2 = new ColorObject;
+//ColorObject* debug1 = new ColorObject;
+//ColorObject* debug2 = new ColorObject;
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
-bool b = false;
+bool IGuide = false;
+bool VRGuide = false;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -22,8 +23,8 @@ DicomObjectsContainer::DicomObjectsContainer()
 	points->SetMasterAppendPose(tmp_initial_model_matrix);
 	//viewer->SetMasterAppendPose(tmp_initial_model_matrix);
 
-	debug1->GenerateSphere(10, 0.05f, false);
-	debug2->GenerateSphere(10, 0.05f, false);
+	//debug1->GenerateSphere(10, 0.05f, false);
+	//debug2->GenerateSphere(10, 0.05f, false);
 
 
 	for (int i = 0; i < max_nr_isovalue_point_cloud_sliders; ++i)
@@ -41,10 +42,10 @@ DicomObjectsContainer::~DicomObjectsContainer()
 // IMPORTANT: Changed from static function outside of .h file
 // to member function
 void DicomObjectsContainer::FileMenu() {
-	if (ImGui::MenuItem("New", "CTRL+N")) {
+	/*if (ImGui::MenuItem("New", "CTRL+N")) {
 		// dialog file selection
-	}
-	if (ImGui::MenuItem("Open", "CTRL+O")) {
+	}*/
+	if (ImGui::MenuItem("Open Data Set", "CTRL+O")) {
 		//dialog folder selection
 		char filename[MAX_PATH];
 		OPENFILENAME ofn;
@@ -98,7 +99,7 @@ void DicomObjectsContainer::FileMenu() {
 		}
 		folder = "";
 	}
-	ImGui::Separator();
+	/*ImGui::Separator();
 	if (ImGui::MenuItem("Save", "Ctrl+S")) {
 	}
 	if (ImGui::MenuItem("Save As...", "SHIFT+CTRL+S")) {
@@ -106,11 +107,11 @@ void DicomObjectsContainer::FileMenu() {
 	ImGui::Separator();
 	if (ImGui::MenuItem("Close", "CTRL+Q")) {
 
-	}
+	}*/
 }
 
-void ShowUserGuide(bool _b) {
-	ImGui::Begin("Interface Guide", &_b);
+void ShowUserGuide(bool _IGuide) {
+	ImGui::Begin("Interface Guide", &_IGuide);
 	ImGui::BulletText("Double-click on title bar to collapse window");
 	ImGui::BulletText("Click and drag on lower right corner to resize window");
 	ImGui::BulletText("Click and drag on any empty space to move window");
@@ -136,6 +137,22 @@ void ShowUserGuide(bool _b) {
 	ImGui::End();
 }
 
+void ShowControllerDiagram(bool _VRGuide) {
+	// Add labeled controller diagram (based on DicomSet display in interface)
+	ImGui::Begin("VR Guide", &_VRGuide);
+
+	TextureObject * ControllerDiagram = new TextureObject;
+	ControllerDiagram->is_clickable = false;
+	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
+	ControllerDiagram->texture_level = CONTROLLER;
+	Texture * controller = new Texture();
+	controller->Load("Controller");
+
+	ImGui::Image((void*)controller->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
+
+	ImGui::End();
+}
+
 // IMPORTANT: Changed from static function outside of .h file
 // to member function
 void DicomObjectsContainer::MainMenuBar() {
@@ -145,10 +162,9 @@ void DicomObjectsContainer::MainMenuBar() {
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("Undo Draw", "CTRL+Z")) {
+			if (ImGui::MenuItem("Undo Curve", "CTRL+Z")) {
 				points->curves.pop_back();
 			}
-			ImGui::Separator();
 			if (ImGui::MenuItem("Clear all Curves", "CTRL+E")) {
 				points->curves.clear();
 			}
@@ -170,34 +186,29 @@ void DicomObjectsContainer::MainMenuBar() {
 			}
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Window")) {
-			/*---- Potential View features:
+		/*if (ImGui::BeginMenu("Window")) {
+			---- Potential View features:
 					transparency slider
 					text size slider
 					Show CT ui window
-					show mini 3D CT setup */
+					show mini 3D CT setup 
 			ImGui::EndMenu();
-		}
+		}*/
 		if (ImGui::BeginMenu("Help")) {
 			if (ImGui::MenuItem("Interface Guide")) {
-				b = true;
+				IGuide = true;
 			}
 			if (ImGui::MenuItem("VR Guide")) {
-				if (ImGui::BeginPopupContextItem(""))
-				{
-					// Add labeled controller diagram
-					GLuint controller;
-					glGenTextures(1, &controller);
-					// [...] load image, render to texture, etc.
-					ImGui::Image((void*)(intptr_t)controller, ImVec2(390, 390));
-					// ImGui::Image(textures[CONTROLLER], ImVec2(390, 390));
-				}
+				VRGuide = true;
 			}
 			ImGui::EndMenu();
 		}
 
-		if (b) {
-			ShowUserGuide(b);
+		if (IGuide) {
+			ShowUserGuide(IGuide);
+		}
+		if (VRGuide) {
+			ShowControllerDiagram(VRGuide);
 		}
 
 		ImGui::EndMainMenuBar();
@@ -800,8 +811,8 @@ void DicomObjectsContainer::AddObjects(Render* _r)
 	_r->AddObjectToScene(points);
 	viewer->AddObjects(_r);
 
-	_r->AddObjectToScene(debug1);
-	_r->AddObjectToScene(debug2);
+	//_r->AddObjectToScene(debug1);
+	//_r->AddObjectToScene(debug2);
 }
 
 void DicomObjectsContainer::AddIsovaluePointCloudSlider(const int _isovalue)

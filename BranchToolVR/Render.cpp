@@ -432,7 +432,7 @@ void Render::LoadTextures()
 	textures[COARSE_VIEWER_SLICE_HANDLE_TEXTURE]->Load("coarseViewerTexture");
 	textures[POINT_CLOUD_FRAME_TEXTURE]->Load("pointCloudFrame");
 	textures[POINT_CLOUD_SELECTOR_TEXTURE]->Load("pointCloudSelectorCube");
-	//textures[CONTROLLER]->Load("Controller");
+	textures[CONTROLLER]->Load("Controller");
 }
 
 void Render::LoadShaders()
