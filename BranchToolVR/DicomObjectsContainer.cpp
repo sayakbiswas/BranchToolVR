@@ -5,7 +5,11 @@
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 bool IGuide = false;
 bool VRGuide = false;
+bool diagram_loaded = false;
 std::string folder = "";
+
+TextureObject * ControllerDiagram = new TextureObject;
+Texture * controller = new Texture();
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -16,6 +20,11 @@ DicomObjectsContainer::DicomObjectsContainer()
 {
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
+
+	ControllerDiagram->is_clickable = false;
+	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
+	ControllerDiagram->texture_level = CONTROLLER;
+	controller->Load("Controller");
 
 	float initial_scale = 0.5f;
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -37,6 +46,8 @@ DicomObjectsContainer::~DicomObjectsContainer()
 {
 	delete points;
 	delete viewer;
+	delete ControllerDiagram;
+	delete controller;
 }
 
 // Changed from static function outside of .h file to member function
@@ -110,13 +121,12 @@ void DicomObjectsContainer::FileMenu() {
 }
 
 void ShowUserGuide(bool _IGuide) {
+	if (!_IGuide) return;
 	ImGui::Begin("Interface Guide", &_IGuide);
 	ImGui::BulletText("Double-click on title bar to collapse window");
 	ImGui::BulletText("Click and drag on lower right corner to resize window");
 	ImGui::BulletText("Click and drag on any empty space to move window");
 	ImGui::BulletText("Mouse Wheel to scroll");
-	if (ImGui::GetIO().FontAllowUserScaling)
-		ImGui::BulletText("CTRL+Mouse Wheel to zoom window contents");
 	ImGui::BulletText("CTRL+Click on a slider or drag box to input value directly");
 	ImGui::BulletText("Window Center and Width adjust display for the data set");
 	ImGui::BulletText(
@@ -134,20 +144,17 @@ void ShowUserGuide(bool _IGuide) {
 		"- Move mouse to look around");
 	ImGui::BulletText("When ready, click Headset Ready to enter VR interface");
 	ImGui::End();
+	return;
 }
 
 // Labeled controller diagram (based on DicomSet display in interface)
+// Stopped displaying image
 void ShowControllerDiagram(bool _VRGuide) {
+	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
 
-	TextureObject * ControllerDiagram = new TextureObject;
-	ControllerDiagram->is_clickable = false;
-	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
-	ControllerDiagram->texture_level = CONTROLLER;
-	Texture * controller = new Texture();
-	controller->Load("Controller");
-
 	ImGui::Image((void*)controller->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
+	diagram_loaded = true;
 
 	ImGui::End();
 }

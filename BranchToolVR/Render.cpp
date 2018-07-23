@@ -1104,7 +1104,7 @@ void Render::UpdateHMDMatrixPose()
 		controller_pointer1->is_hidden = curr_controller_index == 0;
 		controller_pointer2->is_hidden = curr_controller_index == 1;
 
-		if (glfwGetKey(window, GLFW_KEY_Q) && once_per_press)
+		/*if (glfwGetKey(window, GLFW_KEY_Q) && once_per_press)
 		{
 			curr_controller_index = !curr_controller_index;
 			once_per_press = false;
@@ -1112,7 +1112,7 @@ void Render::UpdateHMDMatrixPose()
 		else if(!glfwGetKey(window, GLFW_KEY_Q))
 		{
 			once_per_press = true;
-		}
+		}*/
 
 		if (glfwGetKey(window, GLFW_KEY_SPACE)) {
 			if (glfwGetWindowAttrib(window, GLFW_FOCUSED))
