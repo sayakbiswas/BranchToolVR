@@ -39,8 +39,7 @@ DicomObjectsContainer::~DicomObjectsContainer()
 	delete viewer;
 }
 
-// IMPORTANT: Changed from static function outside of .h file
-// to member function
+// Changed from static function outside of .h file to member function
 void DicomObjectsContainer::FileMenu() {
 	/*if (ImGui::MenuItem("New", "CTRL+N")) {
 		// dialog file selection
@@ -137,8 +136,8 @@ void ShowUserGuide(bool _IGuide) {
 	ImGui::End();
 }
 
+// Labeled controller diagram (based on DicomSet display in interface)
 void ShowControllerDiagram(bool _VRGuide) {
-	// Add labeled controller diagram (based on DicomSet display in interface)
 	ImGui::Begin("VR Guide", &_VRGuide);
 
 	TextureObject * ControllerDiagram = new TextureObject;
@@ -153,8 +152,7 @@ void ShowControllerDiagram(bool _VRGuide) {
 	ImGui::End();
 }
 
-// IMPORTANT: Changed from static function outside of .h file
-// to member function
+// Changed from static function outside of .h file to member function
 void DicomObjectsContainer::MainMenuBar() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
@@ -204,12 +202,8 @@ void DicomObjectsContainer::MainMenuBar() {
 			ImGui::EndMenu();
 		}
 
-		if (IGuide) {
-			ShowUserGuide(IGuide);
-		}
-		if (VRGuide) {
-			ShowControllerDiagram(VRGuide);
-		}
+		ShowUserGuide(IGuide);
+		ShowControllerDiagram(VRGuide);
 
 		ImGui::EndMainMenuBar();
 	}
@@ -302,7 +296,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			adding_selec = true;
 		}
 		if (ImGui::IsMouseClicked(2) && !corners.empty()) {
-			std::cout << "pressed" << std::endl;
+			//std::cout << "pressed" << std::endl;
 			adding_selec = selec_prev = false;
 			corners.pop_back();
 			corners.pop_back();
@@ -669,7 +663,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
 	{
-		std::cout << "touchpad is pressed" << std::endl;
+		//std::cout << "touchpad is pressed" << std::endl;
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
@@ -680,7 +674,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// test if controller is close to old branch point
 	if (_vr.controller1.trigger_first_press)
 	{
-		// find  the closest branch point
+		// find the closest branch point
 		int closest_index = -1;
 		float curr_min = -1.0f;
 		bool found = false;
