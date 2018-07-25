@@ -5,7 +5,6 @@
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 bool IGuide = false;
 bool VRGuide = false;
-bool diagram_loaded = false;
 std::string folder = "";
 
 TextureObject * ControllerDiagram = new TextureObject;
@@ -154,7 +153,6 @@ void ShowControllerDiagram(bool _VRGuide) {
 	ImGui::Begin("VR Guide", &_VRGuide);
 
 	ImGui::Image((void*)controller->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
-	diagram_loaded = true;
 
 	ImGui::End();
 }

@@ -40,16 +40,16 @@ void DicomPointCloudObject::Load()
 	// std::cout << num_instances << std::endl;
 	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
-		/* Orients point cloud according to the CT scan representation and z position of center slice (moved below)
+		// Orients point cloud according to the CT scan representation and z position of center slice
 		float off_z = distinct_z.at(distinct_z.size() / 2);
 		//float range_z = abs(distinct_z.at(distinct_z.size() - 1) - distinct_z.at(0));
 		for (int i = 0; i < num_instances; i++) {
-			instanced_positions.at(i).x = -instanced_positions.at(i).x;
-			instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
-			instanced_positions.at(i).y = -instanced_positions.at(i).y;
-			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
+			//instanced_positions.at(i).x = -instanced_positions.at(i).x;
+			//instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
+			//instanced_positions.at(i).y = -instanced_positions.at(i).y;
+			//instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
 			instanced_positions.at(i).z -= off_z;
-		}*/
+		}
 		if (!has_generated)
 		{
 			glGenVertexArrays(1, &vao);
@@ -309,6 +309,11 @@ float distance(glm::vec3 a, glm::vec3 b){
 	return d;
 }
 
+// Variables to make generating and re-orienting faster/smarter
+//int prev_first = -1;
+//int prev_last = -1;
+//bool z_change = true;
+
 // Currently regenerates entire cloud for all active iso-sliders rather than just the specific one that's value was changed
 void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tolerance, int first, int last, std::vector<IsovaluePointCloudSlider*>& isovalue_point_cloud_sliders)
 {
@@ -335,6 +340,12 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	//voxel_scale *= (1 / (0.00246914*(last - first)));
 	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
 
+	/*if (prev_first != first || prev_last != last) {
+		z_change = true;
+		prev_first = first;
+		prev_last = last;
+	} else z_change = false;*/
+
 	if (!has_generated)
 	{
 		// Adjust offset values so Cloud is within Selector object
@@ -347,6 +358,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 		instanced_isovalue_differences.clear();
 		instanced_colors.clear();
 		distinct_z.clear();
+		//if (z_change) distinct_z.clear();
 	}
 
 	/*------TODO:-----*/
@@ -399,17 +411,18 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								if (num_neighbors > low_limit && num_neighbors <= limit) {
 									isovalue_point_cloud_sliders[slider_count]->point_size++;
 
-									// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider
-									if (instanced_positions.size() == 0 && k == 0)
-										distinct_z.push_back((instanced_position - lower_bounds).z);
-									else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
-										distinct_z.push_back((instanced_position - lower_bounds).z);
+									// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider (k=0)
+									//if (z_change) {
+										if (instanced_positions.empty() && k == 0)
+											distinct_z.push_back((instanced_position - lower_bounds).z);
+										else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
+											distinct_z.push_back((instanced_position - lower_bounds).z);
+									//}
 
-									float off_z = distinct_z.at(distinct_z.size() / 2);
 									// Looks messy but saves processing time by changing orientation here instead of in a separate for loop
 									instanced_positions.push_back(glm::vec3(-(instanced_position.x - lower_bounds.x - ((upper_bounds.x-lower_bounds.x)/2)), 
 																			-(instanced_position.y - lower_bounds.y - ((upper_bounds.y-lower_bounds.y)/2)), 
-																			(instanced_position.z - lower_bounds.z) - off_z));
+																			(instanced_position.z - lower_bounds.z)));
 									instanced_isovalue_differences.push_back(iso_abs_check);
 									instanced_colors.push_back(col);
 								}
@@ -419,16 +432,17 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								isovalue_point_cloud_sliders[slider_count]->point_size++;
 
 								// Tracking distinct z-values for the sake of recentering the cloud later; only need to do so for first slider
-								if (instanced_positions.size() == 0 && k == 0)
-									distinct_z.push_back((instanced_position - lower_bounds).z);
-								else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
-									distinct_z.push_back((instanced_position - lower_bounds).z);
+								//if (z_change) {
+									if (instanced_positions.size() == 0 && k == 0)
+										distinct_z.push_back((instanced_position - lower_bounds).z);
+									else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
+										distinct_z.push_back((instanced_position - lower_bounds).z);
+								//}
 
-								float off_z = distinct_z.at(distinct_z.size() / 2);
 								// Looks messy but saves processing time by changing orientation here instead of in a separate for loop
 								instanced_positions.push_back(glm::vec3(-(instanced_position.x - lower_bounds.x - ((upper_bounds.x - lower_bounds.x) / 2)),
 																		-(instanced_position.y - lower_bounds.y - ((upper_bounds.y - lower_bounds.y) / 2)),
-																		(instanced_position.z - lower_bounds.z) - off_z));
+																		(instanced_position.z - lower_bounds.z)));
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
 							}
@@ -438,6 +452,14 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 			}
 		}
 	}
+
+	/*if (z_change) {
+		off_z = distinct_z.at(distinct_z.size() / 2);
+		for (int i = 0; i < instanced_positions.size(); i++) {
+			instanced_positions.at(i).z -= off_z;
+		}
+		std::cout << "Reached only when first/last changed" << std::endl;
+	}*/
 
 	Load();
 	has_generated = true;
