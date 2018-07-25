@@ -40,16 +40,16 @@ void DicomPointCloudObject::Load()
 	// std::cout << num_instances << std::endl;
 	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
-		// Orients point cloud according to the CT scan representation and z position of center slice
+		/* Orients point cloud according to the CT scan representation and z position of center slice (moved below)
 		float off_z = distinct_z.at(distinct_z.size() / 2);
-		float range_z = abs(distinct_z.at(distinct_z.size() - 1) - distinct_z.at(0));
+		//float range_z = abs(distinct_z.at(distinct_z.size() - 1) - distinct_z.at(0));
 		for (int i = 0; i < num_instances; i++) {
 			instanced_positions.at(i).x = -instanced_positions.at(i).x;
 			instanced_positions.at(i).x += ((upper_bounds.x - lower_bounds.x) / 2);
 			instanced_positions.at(i).y = -instanced_positions.at(i).y;
 			instanced_positions.at(i).y += ((upper_bounds.y - lower_bounds.y) / 2);
 			instanced_positions.at(i).z -= off_z;
-		}
+		}*/
 		if (!has_generated)
 		{
 			glGenVertexArrays(1, &vao);
@@ -353,7 +353,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	// Look into cause for changing values when decimate is toggled after importing DICOM set 
 	// - Apparently alters/resets first and last values; maybe isovalues
 	// - Workaround is to shift variables in interface until cloud comes back
-	// Figure out cause for generation of horizontal strips of points when decimated (may not be a problem per se)
+	// Figure out cause for generation of horizontal strips of points when decimated (minimized, may be unavoidable to an extent)
 
 	//std::cout << "last " << last << std::endl;
 	glm::vec3 col(1.0f);
@@ -405,7 +405,11 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 									else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
 										distinct_z.push_back((instanced_position - lower_bounds).z);
 
-									instanced_positions.push_back(instanced_position - lower_bounds);
+									float off_z = distinct_z.at(distinct_z.size() / 2);
+									// Looks messy but saves processing time by changing orientation here instead of in a separate for loop
+									instanced_positions.push_back(glm::vec3(-(instanced_position.x - lower_bounds.x - ((upper_bounds.x-lower_bounds.x)/2)), 
+																			-(instanced_position.y - lower_bounds.y - ((upper_bounds.y-lower_bounds.y)/2)), 
+																			(instanced_position.z - lower_bounds.z) - off_z));
 									instanced_isovalue_differences.push_back(iso_abs_check);
 									instanced_colors.push_back(col);
 								}
@@ -420,7 +424,11 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 								else if ((instanced_position - lower_bounds).z - instanced_positions.back().z > 0.000001 && k == 0)
 									distinct_z.push_back((instanced_position - lower_bounds).z);
 
-								instanced_positions.push_back(instanced_position - lower_bounds);
+								float off_z = distinct_z.at(distinct_z.size() / 2);
+								// Looks messy but saves processing time by changing orientation here instead of in a separate for loop
+								instanced_positions.push_back(glm::vec3(-(instanced_position.x - lower_bounds.x - ((upper_bounds.x - lower_bounds.x) / 2)),
+																		-(instanced_position.y - lower_bounds.y - ((upper_bounds.y - lower_bounds.y) / 2)),
+																		(instanced_position.z - lower_bounds.z) - off_z));
 								instanced_isovalue_differences.push_back(iso_abs_check);
 								instanced_colors.push_back(col);
 							}
@@ -434,6 +442,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	Load();
 	has_generated = true;
 }
+
 void DicomPointCloudObject::SetMasterAppendPose(glm::mat4 _in)
 {
 	SetAppendPose(_in);

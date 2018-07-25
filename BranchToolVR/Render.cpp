@@ -36,12 +36,15 @@ Render::Render(GLFWwindow *_window)
 	// initialize controller objects
 	controller_pointer1 = new ColorObject;
 	controller_pointer1->GenerateController();
-	AddObjectToScene(controller_pointer1);
-
+	if (hmd_ready) {
+		AddObjectToScene(controller_pointer1);
+	}
 	controller_pointer2 = new ColorObject;
 	controller_pointer2->GenerateController();
-	AddObjectToScene(controller_pointer2);
-	controller_pointer2->SetDisplayColor(glm::vec4(0.5f, 0.25f, 0.1f, 1.0f));
+	if (hmd_ready) {
+		AddObjectToScene(controller_pointer2);
+		controller_pointer2->SetDisplayColor(glm::vec4(0.5f, 0.25f, 0.1f, 1.0f));
+	}
 
 	selected_element1 = NULL;
 	selected_element2 = NULL;
@@ -872,7 +875,7 @@ void Render::DetectCollision(VrMotionController & _controller)
 			glm::vec3 collision_point;
 			if(!absObj->is_hidden && (absObj->is_selectable || absObj->is_clickable) && absObj->TestCollision(_controller.ray, _controller.position, collision_point))
 			{
-				std::cout << "collisions" << std::endl;
+				//std::cout << "collisions" << std::endl;
 				found_collisions.push_back(foundCollision(absObj, collision_point, glm::length(collision_point - _controller.position)));
 			}
 		}
@@ -1101,7 +1104,7 @@ void Render::UpdateHMDMatrixPose()
 		controller_pointer1->is_hidden = curr_controller_index == 0;
 		controller_pointer2->is_hidden = curr_controller_index == 1;
 
-		if (glfwGetKey(window, GLFW_KEY_Q) && once_per_press)
+		/*if (glfwGetKey(window, GLFW_KEY_Q) && once_per_press)
 		{
 			curr_controller_index = !curr_controller_index;
 			once_per_press = false;
@@ -1109,7 +1112,7 @@ void Render::UpdateHMDMatrixPose()
 		else if(!glfwGetKey(window, GLFW_KEY_Q))
 		{
 			once_per_press = true;
-		}
+		}*/
 
 		if (glfwGetKey(window, GLFW_KEY_SPACE)) {
 			if (glfwGetWindowAttrib(window, GLFW_FOCUSED))
@@ -1208,7 +1211,7 @@ void Render::UpdateHMDMatrixPose()
 			}
 			if (state.ulButtonTouched & vr::ButtonMaskFromId(vr::k_EButton_SteamVR_Touchpad))
 			{
-				std::cout << "touchpad" << std::endl;
+				//std::cout << "touchpad" << std::endl;
 				vr::VREvent_TouchPadMove_t tracking = vr::VREvent_TouchPadMove_t();
 				if (tracking.bFingerDown && tracking.flSecondsFingerDown > 0.5f) {
 					currController.touchpad_is_touched = true;

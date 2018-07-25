@@ -87,8 +87,8 @@ DicomSet DicomReader::ReadSet(std::string _dicomFolder)
 		if (_dSet.min > tmp_min) _dSet.min = tmp_min;
 	}
 
-	std::cout << _dSet.max << std::endl;
-	std::cout << _dSet.min << std::endl;
+	//std::cout << _dSet.max << std::endl;
+	//std::cout << _dSet.min << std::endl;
 
 	return _dSet;
 }

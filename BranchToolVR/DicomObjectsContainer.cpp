@@ -5,7 +5,11 @@
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 bool IGuide = false;
 bool VRGuide = false;
+bool diagram_loaded = false;
 std::string folder = "";
+
+TextureObject * ControllerDiagram = new TextureObject;
+Texture * controller = new Texture();
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -16,6 +20,11 @@ DicomObjectsContainer::DicomObjectsContainer()
 {
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
+
+	ControllerDiagram->is_clickable = false;
+	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
+	ControllerDiagram->texture_level = CONTROLLER;
+	controller->Load("Controller");
 
 	float initial_scale = 0.5f;
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -37,10 +46,11 @@ DicomObjectsContainer::~DicomObjectsContainer()
 {
 	delete points;
 	delete viewer;
+	delete ControllerDiagram;
+	delete controller;
 }
 
-// IMPORTANT: Changed from static function outside of .h file
-// to member function
+// Changed from static function outside of .h file to member function
 void DicomObjectsContainer::FileMenu() {
 	/*if (ImGui::MenuItem("New", "CTRL+N")) {
 		// dialog file selection
@@ -111,13 +121,12 @@ void DicomObjectsContainer::FileMenu() {
 }
 
 void ShowUserGuide(bool _IGuide) {
+	if (!_IGuide) return;
 	ImGui::Begin("Interface Guide", &_IGuide);
 	ImGui::BulletText("Double-click on title bar to collapse window");
 	ImGui::BulletText("Click and drag on lower right corner to resize window");
 	ImGui::BulletText("Click and drag on any empty space to move window");
 	ImGui::BulletText("Mouse Wheel to scroll");
-	if (ImGui::GetIO().FontAllowUserScaling)
-		ImGui::BulletText("CTRL+Mouse Wheel to zoom window contents");
 	ImGui::BulletText("CTRL+Click on a slider or drag box to input value directly");
 	ImGui::BulletText("Window Center and Width adjust display for the data set");
 	ImGui::BulletText(
@@ -135,26 +144,22 @@ void ShowUserGuide(bool _IGuide) {
 		"- Move mouse to look around");
 	ImGui::BulletText("When ready, click Headset Ready to enter VR interface");
 	ImGui::End();
+	return;
 }
 
+// Labeled controller diagram (based on DicomSet display in interface)
+// Stopped displaying image
 void ShowControllerDiagram(bool _VRGuide) {
-	// Add labeled controller diagram (based on DicomSet display in interface)
+	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
 
-	TextureObject * ControllerDiagram = new TextureObject;
-	ControllerDiagram->is_clickable = false;
-	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
-	ControllerDiagram->texture_level = CONTROLLER;
-	Texture * controller = new Texture();
-	controller->Load("Controller");
-
 	ImGui::Image((void*)controller->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
+	diagram_loaded = true;
 
 	ImGui::End();
 }
 
-// IMPORTANT: Changed from static function outside of .h file
-// to member function
+// Changed from static function outside of .h file to member function
 void DicomObjectsContainer::MainMenuBar() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
@@ -204,12 +209,8 @@ void DicomObjectsContainer::MainMenuBar() {
 			ImGui::EndMenu();
 		}
 
-		if (IGuide) {
-			ShowUserGuide(IGuide);
-		}
-		if (VRGuide) {
-			ShowControllerDiagram(VRGuide);
-		}
+		ShowUserGuide(IGuide);
+		ShowControllerDiagram(VRGuide);
 
 		ImGui::EndMainMenuBar();
 	}
@@ -302,7 +303,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			adding_selec = true;
 		}
 		if (ImGui::IsMouseClicked(2) && !corners.empty()) {
-			std::cout << "pressed" << std::endl;
+			//std::cout << "pressed" << std::endl;
 			adding_selec = selec_prev = false;
 			corners.pop_back();
 			corners.pop_back();
@@ -669,7 +670,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
 	{
-		std::cout << "touchpad is pressed" << std::endl;
+		//std::cout << "touchpad is pressed" << std::endl;
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
@@ -680,7 +681,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// test if controller is close to old branch point
 	if (_vr.controller1.trigger_first_press)
 	{
-		// find  the closest branch point
+		// find the closest branch point
 		int closest_index = -1;
 		float curr_min = -1.0f;
 		bool found = false;
