@@ -82,7 +82,8 @@ class DicomObjectsContainer
 		std::vector<IsovaluePointCloudSlider*> isovalue_point_cloud_sliders;
 		// IMPORTANT: Changed from static function outside of .h file to member functions
 		void FileMenu();
-		void MainMenuBar();
+		void MainMenuBar(); 
+		void ShowControllerDiagram(bool _VRGuide);
 		int first = 0;
 		int last = 100;
 
@@ -92,6 +93,8 @@ class DicomObjectsContainer
 		DicomSet imaging_data;
 		DicomPointCloudObject * points;
 		CoarseDicomViewer * viewer;
+		TextureObject * ControllerDiagram;
+		Texture * ControllerImage;
 		Curve* curve;
 		bool newCurve = false;
 		int sliderCount = 0;

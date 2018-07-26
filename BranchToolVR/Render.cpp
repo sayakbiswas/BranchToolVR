@@ -36,15 +36,12 @@ Render::Render(GLFWwindow *_window)
 	// initialize controller objects
 	controller_pointer1 = new ColorObject;
 	controller_pointer1->GenerateController();
-	if (hmd_ready) {
-		AddObjectToScene(controller_pointer1);
-	}
+	//AddObjectToScene(controller_pointer1);
+
 	controller_pointer2 = new ColorObject;
 	controller_pointer2->GenerateController();
-	if (hmd_ready) {
-		AddObjectToScene(controller_pointer2);
-		controller_pointer2->SetDisplayColor(glm::vec4(0.5f, 0.25f, 0.1f, 1.0f));
-	}
+	//AddObjectToScene(controller_pointer2);
+	controller_pointer2->SetDisplayColor(glm::vec4(0.5f, 0.25f, 0.1f, 1.0f));
 
 	selected_element1 = NULL;
 	selected_element2 = NULL;

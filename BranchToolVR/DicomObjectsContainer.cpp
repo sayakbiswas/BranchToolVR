@@ -7,9 +7,6 @@ bool IGuide = false;
 bool VRGuide = false;
 std::string folder = "";
 
-TextureObject * ControllerDiagram = new TextureObject;
-Texture * controller = new Texture();
-
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
 float IsovaluePointCloudSlider::min_isovalue = TMP_MIN_ISOVALUE;
@@ -20,10 +17,13 @@ DicomObjectsContainer::DicomObjectsContainer()
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
 
+	ControllerDiagram = new TextureObject;
+	ControllerImage = new Texture;
+
 	ControllerDiagram->is_clickable = false;
 	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
 	ControllerDiagram->texture_level = CONTROLLER;
-	controller->Load("Controller");
+	ControllerImage->Load("Controller");
 
 	float initial_scale = 0.5f;
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -46,7 +46,7 @@ DicomObjectsContainer::~DicomObjectsContainer()
 	delete points;
 	delete viewer;
 	delete ControllerDiagram;
-	delete controller;
+	delete ControllerImage;
 }
 
 // Changed from static function outside of .h file to member function
@@ -148,11 +148,11 @@ void ShowUserGuide(bool _IGuide) {
 
 // Labeled controller diagram (based on DicomSet display in interface)
 // Stopped displaying image
-void ShowControllerDiagram(bool _VRGuide) {
+void DicomObjectsContainer::ShowControllerDiagram(bool _VRGuide) {
 	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
 
-	ImGui::Image((void*)controller->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
+	ImGui::Image((void*)ControllerImage->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
 
 	ImGui::End();
 }
@@ -161,7 +161,7 @@ void ShowControllerDiagram(bool _VRGuide) {
 void DicomObjectsContainer::MainMenuBar() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			this->FileMenu();
+			FileMenu();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
@@ -550,6 +550,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	if (ImGui::Button("Headset Ready")) {
 		ready = true;
 		_r->hmd_ready = true;
+
+		_r->AddObjectToScene(_r->controller_pointer1);
+		_r->AddObjectToScene(_r->controller_pointer2);
 	}
 
 	ImGui::PopStyleColor(3);
@@ -664,6 +667,8 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	{
 		//viewer->SetMasterAppendPose(_vr.controller2.touch_rotate);
 	}
+
+	if (points->curves.empty()) curve = new Curve();
 
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
