@@ -27,6 +27,7 @@ class TextureObject : public AbstractBaseObject{
 		void readObjFromFile(std::string _name, float _scale, glm::vec3 _offset);
 		void readObjFromFile(std::string _name, float _scale);
 		void SetSelected(bool _selected);
+		void SetSelectorScale(std::vector<glm::vec3> _positions);
 
 	private:
 		int Type();

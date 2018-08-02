@@ -17,6 +17,18 @@ void TextureObject::Finalize()
 	Load();
 }
 
+void TextureObject::SetSelectorScale(std::vector<glm::vec3> _positions) {
+	float scale_factor_x = abs(_positions.at(0).x / positions.at(0).x);
+	float scale_factor_y = abs(_positions.at(0).y / positions.at(0).y);
+	float scale_factor_z = abs(_positions.at(0).z / positions.at(0).z);
+	for (int i = 0; i < positions.size(); i++) {
+		positions.at(i).x *= scale_factor_x;
+		positions.at(i).y *= scale_factor_y;
+		positions.at(i).z *= scale_factor_z;
+	}
+	Finalize();
+}
+
 void TextureObject::Load() 
 {
 	is_loaded = true;

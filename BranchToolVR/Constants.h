@@ -23,6 +23,7 @@
 #define TMP_MAX_ISOVALUE 3000
 #define TMP_MIN_WW 100
 #define TMP_MAX_WW 2000
+#define BASE_SELECTOR_SCALE 0.5f
 
 // enablers
 #define ENABLE_BACKFACE_CULLING 1

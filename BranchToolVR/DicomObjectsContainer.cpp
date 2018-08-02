@@ -16,14 +16,14 @@ DicomObjectsContainer::DicomObjectsContainer()
 {
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
-
+/*
 	ControllerDiagram = new TextureObject;
 	ControllerImage = new Texture;
 
 	ControllerDiagram->is_clickable = false;
 	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
 	ControllerDiagram->texture_level = CONTROLLER;
-	ControllerImage->Load("Controller");
+	ControllerImage->Load("Controller");*/
 
 	float initial_scale = 0.5f;
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -33,7 +33,6 @@ DicomObjectsContainer::DicomObjectsContainer()
 
 	//debug1->GenerateSphere(10, 0.05f, false);
 	//debug2->GenerateSphere(10, 0.05f, false);
-
 
 	for (int i = 0; i < max_nr_isovalue_point_cloud_sliders; ++i)
 	{
@@ -45,8 +44,8 @@ DicomObjectsContainer::~DicomObjectsContainer()
 {
 	delete points;
 	delete viewer;
-	delete ControllerDiagram;
-	delete ControllerImage;
+	/*delete ControllerDiagram;
+	delete ControllerImage;*/
 }
 
 // Changed from static function outside of .h file to member function
@@ -151,9 +150,11 @@ void ShowUserGuide(bool _IGuide) {
 void DicomObjectsContainer::ShowControllerDiagram(bool _VRGuide) {
 	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
-
-	ImGui::Image((void*)ControllerImage->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1), ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
-
+	//ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
+	//ImGui::BeginChild("Controls", ImVec2(0, 390));
+	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(viewer->ControllerImage->width, viewer->ControllerImage->height), ImVec2(0, 0), ImVec2(1, 1));
+	//ImGui::EndChild();
+	//ImGui::PopStyleVar();
 	ImGui::End();
 }
 
@@ -228,9 +229,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
 	ImGui::BeginChild("slides", ImVec2(0, 700), true, 1);
 	ImGui::Text("");
-	ImVec2 tex_screen_pos = ImGui::GetCursorScreenPos();
-	float tex_w = (float)viewer->orthoslice_texture->width;
-	float tex_h = (float)viewer->orthoslice_texture->height;
+	//ImVec2 tex_screen_pos = ImGui::GetCursorScreenPos();
+	//float tex_w = (float)viewer->orthoslice_texture->width;
+	//float tex_h = (float)viewer->orthoslice_texture->height;
 	ImGui::ImageButton((void*)viewer->orthoslice_texture->GetGlId(), ImVec2(viewer->orthoslice_texture->width, viewer->orthoslice_texture->height), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 1), ImVec4(1, 1, 1, 1));
 	
 	// Isovalue Magnifier
@@ -646,6 +647,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	{
 		viewer->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
 		points->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
+		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		//SetCoarseViewerAppendPose(viewer->base_handle->GetDoubleSelectionScaleDifference());
 	}
 	else if(viewer->selector->is_selected)
@@ -653,6 +655,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		curr_pose = viewer->selector->cache.controller_pose_updated * viewer->selector->cache.to_controller_space_initial;
 		viewer->SetMasterAppendPose(curr_pose);
 		points->SetMasterAppendPose(curr_pose);
+		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		//SetCoarseViewerAppendPose(curr_pose);
 	}
 

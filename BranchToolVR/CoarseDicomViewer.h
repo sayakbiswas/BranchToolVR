@@ -22,8 +22,10 @@ class CoarseDicomViewer
 		TextureObject* selector;
 		//TextureObject* orthoslice_handle;
 		TextureObject* orthoslice;
+		Texture * orthoslice_texture;
 
-		Texture* orthoslice_texture;
+		TextureObject * ControllerDiagram;
+		Texture * ControllerImage;
 
 		bool selector_changed;
 		float point_cloud_selector_scale;

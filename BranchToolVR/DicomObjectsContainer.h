@@ -93,8 +93,8 @@ class DicomObjectsContainer
 		DicomSet imaging_data;
 		DicomPointCloudObject * points;
 		CoarseDicomViewer * viewer;
-		TextureObject * ControllerDiagram;
-		Texture * ControllerImage;
+		/*TextureObject * ControllerDiagram;
+		Texture * ControllerImage;*/
 		Curve* curve;
 		bool newCurve = false;
 		int sliderCount = 0;
