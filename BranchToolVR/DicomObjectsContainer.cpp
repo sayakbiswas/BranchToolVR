@@ -29,7 +29,7 @@ DicomObjectsContainer::DicomObjectsContainer()
 	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::mat4 tmp_initial_model_matrix = glm::translate(glm::mat4(1.0f), initial_position) * glm::scale(glm::mat4(1.0f), glm::vec3(initial_scale));
 	points->SetMasterAppendPose(tmp_initial_model_matrix);
-	//viewer->SetMasterAppendPose(tmp_initial_model_matrix);
+	viewer->SetMasterAppendPose(tmp_initial_model_matrix);
 
 	//debug1->GenerateSphere(10, 0.05f, false);
 	//debug2->GenerateSphere(10, 0.05f, false);
@@ -554,6 +554,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 		_r->AddObjectToScene(_r->controller_pointer1);
 		_r->AddObjectToScene(_r->controller_pointer2);
+		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 	}
 
 	ImGui::PopStyleColor(3);
@@ -645,17 +646,17 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// Refactor
 	if (viewer->selector->is_double_selected)
 	{
+		//viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		viewer->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
 		points->SetMasterAppendPose(viewer->selector->GetDoubleSelectionTransform());
-		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		//SetCoarseViewerAppendPose(viewer->base_handle->GetDoubleSelectionScaleDifference());
 	}
 	else if(viewer->selector->is_selected)
 	{
 		curr_pose = viewer->selector->cache.controller_pose_updated * viewer->selector->cache.to_controller_space_initial;
+		//viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		viewer->SetMasterAppendPose(curr_pose);
 		points->SetMasterAppendPose(curr_pose);
-		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
 		//SetCoarseViewerAppendPose(curr_pose);
 	}
 
