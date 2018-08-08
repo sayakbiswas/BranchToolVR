@@ -140,7 +140,8 @@ void ShowUserGuide(bool _IGuide) {
 		"Controls for viewing cloud without VR:\n"
 		"- WASD: Move forward, left, back, right\n"
 		"- Move mouse to look around");
-	ImGui::BulletText("When ready, click Headset Ready to enter VR interface");
+	ImGui::BulletText("When cloud is ready, click Headset Ready to enter VR interface\n"
+					  "-You will be able to adjust values after this, but not as reliably");
 	ImGui::End();
 	return;
 }
