@@ -555,7 +555,8 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 		_r->AddObjectToScene(_r->controller_pointer1);
 		_r->AddObjectToScene(_r->controller_pointer2);
-		viewer->selector->SetSelectorScale(points->GetInstancedPositions());
+
+		viewer->selector->SetSelectorScale(points->getXYZrange());
 	}
 
 	ImGui::PopStyleColor(3);

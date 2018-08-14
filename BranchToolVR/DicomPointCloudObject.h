@@ -56,6 +56,7 @@ public:
 	void SetMasterAppendPose(glm::mat4 _in);
 	void Clear();
 	int Type();
+	glm::vec3 getXYZrange();
 	const GLuint GetNumInstances() { return num_instances; }
 	BranchPoint* GetBranchPointByID(int id);
 	void MarkForRegeneration();

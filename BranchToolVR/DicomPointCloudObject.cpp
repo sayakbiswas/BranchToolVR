@@ -33,6 +33,13 @@ int DicomPointCloudObject::Type()
 	return AbstractBaseObject::get_type_id<DicomPointCloudObject>();
 }
 
+glm::vec3 DicomPointCloudObject::getXYZrange() {
+	float x_range = abs(upper_bounds.x - lower_bounds.x);
+	float y_range = abs(upper_bounds.y - lower_bounds.y);
+	float z_range = abs(instanced_positions.at(instanced_positions.size() - 1).z - instanced_positions.at(0).z);
+	return glm::vec3(x_range, y_range, z_range);
+}
+
 void DicomPointCloudObject::Load()
 {
 	num_vertices = positions.size();
