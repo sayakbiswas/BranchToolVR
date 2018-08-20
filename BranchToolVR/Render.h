@@ -95,6 +95,9 @@ class Render
 		void SetOrthosliceTextureReference(Texture* _t);
 		const CursorData& GetCursorData() { return cursor_info; };
 		const VrData& GetVrData() { return vr_info; };
+		// motion controller
+		ColorObject* controller_pointer1;
+		ColorObject* controller_pointer2;
 
 	private:
 		void Interact();
@@ -153,9 +156,6 @@ class Render
 		uint32_t m_nRenderWidth;
 		uint32_t m_nRenderHeight;
 		
-		// motion controller
-		ColorObject* controller_pointer1;
-		ColorObject* controller_pointer2;
 		AbstractBaseObject* selected_element1;
 		AbstractBaseObject* selected_element2;
 		glm::mat4 spoofControllerView;

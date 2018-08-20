@@ -17,6 +17,18 @@ void TextureObject::Finalize()
 	Load();
 }
 
+void TextureObject::SetSelectorScale(glm::vec3 _range) {
+	float scale_factor_x = abs(_range.x / positions.at(0).x);
+	float scale_factor_y = abs(_range.y / positions.at(0).y);
+	float scale_factor_z = abs(_range.z / positions.at(0).z);
+	for (int i = 0; i < positions.size(); i++) {
+		positions.at(i).x *= scale_factor_x;
+		positions.at(i).y *= scale_factor_y;
+		positions.at(i).z *= scale_factor_z;
+	}
+	Finalize();
+}
+
 void TextureObject::Load() 
 {
 	is_loaded = true;
@@ -61,7 +73,6 @@ void TextureObject::GenerateText(std::string _text, glm::vec2 _scale, glm::vec2 
 		positions.clear();
 		normals.clear();
 		uvs.clear();
-
 		//TODO: delete opengl buffers
 	}
 

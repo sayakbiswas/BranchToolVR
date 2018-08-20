@@ -10,12 +10,13 @@ CoarseDicomViewer::CoarseDicomViewer()
 	#endif
 	
 	// Removed commented out TexObj additions; structure mimiced that of below code
-	float base_handle_scale = 0.5f;
 	selector = new TextureObject;
-	selector->readObjFromFile(DirectoryInfo::POINT_CLOUD_SELECTOR_MODEL, base_handle_scale, glm::vec3(0.0f));
+	selector->readObjFromFile(DirectoryInfo::POINT_CLOUD_SELECTOR_MODEL, BASE_SELECTOR_SCALE, glm::vec3(0.0f));
 	selector->is_selectable = true;
 	selector->is_double_selectable = true;
 	selector->texture_level = POINT_CLOUD_SELECTOR_TEXTURE;
+	//for (int i = 0; i < selector->positions.size(); i++)
+	//	std::cout << selector->positions.at(i).x << " " << selector->positions.at(i).y << " " << selector->positions.at(i).z << std::endl;
 
 	orthoslice = new TextureObject;
 	orthoslice->is_clickable = true;
@@ -23,6 +24,13 @@ CoarseDicomViewer::CoarseDicomViewer()
 	orthoslice->texture_level = CURR_ORTHOSLICE_TEXTURE;
 	orthoslice_texture = new Texture;
 	selector_changed = false;
+
+	ControllerDiagram = new TextureObject;
+	ControllerDiagram->is_clickable = true;
+	ControllerDiagram->GenerateXYPlane(1.0f, 1.0f, 0.0f, glm::vec3(0.0f));
+	ControllerDiagram->texture_level = CONTROLLER;
+	ControllerImage = new Texture;
+	ControllerImage->Load("Controller");
 }
 
 CoarseDicomViewer::~CoarseDicomViewer()
@@ -30,6 +38,7 @@ CoarseDicomViewer::~CoarseDicomViewer()
 	delete static_mesh;
 	delete selector;
 	delete orthoslice;
+	delete ControllerDiagram;
 }
 
 void CoarseDicomViewer::AddObjects(Render * _r) 

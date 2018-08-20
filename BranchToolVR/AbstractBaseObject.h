@@ -82,7 +82,8 @@ class AbstractBaseObject
 		int controllerSelectorId;
 		int controllerSelectorIdPrev;
 		int texture_level;		
-		InteractionCache cache;		
+		InteractionCache cache;
+		std::vector<glm::vec3> positions;
 
 	protected:
 		static int object_id_counter;
@@ -103,7 +104,6 @@ class AbstractBaseObject
 		GLuint vao;
 		GLuint num_vertices;
 		GLuint positions_buffer;
-		std::vector<glm::vec3> positions;
 
 		// bounding sphere variables
 		glm::vec3 model_max;
