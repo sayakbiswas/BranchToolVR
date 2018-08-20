@@ -135,28 +135,37 @@ void ShowUserGuide(bool _IGuide) {
 	ImGui::BulletText("Click Middle Mouse Button to undo region drawing");
 	ImGui::BulletText("Click a point in the set to select an isovalue for 3D point cloud");
 	ImGui::BulletText("Adjust value and tolerance as necessary");
-	ImGui::BulletText("'Decimate' is a toggle option that cuts down the number of points in the cloud, sacrificing detail for speed");
+	ImGui::BulletText("'Decimate' is a toggle option that cuts down the number of points in the cloud, sacrificing detail for memory");
 	ImGui::BulletText(
 		"Controls for viewing cloud without VR:\n"
 		"- WASD: Move forward, left, back, right\n"
 		"- Move mouse to look around");
-	ImGui::BulletText("When cloud is ready, click Headset Ready to enter VR interface\n"
-					  "-You will be able to adjust values after this, but not as reliably");
+	ImGui::BulletText(
+		"When cloud is ready, click Headset Ready to enter VR interface\n"
+		"-This will 'lock in' certain values' representations, so be sure everything looks ready\n"
+		"-Isovalues can still be created/changed/decimated without weirdness");
 	ImGui::End();
 	return;
 }
 
 // Labeled controller diagram (based on DicomSet display in interface)
-// Stopped displaying image
+// Stopped displaying image at some point without code change, still unfixed
 void DicomObjectsContainer::ShowControllerDiagram(bool _VRGuide) {
 	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
-	//ImGui::PushStyleVar(ImGuiStyleVar_ChildWindowRounding, 5.0f);
-	//ImGui::BeginChild("Controls", ImVec2(0, 390));
+	ImGui::BulletText("Draw Control Points: Main controller (Green) Trigger");
+	ImGui::BulletText("Start New Curve: Click Touchpad");
+	ImGui::BulletText(
+		"Move Objects (Lights and Point Cloud):\n"
+		"-Select: Alt (palm/ring finger) Button\n"
+		"-Movement follows hand motion"
+	);
+	ImGui::BulletText("Scale Cloud: Select with both hands and move apart/together");
 	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(viewer->ControllerImage->width, viewer->ControllerImage->height), ImVec2(0, 0), ImVec2(1, 1));
 	//ImGui::EndChild();
 	//ImGui::PopStyleVar();
 	ImGui::End();
+	return;
 }
 
 // Changed from static function outside of .h file to member function
@@ -390,7 +399,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 					//controlPoint.x += ((points->upper_bounds.x - points->lower_bounds.x) / 2);
 					//controlPoint.y = -controlPoint.y;
 					//controlPoint.y += ((points->upper_bounds.y - points->lower_bounds.y) / 2);
-					curvesFile << controlPoint.x << " " << controlPoint.y << " " << controlPoint.z << "\n";
+					curvesFile << controlPoint.x << " " << controlPoint.y << " " << -1.0 * controlPoint.z << "\n";
 				}
 			}
 			curvesFile.close();
@@ -728,7 +737,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 				glm::vec4 tmp;
 				if (_vr.hmd_connected && ready)
 				{
-					// NOTE: Must press touch pad before beginning to draw or throws below error
 					glm::vec3 arg1 = _vr.controller1.position + _vr.controller1.ray * 0.25f;
 					tmp = glm::vec4(arg1, 1.0f);
 					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
