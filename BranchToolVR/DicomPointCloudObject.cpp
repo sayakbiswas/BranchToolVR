@@ -2,7 +2,6 @@
 #include "DicomObjectsContainer.h"
 
 int BranchPoint::id_counter = 0;
-std::vector <float> distinct_z;
 
 DicomPointCloudObject::DicomPointCloudObject()
 {
@@ -13,6 +12,7 @@ DicomPointCloudObject::DicomPointCloudObject()
 	current_bp_selection = -1;
 	lower_bounds = glm::vec3(0.5f, 0.5f, 0.5f);
 	upper_bounds = lower_bounds + glm::vec3(DEFAULT_SELECTOR_SCALE);
+	off_z = 0.0f;
 
 	branch_point_marker = new ColorObject;
 	branch_point_marker->SetDisplayColor(glm::vec4(1.0f, 0.1f, 0.2f, 1.0f));
@@ -48,7 +48,7 @@ void DicomPointCloudObject::Load()
 	// Added envelope statement to stop breaking on empty cloud (can happen when adjusting sliders to extreme values)
 	if (num_instances != 0) {
 		// Orients point cloud according to the CT scan representation and z position of center slice
-		float off_z = distinct_z.at(distinct_z.size() / 2);
+		off_z = distinct_z.at(distinct_z.size() / 2);
 		//float range_z = abs(distinct_z.at(distinct_z.size() - 1) - distinct_z.at(0));
 		for (int i = 0; i < num_instances; i++) {
 			//instanced_positions.at(i).x = -instanced_positions.at(i).x;

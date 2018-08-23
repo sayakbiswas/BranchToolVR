@@ -30,6 +30,8 @@ for index, curve in enumerate(curves):
 	# create the Curve Datablock
 	curveData = bpy.data.curves.new('myCurve' + str(index), type='CURVE') #TODO: Curve name should be different for each curve
 	curveData.dimensions = '3D'
+	curveData.bevel_depth = 0.01
+	curveData.fill_mode = 'FULL'
 
 	# map coords to bezier
 	polyline = curveData.splines.new('BEZIER')
@@ -48,9 +50,11 @@ for index, curve in enumerate(curves):
 	polyline.bezier_points[1].handle_right = (x, -1 * y, z) #P3 - TODO: scale in direction
 
 	polyline.resolution_u = 20 # Number of straight line segments used for rendering curve in blender
-	
+
 	# create curve object
 	curveObject = bpy.data.objects.new('myCurve' + str(index), curveData)
+	curveObject.template = 'THICKCURVE'
+	curveObject.carvable = True
 
 	# attach to scene and validate context
 	scn = bpy.context.scene

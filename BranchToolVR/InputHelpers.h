@@ -10,6 +10,7 @@ struct VrMotionController
 	glm::vec3 orientation;
 	glm::vec3 ray;
 	glm::vec3 touch_rotate;
+	glm::vec2 touch_axis;
 	bool trigger_is_pressed;
 	bool trigger_first_press;
 	bool alt_is_pressed;

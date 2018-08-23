@@ -1200,6 +1200,7 @@ void Render::UpdateHMDMatrixPose()
 			{
 				currController.touchpad_first_press = !currController.touchpad_is_pressed;
 				currController.touchpad_is_pressed = true;
+				currController.touch_axis = glm::vec2(state.rAxis[0].x, state.rAxis[0].y);
 			}
 			else
 			{

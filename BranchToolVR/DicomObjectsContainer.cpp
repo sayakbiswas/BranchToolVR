@@ -5,6 +5,7 @@
 bool pushed, fslide, lslide, ready, decimate, sliderHasChanged, exportButtonPressed;
 bool IGuide = false;
 bool VRGuide = false;
+bool undo_curve = false;
 std::string folder = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
@@ -53,7 +54,7 @@ void DicomObjectsContainer::FileMenu() {
 	/*if (ImGui::MenuItem("New", "CTRL+N")) {
 		// dialog file selection
 	}*/
-	if (ImGui::MenuItem("Open Data Set", "CTRL+O")) {
+	if (ImGui::MenuItem("Open Data Set")) {
 		//dialog folder selection
 		char filename[MAX_PATH];
 		OPENFILENAME ofn;
@@ -154,14 +155,15 @@ void DicomObjectsContainer::ShowControllerDiagram(bool _VRGuide) {
 	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
 	ImGui::BulletText("Draw Control Points: Main controller (Green) Trigger");
-	ImGui::BulletText("Start New Curve: Click Touchpad");
+	ImGui::BulletText("Start New Curve: Press Right Side of Touchpad");
+	ImGui::BulletText("Undo Curve: Press Left Side of Touchpad");
 	ImGui::BulletText(
 		"Move Objects (Lights and Point Cloud):\n"
 		"-Select: Alt (palm/ring finger) Button\n"
 		"-Movement follows hand motion"
 	);
 	ImGui::BulletText("Scale Cloud: Select with both hands and move apart/together");
-	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(viewer->ControllerImage->width, viewer->ControllerImage->height), ImVec2(0, 0), ImVec2(1, 1));
+	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1));
 	//ImGui::EndChild();
 	//ImGui::PopStyleVar();
 	ImGui::End();
@@ -176,10 +178,10 @@ void DicomObjectsContainer::MainMenuBar() {
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("Undo Curve", "CTRL+Z")) {
+			if (ImGui::MenuItem("Undo Curve")) {
 				points->curves.pop_back();
 			}
-			if (ImGui::MenuItem("Clear all Curves", "CTRL+E")) {
+			if (ImGui::MenuItem("Clear all Curves")) {
 				points->curves.clear();
 			}
 			ImGui::Separator();
@@ -189,7 +191,7 @@ void DicomObjectsContainer::MainMenuBar() {
 				}
 				points->MarkForRegeneration();
 			}
-			if (ImGui::MenuItem("Clear all Fields", "CTRL+D")) {
+			if (ImGui::MenuItem("Clear all Fields")) {
 				points->curves.clear();
 				first = 0;
 				last = 100;
@@ -378,9 +380,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 	// Button to export
 	ImGui::PushID(3);
-	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 7.0f, 0.8f, 0.8f));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 15.0f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 15.0f, 0.7f, 0.7f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 15.0f, 0.8f, 0.8f));
 	exportButtonPressed = ImGui::Button("Export");
 	if (exportButtonPressed) {
 		std::cout << "Exporting trace" << std::endl;
@@ -393,13 +395,10 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
 				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
-					// Need to figure out curve positioning to smooth out blender importing process
-					// Blender edits: Mirror along y, rotate 180 about z, recenter
-					//controlPoint.x = -controlPoint.x;
-					//controlPoint.x += ((points->upper_bounds.x - points->lower_bounds.x) / 2);
-					//controlPoint.y = -controlPoint.y;
-					//controlPoint.y += ((points->upper_bounds.y - points->lower_bounds.y) / 2);
-					curvesFile << controlPoint.x << " " << controlPoint.y << " " << -1.0 * controlPoint.z << "\n";
+					// X seems right, look into swapping Y/Z (Blender up and Branch Tool up are different)
+					curvesFile << controlPoint.x + ((points->upper_bounds.x - points->lower_bounds.x) / 4)
+						<< " " << controlPoint.y + ((points->upper_bounds.y - points->lower_bounds.y) / 4)
+						<< " " << -1.0 * controlPoint.z  * abs(controlPoint.z - points->getZoffset()) << "\n";
 				}
 			}
 			curvesFile.close();
@@ -555,9 +554,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::SameLine();
 	// Button to ready headset
 	ImGui::PushID(4);
-	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(1 / 7.0f, 0.7f, 0.7f));
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 7.0f, 0.8f, 0.8f));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(4 / 6.0f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(4 / 6.0f, 0.7f, 0.7f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(4 / 6.0f, 0.8f, 0.8f));
 	if (ImGui::Button("Headset Ready")) {
 		ready = true;
 		_r->hmd_ready = true;
@@ -689,10 +688,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
 	{
 		//std::cout << "touchpad is pressed" << std::endl;
+		// Undo for curve from controller, only has effect on current curve (while red dots are visible)
+		if (_vr.controller1.touch_axis.x < 0.0f) points->curves.pop_back();
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
 	}
+
 	static BranchPoint* prev = NULL;
 	static const float dist_threshold_to_existing = 0.1f;
 

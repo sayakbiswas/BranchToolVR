@@ -66,6 +66,9 @@ public:
 	glm::vec3 lower_bounds;
 	glm::vec3 upper_bounds;
 	glm::vec3 voxel_scale;
+	float off_z;
+	std::vector <float> distinct_z;
+	float getZoffset() { return off_z; };
 
 	TextureObject* handle;
 	ColorObject* branch_point_marker;
