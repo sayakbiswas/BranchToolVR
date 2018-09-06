@@ -75,6 +75,7 @@ public:
 	std::vector<BranchPoint*> branch_points;
 	int current_bp_selection;
 	std::vector<Curve*> curves;
+	curveTree curves_tree_version;
 	std::vector<glm::vec3> GetInstancedColor();
 	std::vector<glm::vec3> GetInstancedPositions();
 

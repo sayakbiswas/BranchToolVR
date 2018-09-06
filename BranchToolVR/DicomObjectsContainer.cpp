@@ -649,6 +649,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	// add custom rendering app to draw "magnification square" over area of interest
 }
 
+// Bool to prevent holding button longer than update cycle from affecting number of tree traversals
+bool hold = false;
+
 void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, Render* _r)
 {
 	RenderUi(_r);
@@ -676,11 +679,36 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// only does work if needed
 	points->Generate(imaging_data, -1, MAX_ISOVALUE_TOLERANCE, 1, 50, isovalue_point_cloud_sliders);
 
-	//rotate cloud with touchpad
-	if (_vr.controller2.touchpad_is_touched)
+	glm::vec2 pad2 = _vr.controller2.touch_axis;
+
+	// left hand controls
+	// Math takes advantage of touchpad representation as unit circle about origin of pad
+	// and properties of functions y = x and y = -x
+	if (_vr.controller2.touchpad_is_pressed && !hold)
 	{
-		//viewer->SetMasterAppendPose(_vr.controller2.touch_rotate);
+		//up
+		if (pad2.x > -1 * (pad2.y) && pad2.x < (pad2.y)) {
+			std::cout << "up" << std::endl;
+			points->curves_tree_version.navUp();
+		}
+		//down
+		else if (pad2.x < -1 * (pad2.y) && pad2.x > (pad2.y)) {
+			std::cout << "down" << std::endl;
+			points->curves_tree_version.navDown();
+		}
+		//right
+		else if (pad2.y > -1 * (pad2.x) && pad2.y < (pad2.x)) {
+			std::cout << "right" << std::endl;
+			points->curves_tree_version.navRight();
+		}
+		//left
+		else if (pad2.y < -1 * (pad2.x) && pad2.y > (pad2.x)) {
+			std::cout << "left" << std::endl;
+			points->curves_tree_version.navLeft();
+		}
+		hold = true;
 	}
+	if (!_vr.controller2.touchpad_is_pressed) hold = false;
 
 	if (points->curves.empty()) curve = new Curve();
 
@@ -689,11 +717,14 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	{
 		//std::cout << "touchpad is pressed" << std::endl;
 		// Undo for curve from controller, only has effect on current curve (while red dots are visible)
-		if (_vr.controller1.touch_axis.x < 0.0f) points->curves.pop_back();
+		if (_vr.controller1.touch_axis.x < 0.0f) { points->curves.pop_back(); 
+		points->curves_tree_version.popChild(); }
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
 	}
+
+	
 
 	static BranchPoint* prev = NULL;
 	static const float dist_threshold_to_existing = 0.1f;
@@ -810,14 +841,18 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			if (newCurve || points->curves.empty())
 			{
 				points->curves.push_back(curve);
+				points->curves_tree_version.pushChild(curve);
 			}
 			else
 			{
+				// this will be curr's last child
 				points->curves.back() = curve;
 			}
 			for (Curve* curveInstance : points->curves)
 			{
-				curveInstance->RenderCurve();
+				Curve* current = points->curves_tree_version.getCurr();
+				if (curveInstance == current) curveInstance->RenderCurveHighlight();
+				else curveInstance->RenderCurve();
 			}
 			pointsToFitCount = currPointsToFitCount;
 			pointsAlreadyFitCount = currPointsToFitCount;

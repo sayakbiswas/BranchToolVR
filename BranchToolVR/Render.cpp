@@ -725,6 +725,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				glBindVertexArray(curve_object->GetVao());
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
+				glEnableVertexAttribArray(3);
 				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 			}
 		}

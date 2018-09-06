@@ -10,11 +10,14 @@ A tool designed to map vascular systems present in medical images in virtual rea
 	- [ ] Remove red indicator dots??? (could cause confusion for users)
 - [ ] Make navigating controls and interface easier (how-to's, button naming, etc)
 	- [x] Display diagrams in how-to popups (works at time of writing for vive controller)
-- [ ]Rename classes and clean code to ease open-source use
+- [ ] Rename classes and clean code to ease open-source use
 - [x] Convert the bezier curves in blender python to thick curves (TOP PRIORITY)
 	- [ ] Make the exports overlay exactly in blender
-	- [ ] Formulaic thickness
 	- [ ] Spring constraints between "connected" curves
+	- [ ] Joining curves and adjusting resolution issues
+- [x] Formulaic thickness
+	- [ ] Scale-up scene
+	- [ ] Ensure thickness is close-fit to that in point cloud
 - [x] Coarsify the volumetric hex mesh for SOFA
 	- Working but somewhat odd behavior, look into horizontal strip effect
 - [x] Slider for adjusting isovalue tolerance
