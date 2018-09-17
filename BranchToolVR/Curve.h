@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractBaseObject.h"
+#include "fstream"
 
 class DicomPointCloudObject;
 
@@ -51,6 +52,8 @@ class curveTree {
 	node* curr;
 	int index = 0;
 	std::vector<Curve*> out;
+	std::string output;
+	std::string marker = "# End of Children #\n";
 
 public:
 
@@ -79,6 +82,18 @@ public:
 	Curve* getCurr() {
 		return curr->nodeCurve;
 	}
+	node* getCurrNode() {
+		return curr;
+	}
+	void updateCurve(Curve* C) {
+		temp = curr->children.back();
+		temp->nodeCurve = C;
+		curr->children.back() = temp;
+	}
+
+	bool empty() {
+		return root->children.empty();
+	}
 
 	// Move "down"
 	void pushChild(Curve* C) {
@@ -95,6 +110,7 @@ public:
 	// Move "Up"
 	void navUp() {
 		if (curr == root) {
+			std::cout << "curr==root" << std::endl;
 			return;
 		}
 		curr = prev;
@@ -122,6 +138,30 @@ public:
 		if (index >= prev->children.size()) index = 0;
 		curr = prev->children[index];
 	};
+
+	// Write serialized tree ("end-of-children" method)
+	void writeTree(node* _parent) {
+		if (_parent->children.size() == 0)
+			return;
+
+		for (int i = 0; i < _parent->children.size(); i++) {
+			curr = _parent->children[i];
+			for(glm::vec3 controlPoint : curr->nodeCurve->GetControlPoints()){
+				output += (std::to_string(controlPoint.x)
+					+ " " + std::to_string(controlPoint.y)
+					+ " " + std::to_string(-1.0 * controlPoint.z) + "\n");
+			}
+			writeTree(curr);
+		}
+		output += marker;
+		return;
+	}
+
+	// Start serialization
+	std::string serialize() {
+		writeTree(root);
+		return output;
+	}
 
 	// Level-order, still have to  do marking stuff
 	void levelOrder(node * _parent) {

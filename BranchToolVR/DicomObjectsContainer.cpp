@@ -180,9 +180,11 @@ void DicomObjectsContainer::MainMenuBar() {
 		if (ImGui::BeginMenu("Edit")) {
 			if (ImGui::MenuItem("Undo Curve")) {
 				points->curves.pop_back();
+				points->curves_tree_version.popChild();
 			}
 			if (ImGui::MenuItem("Clear all Curves")) {
 				points->curves.clear();
+				points->curves_tree_version.~curveTree();
 			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Clear Isovalues", NULL)) {
@@ -193,6 +195,7 @@ void DicomObjectsContainer::MainMenuBar() {
 			}
 			if (ImGui::MenuItem("Clear all Fields")) {
 				points->curves.clear();
+				points->curves_tree_version.~curveTree();
 				first = 0;
 				last = 100;
 				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
@@ -395,10 +398,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
 				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
-					// X seems right, look into swapping Y/Z (Blender up and Branch Tool up are different)
-					curvesFile << controlPoint.x + ((points->upper_bounds.x - points->lower_bounds.x) / 4)
-						<< " " << controlPoint.y + ((points->upper_bounds.y - points->lower_bounds.y) / 4)
-						<< " " << -1.0 * controlPoint.z  * abs(controlPoint.z - points->getZoffset()) << "\n";
+					curvesFile << controlPoint.x + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)
+						<< " " << controlPoint.y + points->lower_bounds.y + ((points->upper_bounds.y - points->lower_bounds.y) / 2)
+						<< " " << -1.0 * (controlPoint.z - points->lower_bounds.z - points->getZoffset()) << "\n";
 				}
 			}
 			curvesFile.close();
@@ -406,6 +408,17 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		else
 		{
 			std::cout << "Unable to open file curves.dat" << std::endl;
+		}
+
+		std::ofstream curvesFileTree("curveTree.dat", std::ios::out);
+		if (curvesFileTree.is_open())
+		{
+			std::string out = points->curves_tree_version.serialize();
+			curvesFileTree << out;
+		}
+		else
+		{
+			std::cout << "Unable to open file curveTree.dat" << std::endl;
 		}
 
 		// separate points by color into different files
@@ -707,10 +720,19 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			points->curves_tree_version.navLeft();
 		}
 		hold = true;
+
+		for (Curve* curveInstance : points->curves)
+		{
+			Curve* current = points->curves_tree_version.getCurr();
+			//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
+			if (curveInstance == points->curves_tree_version.getCurr()) curveInstance->RenderCurveHighlight();
+			else curveInstance->RenderCurve();
+			std::cout << "nav rendering" << std::endl;
+		}
 	}
 	if (!_vr.controller2.touchpad_is_pressed) hold = false;
 
-	if (points->curves.empty()) curve = new Curve();
+	if (points->curves_tree_version.empty()) curve = new Curve();
 
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
@@ -847,10 +869,15 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			{
 				// this will be curr's last child
 				points->curves.back() = curve;
+				//points->curves_tree_version.updateCurve(curve);
+				
+				//curveTree::node* current = points->curves_tree_version.getCurrNode();
+				//current->children.back() = curve;
 			}
 			for (Curve* curveInstance : points->curves)
 			{
 				Curve* current = points->curves_tree_version.getCurr();
+				//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
 				if (curveInstance == current) curveInstance->RenderCurveHighlight();
 				else curveInstance->RenderCurve();
 			}

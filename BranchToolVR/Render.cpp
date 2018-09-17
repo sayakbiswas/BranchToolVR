@@ -533,7 +533,7 @@ void Render::LoadShaders()
 	shadow.uniforms[2] = glGetUniformLocation(shadow.id, "M");
 
 	curve.id = CompileGLShader("curve");
-	curve.num_uniforms = 6;
+	curve.num_uniforms = 7;
 	curve.uniforms = new GLuint[curve.num_uniforms];
 	curve.uniforms[0] = glGetUniformLocation(curve.id, "P");
 	curve.uniforms[1] = glGetUniformLocation(curve.id, "V");
@@ -541,6 +541,8 @@ void Render::LoadShaders()
 	curve.uniforms[3] = glGetUniformLocation(curve.id, "pos");
 	curve.uniforms[4] = glGetUniformLocation(curve.id, "lower_bounds");
 	curve.uniforms[5] = glGetUniformLocation(curve.id, "instanced_position");
+	//curve.uniforms[6] = glGetUniformLocation(curve.id, "instanced_color");
+	curve.uniforms[6] = glGetUniformLocation(curve.id, "ambient");
 }
 
 void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V) 
@@ -718,6 +720,8 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 		glUniformMatrix4fv(curve.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
 		glUniformMatrix4fv(curve.uniforms[2], 1, GL_FALSE, glm::value_ptr(dpco->GetModelMatrix()));
 		glUniform3fv(curve.uniforms[4], 1, glm::value_ptr(dpco->lower_bounds));
+		glUniform3fv(curve.uniforms[6], 1, glm::value_ptr(Constants::AMBIENT_LIGHT));
+
 		if (!dpco->curves.empty())
 		{
 			for (Curve* curve_object : dpco->curves)
@@ -726,6 +730,8 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
 				glEnableVertexAttribArray(3);
+				glVertexAttribDivisor(3, 1);
+
 				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 			}
 		}

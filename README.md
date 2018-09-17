@@ -7,7 +7,6 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Testing
 - [ ] Control adjustments for improved UX
 	- [x] Undo curve from touchpad (only for curves in progress)
-	- [ ] Remove red indicator dots??? (could cause confusion for users)
 - [ ] Make navigating controls and interface easier (how-to's, button naming, etc)
 	- [x] Display diagrams in how-to popups (works at time of writing for vive controller)
 - [ ] Rename classes and clean code to ease open-source use
