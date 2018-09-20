@@ -155,15 +155,23 @@ void DicomObjectsContainer::ShowControllerDiagram(bool _VRGuide) {
 	if (!_VRGuide) return;
 	ImGui::Begin("VR Guide", &_VRGuide);
 	ImGui::BulletText("Draw Control Points: Main controller (Green) Trigger");
-	ImGui::BulletText("Start New Curve: Press Right Side of Touchpad");
-	ImGui::BulletText("Undo Curve: Press Left Side of Touchpad");
+	ImGui::BulletText("Start New Curve: Press Right Side of Green Touchpad");
+	ImGui::BulletText("Undo Curve: Press Left Side of Green Touchpad"); 
+	ImGui::BulletText(
+		"Navigate Branching Vein Tree Structure:\n"
+		"-Up, Down, Left, and Right on Brown Touchpad\n"
+		"-Up: Parent of highlighted curve\n"
+		"-Down: First Child of highlighted curve\n"
+		"-Left: Previous Sibling of highlighted curve\n"
+		"-Right: Next Sibling of highlighted curve\n"
+	);
 	ImGui::BulletText(
 		"Move Objects (Lights and Point Cloud):\n"
 		"-Select: Alt (palm/ring finger) Button\n"
 		"-Movement follows hand motion"
 	);
 	ImGui::BulletText("Scale Cloud: Select with both hands and move apart/together");
-	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(390, 390), ImVec2(0, 0), ImVec2(1, 1));
+	ImGui::Image((void*)viewer->ControllerImage->GetGlId(), ImVec2(600, 600), ImVec2(0, 0), ImVec2(1, 1));
 	//ImGui::EndChild();
 	//ImGui::PopStyleVar();
 	ImGui::End();
@@ -413,8 +421,17 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		std::ofstream curvesFileTree("curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
-			std::string out = points->curves_tree_version.serialize();
-			curvesFileTree << out;
+			std::vector<glm::vec3> treePoints = points->curves_tree_version.serialize();
+			for (glm::vec3 controlPoint : treePoints)
+			{
+				if (controlPoint.x == 10){
+					curvesFileTree << "// End of Children //\n";
+					continue;
+				}
+				curvesFileTree << controlPoint.x + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)
+					<< " " << controlPoint.y + points->lower_bounds.y + ((points->upper_bounds.y - points->lower_bounds.y) / 2)
+					<< " " << -1.0 * (controlPoint.z - points->lower_bounds.z - points->getZoffset()) << "\n";
+			}
 		}
 		else
 		{
@@ -577,7 +594,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		_r->AddObjectToScene(_r->controller_pointer1);
 		_r->AddObjectToScene(_r->controller_pointer2);
 
-		viewer->selector->SetSelectorScale(points->getXYZrange());
+		viewer->selector->SetSelectorScale(glm::vec3(1.25*points->getXYZrange().x, 1.25*points->getXYZrange().y, 1.25*points->getXYZrange().z));
 	}
 
 	ImGui::PopStyleColor(3);

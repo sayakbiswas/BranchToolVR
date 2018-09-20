@@ -1,6 +1,6 @@
 #pragma once
 #include "AbstractBaseObject.h"
-#include "fstream"
+#include <limits>
 
 class DicomPointCloudObject;
 
@@ -51,9 +51,9 @@ class curveTree {
 	node* temp;
 	node* curr;
 	int index = 0;
-	std::vector<Curve*> out;
-	std::string output;
-	std::string marker = "# End of Children #\n";
+	std::vector<glm::vec3> out;
+	//std::string output;
+	//std::string marker = "# End of Children #\n";
 
 public:
 
@@ -147,35 +147,35 @@ public:
 		for (int i = 0; i < _parent->children.size(); i++) {
 			curr = _parent->children[i];
 			for(glm::vec3 controlPoint : curr->nodeCurve->GetControlPoints()){
-				output += (std::to_string(controlPoint.x)
-					+ " " + std::to_string(controlPoint.y)
-					+ " " + std::to_string(-1.0 * controlPoint.z) + "\n");
+				out.push_back(controlPoint);
 			}
 			writeTree(curr);
 		}
-		output += marker;
+		out.push_back(glm::vec3(10));
 		return;
 	}
 
 	// Start serialization
-	std::string serialize() {
+	std::vector<glm::vec3> serialize() {
+		//output = "";
+		//out.clear();
 		writeTree(root);
-		return output;
+		return out;
 	}
 
 	// Level-order, still have to  do marking stuff
-	void levelOrder(node * _parent) {
-		for (int i = 0; i < _parent->children.size(); i++) {
-			curr = _parent->children[i];
-			out.push_back(curr->nodeCurve);
-		}
-		for (int i = 0;  i < _parent->children.size(); i++)
-			levelOrder(_parent->children[i]);
-	};
+	//void levelOrder(node * _parent) {
+	//	for (int i = 0; i < _parent->children.size(); i++) {
+	//		curr = _parent->children[i];
+	//		out.push_back(curr->nodeCurve);
+	//	}
+	//	for (int i = 0;  i < _parent->children.size(); i++)
+	//		levelOrder(_parent->children[i]);
+	//};
 
-	// Kick-start traversal
-	std::vector<Curve*> traverse() {
-		levelOrder(root);
-		return out;
-	};
+	//// Kick-start traversal
+	//std::vector<Curve*> traverse() {
+	//	levelOrder(root);
+	//	return out;
+	//};
 };

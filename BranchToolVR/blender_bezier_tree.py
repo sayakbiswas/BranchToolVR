@@ -20,12 +20,12 @@ depth = 0
 with open('C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/curveTree.dat', 'r') as f:
 	coords = []
 	for line in f:
-		if line.startswith('###'):
+		if line.startswith('#'):
 			depth -= 1
 			continue
-		if countPoints > 4:
+		if countPoints >= 4:
+			curves.append(coords)
 			coords = []
-			depth += 1
 			countPoints = 0
 		strarr = np.array(line.split())	# split into a string numpy array
 		coords.append(strarr.astype(np.float))	# convert string array to float array
@@ -42,6 +42,7 @@ with open('C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/curveTree.dat
 		# 	bm.to_mesh(mesh)
 		# 	bm.free()
 		# 	coord0 = []
+		depth += 1
 		countPoints += 1
 	curves.append(coords)	# append the curve from the last iteration
 
