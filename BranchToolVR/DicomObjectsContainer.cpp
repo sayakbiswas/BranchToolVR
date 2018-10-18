@@ -1,4 +1,5 @@
 #include "DicomObjectsContainer.h"
+#include "tiny_obj_loader.h"
 
 //ColorObject* debug1 = new ColorObject;
 //ColorObject* debug2 = new ColorObject;
@@ -406,9 +407,13 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
 				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
-					curvesFile << controlPoint.x + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)
-						<< " " << controlPoint.y + points->lower_bounds.y + ((points->upper_bounds.y - points->lower_bounds.y) / 2)
-						<< " " << -1.0 * (controlPoint.z - points->lower_bounds.z - points->getZoffset()) << "\n";
+					glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
+					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
+					glm::vec4 cp = modelPoints * temp;
+					//glm::vec4 cp = points->GetModelMatrix() * temp;
+					curvesFile << cp.x/* + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)*/
+						<< " " << cp.y/* + points->lower_bounds.y/* + ((points->upper_bounds.y - points->lower_bounds.y) / 2)*/
+						<< " " << -1.0 * (cp.z/* - points->lower_bounds.z/* - points->getZoffset()*/) << "\n";
 				}
 			}
 			curvesFile.close();
@@ -421,16 +426,28 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		std::ofstream curvesFileTree("curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
+			int curveCount = 0;
 			std::vector<glm::vec3> treePoints = points->curves_tree_version.serialize();
+			int tCount = 0;
 			for (glm::vec3 controlPoint : treePoints)
 			{
-				if (controlPoint.x == 10){
+				//controlPoint *= ; TODO inverse of points->getModelMatrix()
+				if (abs(10 - controlPoint.x) < 0.001){
 					curvesFileTree << "// End of Children //\n";
-					continue;
 				}
-				curvesFileTree << controlPoint.x + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)
-					<< " " << controlPoint.y + points->lower_bounds.y + ((points->upper_bounds.y - points->lower_bounds.y) / 2)
-					<< " " << -1.0 * (controlPoint.z - points->lower_bounds.z - points->getZoffset()) << "\n";
+				else {
+					if (tCount % 4 == 0) {
+						curvesFileTree << "### Curve " << curveCount++ << " ###\n";
+						tCount = 0;
+					}
+					glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
+					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
+					glm::vec4 cp = modelPoints * temp;
+					curvesFileTree << cp.x
+						<< " " << cp.y
+						<< " " << -1.0 * (cp.z) << "\n";
+					tCount++;
+				}
 			}
 		}
 		else

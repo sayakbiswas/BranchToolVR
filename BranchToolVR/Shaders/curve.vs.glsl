@@ -13,6 +13,7 @@ out vec3 oi_instanced_color;
 
 void main()
 {
-	gl_Position = P * V * M * vec4(pos + lower_bounds, 1.f);
+	vec3 position = vec3(M * vec4(pos + lower_bounds, 1.0f));
+	gl_Position = P * V * vec4(position, 1.0f);
 	oi_instanced_color = instanced_color;
 }

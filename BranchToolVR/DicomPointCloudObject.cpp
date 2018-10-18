@@ -476,6 +476,10 @@ void DicomPointCloudObject::SetMasterAppendPose(glm::mat4 _in)
 {
 	SetAppendPose(_in);
 	branch_point_marker->SetAppendPose(_in);
+	//Below is potentially useless code but looks like something we should be doing
+	for (Curve* curve : curves) {
+		curve->SetAppendPose(_in);
+	}
 
 }
 

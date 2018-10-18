@@ -46,7 +46,7 @@ class curveTree {
 		int childIndex;
 	};
 
-	node* root = new node();
+	node* root;
 	node* prev;
 	node* temp;
 	node* curr;
@@ -59,12 +59,22 @@ public:
 
 	curveTree() {
 		// Junk values for super root
+		root = new node();
+		clear(root);
 		root->nodeCurve = new Curve();
 		root->depth = -1;
 		root->childIndex = -1;
 		curr = root;
 		prev = new node();
 		temp = new node();
+		//std::cout << curr->children.size() << std::endl;
+	};
+
+	void clear(node* n) {
+		for (int i = 0; i < n->children.size(); i++) {
+			clear(n->children[i]);
+		}
+		n->children.clear();
 	};
 
 	// Recursive helper for destructor
@@ -77,7 +87,12 @@ public:
 		}
 	};
 
-	~curveTree() { delete root, prev, temp, curr; };
+	~curveTree() {
+		clear(root); 
+		delete root, prev, temp, curr;
+		index = 0; 
+		out.clear();
+	};
 
 	Curve* getCurr() {
 		return curr->nodeCurve;
@@ -95,9 +110,10 @@ public:
 		return root->children.empty();
 	}
 
-	// Move "down"
+	// Move "down" with push
 	void pushChild(Curve* C) {
 		prev = curr;
+		temp = new node();
 		temp->nodeCurve = C;
 		temp->depth = prev->depth + 1;
 		prev->children.push_back(temp);
@@ -117,10 +133,10 @@ public:
 		prev = curr->parent;
 		index = curr->childIndex;
 	};
-	// Move "Down"
+	// Move "Down" no push
 	void navDown() {
 		index = 0;
-		if (!curr->children[index]) {
+		if (curr->children.size() == 0) {
 			return;
 		}
 		prev = curr;
@@ -141,25 +157,61 @@ public:
 
 	// Write serialized tree ("end-of-children" method)
 	void writeTree(node* _parent) {
-		if (_parent->children.size() == 0)
-			return;
 
+		if (_parent->children.size() == 0) {
+			std::cout << "empty tree!" << std::endl;
+			std::cout << "pushing spacer..." << std::endl;
+			out.push_back(glm::vec3(10));
+			return;
+		}
+
+		std::cout << "recursion..." << std::endl;
 		for (int i = 0; i < _parent->children.size(); i++) {
 			curr = _parent->children[i];
-			for(glm::vec3 controlPoint : curr->nodeCurve->GetControlPoints()){
+			for (glm::vec3 controlPoint : curr->nodeCurve->GetControlPoints()) {
 				out.push_back(controlPoint);
 			}
 			writeTree(curr);
 		}
+
+		std::cout << "pushing spacer..." << std::endl;
 		out.push_back(glm::vec3(10));
+		std::cout << "node written!" << std::endl;
 		return;
+
+		/*curr = _parent;
+
+		if (curr == NULL) {
+			std::cout << "pushing spacer..." << std::endl;
+			out.push_back(glm::vec3(10));
+		}
+
+		if (curr != root) {
+			std::cout << "pushing points..." << std::endl;
+			for (glm::vec3 controlPoint : curr->nodeCurve->GetControlPoints()) {
+				out.push_back(controlPoint);
+			}
+			std::cout << "node written!" << std::endl;
+		}
+
+		std::cout << "recursion..." << std::endl;
+		for (int i = 0; i < curr->children.size(); i++) {
+			writeTree(curr->children[i]);
+		}
+
+		std::cout << "children written!" << std::endl;
+
+		return;*/
 	}
 
 	// Start serialization
 	std::vector<glm::vec3> serialize() {
 		//output = "";
 		//out.clear();
+
+		std::cout << "begin serialize..." << std::endl;
 		writeTree(root);
+		std::cout << "end serialize!" << std::endl;
 		return out;
 	}
 
