@@ -23,7 +23,7 @@ out float oi_lighting;
 
 void main()
 {
-	vec4 tmp = M * vec4(position + instanced_position + lower_bounds, 1.0f);
+	vec4 tmp = M * vec4(position + instanced_position, 1.0f);
 	gl_Position = P * V * tmp;
 	oi_normal = normalize(vec3(M * vec4(normal, 0.0f)));
 	oi_pos = vec3(tmp);

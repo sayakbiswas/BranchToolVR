@@ -407,13 +407,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 				curvesFile << "### Curve " << curveCount++ << " ###\n";
 				for (glm::vec3 controlPoint : curve->GetControlPoints())
 				{
-					glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
-					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
-					glm::vec4 cp = modelPoints * temp;
-					//glm::vec4 cp = points->GetModelMatrix() * temp;
-					curvesFile << cp.x/* + points->lower_bounds.x + ((points->upper_bounds.x - points->lower_bounds.x) / 2)*/
-						<< " " << cp.y/* + points->lower_bounds.y/* + ((points->upper_bounds.y - points->lower_bounds.y) / 2)*/
-						<< " " << -1.0 * (cp.z/* - points->lower_bounds.z/* - points->getZoffset()*/) << "\n";
+					curvesFile << controlPoint.x
+						<< " " << controlPoint.y
+						<< " " << -1.0 * (controlPoint.z) << "\n";
 				}
 			}
 			curvesFile.close();
@@ -431,7 +427,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			int tCount = 0;
 			for (glm::vec3 controlPoint : treePoints)
 			{
-				//controlPoint *= ; TODO inverse of points->getModelMatrix()
 				if (abs(10 - controlPoint.x) < 0.001){
 					curvesFileTree << "// End of Children //\n";
 				}
@@ -440,12 +435,12 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 						curvesFileTree << "### Curve " << curveCount++ << " ###\n";
 						tCount = 0;
 					}
-					glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
+					/*glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
 					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
-					glm::vec4 cp = modelPoints * temp;
-					curvesFileTree << cp.x
-						<< " " << cp.y
-						<< " " << -1.0 * (cp.z) << "\n";
+					glm::vec4 cp = modelPoints * temp;*/
+					curvesFileTree << controlPoint.x
+						<< " " << controlPoint.y
+						<< " " << -1.0 * (controlPoint.z) << "\n";
 					tCount++;
 				}
 			}
@@ -831,14 +826,14 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
 					controller_pos_in_point_space = modelPoints * tmp;
 				}
-				else
+				else // TODO: is this necessary anymore?????
 				{
 					controller_pos_in_point_space = glm::inverse(points->GetModelMatrix())
 						* glm::vec4(_vr.controller1.position, 1.0f);
 					tmp = points->GetModelMatrix() * glm::inverse(points->GetModelMatrix())
 						* glm::vec4(_vr.controller1.position, 1.0f);
 				}
-				BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
+				BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space));
 				points->branch_points.push_back(newBP);
 				prev->neighbors.push_back(newBP->id);
 				prev = newBP;
@@ -859,7 +854,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 					* glm::vec4(_vr.controller1.position, 1.0f);
 			}
 
-			BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space) - points->lower_bounds);
+			BranchPoint* newBP = new BranchPoint(glm::vec3(controller_pos_in_point_space));
 			points->branch_points.push_back(newBP);
 			prev = newBP;
 		}
