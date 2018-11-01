@@ -1,42 +1,31 @@
 #include "Curve.h"
 #include "DicomPointCloudObject.h"
 
-Curve::Curve()
-{
-}
+Curve::Curve(){}
 
+Curve::~Curve(){}
 
-Curve::~Curve()
-{
-}
-
-Curve::Curve(std::vector<glm::vec3> curvePoints)
-{
+Curve::Curve(std::vector<glm::vec3> curvePoints) {
 	this->positions = curvePoints;
 }
 
-void Curve::SetPositions(std::vector<glm::vec3> curvePoints)
-{
+void Curve::SetPositions(std::vector<glm::vec3> curvePoints) {
 	this->positions = curvePoints;
 }
 
-std::vector<glm::vec3> Curve::GetPositions()
-{
+std::vector<glm::vec3> Curve::GetPositions() {
 	return positions;
 }
 
-void Curve::SetNormals(std::vector<glm::vec3> normals)
-{
+void Curve::SetNormals(std::vector<glm::vec3> normals) {
 	this->normals = normals;
 }
 
-std::vector<glm::vec3> Curve::GetNormals()
-{
+std::vector<glm::vec3> Curve::GetNormals() {
 	return normals;
 }
 
-void Curve::Load()
-{
+void Curve::Load() {
 	num_vertices = positions.size();
 	
 	/*std::cout << "Rendering positions" << std::endl;
@@ -85,18 +74,15 @@ void Curve::Load()
 	glDisableVertexAttribArray(3);
 }
 
-int Curve::Type()
-{
+int Curve::Type() {
 	return AbstractBaseObject::get_type_id<Curve>();
 }
 
-void Curve::RenderCurve()
-{
+void Curve::RenderCurve() {
 	Load();
 }
 
-void Curve::RenderCurveHighlight()
-{
+void Curve::RenderCurveHighlight() {
 	num_vertices = positions.size();
 
 	glGenVertexArrays(1, &vao);
@@ -139,17 +125,14 @@ void Curve::RenderCurveHighlight()
 	glDisableVertexAttribArray(3);
 }
 
-void Curve::SetDicomPointCloudObject(DicomPointCloudObject* pointCloud)
-{
+void Curve::SetDicomPointCloudObject(DicomPointCloudObject* pointCloud) {
 	this->pointCloud = pointCloud;
 }
 
-void Curve::SetControlPoints(std::vector<glm::vec3> controlPoints)
-{
+void Curve::SetControlPoints(std::vector<glm::vec3> controlPoints) {
 	this->controlPoints = controlPoints;
 }
 
-std::vector<glm::vec3> Curve::GetControlPoints()
-{
+std::vector<glm::vec3> Curve::GetControlPoints() {
 	return controlPoints;
 }

@@ -12,8 +12,7 @@
 #include "DicomReader.h"
 #include "MiscFunctions.h"
 
-class ColorObject : public AbstractBaseObject
-{
+class ColorObject : public AbstractBaseObject {
 	public:
 		ColorObject();
 		~ColorObject();

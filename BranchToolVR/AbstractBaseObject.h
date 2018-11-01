@@ -13,8 +13,7 @@
 #include "MiscFunctions.h"
 #include "Constants.h"
 
-struct InteractionCache
-{
+struct InteractionCache {
 	glm::mat4 to_controller_space_initial;
 	glm::mat4 controller_pose_initial;
 	glm::mat4 controller_pose_updated;
@@ -33,8 +32,7 @@ struct InteractionCache
 	float initial_scale;
 };
 
-class AbstractBaseObject
-{
+class AbstractBaseObject {
 	public:
 		AbstractBaseObject();
 		~AbstractBaseObject();
@@ -113,13 +111,11 @@ class AbstractBaseObject
 };
 
 template<typename T>
-int AbstractBaseObject::get_type_id()
-{
+int AbstractBaseObject::get_type_id() {
 	static bool exists = false;
 	static int type_id;
 	
-	if (!exists)
-	{
+	if (!exists) {
 		type_id = type_id_counter++;
 		exists = true;
 	}

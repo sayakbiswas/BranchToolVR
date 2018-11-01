@@ -13,6 +13,7 @@
 #include "Constants.h"
 #include "LeastSquaresFit.h"
 #include "Curve.h"
+#include "CurveTree.h"
 
 struct IsovaluePointCloudSlider;
 struct BranchPoint
@@ -75,7 +76,7 @@ public:
 	std::vector<BranchPoint*> branch_points;
 	int current_bp_selection;
 	std::vector<Curve*> curves;
-	curveTree curves_tree_version;
+	curveTree curvesTree;
 	std::vector<glm::vec3> GetInstancedColor();
 	std::vector<glm::vec3> GetInstancedPositions();
 

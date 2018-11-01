@@ -189,11 +189,11 @@ void DicomObjectsContainer::MainMenuBar() {
 		if (ImGui::BeginMenu("Edit")) {
 			if (ImGui::MenuItem("Undo Curve")) {
 				points->curves.pop_back();
-				points->curves_tree_version.popChild();
+				points->curvesTree.popChild();
 			}
 			if (ImGui::MenuItem("Clear all Curves")) {
 				points->curves.clear();
-				points->curves_tree_version.~curveTree();
+				points->curvesTree.~curveTree();
 			}
 			ImGui::Separator();
 			if (ImGui::MenuItem("Clear Isovalues", NULL)) {
@@ -204,7 +204,7 @@ void DicomObjectsContainer::MainMenuBar() {
 			}
 			if (ImGui::MenuItem("Clear all Fields")) {
 				points->curves.clear();
-				points->curves_tree_version.~curveTree();
+				points->curvesTree.~curveTree();
 				first = 0;
 				last = 100;
 				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
@@ -423,7 +423,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		if (curvesFileTree.is_open())
 		{
 			int curveCount = 0;
-			std::vector<glm::vec3> treePoints = points->curves_tree_version.serialize();
+			std::vector<glm::vec3> treePoints = points->curvesTree.serialize();
 			int tCount = 0;
 			for (glm::vec3 controlPoint : treePoints)
 			{
@@ -731,37 +731,37 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		//up
 		if (pad2.x > -1 * (pad2.y) && pad2.x < (pad2.y)) {
 			std::cout << "up" << std::endl;
-			points->curves_tree_version.navUp();
+			points->curvesTree.navUp();
 		}
 		//down
 		else if (pad2.x < -1 * (pad2.y) && pad2.x > (pad2.y)) {
 			std::cout << "down" << std::endl;
-			points->curves_tree_version.navDown();
+			points->curvesTree.navDown();
 		}
 		//right
 		else if (pad2.y > -1 * (pad2.x) && pad2.y < (pad2.x)) {
 			std::cout << "right" << std::endl;
-			points->curves_tree_version.navRight();
+			points->curvesTree.navRight();
 		}
 		//left
 		else if (pad2.y < -1 * (pad2.x) && pad2.y > (pad2.x)) {
 			std::cout << "left" << std::endl;
-			points->curves_tree_version.navLeft();
+			points->curvesTree.navLeft();
 		}
 		hold = true;
 
 		for (Curve* curveInstance : points->curves)
 		{
-			Curve* current = points->curves_tree_version.getCurr();
+			Curve* current = points->curvesTree.getCurr();
 			//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
-			if (curveInstance == points->curves_tree_version.getCurr()) curveInstance->RenderCurveHighlight();
+			if (curveInstance == points->curvesTree.getCurr()) curveInstance->RenderCurveHighlight();
 			else curveInstance->RenderCurve();
 			std::cout << "nav rendering" << std::endl;
 		}
 	}
 	if (!_vr.controller2.touchpad_is_pressed) hold = false;
 
-	if (points->curves_tree_version.empty()) curve = new Curve();
+	if (points->curvesTree.empty()) curve = new Curve();
 
 	// drawing branches in VR
 	if (_vr.controller1.touchpad_is_pressed && !newCurve)
@@ -769,7 +769,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		//std::cout << "touchpad is pressed" << std::endl;
 		// Undo for curve from controller, only has effect on current curve (while red dots are visible)
 		if (_vr.controller1.touch_axis.x < 0.0f) { points->curves.pop_back(); 
-		points->curves_tree_version.popChild(); }
+		points->curvesTree.popChild(); }
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
@@ -892,7 +892,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			if (newCurve || points->curves.empty())
 			{
 				points->curves.push_back(curve);
-				points->curves_tree_version.pushChild(curve);
+				points->curvesTree.pushChild(curve);
 			}
 			else
 			{
@@ -905,7 +905,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			}
 			for (Curve* curveInstance : points->curves)
 			{
-				Curve* current = points->curves_tree_version.getCurr();
+				Curve* current = points->curvesTree.getCurr();
 				//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
 				if (curveInstance == current) curveInstance->RenderCurveHighlight();
 				else curveInstance->RenderCurve();

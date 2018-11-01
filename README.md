@@ -7,7 +7,6 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Testing
 - [ ] Control adjustments for improved UX
 	- [x] Undo curve from touchpad (only for curves in progress)
-	- [ ] Make starting view in VR line up with headset instead of origin, or just move the origin up to eye-level
 - [ ] Make navigating controls and interface easier (how-to's, button naming, etc)
 	- [x] Display diagrams in how-to popups
 - [ ] Rename classes and clean code to ease open-source use

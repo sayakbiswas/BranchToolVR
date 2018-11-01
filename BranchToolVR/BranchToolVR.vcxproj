@@ -136,6 +136,7 @@
     <ClCompile Include="AbstractBaseObject.cpp" />
     <ClCompile Include="CoarseDicomViewer.cpp" />
     <ClCompile Include="Curve.cpp" />
+    <ClCompile Include="CurveTree.cpp" />
     <ClCompile Include="DicomObjectsContainer.cpp" />
     <ClCompile Include="DicomPointCloudObject.cpp" />
     <ClCompile Include="DicomReader.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="CoarseDicomViewer.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Curve.h" />
+    <ClInclude Include="CurveTree.h" />
     <ClInclude Include="DicomObjectsContainer.h" />
     <ClInclude Include="DicomPointCloudObject.h" />
     <ClInclude Include="DicomReader.h" />

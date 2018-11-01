@@ -7,8 +7,7 @@
 
 // TODO: privatize class members (requires const refactor)
 
-class CoarseDicomViewer
-{
+class CoarseDicomViewer {
 	public:
 		CoarseDicomViewer();
 		~CoarseDicomViewer();		
