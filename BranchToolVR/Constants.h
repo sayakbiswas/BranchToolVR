@@ -53,6 +53,8 @@ namespace DirectoryInfo
 	static const std::string CONTROLLER = "Controller";
 	static const std::string IMGUI_FRAME_MODEL = "imguiFrame";
 	static const std::string MODEL_EXT = ".wobj"; // rename from obj to avoid conflicts with obj files in gitignore
+	static const std::string EXPORT_PATH = "./BranchToolExport/";
+	static const char* EXPORT_DIR = "./BranchToolExport/";
 }
 
 namespace Constants 

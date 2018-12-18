@@ -21,10 +21,12 @@ currParent = []
 tmp = 0
 currParent.append(-1)
 parentList = []
+filename = './curveTree.dat'
 
 # read data from file
 # Filepath stuff needs work
-with open(os.path.join(bpy.path.abspath(bpy.data.filepath), 'curveTree.dat'), 'r') as f:
+#with open(os.path.join(bpy.path.abspath(bpy.data.filepath), 'curveTree.dat'), 'r') as f:
+with open('C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/curveTree.dat', 'r') as f:
 	coords = []
 	for line in f:
 		if line.startswith('###'):

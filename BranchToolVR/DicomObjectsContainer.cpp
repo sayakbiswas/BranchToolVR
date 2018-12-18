@@ -1,5 +1,7 @@
 #include "DicomObjectsContainer.h"
 #include "tiny_obj_loader.h"
+#include <direct.h>
+//#include <filesystem>
 
 //ColorObject* debug1 = new ColorObject;
 //ColorObject* debug2 = new ColorObject;
@@ -8,6 +10,7 @@ bool IGuide = false;
 bool VRGuide = false;
 bool undo_curve = false;
 std::string folder = "";
+std::string code_dir = "";
 
 int IsovaluePointCloudSlider::id_counter = 0;
 const int max_nr_isovalue_point_cloud_sliders = MAX_NR_POINT_CLOUD_SLIDERS;
@@ -18,6 +21,11 @@ DicomObjectsContainer::DicomObjectsContainer()
 {
 	points = new DicomPointCloudObject;
 	viewer = new CoarseDicomViewer;
+
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::string::size_type dir_end = std::string(buffer).find_last_of("\\/");
+	code_dir = std::string(buffer).substr(0, dir_end);
 /*
 	ControllerDiagram = new TextureObject;
 	ControllerImage = new Texture;
@@ -397,8 +405,10 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 15.0f, 0.8f, 0.8f));
 	exportButtonPressed = ImGui::Button("Export");
 	if (exportButtonPressed) {
+		_mkdir(DirectoryInfo::EXPORT_DIR);
+		//std::filesystem::copy( code_dir + "base.blend", DirectoryInfo::EXPORT_PATH + "base.blend");
 		std::cout << "Exporting trace" << std::endl;
-		std::ofstream curvesFile("curves.dat", std::ios::out);
+		std::ofstream curvesFile(DirectoryInfo::EXPORT_PATH + "curves.dat", std::ios::out);
 		if (curvesFile.is_open())
 		{
 			int curveCount = 0;
@@ -419,7 +429,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}
 
-		std::ofstream curvesFileTree("curveTree.dat", std::ios::out);
+		std::ofstream curvesFileTree(DirectoryInfo::EXPORT_PATH + "curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
 			int curveCount = 0;
@@ -457,7 +467,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			int indices = 0;
 			std::ostringstream ply;
 			ply << "tumor" << slider_i << ".ply";
-			std::ofstream pointCloudPLYFile(std::string(ply.str()), std::ios::out);
+			std::ofstream pointCloudPLYFile(DirectoryInfo::EXPORT_PATH + std::string(ply.str()), std::ios::out);
 			
 			if (pointCloudPLYFile.is_open())
 			{
@@ -488,7 +498,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			}
 			std::ostringstream xyz;
 			xyz << "tumor" << slider_i << ".xyz";
-			std::ofstream pointCloudXYZFile(std::string(xyz.str()), std::ios::out);
+			std::ofstream pointCloudXYZFile(DirectoryInfo::EXPORT_PATH + std::string(xyz.str()), std::ios::out);
 			if (pointCloudXYZFile.is_open())
 			{
 				unsigned int i_count = 0;
@@ -509,7 +519,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 			std::ostringstream h;
 			h << "hexmesh" << slider_i << ".obj";
-			std::ofstream hexMeshFile(h.str(), std::ios::out);
+			std::ofstream hexMeshFile(DirectoryInfo::EXPORT_PATH + h.str(), std::ios::out);
 			
 			if (hexMeshFile.is_open()) {
 				unsigned int i_count = 0;
