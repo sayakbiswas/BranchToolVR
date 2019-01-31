@@ -107,10 +107,10 @@ void ColorObject::GenerateController()
 	float pointer_width = 0.005f;
 
 	// Changes to pointer length are not always displayed properly for some reason; behaving on previous values
+	GenerateSphere(11, 0.005f, false, glm::vec3(0.0f, 0.0f, -0.25f));
 	AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
 	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
-	AddRectangularPrism(glm::vec3(pointer_width / 4.0f, pointer_width / 4.0f, -10.0f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
-	
+	AddRectangularPrism(glm::vec3(pointer_width / 5.0f, pointer_width / 5.0f, -10.0f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	Finalize();
 }
 
@@ -489,7 +489,7 @@ void ColorObject::GenerateIsosurfaceFromDicomSet(DicomSet & _dSet, int _isolevel
 
 }
 
-void ColorObject::GenerateSphere(int _res, float _radius, bool _invNormals) {
+void ColorObject::GenerateSphere(int _res, float _radius, bool _invNormals, glm::vec3 _offset) {
 
 	positions.clear();
 	normals.clear();
@@ -516,9 +516,9 @@ void ColorObject::GenerateSphere(int _res, float _radius, bool _invNormals) {
 		int y = i / resolution;
 
 		if (y != 0) {
-			positions.push_back(vertices[i]);
-			positions.push_back(vertices[(x + 1) % resolution + y*resolution]);
-			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution]);
+			positions.push_back(vertices[i] + _offset);
+			positions.push_back(vertices[(x + 1) % resolution + y*resolution] + _offset);
+			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution] + _offset);
 
 			normals.push_back(normal_fac*vertices[i]);
 			normals.push_back(normal_fac*vertices[(x + 1) % resolution + y*resolution]);
@@ -526,9 +526,9 @@ void ColorObject::GenerateSphere(int _res, float _radius, bool _invNormals) {
 		}
 
 		if (y != resolution - 1) {
-			positions.push_back(vertices[i]);
-			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution]);
-			positions.push_back(vertices[x % resolution + (y + 1)*resolution]);
+			positions.push_back(vertices[i] + _offset);
+			positions.push_back(vertices[(x + 1) % resolution + (y + 1)*resolution] + _offset);
+			positions.push_back(vertices[x % resolution + (y + 1)*resolution] + _offset);
 
 			normals.push_back(normal_fac*vertices[i]);
 			normals.push_back(normal_fac*vertices[(x + 1) % resolution + (y + 1)*resolution]);

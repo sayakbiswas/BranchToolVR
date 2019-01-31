@@ -83,7 +83,7 @@ void DicomPointCloudObject::Load()
 			if (instanced_colors.size() > 0)
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
 			}
 
 			if (instanced_isovalue_differences.size() > 0)
@@ -106,7 +106,9 @@ void DicomPointCloudObject::Load()
 
 			glEnableVertexAttribArray(3);
 			glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-			glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			glEnableVertexAttribArray(4);
 			glBindBuffer(GL_ARRAY_BUFFER, instanced_isovalue_differences_buffer);
@@ -130,7 +132,7 @@ void DicomPointCloudObject::Load()
 			if (instanced_colors.size() > 0)
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4)*instanced_colors.size(), &instanced_colors[0], GL_STATIC_DRAW);
 			}
 
 			if (instanced_isovalue_differences.size() > 0)
@@ -142,7 +144,7 @@ void DicomPointCloudObject::Load()
 	}
 }
 
-std::vector<glm::vec3> DicomPointCloudObject::GetInstancedColor()
+std::vector<glm::vec4> DicomPointCloudObject::GetInstancedColor()
 {
 	return instanced_colors;
 }
@@ -345,7 +347,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	// This changes if loading sets with different distance between slices, causing voxels to elongate
 	voxel_scale = glm::vec3(_ds.scale.x / (float)(_ds.data[0].width + f), _ds.scale.y / (float)(_ds.data[0].height + f), /*_ds.scale.z / ((float)_ds.data.size() + f)*/ 0.00246914);
 	//voxel_scale *= (1 / (0.00246914*(last - first)));
-	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false);
+	branch_point_marker->GenerateSphere(10, voxel_scale.x * 0.5f, false, glm::vec3(0));
 
 	/*if (prev_first != first || prev_last != last) {
 		z_change = true;
@@ -375,7 +377,7 @@ void DicomPointCloudObject::Generate(DicomSet & _ds, int _isovalue, int max_tole
 	// Figure out cause for generation of horizontal strips of points when decimated (minimized, may be unavoidable to an extent)
 
 	//std::cout << "last " << last << std::endl;
-	glm::vec3 col(1.0f);
+	glm::vec4 col(1.0f);
 
 	// Moved this stuff around for ply output correction and speed
 	for (int k = 0; k < isovalue_point_cloud_sliders.size(); k++)

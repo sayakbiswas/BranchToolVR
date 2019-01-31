@@ -11,7 +11,7 @@ private:
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec3> controlPoints;
-	std::vector<glm::vec3> instanced_colors = { glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 0.0, 0.0) };
+	std::vector<glm::vec3> instanced_colors = { glm::vec3(0.0, 1.0, 1.0), glm::vec3(1.0, 0.0, 0.0) };
 
 	GLuint normals_buffer;
 	GLuint instanced_positions_buffer;

@@ -656,6 +656,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 		glEnableVertexAttribArray(2);
 		glEnableVertexAttribArray(3);
 		glEnableVertexAttribArray(4);
+
 		glVertexAttribDivisor(0, 0);
 		glVertexAttribDivisor(1, 0);
 		glVertexAttribDivisor(2, 1);
@@ -731,6 +732,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				glEnableVertexAttribArray(1);
 				glEnableVertexAttribArray(3);
 				glVertexAttribDivisor(3, 1);
+				glLineWidth(5.0);
 
 				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 			}

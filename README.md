@@ -12,7 +12,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [ ] Rename classes and clean code to ease open-source use
 - [x] Convert the bezier curves in blender python to thick curves (TOP PRIORITY)
 	- [x] Make the exports overlay exactly in blender
-	- [ ] Spring constraints between "connected" curves
+	- [x] Spring constraints between "connected" curves
 	- [ ] Joining curves and adjusting resolution issues
 - [x] Formulaic thickness
 	- [ ] Scale-up scene
@@ -62,3 +62,4 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - Go to Tools->Options->Debugging->Symbols and check Microsoft Symbol Servers
 - Change project type to Release
 - If you get errors saying "application could not be loaded", you need to copy BranchToolVR\Libraries\glew-2.1.0\bin\Release\x64\glew32.dll and BranchToolVR\Libraries\openvr-master\bin\win64\openvr_api.dll to BranchToolVR-master\x64\Release
+- If you get deprecation or security warnings, add "_CRT_SECURE_NO_WARNINGS" (no quotes) to Project > Properties > C/C++ > Preprocessor > Preprocessor Definitions

@@ -148,7 +148,7 @@ void ShowUserGuide(bool _IGuide) {
 	ImGui::BulletText("'Decimate' is a toggle option that cuts down the number of points in the cloud, sacrificing detail for memory");
 	ImGui::BulletText(
 		"Controls for viewing cloud without VR:\n"
-		"- WASD: Move forward, left, back, right\n"
+		"- Space + WASD: Move forward, left, back, right\n"
 		"- Move mouse to look around");
 	ImGui::BulletText(
 		"When cloud is ready, click Headset Ready to enter VR interface\n"
@@ -194,34 +194,34 @@ void DicomObjectsContainer::MainMenuBar() {
 			FileMenu();
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Edit")) {
-			if (ImGui::MenuItem("Undo Curve")) {
-				points->curves.pop_back();
-				points->curvesTree.popChild();
-			}
-			if (ImGui::MenuItem("Clear all Curves")) {
-				points->curves.clear();
-				points->curvesTree.~curveTree();
-			}
-			ImGui::Separator();
-			if (ImGui::MenuItem("Clear Isovalues", NULL)) {
-				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
-					isovalue_point_cloud_sliders[i]->SetInUse(false);
-				}
-				points->MarkForRegeneration();
-			}
-			if (ImGui::MenuItem("Clear all Fields")) {
-				points->curves.clear();
-				points->curvesTree.~curveTree();
-				first = 0;
-				last = 100;
-				for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
-					isovalue_point_cloud_sliders[i]->SetInUse(false);
-				}
-				points->MarkForRegeneration();
-			}
-			ImGui::EndMenu();
-		}
+		//if (ImGui::BeginMenu("Edit")) {
+		//	if (ImGui::MenuItem("Undo Curve")) {
+		//		//points->curves.pop_back();
+		//		//points->curvesTree.popChild();
+		//	}
+		//	if (ImGui::MenuItem("Clear all Curves")) {
+		//		//points->curves.clear();
+		//		//points->curvesTree.~curveTree();
+		//	}
+		//	ImGui::Separator();
+		//	if (ImGui::MenuItem("Clear Isovalues", NULL)) {
+		//		for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
+		//			isovalue_point_cloud_sliders[i]->SetInUse(false);
+		//		}
+		//		points->MarkForRegeneration();
+		//	}
+		//	if (ImGui::MenuItem("Clear all Fields")) {
+		//		points->curves.clear();
+		//		points->curvesTree.~curveTree();
+		//		first = 0;
+		//		last = 100;
+		//		for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
+		//			isovalue_point_cloud_sliders[i]->SetInUse(false);
+		//		}
+		//		points->MarkForRegeneration();
+		//	}
+		//	ImGui::EndMenu();
+		//}
 		/*if (ImGui::BeginMenu("Window")) {
 			---- Potential View features:
 					transparency slider
@@ -252,7 +252,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	// ========== Main Menu Bar ===========
 
 	bool b = true;
-
+	//ImGui::ShowTestWindow();
 	ImGui::Begin("Dicom Set", &b);
 	MainMenuBar();
 
@@ -292,6 +292,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		AddIsovaluePointCloudSlider(imaging_data.isovalue);
 		points->MarkForRegeneration();
 		points->Generate(imaging_data, imaging_data.isovalue, 30, first, last, isovalue_point_cloud_sliders);
+		//points->SetMasterAppendPose(glm::mat4(1.0f));
+		points->SetMasterAppendPose(glm::scale(glm::mat4(1.0f), glm::vec3(2))* points->GetAppendPose());
+		viewer->SetMasterAppendScale(2);
 		IsovaluePointCloudSlider::min_isovalue = imaging_data.isovalue - 300;
 		IsovaluePointCloudSlider::max_isovalue = imaging_data.isovalue + 300;
 	}
@@ -405,10 +408,11 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(1 / 15.0f, 0.8f, 0.8f));
 	exportButtonPressed = ImGui::Button("Export");
 	if (exportButtonPressed) {
+		_rmdir(DirectoryInfo::EXPORT_DIR);
 		_mkdir(DirectoryInfo::EXPORT_DIR);
 		//std::filesystem::copy( code_dir + "base.blend", DirectoryInfo::EXPORT_PATH + "base.blend");
 		std::cout << "Exporting trace" << std::endl;
-		std::ofstream curvesFile(DirectoryInfo::EXPORT_PATH + "curves.dat", std::ios::out);
+		/*std::ofstream curvesFile(DirectoryInfo::EXPORT_PATH + "curves.dat", std::ios::out);
 		if (curvesFile.is_open())
 		{
 			int curveCount = 0;
@@ -427,15 +431,18 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		else
 		{
 			std::cout << "Unable to open file curves.dat" << std::endl;
-		}
+		}*/
 
-		std::ofstream curvesFileTree(DirectoryInfo::EXPORT_PATH + "curveTree.dat", std::ios::out);
+		std::ofstream curvesFileTree("./BranchToolExport/curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
 			int curveCount = 0;
 			std::vector<glm::vec3> treePoints = points->curvesTree.serialize();
 			int tCount = 0;
+
+			// Note: this iterator could be causing the occasional vector address error on export
 			for (glm::vec3 controlPoint : treePoints)
+			//for (int i = 0; i < treePoints.size(); i++)
 			{
 				if (abs(10 - controlPoint.x) < 0.001){
 					curvesFileTree << "// End of Children //\n";
@@ -448,9 +455,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 					/*glm::vec4 temp = glm::vec4(controlPoint, 1.0f);
 					glm::mat4 modelPoints = glm::inverse(points->GetModelMatrix());
 					glm::vec4 cp = modelPoints * temp;*/
-					curvesFileTree << controlPoint.x
-						<< " " << controlPoint.y
-						<< " " << -1.0 * (controlPoint.z) << "\n";
+					curvesFileTree << controlPoint.x << " " << controlPoint.y << " " << -1.0 * (controlPoint.z) << "\n";
 					tCount++;
 				}
 			}
@@ -461,7 +466,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		}
 
 		// separate points by color into different files
-		std::vector<glm::vec3> colors = points->GetInstancedColor();
+		std::vector<glm::vec4> colors = points->GetInstancedColor();
 		for (int slider_i = 0; slider_i < sliderCount; ++slider_i) {
 			int index = 0;
 			int indices = 0;
@@ -622,21 +627,32 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
-	// ======================== NEED TO SWITCH MOUSE BUTTONS TO VR BUTTONS ==================================
-
 	ImGui::NextColumn();
-	bool wc_changed = ImGui::SliderInt("Window Center", &imaging_data.window_center, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE);
-	bool ww_changed = ImGui::SliderInt("Window Width", &imaging_data.window_width, TMP_MIN_WW, TMP_MAX_WW);
+	bool wc_changed = ImGui::SliderInt("Brightness (Window Center)", &imaging_data.window_center, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE, "");
+	bool ww_changed = ImGui::SliderInt("Contrast (Window Width)", &imaging_data.window_width, TMP_MIN_WW, TMP_MAX_WW, "");
 	bool less = ImGui::Button("<"); ImGui::SameLine(); bool more = ImGui::Button(">"); ImGui::SameLine();
 	bool slice_index_changed = ImGui::SliderInt("Slice Index", &imaging_data.current_index, 0, imaging_data.data.size() - 1);
 	ImGui::SameLine(); ShowHelpMarker("CTRL + click to input value.");
 	if (less) {
-		slice_index_changed = true;
 		imaging_data.current_index--;
+		if (imaging_data.current_index < 0)
+			imaging_data.current_index = 0;
+		slice_index_changed = true;
 	}
 	if (more) {
-		slice_index_changed = true;
 		imaging_data.current_index++;
+		if (imaging_data.current_index > imaging_data.data.size() - 1)
+			imaging_data.current_index = imaging_data.data.size() - 1;
+		slice_index_changed = true;
+	}
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.MouseWheel) {
+		imaging_data.current_index -= io.MouseWheel;
+		if (imaging_data.current_index < 0)
+			imaging_data.current_index = 0;
+		if (imaging_data.current_index > imaging_data.data.size() - 1)
+			imaging_data.current_index = imaging_data.data.size() - 1;
+		slice_index_changed = true;
 	}
 
 	if (wc_changed || ww_changed || slice_index_changed)
@@ -651,18 +667,18 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 	for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
 		if (!isovalue_point_cloud_sliders[i]->in_use) continue;
-		ImVec4 color = ImColor(isovalue_point_cloud_sliders[i]->color.x, isovalue_point_cloud_sliders[i]->color.y, isovalue_point_cloud_sliders[i]->color.z);
+		ImVec4 color = ImColor(isovalue_point_cloud_sliders[i]->color.r, isovalue_point_cloud_sliders[i]->color.g, isovalue_point_cloud_sliders[i]->color.b, isovalue_point_cloud_sliders[i]->color.a);
 		ImGui::ColorButton(color);
 		if (ImGui::BeginPopupContextItem(""))
 		{
 			ImGui::Text("Edit color");
-			ImGui::ColorEdit3("##edit" + i, (float*)&color);
+			ImGui::ColorEdit4("##edit" + i, (float*)&color);
 			if (ImGui::Button("Close")) {
 				ImGui::CloseCurrentPopup();
 				points->MarkForRegeneration();
 			}
 			ImGui::EndPopup();
-			isovalue_point_cloud_sliders[i]->SetColor(glm::vec3(color.x, color.y, color.z));
+			isovalue_point_cloud_sliders[i]->SetColor(glm::vec4(color.x, color.y, color.z, color.w));
 		}
 		ImGui::SameLine();
 		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, IsovaluePointCloudSlider::min_isovalue, IsovaluePointCloudSlider::max_isovalue);
@@ -680,8 +696,20 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0, 0, 0, 1));
 		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(20, 20));
 		if (pushed) {
-			isovalue_point_cloud_sliders[i]->SetInUse(false);
-			points->MarkForRegeneration();
+			for (int j = i; j < isovalue_point_cloud_sliders.size(); j++) {
+				isovalue_point_cloud_sliders[j] = isovalue_point_cloud_sliders[j + 1];
+				//isovalue_point_cloud_sliders[isovalue_point_cloud_sliders.size() - 1]->SetInUse(false);
+			}
+			//if (isovalue_point_cloud_sliders[i]->id == 0) {
+			//	//IsovaluePointCloudSlider* tempSlider = isovalue_point_cloud_sliders[0];
+			//	isovalue_point_cloud_sliders[0] = isovalue_point_cloud_sliders[1];
+			//	isovalue_point_cloud_sliders[1]->SetInUse(false);
+			//	points->MarkForRegeneration();
+			//}
+			//else {
+			//	isovalue_point_cloud_sliders[i]->SetInUse(false);
+			//	points->MarkForRegeneration();
+			//}
 		}
 		ImGui::PopStyleColor(1);
 
@@ -736,7 +764,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// left hand controls
 	// Math takes advantage of touchpad representation as unit circle about origin of pad
 	// and properties of functions y = x and y = -x
-	if (_vr.controller2.touchpad_is_pressed && !hold)
+	if (_vr.controller2.touchpad_is_pressed && !hold && !_vr.controller1.trigger_first_press && !_vr.controller1.trigger_is_pressed)
 	{
 		//up
 		if (pad2.x > -1 * (pad2.y) && pad2.x < (pad2.y)) {
@@ -766,7 +794,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
 			if (curveInstance == points->curvesTree.getCurr()) curveInstance->RenderCurveHighlight();
 			else curveInstance->RenderCurve();
-			std::cout << "nav rendering" << std::endl;
+			//std::cout << "nav rendering" << std::endl;
 		}
 	}
 	if (!_vr.controller2.touchpad_is_pressed) hold = false;
@@ -917,7 +945,13 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 			{
 				Curve* current = points->curvesTree.getCurr();
 				//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
-				if (curveInstance == current) curveInstance->RenderCurveHighlight();
+
+				if (curveInstance == current) {
+					if (!_vr.controller1.trigger_is_pressed) {
+						curveInstance->RenderCurveHighlight();
+					}
+					else curveInstance->RenderCurve();
+				}
 				else curveInstance->RenderCurve();
 			}
 			pointsToFitCount = currPointsToFitCount;

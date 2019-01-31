@@ -77,7 +77,7 @@ public:
 	int current_bp_selection;
 	std::vector<Curve*> curves;
 	curveTree curvesTree;
-	std::vector<glm::vec3> GetInstancedColor();
+	std::vector<glm::vec4> GetInstancedColor();
 	std::vector<glm::vec3> GetInstancedPositions();
 
 private:
@@ -89,7 +89,7 @@ private:
 	unsigned int num_instances;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec3> instanced_positions;
-	std::vector<glm::vec3> instanced_colors;
+	std::vector<glm::vec4> instanced_colors;
 	std::vector<GLfloat> instanced_isovalue_differences;
 
 	GLuint normals_buffer;

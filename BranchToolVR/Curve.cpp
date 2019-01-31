@@ -66,6 +66,7 @@ void Curve::Load() {
 	glEnableVertexAttribArray(3);
 	glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	//glLineWidth(1.0f);
 
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
@@ -117,6 +118,7 @@ void Curve::RenderCurveHighlight() {
 	glEnableVertexAttribArray(3);
 	glBindBuffer(GL_ARRAY_BUFFER, instanced_colors_buffer);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glLineWidth(5.0f);
 
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);

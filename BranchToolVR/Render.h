@@ -34,12 +34,12 @@ struct Light
 
 	Light()
 	{
-		marker.GenerateSphere(11, 0.05f, true);
+		marker.GenerateSphere(11, 0.05f, true, glm::vec3(0));
 	}
 
 	Light(float _radius) 
 	{
-		marker.GenerateSphere(11, _radius, true);
+		marker.GenerateSphere(11, _radius, true, glm::vec3(0));
 	}
 };
 

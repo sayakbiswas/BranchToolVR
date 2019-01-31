@@ -24,7 +24,7 @@ struct IsovaluePointCloudSlider
 	static float min_isovalue;
 	static float max_isovalue;
 	bool dec = false;
-	glm::vec3 color;
+	glm::vec4 color;
 
 	IsovaluePointCloudSlider(int _isovalue) : curr_isovalue(_isovalue), id(id_counter++)
 	{
@@ -44,10 +44,10 @@ struct IsovaluePointCloudSlider
 	{
 		this->SetInUse(false);
 		point_size = 0;
-		SetColor(glm::vec3(RAND_0_TO_1, RAND_0_TO_1, RAND_0_TO_1));
+		SetColor(glm::vec4(RAND_0_TO_1, RAND_0_TO_1, RAND_0_TO_1, 1.0f));
 	}
 
-	void SetColor(const glm::vec3 _color)
+	void SetColor(const glm::vec4 _color)
 	{
 		color = _color;
 	}
