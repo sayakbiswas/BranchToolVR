@@ -219,7 +219,7 @@
     <ClCompile Include="Libraries\imgui\imgui_draw.cpp" />
     <ClCompile Include="Libraries\misc\lodepng.cpp" />
     <ClCompile Include="Libraries\misc\pathtools.cpp" />
-    <ClCompile Include="LineObject.cpp" />
+    <ClCompile Include="Axis.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ColorObject.cpp" />
     <ClCompile Include="MarchingCubesVars.cpp" />
@@ -248,7 +248,7 @@
     <ClInclude Include="Libraries\imgui\stb_textedit.h" />
     <ClInclude Include="Libraries\imgui\stb_truetype.h" />
     <ClInclude Include="Libraries\misc\tiny_obj_loader.h" />
-    <ClInclude Include="LineObject.h" />
+    <ClInclude Include="Axis.h" />
     <ClInclude Include="MiscFunctions.h" />
     <ClInclude Include="InputHelpers.h" />
     <ClInclude Include="Render.h" />

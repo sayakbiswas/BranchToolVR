@@ -15,7 +15,7 @@
 #include <cstdlib>
 
 #include "ColorObject.h"
-#include "LineObject.h"
+#include "Axis.h"
 #include "DicomPointCloudObject.h"
 #include "AbstractBaseObject.h"
 #include "TextureObject.h"
@@ -90,7 +90,7 @@ class Render
 		void AddObjectToScene(AbstractBaseObject* abso);
 		void AddObjectToScene(ColorObject * bso);
 		void AddObjectToScene(DicomPointCloudObject * dpco);
-		void AddObjectToScene(LineObject * l);
+		void AddObjectToScene(Axis * l);
 		void AddObjectToScene(TextureObject * t);
 		void SetOrthosliceTextureReference(Texture* _t);
 		const CursorData& GetCursorData() { return cursor_info; };
@@ -141,7 +141,7 @@ class Render
 		std::vector<AbstractBaseObject*> all_objects;
 		std::vector<ColorObject*> color_objects;
 		std::vector<TextureObject*> texture_objects;
-		std::vector<LineObject*> line_objects;
+		std::vector<Axis*> axis_object;
 		std::vector<DicomPointCloudObject*> dicom_point_cloud_objects;
 
 		// VR variables

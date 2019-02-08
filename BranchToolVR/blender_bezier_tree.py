@@ -26,7 +26,7 @@ pathdir = bpy.context.space_data.text.filepath;
 
 # read data from file
 print(bpy.context.space_data.text.filepath)
-with open(os.path.join(pathdir, '../curveTree.dat'), 'r') as f:
+with open(os.path.join(pathdir, '../BranchToolExport/curveTree.dat'), 'r') as f:
 #with open('C:/Users/SurfLab/Documents/VR/BranchToolVR/BranchToolVR/curveTree.dat', 'r') as f:
 	coords = []
 	for line in f:
@@ -102,7 +102,7 @@ for index, curve in enumerate(curves):
 
 os.system('cls')
 
-filepath = os.path.join(pathdir, '../hexmesh0.obj')
+filepath = os.path.join(pathdir, '../BranchToolExport/hexmesh0.obj')
 
 
 # import OBJ file
@@ -113,7 +113,7 @@ hexmesh_object = bpy.context.selected_objects[0]
 scn = bpy.context.scene
 scn.objects.active = hexmesh_object
 hexmesh_object.select = True
-# 
+#
 #
 # def recalc_outer_surface(M):
 #   print('recalculating outer surface')

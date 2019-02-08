@@ -62,9 +62,7 @@ struct IsovaluePointCloudSlider
 		_in_use = !_in_use;
 	}
 
-	~IsovaluePointCloudSlider()
-	{
-	}
+	~IsovaluePointCloudSlider(){}
 };
 
 class DicomObjectsContainer

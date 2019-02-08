@@ -433,8 +433,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}*/
 
-		// TODO: move all export files to new BranchToolExports directory and then edit python script accordingly
-
 		std::ofstream curvesFileTree(DirectoryInfo::EXPORT_PATH + "curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
@@ -796,7 +794,6 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		Curve* current = points->curvesTree.getCurr();
 		for (Curve* curveInstance : points->curves)
 		{
-
 			if (curveInstance == points->curvesTree.getCurr()) curveInstance->RenderCurveHighlight();
 			else curveInstance->RenderCurve();
 		}
@@ -819,15 +816,11 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		Curve* current = points->curvesTree.getCurr();
 		for (Curve* curveInstance : points->curves)
 		{
-			if (curveInstance == current) {
-				curveInstance->RenderCurveHighlight();
-			}
+			if (curveInstance == current) curveInstance->RenderCurveHighlight();
 			else curveInstance->RenderCurve();
 
 		}
 	}
-
-	
 
 	static BranchPoint* prev = NULL;
 	static const float dist_threshold_to_existing = 0.1f;

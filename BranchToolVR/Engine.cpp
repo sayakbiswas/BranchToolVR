@@ -19,7 +19,7 @@ Engine::Engine()
 void Engine::InitObjects()
 {
 	// axis lines
-	LineObject* axis = new LineObject;
+	Axis* axis = new Axis;
 	axis->GenerateAxis();
 	renderer->AddObjectToScene(axis);
 

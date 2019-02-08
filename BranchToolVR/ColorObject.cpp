@@ -8,9 +8,7 @@ ColorObject::ColorObject()
 	selection_modifier = 0.5f;
 }
 
-ColorObject::~ColorObject()
-{
-}
+ColorObject::~ColorObject(){}
 
 glm::vec4 ColorObject::GetDisplayColor() 
 {
@@ -109,7 +107,6 @@ void ColorObject::GenerateController()
 	// Changes to pointer length are not always displayed properly for some reason; behaving on previous values
 	GenerateSphere(11, 0.005f, false, glm::vec3(0.0f, 0.0f, -0.25f));
 	readObjFromFile("vr_controller_vive_1_5");
-	//AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
 	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	AddRectangularPrism(glm::vec3(pointer_width / 5.0f, pointer_width / 5.0f, -10.0f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	Finalize();

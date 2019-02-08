@@ -184,10 +184,10 @@ void Render::AddObjectToScene(DicomPointCloudObject * _dpco)
 	dicom_point_cloud_objects.push_back(_dpco);
 }
 
-void Render::AddObjectToScene(LineObject * _l) 
+void Render::AddObjectToScene(Axis * _l) 
 {
 	if (_l != NULL)
-		line_objects.push_back(_l);
+		axis_object.push_back(_l);
 }
 
 void Render::AddObjectToScene(TextureObject * _t) 
@@ -558,7 +558,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 	glUniformMatrix4fv(line.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
 	glUniformMatrix4fv(line.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
 	
-	for (LineObject* & l : line_objects) 
+	for (Axis* & l : axis_object) 
 	{
 		glUniformMatrix4fv(line.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 		

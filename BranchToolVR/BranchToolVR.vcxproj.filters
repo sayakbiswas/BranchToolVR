@@ -45,9 +45,6 @@
     <ClCompile Include="MarchingCubesVars.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LineObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -309,6 +306,9 @@
     <ClCompile Include="CurveTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Axis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
@@ -321,9 +321,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DicomReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LineObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
@@ -389,18 +386,15 @@
     <ClInclude Include="CurveTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Axis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\dicom_point_cloud.fs.glsl">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\dicom_point_cloud.vs.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\line.vs.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\line.fs.glsl">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\color.fs.glsl">
@@ -444,6 +438,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\curve.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\line.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\line.fs.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

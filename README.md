@@ -13,7 +13,7 @@ A tool designed to map vascular systems present in medical images in virtual rea
 - [x] Convert the bezier curves in blender python to thick curves (TOP PRIORITY)
 	- [x] Make the exports overlay exactly in blender
 	- [x] Spring constraints between "connected" curves
-	- [ ] Joining curves and adjusting resolution issues
+	- [x] Joining curves and adjusting resolution issues
 - [x] Formulaic thickness
 	- [ ] Scale-up scene
 	- [ ] Ensure thickness is close-fit to that in point cloud
