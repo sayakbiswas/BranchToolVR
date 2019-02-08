@@ -261,6 +261,7 @@ void DicomPointCloudObject::GenerateCube(glm::vec3 _scale, glm::vec3 _offset)
 		positions[i].z += 1.0f;
 		positions[i] += _offset;
 		positions[i] *= _scale;
+		positions[i].y += 0.1;						//IF YOU WANT TO MOVE POINT CLOUD GENERATION POINT (ORIGIN?) MODIFY THIS
 	}
 }
 

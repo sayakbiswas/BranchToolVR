@@ -433,7 +433,9 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			std::cout << "Unable to open file curves.dat" << std::endl;
 		}*/
 
-		std::ofstream curvesFileTree("./BranchToolExport/curveTree.dat", std::ios::out);
+		// TODO: move all export files to new BranchToolExports directory and then edit python script accordingly
+
+		std::ofstream curvesFileTree(DirectoryInfo::EXPORT_PATH + "curveTree.dat", std::ios::out);
 		if (curvesFileTree.is_open())
 		{
 			int curveCount = 0;
@@ -459,6 +461,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 					tCount++;
 				}
 			}
+			curvesFileTree.close();
 		}
 		else
 		{
@@ -630,21 +633,21 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 	ImGui::NextColumn();
 	bool wc_changed = ImGui::SliderInt("Brightness (Window Center)", &imaging_data.window_center, TMP_MIN_ISOVALUE, TMP_MAX_ISOVALUE, "");
 	bool ww_changed = ImGui::SliderInt("Contrast (Window Width)", &imaging_data.window_width, TMP_MIN_WW, TMP_MAX_WW, "");
-	bool less = ImGui::Button("<"); ImGui::SameLine(); bool more = ImGui::Button(">"); ImGui::SameLine();
+	//bool less = ImGui::Button("<"); ImGui::SameLine(); bool more = ImGui::Button(">"); ImGui::SameLine();
 	bool slice_index_changed = ImGui::SliderInt("Slice Index", &imaging_data.current_index, 0, imaging_data.data.size() - 1);
 	ImGui::SameLine(); ShowHelpMarker("CTRL + click to input value.");
-	if (less) {
-		imaging_data.current_index--;
-		if (imaging_data.current_index < 0)
-			imaging_data.current_index = 0;
-		slice_index_changed = true;
-	}
-	if (more) {
-		imaging_data.current_index++;
-		if (imaging_data.current_index > imaging_data.data.size() - 1)
-			imaging_data.current_index = imaging_data.data.size() - 1;
-		slice_index_changed = true;
-	}
+	//if (less) {
+	//	imaging_data.current_index--;
+	//	if (imaging_data.current_index < 0)
+	//		imaging_data.current_index = 0;
+	//	slice_index_changed = true;
+	//}
+	//if (more) {
+	//	imaging_data.current_index++;
+	//	if (imaging_data.current_index > imaging_data.data.size() - 1)
+	//		imaging_data.current_index = imaging_data.data.size() - 1;
+	//	slice_index_changed = true;
+	//}
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.MouseWheel) {
 		imaging_data.current_index -= io.MouseWheel;
@@ -667,6 +670,7 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 
 	for (int i = 0; i < isovalue_point_cloud_sliders.size(); ++i) {
 		if (!isovalue_point_cloud_sliders[i]->in_use) continue;
+		
 		ImVec4 color = ImColor(isovalue_point_cloud_sliders[i]->color.r, isovalue_point_cloud_sliders[i]->color.g, isovalue_point_cloud_sliders[i]->color.b, isovalue_point_cloud_sliders[i]->color.a);
 		ImGui::ColorButton(color);
 		if (ImGui::BeginPopupContextItem(""))
@@ -680,9 +684,10 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			ImGui::EndPopup();
 			isovalue_point_cloud_sliders[i]->SetColor(glm::vec4(color.x, color.y, color.z, color.w));
 		}
+
 		ImGui::SameLine();
 		sliderHasChanged = ImGui::SliderFloat(("" + std::to_string(i)).c_str(), &isovalue_point_cloud_sliders[i]->curr_isovalue, IsovaluePointCloudSlider::min_isovalue, IsovaluePointCloudSlider::max_isovalue);
-
+		
 		ImGui::SameLine(); 
 		ShowHelpMarker("right-click color square to change");
 
@@ -788,13 +793,12 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		}
 		hold = true;
 
+		Curve* current = points->curvesTree.getCurr();
 		for (Curve* curveInstance : points->curves)
 		{
-			Curve* current = points->curvesTree.getCurr();
-			//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
+
 			if (curveInstance == points->curvesTree.getCurr()) curveInstance->RenderCurveHighlight();
 			else curveInstance->RenderCurve();
-			//std::cout << "nav rendering" << std::endl;
 		}
 	}
 	if (!_vr.controller2.touchpad_is_pressed) hold = false;
@@ -811,6 +815,16 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 		newCurve = true;
 		points->branch_points.clear();
 		curve = new Curve();
+
+		Curve* current = points->curvesTree.getCurr();
+		for (Curve* curveInstance : points->curves)
+		{
+			if (curveInstance == current) {
+				curveInstance->RenderCurveHighlight();
+			}
+			else curveInstance->RenderCurve();
+
+		}
 	}
 
 	
@@ -940,20 +954,11 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 				
 				//curveTree::node* current = points->curves_tree_version.getCurrNode();
 				//current->children.back() = curve;
+				
 			}
-			for (Curve* curveInstance : points->curves)
-			{
-				Curve* current = points->curvesTree.getCurr();
-				//change if to track the tree current once that has been set, may also be due to the fact that currentlynot looping through the tree so can't actually check 
-
-				if (curveInstance == current) {
-					if (!_vr.controller1.trigger_is_pressed) {
-						curveInstance->RenderCurveHighlight();
-					}
-					else curveInstance->RenderCurve();
-				}
-				else curveInstance->RenderCurve();
-			}
+			
+			curve->RenderCurve(); //renders currently being drawn curve
+			
 			pointsToFitCount = currPointsToFitCount;
 			pointsAlreadyFitCount = currPointsToFitCount;
 			newCurve = false;

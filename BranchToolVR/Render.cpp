@@ -551,7 +551,6 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	glUseProgram(line.id);
@@ -732,7 +731,6 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 				glEnableVertexAttribArray(1);
 				glEnableVertexAttribArray(3);
 				glVertexAttribDivisor(3, 1);
-				glLineWidth(5.0);
 
 				glDrawArrays(GL_LINE_STRIP, 0, curve_object->GetNumVertices());
 			}
@@ -1087,6 +1085,7 @@ void Render::SpoofInput(int controllerIndex)
 	*/
 	vr_info.head_pose_inv = glm::inverse(currController.pose);
 
+	lights[1].position = currController.position + glm::vec3(0.125, 0.35, 0.0);
 	
 	controller_pointer1->SetModelMatrixOverride(vr_info.controller1.pose);
 	controller_pointer2->SetModelMatrixOverride(vr_info.controller2.pose);

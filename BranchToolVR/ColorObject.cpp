@@ -108,7 +108,8 @@ void ColorObject::GenerateController()
 
 	// Changes to pointer length are not always displayed properly for some reason; behaving on previous values
 	GenerateSphere(11, 0.005f, false, glm::vec3(0.0f, 0.0f, -0.25f));
-	AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
+	readObjFromFile("vr_controller_vive_1_5");
+	//AddRectangularPrism(glm::vec3(len, len, len*2.5f), glm::vec3(-len/2.0f, -len/2.0f, 0.0f));
 	AddRectangularPrism(glm::vec3(pointer_width, pointer_width, -0.25f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	AddRectangularPrism(glm::vec3(pointer_width / 5.0f, pointer_width / 5.0f, -10.0f), glm::vec3(-pointer_width / 2.0f, -pointer_width / 2.0f, 0.0f));
 	Finalize();
@@ -538,4 +539,72 @@ void ColorObject::GenerateSphere(int _res, float _radius, bool _invNormals, glm:
 	}
 
 	Finalize();
+}
+
+void ColorObject::readObjFromFile(std::string _name)
+{
+	readObjFromFile(_name, 1.0f, glm::vec3(0.0f));
+}
+
+void ColorObject::readObjFromFile(std::string _name, float _scale, glm::vec3 _offset)
+{
+	std::string strFullPath = MiscFunctions::relativeToAbsolutePath(DirectoryInfo::RELATIVE_MODELS_DIR + _name + DirectoryInfo::MODEL_EXT);
+
+	tinyobj::attrib_t attrib;
+	std::vector<tinyobj::shape_t> shapes;
+	std::vector<tinyobj::material_t> materials;
+
+	std::string err;
+	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, strFullPath.c_str());
+
+	// Loop over shapes
+	for (size_t s = 0; s < shapes.size(); s++)
+	{
+		// Loop over faces(polygon)
+		size_t index_offset = 0;
+		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++)
+		{
+			int fv = shapes[s].mesh.num_face_vertices[f];
+
+			// Loop over vertices in the face.
+			for (size_t v = 0; v < fv; v++)
+			{
+				// access to vertex
+				tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+
+				float vx = attrib.vertices[3 * idx.vertex_index + 0];
+				float vy = attrib.vertices[3 * idx.vertex_index + 1];
+				float vz = attrib.vertices[3 * idx.vertex_index + 2];
+
+				float nx = attrib.normals[3 * idx.normal_index + 0];
+				float ny = attrib.normals[3 * idx.normal_index + 1];
+				float nz = attrib.normals[3 * idx.normal_index + 2];
+
+				float tx = 0.0f;
+				float ty = 0.0f;
+
+				if (attrib.texcoords.size() > 1)
+				{
+					tx = attrib.texcoords[2 * idx.texcoord_index + 0];
+					ty = attrib.texcoords[2 * idx.texcoord_index + 1];
+				}
+
+				positions.push_back(_scale * glm::vec3(vx, vy, vz) + _offset);
+				normals.push_back(glm::vec3(nx, ny, nz));
+				uvs.push_back(glm::vec2(tx, ty));
+			}
+
+			index_offset += fv;
+
+			// per-face material
+			shapes[s].mesh.material_ids[f];
+		}
+	}
+
+	Finalize();
+}
+
+void ColorObject::readObjFromFile(std::string _name, float _scale)
+{
+	readObjFromFile(_name, _scale, glm::vec3(0.0f));
 }
