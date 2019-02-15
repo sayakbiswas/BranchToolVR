@@ -97,12 +97,18 @@ void curveTree::navDown() {
 };
 // Move "Left"
 void curveTree::navLeft() {
+	if (curr == root) {
+		return;
+	}
 	index--;
 	if (index < 0) index = prev->children.size() - 1;
 	curr = prev->children[index];
 };
 // Move "Right"
 void curveTree::navRight() {
+	if (curr == root) {
+		return;
+	}
 	index++;
 	if (index >= prev->children.size()) index = 0;
 	curr = prev->children[index];

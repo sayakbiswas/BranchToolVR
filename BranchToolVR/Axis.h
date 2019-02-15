@@ -6,11 +6,11 @@
 
 #include "AbstractBaseObject.h"
 
-class LineObject : public AbstractBaseObject
+class Axis : public AbstractBaseObject
 {
 	public:
-		LineObject();
-		~LineObject();
+		Axis();
+		~Axis();
 		void GenerateAxis();
 		int Type();
 

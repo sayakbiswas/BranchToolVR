@@ -13,7 +13,7 @@
 
 #include "Render.h"
 #include "ColorObject.h"
-#include "LineObject.h"
+#include "Axis.h"
 #include "DicomReader.h"
 #include "DicomObjectsContainer.h"
 #include "Constants.h"

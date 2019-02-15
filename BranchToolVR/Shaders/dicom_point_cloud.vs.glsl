@@ -3,7 +3,7 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec3 instanced_position;
-layout(location = 3) in vec3 instanced_color;
+layout(location = 3) in vec4 instanced_color;
 layout(location = 4) in float instanced_iso_diff;
 
 struct Light
@@ -21,7 +21,7 @@ uniform float tolerance;
 uniform vec3 scale;
 
 out float oi_lighting;
-out vec3 oi_instanced_color;
+out vec4 oi_instanced_color;
 
 void main()
 {

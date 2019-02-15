@@ -184,10 +184,10 @@ void Render::AddObjectToScene(DicomPointCloudObject * _dpco)
 	dicom_point_cloud_objects.push_back(_dpco);
 }
 
-void Render::AddObjectToScene(LineObject * _l) 
+void Render::AddObjectToScene(Axis * _l) 
 {
 	if (_l != NULL)
-		line_objects.push_back(_l);
+		axis_object.push_back(_l);
 }
 
 void Render::AddObjectToScene(TextureObject * _t) 
@@ -551,7 +551,6 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	glUseProgram(line.id);
@@ -559,7 +558,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 	glUniformMatrix4fv(line.uniforms[0], 1, GL_FALSE, glm::value_ptr(_P));
 	glUniformMatrix4fv(line.uniforms[1], 1, GL_FALSE, glm::value_ptr(_V));
 	
-	for (LineObject* & l : line_objects) 
+	for (Axis* & l : axis_object) 
 	{
 		glUniformMatrix4fv(line.uniforms[2], 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 		
@@ -656,6 +655,7 @@ void Render::RenderSceneInternal(glm::mat4 _P, glm::mat4 _V)
 		glEnableVertexAttribArray(2);
 		glEnableVertexAttribArray(3);
 		glEnableVertexAttribArray(4);
+
 		glVertexAttribDivisor(0, 0);
 		glVertexAttribDivisor(1, 0);
 		glVertexAttribDivisor(2, 1);
@@ -1085,6 +1085,7 @@ void Render::SpoofInput(int controllerIndex)
 	*/
 	vr_info.head_pose_inv = glm::inverse(currController.pose);
 
+	lights[1].position = currController.position + glm::vec3(0.125, 0.35, 0.0);
 	
 	controller_pointer1->SetModelMatrixOverride(vr_info.controller1.pose);
 	controller_pointer2->SetModelMatrixOverride(vr_info.controller2.pose);

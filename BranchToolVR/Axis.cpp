@@ -1,19 +1,15 @@
-#include "LineObject.h"
+#include "Axis.h"
 
-LineObject::LineObject()
+Axis::Axis(){}
+
+Axis::~Axis(){}
+
+int Axis::Type()
 {
+	return AbstractBaseObject::get_type_id<Axis>();
 }
 
-LineObject::~LineObject()
-{
-}
-
-int LineObject::Type()
-{
-	return AbstractBaseObject::get_type_id<LineObject>();
-}
-
-void LineObject::GenerateAxis() 
+void Axis::GenerateAxis() 
 {
 	positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
 	positions.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -36,7 +32,7 @@ void LineObject::GenerateAxis()
 	Load();
 }
 
-void LineObject::Load() 
+void Axis::Load() 
 {
 	num_vertices = positions.size();
 

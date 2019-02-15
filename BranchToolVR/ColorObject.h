@@ -7,6 +7,7 @@
 #include <glm\gtx\euler_angles.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
+#include <tiny_obj_loader.h>
 
 #include "AbstractBaseObject.h"
 #include "DicomReader.h"
@@ -21,10 +22,13 @@ class ColorObject : public AbstractBaseObject {
 		void GenerateXZPlane(float _scaleX, float _scaleZ, float _padding, glm::vec3 _offset);
 		void GenerateXYPrism(float _scaleX, float _scaleY, float _scaaleZ, glm::vec2 _padding, glm::vec3 _offset);
 		void GenerateXYPrism(glm::vec3 _scale, glm::vec2 _padding, glm::vec3 _offset);
-		void GenerateSphere(int _res, float _radius, bool _invNormals);
+		void GenerateSphere(int _res, float _radius, bool _invNormals, glm::vec3 _offset);
 		void GenerateIsosurfaceFromDicomSet(DicomSet & _dSet, int _isovalue);
 		void GenerateController();
 		void GenerateGround();
+		void readObjFromFile(std::string _name);
+		void readObjFromFile(std::string _name, float _scale, glm::vec3 _offset);
+		void readObjFromFile(std::string _name, float _scale);
 		void SetDisplayColor(const glm::vec4 & _inColor);
 		void SetSelected(bool _isSelected);
 		glm::vec4 GetDisplayColor();		
@@ -41,5 +45,8 @@ class ColorObject : public AbstractBaseObject {
 		float selection_modifier;
 
 		std::vector<glm::vec3> normals;
+		std::vector<glm::vec2> uvs;
 		GLuint normals_buffer;
+		GLuint uvs_buffer;
+
 };

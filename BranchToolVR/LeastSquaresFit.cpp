@@ -1,9 +1,9 @@
 #include "LeastSquaresFit.h"
 #include "DicomPointCloudObject.h"
 
-LeastSquaresFit::LeastSquaresFit()
-{
-}
+LeastSquaresFit::LeastSquaresFit(){}
+
+LeastSquaresFit::~LeastSquaresFit(){}
 
 LeastSquaresFit::LeastSquaresFit(std::vector<BranchPoint*> branchPoints)
 {
@@ -14,10 +14,6 @@ LeastSquaresFit::LeastSquaresFit(std::vector<BranchPoint*> branchPoints, int num
 {
 	this->branchPoints = branchPoints;
 	this->numberOfPieces = numberOfPieces;
-}
-
-LeastSquaresFit::~LeastSquaresFit()
-{
 }
 
 void LeastSquaresFit::CalculateParameters(int start, int end)

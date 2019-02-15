@@ -123,7 +123,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Users\Michael\Documents\Programming\BranchToolVR\BranchToolVR\Libraries\imgui\examples\opengl3_example;$(ProjectDir)Libraries\imgui;$(ProjectDir)Libraries\misc;$(ProjectDir)Libraries\openvr-master\headers;$(ProjectDir)Libraries\tinydir;$(ProjectDir)Libraries\imebra\library\imebra\include;$(ProjectDir)Libraries\imebra\library\base\include;$(ProjectDir)Libraries\glm;$(ProjectDir)Libraries\glew-1.13.0\include;$(ProjectDir)Libraries\glfw-3.1.2.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -219,7 +219,7 @@
     <ClCompile Include="Libraries\imgui\imgui_draw.cpp" />
     <ClCompile Include="Libraries\misc\lodepng.cpp" />
     <ClCompile Include="Libraries\misc\pathtools.cpp" />
-    <ClCompile Include="LineObject.cpp" />
+    <ClCompile Include="Axis.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ColorObject.cpp" />
     <ClCompile Include="MarchingCubesVars.cpp" />
@@ -248,7 +248,7 @@
     <ClInclude Include="Libraries\imgui\stb_textedit.h" />
     <ClInclude Include="Libraries\imgui\stb_truetype.h" />
     <ClInclude Include="Libraries\misc\tiny_obj_loader.h" />
-    <ClInclude Include="LineObject.h" />
+    <ClInclude Include="Axis.h" />
     <ClInclude Include="MiscFunctions.h" />
     <ClInclude Include="InputHelpers.h" />
     <ClInclude Include="Render.h" />
