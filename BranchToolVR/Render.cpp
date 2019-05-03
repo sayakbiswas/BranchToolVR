@@ -207,8 +207,10 @@ void Render::SetOrthosliceTextureReference(Texture* _t)
 
 void Render::RenderToHMD()
 {
-	if (!m_pHMD || !hmd_ready)
+	if (!m_pHMD || !hmd_ready) {
+
 		return;
+	}
 
 	// left eye
 	glBindFramebuffer(GL_FRAMEBUFFER, leftEyeDesc.m_nRenderFramebufferId);

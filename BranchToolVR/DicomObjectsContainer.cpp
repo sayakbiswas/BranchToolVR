@@ -676,8 +676,8 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			ImGui::Text("Edit color");
 			ImGui::ColorEdit4("##edit" + i, (float*)&color);
 			if (ImGui::Button("Close")) {
-				ImGui::CloseCurrentPopup();
 				points->MarkForRegeneration();
+				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
 			isovalue_point_cloud_sliders[i]->SetColor(glm::vec4(color.x, color.y, color.z, color.w));
@@ -698,9 +698,11 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 		ImGui::SameLine();
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0, 0, 0, 1));
 		pushed = ImGui::Button(("X##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str(), ImVec2(20, 20));
+		ImGui::PopStyleColor(1);
 		if (pushed) {
+			isovalue_point_cloud_sliders[i]->SetInUse(false);
 			for (int j = i; j < isovalue_point_cloud_sliders.size(); j++) {
-				isovalue_point_cloud_sliders[j] = isovalue_point_cloud_sliders[j + 1];
+				//isovalue_point_cloud_sliders[j] = isovalue_point_cloud_sliders[j + 1];
 				//isovalue_point_cloud_sliders[isovalue_point_cloud_sliders.size() - 1]->SetInUse(false);
 			}
 			//if (isovalue_point_cloud_sliders[i]->id == 0) {
@@ -714,7 +716,6 @@ void DicomObjectsContainer::RenderUi(Render* _r)
 			//	points->MarkForRegeneration();
 			//}
 		}
-		ImGui::PopStyleColor(1);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(1 / 7.0f, 0.6f, 0.6f));
 		decimate = ImGui::Button(("Decimate##" + std::to_string(isovalue_point_cloud_sliders[i]->id)).c_str());
@@ -767,7 +768,7 @@ void DicomObjectsContainer::Update(const VrData& _vr, const CursorData& _crsr, R
 	// left hand controls
 	// Math takes advantage of touchpad representation as unit circle about origin of pad
 	// and properties of functions y = x and y = -x
-	if (_vr.controller2.touchpad_is_pressed && !hold && !_vr.controller1.trigger_first_press && !_vr.controller1.trigger_is_pressed)
+	if (_vr.controller2.touchpad_is_pressed && !hold && !_vr.controller1.trigger_first_press && !_vr.controller1.trigger_is_pressed && newCurve)
 	{
 		//up
 		if (pad2.x > -1 * (pad2.y) && pad2.x < (pad2.y)) {
