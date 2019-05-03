@@ -247,6 +247,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+BranchToolVR/BranchToolExport/
 
 !BranchToolVR/Libraries
 !BranchToolVR/Resources/DICOM
